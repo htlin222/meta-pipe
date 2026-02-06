@@ -23,6 +23,12 @@ Example prompts that trigger this:
 
 ## When User Says "Start" or "See TOPIC.txt"
 
+⚠️ **MANDATORY FIRST STEP**: Run 4-hour feasibility assessment ([FEASIBILITY_CHECKLIST.md](FEASIBILITY_CHECKLIST.md)) before any data extraction or protocol writing.
+
+**Why**: Prevents 10-40 hours of wasted work on unanswerable research questions.
+
+Then proceed:
+
 1. **Read `TOPIC.txt`** to understand the research question
 2. **Check project state** - which stages are complete?
 3. **Ask only essential questions** before proceeding:
