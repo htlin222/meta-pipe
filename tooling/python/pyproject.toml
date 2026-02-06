@@ -7,6 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "bibtexparser>=1.4.4",
     "biopython>=1.86",
+    "pdfplumber>=0.11.9",
     "pyyaml>=6.0.3",
     "requests>=2.32.5",
 ]
