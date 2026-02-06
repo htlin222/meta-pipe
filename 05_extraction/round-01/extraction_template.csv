@@ -1,0 +1,11 @@
+study_id,pdf_filename,pdf_pages,pdf_chars,first_author,publication_year,title,journal,doi,pmid,trial_name,study_design,phase,randomization,n_total,n_cdk46_prior,pct_cdk46_prior,age_median,hr_positive_pct,her2_negative_pct,metastatic_pct,cdk46_type,cdk46_line,cdk46_setting,arm_1_name,arm_1_category,arm_1_dose,arm_1_n,arm_2_name,arm_2_category,arm_2_dose,arm_2_n,primary_endpoint,pfs_median_arm1,pfs_median_arm2,pfs_hr,pfs_ci_lower,pfs_ci_upper,pfs_p_value,os_median_arm1,os_median_arm2,os_hr,os_ci_lower,os_ci_upper,os_p_value,orr_arm1,orr_arm2,ae_grade3plus_arm1_pct,ae_grade3plus_arm2_pct,rob_overall,notes_general
+AgostiniM202478,AgostiniM202478.pdf,10,41768,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+AgrawalYN202536,AgrawalYN202536.pdf,17,67799,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+CogliatiV2022222,CogliatiV2022222.pdf,17,65970,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+DegenhardtT2023138,DegenhardtT2023138.pdf,9,41547,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+HoraniM202337860199,HoraniM202337860199.pdf,8,42618,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+KettnerNM20252,KettnerNM20252.pdf,20,100894,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+OgataN202550,OgataN202550.pdf,13,39003,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PalumboR2023179,PalumboR2023179.pdf,11,42842,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PrestiD2019335,PrestiD2019335.pdf,20,75974,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+TokunagaE202539379782,TokunagaE202539379782.pdf,12,48655,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

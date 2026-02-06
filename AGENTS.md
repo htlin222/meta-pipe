@@ -205,13 +205,55 @@ uv run ../../ma-fulltext-management/scripts/download_oa_pdfs.py \
 <details>
 <summary><strong>Stage 05: Extraction</strong></summary>
 
+**Recommended: LLM-Assisted Extraction (using Claude CLI)**
+
+Requires: `claude` CLI (subscription) or `codex` CLI installed
+
 ```bash
+cd /Users/htlin/meta-pipe/tooling/python
+
+# Step 1: Extract PDF text
 uv add pdfplumber
+uv run extract_pdf_text.py \
+  --pdf-dir ../../04_fulltext/round-01/pdfs \
+  --out-jsonl ../../05_extraction/round-01/pdf_texts.jsonl \
+  --pattern "*.pdf"
+
+# Step 2: LLM extraction using Claude CLI (no API key needed)
+uv run llm_extract_cli.py \
+  --pdf-jsonl ../../05_extraction/round-01/pdf_texts.jsonl \
+  --data-dict ../../05_extraction/data-dictionary.md \
+  --out-jsonl ../../05_extraction/round-01/llm_extracted_all.jsonl \
+  --cli claude
+
+# Step 3: Convert to CSV format
+uv run jsonl_to_extraction_csv.py \
+  --jsonl ../../05_extraction/round-01/llm_extracted_all.jsonl \
+  --data-dict ../../05_extraction/data-dictionary.md \
+  --out-csv ../../05_extraction/round-01/extraction.csv
+
+# Step 4: Validate extraction quality
+uv run validate_extraction.py \
+  --csv ../../05_extraction/round-01/extraction.csv \
+  --out-md ../../05_extraction/round-01/validation_report.md
+```
+
+**Expected results**:
+- 100% success rate (all PDFs processed)
+- 65-70% time savings vs manual extraction
+- Some missing fields will need manual review
+- See `validation_report.md` for data quality issues
+
+**Alternative: API-based extraction** (if CLI not available)
+
+```bash
 uv run ../../ma-data-extraction/scripts/llm_extract.py \
   --manifest ../../04_fulltext/manifest.csv \
   --data-dictionary ../../05_extraction/data-dictionary.md \
   --out-jsonl ../../05_extraction/llm_suggestions.jsonl
 ```
+
+Requires `LLM_API_BASE`, `LLM_API_KEY`, `LLM_MODEL` in `.env`
 
 </details>
 
