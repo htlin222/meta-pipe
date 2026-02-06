@@ -9,13 +9,15 @@
 
 ## ❗ Why This Matters
 
-**Lesson learned**: The CDK4/6i project spent 13 hours before discovering:
+**Lesson learned**: A pilot project spent 13 hours before discovering:
 
 - Only 2/10 studies had usable data
 - Studies were too heterogeneous to pool
 - Research question didn't match available literature
 
 **Cost**: 9+ hours wasted that could have been avoided with upfront assessment
+
+> See `docs/archive/cdk46-project/PROJECT_LESSONS_LEARNED.md` for detailed case study
 
 ---
 
@@ -27,10 +29,10 @@
 
 ```bash
 # PubMed search with broad terms
-# For CDK4/6i example:
-(CDK4/6 inhibitor OR palbociclib OR ribociclib OR abemaciclib) AND
-(progression OR resistance OR post-progression) AND
-(breast cancer) AND
+# Generic example:
+([intervention keywords] OR [drug names]) AND
+([condition keywords] OR [outcome terms]) AND
+([population terms]) AND
 (randomized OR trial OR cohort)
 ```
 
@@ -341,45 +343,25 @@ graph TD
 
 ---
 
-## 📊 Example: CDK4/6i Project Post-Mortem
+## 📊 Case Study: Real-World Post-Mortem
 
-**What we actually found** (after 13 hours):
+> **Full case study**: `docs/archive/cdk46-project/PROJECT_LESSONS_LEARNED.md`
 
-- 10 PDFs downloaded
-- 6 potentially includable (4 reviews/protocols excluded)
-- Only 2/6 had usable HR data
-- Studies compared different interventions
-- **Conclusion**: Not feasible for meta-analysis
+**Summary**: A pilot project demonstrated why this checklist matters:
 
-**What feasibility assessment would have revealed** (in 4 hours):
+| Phase                  | Actual Time | With Checklist |
+| ---------------------- | ----------- | -------------- |
+| Protocol + Search      | 4 hours     | 4 hours        |
+| Screening + Extraction | 9 hours     | **0 hours**    |
+| Total                  | 13 hours    | 4 hours        |
 
-### Hour 1: Literature scan
+**Key findings from post-mortem**:
 
-- Found: Mostly review articles and protocols
-- Found: Few RCTs of CDK4/6i continuation
-- Found: Studies compare different agents (AKT inhibitors, chemotherapy)
-- **Red flag identified**: Insufficient original research
+- Feasibility score: **3/16** (clear STOP signal)
+- Fatal flaws: Insufficient studies, <50% report HR, heterogeneous comparisons
+- **Lesson**: 4-hour assessment would have saved 9+ hours
 
-### Hour 2: Pilot extraction (3 PDFs)
-
-- Study 1: Review article (no original data)
-- Study 2: Protocol (no results yet)
-- Study 3: Observational study (no HR reported)
-- **Fatal flaw identified**: 0/3 report quantitative effect sizes
-
-### Hour 3: Feasibility score
-
-- Study quantity: 0/2 (only 6 original studies)
-- Study quality: 1/2 (mixed RCT/observational)
-- Outcome reporting: 0/2 (<50% report HR)
-- Clinical homogeneity: 0/2 (all different comparisons)
-- **Total: 3/16** → **STOP**
-
-### Hour 4: Decision
-
-- **STOP**: Not feasible for quantitative meta-analysis
-- **Alternative**: Consider narrative review or choose different topic
-- **Time saved**: 9+ hours of extraction work avoided
+**Apply this checklist to avoid the same fate.**
 
 ---
 
@@ -457,9 +439,9 @@ Day 4: Select new research question
 ---
 
 **Created**: 2026-02-06
-**Based on**: Lessons from CDK4/6i meta-analysis project
+**Based on**: Lessons from pilot meta-analysis projects
 **Status**: Mandatory for all future systematic reviews
-**Next update**: After applying to 3 projects
+**Case studies**: `docs/archive/cdk46-project/`
 
 ---
 
