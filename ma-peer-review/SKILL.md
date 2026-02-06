@@ -21,6 +21,10 @@ Perform structured peer review and produce actionable feedback and validation ch
 - `08_reviews/grade_summary.md`
 - `08_reviews/grade_suggestions.csv` (optional)
 - `08_reviews/grade_suggestions.md` (optional)
+- `03_screening/round-01/quality_rob2.csv` (RoB 2 for RCTs)
+- `03_screening/round-01/rob2_assessment.md` (RoB 2 narrative)
+- `03_screening/round-01/quality_robins_i.csv` (ROBINS-I for observational)
+- `03_screening/round-01/robins_i_assessment.md` (ROBINS-I narrative)
 
 ## Workflow
 1. Reviewer 1 focuses on methodology, inclusion criteria, and statistical validity.
@@ -34,8 +38,12 @@ Perform structured peer review and produce actionable feedback and validation ch
 - `references/reporting-checks.md` for PRISMA-style reporting checks.
 - `references/grade-template.md` for GRADE evidence profiling.
 - `references/grade-summary-schema.md` for GRADE summary columns.
+- `references/rob2-template.md` for RoB 2 per-study assessment (RCTs).
+- `references/robins-i-template.md` for ROBINS-I per-study assessment (observational).
 - `scripts/init_grade_summary.py` for generating GRADE summary tables.
 - `scripts/auto_grade_suggestion.py` for initial certainty suggestions.
+- `scripts/init_rob2_assessment.py` for initializing RoB 2 assessment tables.
+- `scripts/init_robins_i_assessment.py` for initializing ROBINS-I assessment tables.
 
 ## Validation
 - Verify that methods and results are consistent with the protocol.

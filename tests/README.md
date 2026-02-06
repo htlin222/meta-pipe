@@ -108,6 +108,35 @@ uv run ../../ma-peer-review/scripts/init_grade_summary.py \
   --out-md /tmp/test_grade.md
 ```
 
+### Test RoB 2 assessment
+
+```bash
+uv run ../../ma-peer-review/scripts/init_rob2_assessment.py \
+  --extraction ../../tests/fixtures/05_extraction/extraction.csv \
+  --out-csv /tmp/test_rob2.csv \
+  --out-md /tmp/test_rob2.md
+# Expected: 7 studies x 5 domains = 35 rows
+```
+
+### Test ROBINS-I assessment
+
+```bash
+uv run ../../ma-peer-review/scripts/init_robins_i_assessment.py \
+  --extraction ../../tests/fixtures/05_extraction/extraction.csv \
+  --out-csv /tmp/test_robins_i.csv \
+  --out-md /tmp/test_robins_i.md
+# Expected: 7 studies x 7 domains = 49 rows
+```
+
+### Test PROSPERO generation
+
+```bash
+uv run generate_prospero_protocol.py \
+  --pico ../../01_protocol/pico.yaml \
+  --out /tmp/test_prospero.md
+# Expected: Formatted PROSPERO registration document
+```
+
 ## Expected Results
 
 | Stage      | Input      | Output       | Validation                  |
@@ -117,6 +146,9 @@ uv run ../../ma-peer-review/scripts/init_grade_summary.py \
 | Screening  | 9 records  | 7 included   | 2 excluded with reasons     |
 | Extraction | 7 studies  | 18 data rows | All required fields present |
 | GRADE      | 3 outcomes | 3 GRADE rows | Certainty: moderate/low     |
+| RoB 2      | 7 studies  | 35 rows      | 5 domains per study         |
+| ROBINS-I   | 7 studies  | 49 rows      | 7 domains per study         |
+| PROSPERO   | pico.yaml  | 1 document   | All PROSPERO fields filled  |
 
 ---
 

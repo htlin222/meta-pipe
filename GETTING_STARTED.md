@@ -32,6 +32,18 @@ Write your research question in `TOPIC.txt`.
 
 Use `ma-topic-intake` to generate: `pico.yaml`, `eligibility.md`, `outcomes.md`, `search-plan.md`
 
+### Generate PROSPERO Registration
+
+```bash
+cd tooling/python
+uv add pyyaml
+uv run generate_prospero_protocol.py \
+  --pico ../../01_protocol/pico.yaml \
+  --out ../../01_protocol/prospero_registration.md
+```
+
+Review, edit, and submit to [PROSPERO](https://www.crd.york.ac.uk/prospero/). Update `prospero_id` in `pico.yaml` once registered.
+
 ## 4. Run Search (Stage 02)
 
 <details>
@@ -231,21 +243,55 @@ uv run ../../ma-manuscript-quarto/scripts/render_manuscript.py \
 
 </details>
 
-## 10. GRADE & Reviews (Stage 08)
+## 10. Risk of Bias Assessment
+
+<details>
+<summary><strong>RoB 2 (for RCTs)</strong></summary>
+
+```bash
+cd tooling/python
+uv run ../../ma-peer-review/scripts/init_rob2_assessment.py \
+  --extraction ../../05_extraction/round-01/extraction.csv \
+  --out-csv ../../03_screening/round-01/quality_rob2.csv \
+  --out-md ../../03_screening/round-01/rob2_assessment.md
+```
+
+</details>
+
+<details>
+<summary><strong>ROBINS-I (for cohort/observational studies)</strong></summary>
+
+```bash
+cd tooling/python
+uv run ../../ma-peer-review/scripts/init_robins_i_assessment.py \
+  --extraction ../../05_extraction/round-01/extraction.csv \
+  --out-csv ../../03_screening/round-01/quality_robins_i.csv \
+  --out-md ../../03_screening/round-01/robins_i_assessment.md
+```
+
+</details>
+
+## 11. GRADE & Reviews (Stage 08)
 
 <details>
 <summary><strong>GRADE summary</strong></summary>
 
 ```bash
+cd tooling/python
 uv run ../../ma-peer-review/scripts/init_grade_summary.py \
   --extraction ../../05_extraction/extraction.csv \
   --out-csv ../../08_reviews/grade_summary.csv \
   --out-md ../../08_reviews/grade_summary.md
+
+uv run ../../ma-peer-review/scripts/auto_grade_suggestion.py \
+  --grade ../../08_reviews/grade_summary.csv \
+  --out-csv ../../08_reviews/grade_suggestions.csv \
+  --out-md ../../08_reviews/grade_suggestions.md
 ```
 
 </details>
 
-## 11. Final QA (Stage 09)
+## 12. Final QA (Stage 09)
 
 ```bash
 uv run ../../ma-end-to-end/scripts/final_qa_report.py \

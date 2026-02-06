@@ -80,6 +80,24 @@ Only ask if information is missing from TOPIC.txt:
 ## Commands Reference
 
 <details>
+<summary><strong>Stage 01: Protocol & PROSPERO</strong></summary>
+
+```bash
+cd /Users/htlin/meta-pipe/tooling/python
+
+# Generate PROSPERO registration document from pico.yaml
+uv add pyyaml
+uv run generate_prospero_protocol.py \
+  --pico ../../01_protocol/pico.yaml \
+  --out ../../01_protocol/prospero_registration.md
+```
+
+Review the generated document, edit as needed, then submit to PROSPERO.
+Update `prospero_id` in `pico.yaml` once registered.
+
+</details>
+
+<details>
 <summary><strong>Stage 02: Search</strong></summary>
 
 ```bash
@@ -347,6 +365,29 @@ uv run ../../ma-manuscript-quarto/scripts/render_manuscript.py \
 </details>
 
 <details>
+<summary><strong>Risk of Bias Assessment</strong></summary>
+
+```bash
+cd /Users/htlin/meta-pipe/tooling/python
+
+# RoB 2 for RCTs
+uv run ../../ma-peer-review/scripts/init_rob2_assessment.py \
+  --extraction ../../05_extraction/round-01/extraction.csv \
+  --out-csv ../../03_screening/round-01/quality_rob2.csv \
+  --out-md ../../03_screening/round-01/rob2_assessment.md
+
+# ROBINS-I for cohort/observational studies
+uv run ../../ma-peer-review/scripts/init_robins_i_assessment.py \
+  --extraction ../../05_extraction/round-01/extraction.csv \
+  --out-csv ../../03_screening/round-01/quality_robins_i.csv \
+  --out-md ../../03_screening/round-01/robins_i_assessment.md
+```
+
+Templates: `ma-peer-review/references/rob2-template.md`, `ma-peer-review/references/robins-i-template.md`
+
+</details>
+
+<details>
 <summary><strong>Stage 08: GRADE</strong></summary>
 
 ```bash
@@ -357,7 +398,8 @@ uv run ../../ma-peer-review/scripts/init_grade_summary.py \
 
 uv run ../../ma-peer-review/scripts/auto_grade_suggestion.py \
   --grade ../../08_reviews/grade_summary.csv \
-  --out-csv ../../08_reviews/grade_suggestions.csv
+  --out-csv ../../08_reviews/grade_suggestions.csv \
+  --out-md ../../08_reviews/grade_suggestions.md
 ```
 
 </details>
@@ -387,6 +429,12 @@ uv run ../../ma-publication-quality/scripts/crossref_check.py \
 # Hash artifacts for reproducibility audit
 uv run ../../ma-end-to-end/scripts/hash_artifacts.py \
   --root ../.. --out 09_qa/artifact_hashes.json
+
+# Module registry validation (check all scripts are documented)
+uv run ../../ma-end-to-end/scripts/validate_module_registry.py \
+  --root ../.. \
+  --out-md 09_qa/module_registry_report.md \
+  --out-json 09_qa/module_registry.json
 ```
 
 </details>

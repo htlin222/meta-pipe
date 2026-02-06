@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Pre-commit hook: validate module registry (SKILL.md coverage only)
+# Checks that every ma-*/scripts/*.py is registered in its SKILL.md.
+# Runs only when Python scripts or SKILL.md files are staged.
+#
+# Setup (run once per clone):
+#   git config core.hooksPath .githooks
+
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+# Only run if relevant files are staged
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+
+NEED_CHECK=false
+while IFS= read -r file; do
+    case "$file" in
+        ma-*/scripts/*.py|tooling/python/*.py|*/SKILL.md|CLAUDE.md|GETTING_STARTED.md)
+            NEED_CHECK=true
+            break
+            ;;
+    esac
+done <<< "$STAGED"
+
+if [ "$NEED_CHECK" = false ]; then
+    exit 0
+fi
+
+echo "[pre-commit] Running module registry validation..."
+
+# Find uv
+if command -v uv &>/dev/null; then
+    UV=uv
+elif [ -x "$ROOT/tooling/python/.venv/bin/python" ]; then
+    UV="$ROOT/tooling/python/.venv/bin/python"
+else
+    echo "[pre-commit] uv not found, skipping module registry check"
+    exit 0
+fi
+
+cd "$ROOT/tooling/python"
+
+# Run validation (errors only, not strict)
+if $UV run ../../ma-end-to-end/scripts/validate_module_registry.py --root ../.. 2>&1; then
+    echo "[pre-commit] Module registry: OK"
+else
+    EXIT_CODE=$?
+    if [ "$EXIT_CODE" -eq 2 ]; then
+        echo ""
+        echo "[pre-commit] Module registry validation FAILED."
+        echo "  Fix the errors above, or skip with: git commit --no-verify"
+        echo "  Run the full check:"
+        echo "    cd tooling/python && uv run ../../ma-end-to-end/scripts/validate_module_registry.py --root ../.."
+        exit 1
+    fi
+    # Exit code 1 = warnings only, allow commit
+    echo "[pre-commit] Module registry: OK (with warnings)"
+fi
