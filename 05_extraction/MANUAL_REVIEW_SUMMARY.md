@@ -13,22 +13,24 @@
 ### 1. PDF Manual Review
 
 Reviewed all PDFs with missing critical fields to determine:
+
 - Whether they are original research or secondary sources
 - If original research, extract missing sample size data
 
 ### 2. Study Classification
 
-| Study ID | Type | Decision | Reason |
-|----------|------|----------|--------|
-| CogliatiV2022222 | Review | ❌ EXCLUDE | Review article (TYPE: Review) |
-| DegenhardtT2023338 | Protocol | ❌ EXCLUDE | Study protocol (PRECYCLE trial protocol) |
-| HoraniM202337860199 | Review | ❌ EXCLUDE | Review article (TYPE: Review) |
-| PrestiD2019335 | Review | ❌ EXCLUDE | Review article (labelled "Review") |
-| TokunagaE202539379782 | Original | ✅ INCLUDE | Subgroup analysis of RCT |
+| Study ID              | Type     | Decision   | Reason                                   |
+| --------------------- | -------- | ---------- | ---------------------------------------- |
+| CogliatiV2022222      | Review   | ❌ EXCLUDE | Review article (TYPE: Review)            |
+| DegenhardtT2023338    | Protocol | ❌ EXCLUDE | Study protocol (PRECYCLE trial protocol) |
+| HoraniM202337860199   | Review   | ❌ EXCLUDE | Review article (TYPE: Review)            |
+| PrestiD2019335        | Review   | ❌ EXCLUDE | Review article (labelled "Review")       |
+| TokunagaE202539379782 | Original | ✅ INCLUDE | Subgroup analysis of RCT                 |
 
 ### 3. Data Completion
 
 **TokunagaE202539379782** (CAPItello-291 Japan subgroup):
+
 - ✅ Added `n_total = 78` (already extracted by LLM)
 - ✅ Added `n_cdk46_prior = 13` (78 × 16.7% = 13)
 - ✅ Added `pct_cdk46_prior = 16.7%`
@@ -61,23 +63,25 @@ Source: "Of 708 patients randomized in CAPItello-291, 78 were from Japan"
 ## 🔍 Validation Status
 
 ### Before Manual Review
+
 - ⚠️ 8 missing critical fields across 5 studies
 - ❌ 4 non-empirical studies (not identified)
 - ⚠️ 1 study with incomplete data
 
 ### After Manual Review
+
 - ✅ 1 study data completed (TokunagaE202539379782)
 - ✅ 4 non-empirical studies marked for exclusion
 - ✅ 7 remaining "missing" fields belong to excluded studies (expected)
 
 ### Validation Summary
 
-| Issue Type | Count | Status |
-|------------|-------|--------|
-| Missing critical fields (excluded studies) | 7 | ✅ Expected - studies excluded |
-| Missing critical fields (included studies) | 0 | ✅ All complete |
-| Data type issues | 0 | ✅ Pass |
-| Value range issues | 0 | ✅ Pass |
+| Issue Type                                 | Count | Status                         |
+| ------------------------------------------ | ----- | ------------------------------ |
+| Missing critical fields (excluded studies) | 7     | ✅ Expected - studies excluded |
+| Missing critical fields (included studies) | 0     | ✅ All complete                |
+| Data type issues                           | 0     | ✅ Pass                        |
+| Value range issues                         | 0     | ✅ Pass                        |
 
 ---
 
@@ -99,10 +103,12 @@ Source: "Of 708 patients randomized in CAPItello-291, 78 were from Japan"
 ### Studies to Include in Meta-Analysis
 
 **Primary Analysis** (if all have comparable outcomes):
+
 - Use 6 includable studies
 - Total sample size will depend on which studies report the outcomes of interest
 
 **Sensitivity Analysis**:
+
 - Exclude subgroup analyses (TokunagaE202539379782) if needed
 - Compare results with vs without secondary analyses
 
@@ -142,6 +148,7 @@ Before proceeding to Stage 06 (Meta-Analysis):
 ### CDK4/6 Prior Use Calculation
 
 TokunagaE202539379782:
+
 - Japan subgroup: n=78
 - Prior CDK4/6 inhibitor use: 16.7%
 - Calculation: 78 × 0.167 = 13.026 → **13 patients**
