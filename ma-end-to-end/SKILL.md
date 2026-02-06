@@ -63,6 +63,8 @@ tooling/python/   # uv project
 - `scripts/final_qa_report.py` generates a final QA report and blocks on failures.
 - `scripts/validate_stage_transition.py` validates continuity between stages.
 - `scripts/checkpoint.py` creates and restores pipeline checkpoints.
+- `scripts/hash_artifacts.py` computes SHA-256 hashes for reproducibility audit.
+- `scripts/validate_module_registry.py` checks all scripts are documented across SKILL.md, CLAUDE.md, and GETTING_STARTED.md.
 
 ## Step References
 Open the relevant skill for details at each stage:

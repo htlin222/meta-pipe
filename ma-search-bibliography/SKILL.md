@@ -48,6 +48,9 @@ Run reproducible database searches, capture the search strategy, and produce ver
 - `scripts/scopus_fetch.py` fetches Scopus Search API results.
 - `scripts/embase_fetch.py` fetches Embase Search API results.
 - `scripts/cochrane_fetch.py` fetches Cochrane ReviewDB API results.
+- `scripts/bib_subset_by_ids.py` extracts a BibTeX subset from CSV record IDs.
+- `scripts/zotero_fetch.py` fetches records from a Zotero collection.
+- `scripts/zotero_sync.py` syncs a `.bib` file back to a Zotero collection.
 - `scripts/env_utils.py` loads `.env` credentials.
 - `references/pubmed-eutils.md` summarizes the E-utilities workflow.
 - `references/database-auth.md` summarizes authentication per database.

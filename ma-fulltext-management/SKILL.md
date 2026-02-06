@@ -29,6 +29,8 @@ Gather full texts, validate completeness, and prepare a clean manifest.
 ## Resources
 - `references/manifest-template.csv` provides a manifest header.
 - `scripts/unpaywall_fetch.py` queries Unpaywall for open-access links.
+- `scripts/analyze_unpaywall.py` analyzes Unpaywall results and generates summary statistics.
+- `scripts/download_oa_pdfs.py` downloads open-access PDFs automatically from Unpaywall URLs.
 - `scripts/render_pdf_previews.py` renders PDF pages to PNG previews.
 Note: Unpaywall requires `UNPAYWALL_EMAIL` in `.env`.
 Note: PDF previews require `pdftoppm` or `mutool` installed.
