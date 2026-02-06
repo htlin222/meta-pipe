@@ -429,6 +429,12 @@ uv run ../../ma-publication-quality/scripts/crossref_check.py \
 # Hash artifacts for reproducibility audit
 uv run ../../ma-end-to-end/scripts/hash_artifacts.py \
   --root ../.. --out 09_qa/artifact_hashes.json
+
+# Module registry validation (check all scripts are documented)
+uv run ../../ma-end-to-end/scripts/validate_module_registry.py \
+  --root ../.. \
+  --out-md 09_qa/module_registry_report.md \
+  --out-json 09_qa/module_registry.json
 ```
 
 </details>
