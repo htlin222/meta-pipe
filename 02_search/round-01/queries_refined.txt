@@ -1,0 +1,262 @@
+# Refined Search Strategies for Post-CDK4/6 Treatment in HR+/HER2- Metastatic Breast Cancer
+# Network Meta-Analysis
+# Date: 2026-02-06
+# Date Range: 2015-01-01 to 2025-01-31
+
+---
+
+## PubMed/MEDLINE Search Strategy
+
+### Search String (Boolean):
+
+```
+(("breast cancer"[MeSH Terms] OR "breast neoplasms"[MeSH Terms] OR "breast cancer"[tiab] OR "breast carcinoma"[tiab])
+AND
+("hormone receptor positive"[tiab] OR "HR positive"[tiab] OR "HR+"[tiab] OR "ER positive"[tiab] OR "ER+"[tiab] OR "estrogen receptor positive"[tiab] OR "oestrogen receptor positive"[tiab])
+AND
+("HER2 negative"[tiab] OR "HER2-"[tiab] OR "HER2-negative"[tiab] OR "human epidermal growth factor receptor 2 negative"[tiab])
+AND
+("metastatic"[tiab] OR "advanced"[tiab] OR "stage IV"[tiab] OR "recurrent"[tiab])
+AND
+("CDK4/6 inhibitor"[tiab] OR "CDK4-6 inhibitor"[tiab] OR "cyclin-dependent kinase 4/6 inhibitor"[tiab] OR "palbociclib"[Supplementary Concept] OR "palbociclib"[tiab] OR "ribociclib"[Supplementary Concept] OR "ribociclib"[tiab] OR "abemaciclib"[Supplementary Concept] OR "abemaciclib"[tiab] OR "Ibrance"[tiab] OR "Kisqali"[tiab] OR "Verzenio"[tiab])
+AND
+("progression"[tiab] OR "resistant"[tiab] OR "resistance"[tiab] OR "refractory"[tiab] OR "failure"[tiab] OR "post-CDK"[tiab] OR "after CDK"[tiab] OR "subsequent"[tiab] OR "second-line"[tiab] OR "third-line"[tiab])
+AND
+("randomized controlled trial"[Publication Type] OR "randomized"[tiab] OR "randomised"[tiab] OR "clinical trial"[Publication Type] OR "phase 2"[tiab] OR "phase II"[tiab] OR "phase 3"[tiab] OR "phase III"[tiab] OR "comparative study"[Publication Type] OR "cohort"[tiab])
+AND
+("2015/01/01"[Date - Publication] : "2025/01/31"[Date - Publication])
+AND
+("humans"[MeSH Terms])
+AND
+("adult"[MeSH Terms] OR "adult"[tiab]))
+```
+
+### Simplified PubMed Query (for quick testing):
+
+```
+(breast cancer) AND (HR positive OR ER positive) AND (HER2 negative) AND (metastatic OR advanced) AND (CDK4/6 inhibitor OR palbociclib OR ribociclib OR abemaciclib) AND (progression OR resistance OR failure OR post-CDK) AND (randomized OR phase 2 OR phase 3) AND 2015:2025[dp]
+```
+
+---
+
+## Scopus Search Strategy
+
+### Search String:
+
+```
+TITLE-ABS-KEY(("breast cancer" OR "breast neoplasm" OR "breast carcinoma")
+AND ("hormone receptor positive" OR "HR positive" OR "HR+" OR "ER positive" OR "ER+" OR "estrogen receptor positive")
+AND ("HER2 negative" OR "HER2-" OR "HER2-negative")
+AND ("metastatic" OR "advanced" OR "stage IV")
+AND ("CDK4/6 inhibitor" OR "CDK4-6 inhibitor" OR "palbociclib" OR "ribociclib" OR "abemaciclib" OR "Ibrance" OR "Kisqali" OR "Verzenio")
+AND ("progression" OR "resistant" OR "resistance" OR "refractory" OR "failure" OR "post-CDK" OR "after CDK" OR "subsequent")
+AND ("randomized" OR "randomised" OR "phase 2" OR "phase II" OR "phase 3" OR "phase III" OR "clinical trial" OR "cohort"))
+AND PUBYEAR > 2014 AND PUBYEAR < 2026
+AND (LIMIT-TO (DOCTYPE, "ar") OR LIMIT-TO (DOCTYPE, "re"))
+AND (LIMIT-TO (LANGUAGE, "English"))
+```
+
+---
+
+## Embase Search Strategy
+
+### Search String (Ovid syntax):
+
+```
+1. 'breast cancer'/exp OR 'breast neoplasm'/exp OR 'breast cancer':ti,ab,kw OR 'breast carcinoma':ti,ab,kw
+2. 'hormone receptor positive':ti,ab,kw OR 'HR positive':ti,ab,kw OR 'HR+':ti,ab,kw OR 'ER positive':ti,ab,kw OR 'ER+':ti,ab,kw OR 'estrogen receptor positive':ti,ab,kw
+3. 'HER2 negative':ti,ab,kw OR 'HER2-':ti,ab,kw OR 'HER2-negative':ti,ab,kw
+4. 'metastatic':ti,ab,kw OR 'advanced':ti,ab,kw OR 'stage IV':ti,ab,kw OR 'recurrent':ti,ab,kw
+5. 'CDK4/6 inhibitor':ti,ab,kw OR 'palbociclib'/exp OR 'palbociclib':ti,ab,kw OR 'ribociclib'/exp OR 'ribociclib':ti,ab,kw OR 'abemaciclib'/exp OR 'abemaciclib':ti,ab,kw OR 'Ibrance':ti,ab,kw OR 'Kisqali':ti,ab,kw OR 'Verzenio':ti,ab,kw
+6. 'progression':ti,ab,kw OR 'resistant':ti,ab,kw OR 'resistance':ti,ab,kw OR 'refractory':ti,ab,kw OR 'failure':ti,ab,kw OR 'post-CDK':ti,ab,kw OR 'after CDK':ti,ab,kw OR 'subsequent':ti,ab,kw
+7. 'randomized controlled trial'/exp OR 'randomized':ti,ab,kw OR 'randomised':ti,ab,kw OR 'clinical trial'/exp OR 'phase 2':ti,ab,kw OR 'phase II':ti,ab,kw OR 'phase 3':ti,ab,kw OR 'phase III':ti,ab,kw OR 'cohort study'/exp
+8. 1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7
+9. 8 AND [2015-2025]/py
+10. 9 AND [humans]/lim
+11. 10 AND [adult]/lim
+12. 11 AND [english]/lim
+```
+
+---
+
+## Cochrane CENTRAL Search Strategy
+
+### Search String:
+
+```
+#1 MeSH descriptor: [Breast Neoplasms] explode all trees
+#2 ("breast cancer" OR "breast neoplasm" OR "breast carcinoma"):ti,ab,kw
+#3 #1 OR #2
+#4 ("hormone receptor positive" OR "HR positive" OR "HR+" OR "ER positive" OR "ER+"):ti,ab,kw
+#5 ("HER2 negative" OR "HER2-" OR "HER2-negative"):ti,ab,kw
+#6 ("metastatic" OR "advanced" OR "stage IV"):ti,ab,kw
+#7 ("CDK4/6 inhibitor" OR "CDK4-6 inhibitor" OR "palbociclib" OR "ribociclib" OR "abemaciclib"):ti,ab,kw
+#8 ("progression" OR "resistant" OR "resistance" OR "failure" OR "post-CDK" OR "subsequent"):ti,ab,kw
+#9 #3 AND #4 AND #5 AND #6 AND #7 AND #8
+#10 #9 with Publication Year from 2015 to 2025
+```
+
+---
+
+## ClinicalTrials.gov Search Strategy
+
+### Search Terms:
+
+**Condition:**
+- Breast Cancer
+- Metastatic Breast Cancer
+- HR+ Breast Cancer
+- HER2- Breast Cancer
+
+**Other Terms:**
+- CDK4/6 inhibitor AND progression
+- palbociclib AND progression
+- ribociclib AND progression
+- abemaciclib AND progression
+- post-CDK4/6
+- hormone receptor positive AND CDK4/6 AND progression
+
+**Study Type:**
+- Interventional Studies (Clinical Trials)
+
+**Phase:**
+- Phase 2
+- Phase 3
+
+**Study Results:**
+- With Results
+- Without Results (to capture ongoing trials)
+
+**First Posted:**
+- From 01/01/2015 to 01/31/2025
+
+---
+
+## Alternative Search Strategies (Sensitivity Analyses)
+
+### Strategy A: Focus on Specific Treatments Post-CDK4/6
+
+**PubMed:**
+```
+(breast cancer AND HR+ AND HER2- AND metastatic AND (palbociclib OR ribociclib OR abemaciclib) AND progression) AND (everolimus OR sacituzumab OR datopotamab OR elacestrant OR imlunestrant OR capivasertib OR alpelisib OR chemotherapy) AND (randomized OR phase 2 OR phase 3) AND 2015:2025[dp]
+```
+
+### Strategy B: Network Node-Specific Searches
+
+**For CDK4/6 Continuation:**
+```
+(postMONARCH OR MAINTAIN OR PALMIRA) OR (abemaciclib AND fulvestrant AND palbociclib) OR (ribociclib AND palbociclib AND progression)
+```
+
+**For ADCs:**
+```
+(TROPiCS-02 OR TROPION-Breast01) OR (sacituzumab govitecan AND breast cancer AND CDK4/6) OR (datopotamab deruxtecan AND breast cancer AND HR+)
+```
+
+**For Oral SERDs:**
+```
+(EMERALD OR EMBER-3) OR (elacestrant AND breast cancer AND CDK4/6) OR (imlunestrant AND breast cancer AND progression)
+```
+
+**For PI3K/AKT Inhibitors:**
+```
+(CAPItello-291 OR SOLAR-1) OR (capivasertib AND breast cancer AND fulvestrant) OR (alpelisib AND PIK3CA AND breast cancer)
+```
+
+**For mTOR Inhibitors:**
+```
+(BOLERO-2 AND CDK4/6) OR (everolimus AND exemestane AND palbociclib) OR (everolimus AND fulvestrant AND ribociclib)
+```
+
+---
+
+## Known Key Trials to Hand-Search
+
+1. **postMONARCH** (NCT05169567) - Abemaciclib + fulvestrant vs fulvestrant
+2. **MAINTAIN** (NCT02632045) - Ribociclib + ET vs placebo + ET
+3. **PALMIRA** (NCT03809988) - Palbociclib + ET vs ET alone
+4. **TROPiCS-02** (NCT03901339) - Sacituzumab govitecan vs chemotherapy
+5. **TROPION-Breast01** (NCT05104866) - Datopotamab deruxtecan vs chemotherapy
+6. **EMBER-3** (NCT04975308) - Imlunestrant ± abemaciclib
+7. **EMERALD** (NCT03778931) - Elacestrant vs standard ET
+8. **CAPItello-291** (NCT04305496) - Capivasertib + fulvestrant
+9. **SOLAR-1** (NCT02437318) - Alpelisib + fulvestrant (PIK3CA-mutated subgroup)
+10. **BOLERO-2** (NCT00863655) - Everolimus + exemestane (post-CDK4/6 subgroup)
+
+**Action:** Search ClinicalTrials.gov by NCT number, PubMed by trial name, and Google Scholar for associated publications
+
+---
+
+## Supplementary Sources
+
+### Grey Literature:
+- **ASCO Annual Meeting Abstracts** (2015-2025)
+- **ESMO Congress Abstracts** (2015-2025)
+- **San Antonio Breast Cancer Symposium** (2015-2025)
+
+### Pharmaceutical Company Sites:
+- **Pfizer** (palbociclib/Ibrance)
+- **Novartis** (ribociclib/Kisqali)
+- **Eli Lilly** (abemaciclib/Verzenio)
+- **Gilead** (sacituzumab govitecan/Trodelvy)
+- **Daiichi Sankyo** (datopotamab deruxtecan)
+- **AstraZeneca** (capivasertib)
+
+### Regulatory Agencies:
+- **FDA Drug Approvals & Label Changes** (Drugs@FDA)
+- **EMA Public Assessment Reports** (European Medicines Agency)
+
+---
+
+## Search Execution Plan
+
+### Phase 1: Database Searches (Week 1)
+1. Execute PubMed search → export as .bib
+2. Execute Scopus search → export as .bib
+3. Execute Embase search → export as .bib
+4. Execute Cochrane CENTRAL → export as .bib
+5. Execute ClinicalTrials.gov → export as .csv
+
+### Phase 2: Hand-Searching (Week 1)
+1. Search 10 key trials by NCT number
+2. Search trial names in PubMed (e.g., "postMONARCH")
+3. Check reference lists of recent systematic reviews
+
+### Phase 3: Deduplication (Week 1)
+1. Merge all .bib files
+2. Run `multi_db_dedupe.py`
+3. Manual review of borderline duplicates
+
+### Phase 4: Validation (Week 1-2)
+1. Verify ≥10 known key trials are captured
+2. If key trials missing, refine search strategy
+3. Document search yield per database
+
+---
+
+## Expected Search Yield (Estimate)
+
+| Database          | Expected Records |
+|-------------------|------------------|
+| PubMed            | 200-300          |
+| Scopus            | 250-350          |
+| Embase            | 300-400          |
+| Cochrane CENTRAL  | 50-100           |
+| ClinicalTrials.gov| 30-50            |
+| **Total (merged)**| **500-800**      |
+| **After dedupe**  | **300-500**      |
+| **After screening** | **15-25 RCTs** |
+
+---
+
+## Notes
+- Update search immediately before manuscript submission
+- Save search history screenshots for PRISMA flow diagram
+- Document any database access issues or API limitations
+- Record date/time of each search execution for reproducibility
+
+---
+
+**Created:** 2026-02-06
+**Last Updated:** 2026-02-06
+**Status:** Ready for execution

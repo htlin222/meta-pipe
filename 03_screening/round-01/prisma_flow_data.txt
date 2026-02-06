@@ -1,0 +1,41 @@
+# PRISMA Flow Diagram Data
+# Stage 03: Title/Abstract Screening Complete
+# Date: 2026-02-06
+
+## Identification
+- Records identified from PubMed: 54
+- Records identified from Scopus: 440
+- Records identified from manual search: 6
+- Total records after deduplication: 447
+
+## Screening
+- Records screened (title/abstract): 447
+- Records excluded at title/abstract: 395
+  - No CDK4/6 inhibitor mentioned (I1): ~150
+  - First-line CDK4/6i (P3): ~120
+  - Review/meta-analysis (D1): ~80
+  - Wrong population HER2+/TNBC (P1): ~30
+  - Early-stage only (P2): ~10
+  - Preclinical/animal (D2): ~5
+
+## Full-text Assessment (Pending)
+- Records assessed for full-text eligibility: 52
+  - Include (I): 26
+  - Uncertain (U): 26
+
+## Next Steps
+- Retrieve full-text PDFs: 52 records
+- Apply detailed eligibility criteria
+- Expected final inclusion: 15-25 studies
+
+## Key Trials Status
+- postMONARCH: ✓ Included
+- MAINTAIN: ✓ Included
+- PALMIRA: ✓ Included
+- TROPiCS-02: ✓ Included
+- TROPION-Breast01: ✓ Included
+- EMBER-3: ✓ Included
+- EMERALD: ✓ Included
+- CAPItello-291: ✓ Included
+- SOLAR-1: ✓ Included
+- BOLERO-2 post-CDK4/6: ✓ Included

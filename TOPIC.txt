@@ -1,18 +1,257 @@
-<Paste your meta-analysis topic here>
+# Meta-Analysis Research Topic
 
-Or say "help me brainstorm a topic" to develop one interactively.
+## Title (English)
+Comparative Efficacy and Safety of Treatment Strategies Following Progression on CDK4/6 Inhibitors in Hormone Receptor-Positive, HER2-Negative Metastatic Breast Cancer: A Systematic Review and Network Meta-Analysis
 
-Example format:
+## Title (中文)
+HR+/HER2- 轉移性乳癌患者在 CDK4/6 抑制劑治療失敗後不同治療策略的療效與安全性比較：系統性回顧與網絡統合分析
+
 ---
-Research Question:
-Is [intervention] effective for [outcome] in [population] compared to [comparator]?
 
-Population: [specific patient group]
-Intervention: [treatment/exposure]
-Comparator: [control condition]
-Outcomes:
-- Primary: [main outcome]
-- Secondary: [other outcomes]
+## PICO Framework
 
-Study Designs: [RCTs / RCTs + observational]
+### Population (研究對象)
+**Inclusion:**
+- Patients with hormone receptor-positive (HR+), HER2-negative (HER2-) advanced or metastatic breast cancer
+- Disease progression on or after CDK4/6 inhibitor therapy (palbociclib, ribociclib, or abemaciclib) in combination with endocrine therapy
+- Age ≥18 years
+- Any ECOG performance status
+- Both endocrine-sensitive and endocrine-resistant disease
+
+**Exclusion:**
+- HER2-positive breast cancer
+- Triple-negative breast cancer
+- Early-stage breast cancer (adjuvant/neoadjuvant setting)
+- Male breast cancer (unless explicitly stratified)
+
 ---
+
+### Intervention (介入措施)
+
+**Primary Treatment Strategies:**
+
+1. **CDK4/6 Inhibitor Continuation/Switching:**
+   - Switch to different CDK4/6 inhibitor + endocrine therapy
+   - Example trials: postMONARCH, MAINTAIN, PALMIRA
+
+2. **mTOR Inhibitors:**
+   - Everolimus + exemestane or fulvestrant
+   - Example trials: BOLERO-2 (post-CDK4/6 subgroup)
+
+3. **Antibody-Drug Conjugates (ADCs):**
+   - Sacituzumab govitecan
+   - Datopotamab deruxtecan
+   - Example trials: TROPiCS-02, TROPION-Breast01
+
+4. **Novel Endocrine Therapy:**
+   - Oral SERDs (elacestrant, imlunestrant)
+   - SERD + CDK4/6 inhibitor combination
+   - Example trials: EMBER-3, EMERALD
+
+5. **PI3K/AKT/mTOR Pathway Inhibitors:**
+   - Capivasertib + fulvestrant
+   - Alpelisib + fulvestrant (PIK3CA-mutated)
+   - Sapanisertib + fulvestrant
+   - Example trials: CAPItello-291, SOLAR-1
+
+6. **Chemotherapy:**
+   - Single-agent chemotherapy (capecitabine, taxanes, eribulin)
+   - Combination chemotherapy
+
+---
+
+### Comparator (對照組)
+- Network meta-analysis: Indirect comparisons between all treatment strategies
+- Direct comparisons where head-to-head trials exist
+- Standard of care (physician's choice or best supportive care)
+
+---
+
+### Outcomes (結果指標)
+
+**Primary Outcome:**
+- **Progression-Free Survival (PFS)** - time from randomization to disease progression or death
+
+**Secondary Outcomes:**
+1. **Overall Survival (OS)** - time from randomization to death from any cause
+2. **Objective Response Rate (ORR)** - proportion achieving complete or partial response
+3. **Clinical Benefit Rate (CBR)** - ORR + stable disease ≥24 weeks
+4. **Safety:**
+   - Grade 3-4 adverse events (overall and specific: neutropenia, diarrhea, hepatotoxicity, QTc prolongation)
+   - Treatment discontinuation due to adverse events
+   - Treatment-related deaths
+5. **Quality of Life (QoL)** - if reported (EORTC QLQ-C30, FACT-B)
+
+---
+
+## Subgroup Analyses (亞群分析)
+
+### Pre-specified Subgroups:
+1. **Prior CDK4/6 Inhibitor Type:**
+   - Palbociclib vs Ribociclib vs Abemaciclib
+
+2. **Endocrine Sensitivity:**
+   - Endocrine-sensitive disease (progression ≥12 months after starting ET)
+   - Endocrine-resistant disease (progression <12 months or on ET)
+
+3. **CDK4/6 Inhibitor Treatment Line:**
+   - First-line CDK4/6 inhibitor failure
+   - Second-line CDK4/6 inhibitor failure
+
+4. **Presence of Visceral Metastases:**
+   - Visceral disease vs non-visceral disease
+
+5. **Biomarker Status (if available):**
+   - PIK3CA mutation status
+   - ESR1 mutation status
+   - TROP2 expression
+
+6. **Type of Endocrine Partner:**
+   - Aromatase inhibitor vs Fulvestrant
+
+---
+
+## Study Design
+
+### Study Types to Include:
+- **Phase II/III randomized controlled trials (RCTs)** - primary evidence
+- **Post-hoc analyses** of major trials in post-CDK4/6 populations
+- **Large prospective cohort studies** (n ≥100) for real-world evidence
+
+### Exclusion:
+- Case reports, case series (n <30)
+- Retrospective studies with high risk of bias
+- Conference abstracts without full-text publication (unless essential data unavailable elsewhere)
+
+---
+
+## Search Strategy
+
+### Databases:
+1. **PubMed/MEDLINE** (2015 - January 2025)
+2. **Scopus** (2015 - January 2025)
+3. **Embase** (2015 - January 2025)
+4. **Cochrane Central Register of Controlled Trials (CENTRAL)**
+5. **ClinicalTrials.gov** - for ongoing/unpublished trials
+
+### Key Search Terms:
+- **Population:** "breast cancer", "breast neoplasm", "HR positive", "hormone receptor positive", "ER positive", "HER2 negative"
+- **Intervention:** "CDK4/6 inhibitor", "palbociclib", "ribociclib", "abemaciclib", "cyclin dependent kinase", "progression", "resistance", "post-CDK"
+- **Treatment:** "everolimus", "sacituzumab govitecan", "datopotamab deruxtecan", "elacestrant", "imlunestrant", "chemotherapy", "endocrine therapy"
+- **Study design:** "randomized controlled trial", "clinical trial", "phase II", "phase III"
+
+### Date Range:
+- **2015 - January 2025** (CDK4/6 inhibitors approved starting 2015)
+
+### Language:
+- **English only** (primary), Chinese publications reviewed if relevant
+
+---
+
+## Risk of Bias Assessment
+
+**Tool:** Cochrane Risk of Bias 2 (RoB 2) for RCTs
+- Randomization process
+- Deviations from intended interventions
+- Missing outcome data
+- Measurement of the outcome
+- Selection of the reported result
+
+---
+
+## Data Analysis Plan
+
+### Statistical Methods:
+
+1. **Network Meta-Analysis (NMA):**
+   - Bayesian hierarchical model using frequentist approach
+   - Software: R (netmeta package) or Stata (network meta)
+   - Rank treatments using P-score or SUCRA
+
+2. **Heterogeneity Assessment:**
+   - I² statistic (>50% = substantial heterogeneity)
+   - τ² (between-study variance)
+   - Prediction intervals
+
+3. **Sensitivity Analyses:**
+   - Exclude high risk-of-bias studies
+   - Exclude studies with <6 months follow-up
+   - Fixed-effect vs random-effects models
+
+4. **Publication Bias:**
+   - Funnel plots (if ≥10 studies)
+   - Egger's test
+   - Trim-and-fill method
+
+---
+
+## Clinical Significance
+
+### Rationale:
+- **>50% of patients** progress on CDK4/6 inhibitors within 2 years
+- **Lack of head-to-head trials** comparing post-CDK4/6 treatment strategies
+- **Rapidly evolving landscape** with new ADCs and oral SERDs
+- **Clinical equipoise** - physicians need evidence-based guidance
+
+### Expected Impact:
+- Inform treatment sequencing guidelines
+- Support regulatory/reimbursement decisions
+- Identify patient subgroups most likely to benefit from specific strategies
+
+---
+
+## Key Trials to Include
+
+### Confirmed Trials:
+1. **postMONARCH** (abemaciclib + fulvestrant vs fulvestrant alone)
+2. **MAINTAIN** (ribociclib continuation)
+3. **PALMIRA** (palbociclib continuation - negative trial)
+4. **TROPiCS-02** (sacituzumab govitecan vs chemotherapy)
+5. **TROPION-Breast01** (datopotamab deruxtecan vs chemotherapy)
+6. **EMBER-3** (imlunestrant ± abemaciclib)
+7. **EMERALD** (elacestrant vs standard ET)
+8. **CAPItello-291** (capivasertib + fulvestrant)
+9. **SOLAR-1** (alpelisib + fulvestrant, PIK3CA-mutated)
+10. **BOLERO-2** (everolimus + exemestane - subgroup analysis)
+
+---
+
+## Timeline (Estimated)
+
+- **Stage 01-02 (Protocol & Search):** 1-2 weeks
+- **Stage 03 (Screening):** 2-3 weeks
+- **Stage 04 (Full-text):** 1-2 weeks
+- **Stage 05 (Data Extraction):** 2-3 weeks
+- **Stage 06 (Analysis/NMA):** 2-3 weeks
+- **Stage 07 (Manuscript):** 2-3 weeks
+- **Stage 08-09 (GRADE & QA):** 1 week
+
+**Total estimated time:** 11-17 weeks
+
+---
+
+## Target Journal
+
+**Primary targets:**
+1. **Lancet Oncology** (IF ~54)
+2. **JAMA Oncology** (IF ~33)
+3. **Annals of Oncology** (IF ~51)
+
+**Secondary targets:**
+4. **Breast Cancer Research and Treatment** (IF ~4.5)
+5. **Cancer Treatment Reviews** (IF ~12)
+6. **npj Breast Cancer** (IF ~6)
+
+---
+
+## Notes
+- Update search immediately before submission to capture latest trials
+- Contact trial authors for unpublished data if needed
+- Consider Individual Patient Data (IPD) meta-analysis if feasible
+- Coordinate with clinical oncologists for interpretation
+
+---
+
+**Created:** 2026-02-06
+**Last Updated:** 2026-02-06
+**Status:** Ready to begin Stage 01

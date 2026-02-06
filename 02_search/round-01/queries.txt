@@ -1,0 +1,15 @@
+# Generated from 01_protocol/pico.yaml
+
+[pubmed]
+("Patients with hormone receptor-positive (HR+)"[tiab] OR "HER2-negative (HER2-) advanced or metastatic breast cancer who experienced disease progression on or after CDK4/6 inhibitor therapy"[tiab]) AND "Systemic treatment strategies administered after progression on CDK4/6 inhibitor therapy"[tiab] AND ("Progression-Free Survival (PFS)"[tiab] OR "Overall Survival (OS)"[tiab] OR "Objective Response Rate (ORR)"[tiab] OR "Clinical Benefit Rate (CBR)"[tiab] OR "Grade 3-4 Adverse Events (Overall)"[tiab] OR "Specific Adverse Events"[tiab] OR "Treatment Discontinuation Due to Adverse Events"[tiab] OR "Treatment-Related Deaths"[tiab] OR "Quality of Life (QoL)"[tiab])
+
+[scopus]
+(TITLE-ABS-KEY("Patients with hormone receptor-positive (HR+)") OR TITLE-ABS-KEY("HER2-negative (HER2-) advanced or metastatic breast cancer who experienced disease progression on or after CDK4/6 inhibitor therapy")) AND TITLE-ABS-KEY("Systemic treatment strategies administered after progression on CDK4/6 inhibitor therapy") AND (TITLE-ABS-KEY("Progression-Free Survival (PFS)") OR TITLE-ABS-KEY("Overall Survival (OS)") OR TITLE-ABS-KEY("Objective Response Rate (ORR)") OR TITLE-ABS-KEY("Clinical Benefit Rate (CBR)") OR TITLE-ABS-KEY("Grade 3-4 Adverse Events (Overall)") OR TITLE-ABS-KEY("Specific Adverse Events") OR TITLE-ABS-KEY("Treatment Discontinuation Due to Adverse Events") OR TITLE-ABS-KEY("Treatment-Related Deaths") OR TITLE-ABS-KEY("Quality of Life (QoL)"))
+
+[embase]
+("Patients with hormone receptor-positive (HR+)":ti,ab,kw OR "HER2-negative (HER2-) advanced or metastatic breast cancer who experienced disease progression on or after CDK4/6 inhibitor therapy":ti,ab,kw) AND "Systemic treatment strategies administered after progression on CDK4/6 inhibitor therapy":ti,ab,kw AND ("Progression-Free Survival (PFS)":ti,ab,kw OR "Overall Survival (OS)":ti,ab,kw OR "Objective Response Rate (ORR)":ti,ab,kw OR "Clinical Benefit Rate (CBR)":ti,ab,kw OR "Grade 3-4 Adverse Events (Overall)":ti,ab,kw OR "Specific Adverse Events":ti,ab,kw OR "Treatment Discontinuation Due to Adverse Events":ti,ab,kw OR "Treatment-Related Deaths":ti,ab,kw OR "Quality of Life (QoL)":ti,ab,kw)
+
+[cochrane]
+("Patients with hormone receptor-positive (HR+)" OR "HER2-negative (HER2-) advanced or metastatic breast cancer who experienced disease progression on or after CDK4/6 inhibitor therapy") AND "Systemic treatment strategies administered after progression on CDK4/6 inhibitor therapy" AND ("Progression-Free Survival (PFS)" OR "Overall Survival (OS)" OR "Objective Response Rate (ORR)" OR "Clinical Benefit Rate (CBR)" OR "Grade 3-4 Adverse Events (Overall)" OR "Specific Adverse Events" OR "Treatment Discontinuation Due to Adverse Events" OR "Treatment-Related Deaths" OR "Quality of Life (QoL)")
+
+# Review and refine queries per database syntax before running searches.

@@ -160,10 +160,45 @@ uv run ../../ma-screening-quality/scripts/dual_review_agreement.py \
 <summary><strong>Stage 04: Fulltext</strong></summary>
 
 ```bash
+# Extract BibTeX subset for full-text review (from screening results)
+uv run ../../ma-search-bibliography/scripts/bib_subset_by_ids.py \
+  --in-csv ../../03_screening/round-01/decisions_screened.csv \
+  --in-bib ../../02_search/round-01/dedupe.bib \
+  --out-bib ../../04_fulltext/round-01/fulltext_subset.bib \
+  --filter-column final_decision \
+  --filter-value Include
+
+# Alternative: Extract ALL records for full-text (Include + Uncertain)
+uv run ../../ma-search-bibliography/scripts/bib_subset_by_ids.py \
+  --in-csv ../../04_fulltext/round-01/pdf_retrieval_manifest.csv \
+  --in-bib ../../02_search/round-01/dedupe.bib \
+  --out-bib ../../04_fulltext/round-01/fulltext_subset.bib
+
+# Query Unpaywall API for Open Access status
 uv run ../../ma-fulltext-management/scripts/unpaywall_fetch.py \
-  --in-bib ../../03_screening/round-01/included.bib \
-  --out-csv ../../04_fulltext/unpaywall_results.csv
+  --in-bib ../../04_fulltext/round-01/fulltext_subset.bib \
+  --out-csv ../../04_fulltext/round-01/unpaywall_results.csv \
+  --out-log ../../04_fulltext/round-01/unpaywall_fetch.log \
+  --email "your@email.com"
+
+# Analyze Unpaywall results
+uv run ../../ma-fulltext-management/scripts/analyze_unpaywall.py \
+  --in-csv ../../04_fulltext/round-01/unpaywall_results.csv \
+  --out-md ../../04_fulltext/round-01/unpaywall_summary.md
+
+# Download Open Access PDFs automatically
+uv run ../../ma-fulltext-management/scripts/download_oa_pdfs.py \
+  --in-csv ../../04_fulltext/round-01/unpaywall_results.csv \
+  --pdf-dir ../../04_fulltext/round-01/pdfs \
+  --out-log ../../04_fulltext/round-01/pdf_download.log \
+  --sleep 1 \
+  --max-retries 3
 ```
+
+**Expected results**:
+- 40-60% PDFs downloaded automatically (Gold/Green OA)
+- Remaining PDFs need manual retrieval via institutional access
+- See `unpaywall_summary.md` for retrieval statistics
 
 </details>
 

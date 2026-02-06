@@ -1,0 +1,408 @@
+# PICO Framework for Network Meta-Analysis
+# Topic: Post-CDK4/6 Treatment Strategies in HR+/HER2- Metastatic Breast Cancer
+
+meta:
+  title: "Comparative Efficacy and Safety of Treatment Strategies Following Progression on CDK4/6 Inhibitors in HR+/HER2- Metastatic Breast Cancer"
+  short_title: "Post-CDK4/6 Treatment Network Meta-Analysis"
+  protocol_version: "1.0"
+  date_created: "2026-02-06"
+  lead_author: "htlin"
+  study_type: "Network Meta-Analysis"
+  prospero_id: "TBD" # To be registered
+
+population:
+  description: "Patients with hormone receptor-positive (HR+), HER2-negative (HER2-) advanced or metastatic breast cancer who experienced disease progression on or after CDK4/6 inhibitor therapy"
+
+  inclusion_criteria:
+    - "Confirmed HR+ (ER+ and/or PR+) breast cancer"
+    - "HER2-negative status (IHC 0-1+ or FISH non-amplified)"
+    - "Advanced or metastatic disease (stage IIIB, IIIC, or IV)"
+    - "Prior treatment with CDK4/6 inhibitor (palbociclib, ribociclib, or abemaciclib) + endocrine therapy"
+    - "Disease progression during or after CDK4/6 inhibitor therapy (RECIST criteria)"
+    - "Age ≥18 years"
+    - "Any ECOG performance status (0-4)"
+    - "Both endocrine-sensitive and endocrine-resistant disease"
+    - "Measurable or non-measurable disease"
+
+  exclusion_criteria:
+    - "HER2-positive breast cancer (IHC 3+ or FISH amplified)"
+    - "Triple-negative breast cancer (ER-, PR-, HER2-)"
+    - "Early-stage breast cancer (adjuvant/neoadjuvant setting only)"
+    - "Male breast cancer (unless trial explicitly stratifies by sex)"
+    - "CDK4/6 inhibitor-naïve patients"
+    - "De novo metastatic patients who never received CDK4/6 inhibitor"
+
+  subgroups:
+    prior_cdk46:
+      - "Palbociclib"
+      - "Ribociclib"
+      - "Abemaciclib"
+    endocrine_sensitivity:
+      - "Endocrine-sensitive (progression ≥12 months after starting ET)"
+      - "Endocrine-resistant (progression <12 months or while on ET)"
+    treatment_line:
+      - "First-line CDK4/6 inhibitor failure"
+      - "Second-line or later CDK4/6 inhibitor failure"
+    visceral_metastases:
+      - "Visceral disease present"
+      - "Non-visceral disease only (bone, lymph nodes)"
+    biomarkers:
+      - "PIK3CA mutated"
+      - "PIK3CA wild-type"
+      - "ESR1 mutated"
+      - "ESR1 wild-type"
+      - "TROP2 positive"
+      - "TROP2 negative/unknown"
+    endocrine_partner:
+      - "Aromatase inhibitor (AI)"
+      - "Fulvestrant"
+      - "Tamoxifen"
+    prior_chemotherapy:
+      - "Chemotherapy-naïve in metastatic setting"
+      - "Prior chemotherapy for metastatic disease"
+
+intervention:
+  description: "Systemic treatment strategies administered after progression on CDK4/6 inhibitor therapy"
+
+  treatment_categories:
+    cdk46_continuation:
+      name: "CDK4/6 Inhibitor Continuation/Switching"
+      description: "Switch to different CDK4/6 inhibitor or continue same CDK4/6i with different endocrine partner"
+      agents:
+        - "Abemaciclib + fulvestrant (postMONARCH)"
+        - "Ribociclib + endocrine therapy (MAINTAIN)"
+        - "Palbociclib + endocrine therapy (PALMIRA)"
+      key_trials:
+        - "postMONARCH (Phase III)"
+        - "MAINTAIN (Phase II)"
+        - "PALMIRA (Phase II)"
+
+    mtor_inhibitors:
+      name: "mTOR Inhibitors"
+      description: "mTOR pathway inhibition combined with endocrine therapy"
+      agents:
+        - "Everolimus + exemestane"
+        - "Everolimus + fulvestrant"
+      key_trials:
+        - "BOLERO-2 (post-CDK4/6 subgroup)"
+        - "Real-world studies"
+
+    antibody_drug_conjugates:
+      name: "Antibody-Drug Conjugates (ADCs)"
+      description: "Targeted delivery of cytotoxic agents"
+      agents:
+        - "Sacituzumab govitecan (anti-TROP2 ADC)"
+        - "Datopotamab deruxtecan (anti-TROP2 ADC)"
+      key_trials:
+        - "TROPiCS-02 (sacituzumab govitecan)"
+        - "TROPION-Breast01 (datopotamab deruxtecan)"
+
+    novel_endocrine:
+      name: "Novel Endocrine Therapies"
+      description: "Oral SERDs and next-generation endocrine agents"
+      agents:
+        - "Elacestrant (oral SERD)"
+        - "Imlunestrant (oral SERD)"
+        - "Imlunestrant + abemaciclib"
+      key_trials:
+        - "EMERALD (elacestrant)"
+        - "EMBER-3 (imlunestrant ± abemaciclib)"
+
+    pi3k_akt_pathway:
+      name: "PI3K/AKT/mTOR Pathway Inhibitors"
+      description: "Targeting PI3K/AKT signaling in combination with endocrine therapy"
+      agents:
+        - "Capivasertib + fulvestrant (AKT inhibitor)"
+        - "Alpelisib + fulvestrant (PI3K inhibitor, PIK3CA-mutated)"
+        - "Sapanisertib + fulvestrant (dual mTORC1/2 inhibitor)"
+      key_trials:
+        - "CAPItello-291 (capivasertib)"
+        - "SOLAR-1 (alpelisib, PIK3CA-mutated)"
+        - "Phase II studies (sapanisertib)"
+
+    chemotherapy:
+      name: "Chemotherapy"
+      description: "Cytotoxic chemotherapy (single-agent or combination)"
+      agents:
+        - "Capecitabine"
+        - "Paclitaxel"
+        - "Docetaxel"
+        - "Nab-paclitaxel"
+        - "Eribulin"
+        - "Vinorelbine"
+        - "Gemcitabine"
+        - "Carboplatin"
+      key_trials:
+        - "TROPiCS-02 (chemotherapy arm)"
+        - "TROPION-Breast01 (chemotherapy arm)"
+        - "Real-world studies"
+
+comparator:
+  description: "Network meta-analysis will perform indirect comparisons between all treatment strategies. Direct comparisons include:"
+  direct_comparisons:
+    - "CDK4/6 continuation vs endocrine therapy alone (postMONARCH, MAINTAIN)"
+    - "Sacituzumab govitecan vs chemotherapy (TROPiCS-02)"
+    - "Datopotamab deruxtecan vs chemotherapy (TROPION-Breast01)"
+    - "Elacestrant vs standard endocrine therapy (EMERALD)"
+    - "Imlunestrant ± abemaciclib vs standard therapy (EMBER-3)"
+    - "Capivasertib + fulvestrant vs placebo + fulvestrant (CAPItello-291)"
+    - "Alpelisib + fulvestrant vs placebo + fulvestrant (SOLAR-1)"
+
+  standard_of_care:
+    - "Physician's choice chemotherapy"
+    - "Best supportive care"
+    - "Endocrine therapy alone"
+
+outcomes:
+  primary:
+    - name: "Progression-Free Survival (PFS)"
+      definition: "Time from randomization to disease progression (RECIST v1.1) or death from any cause, whichever occurs first"
+      measure: "Hazard Ratio (HR) with 95% CI"
+      direction: "Lower HR favors intervention"
+
+  secondary:
+    - name: "Overall Survival (OS)"
+      definition: "Time from randomization to death from any cause"
+      measure: "Hazard Ratio (HR) with 95% CI"
+      direction: "Lower HR favors intervention"
+
+    - name: "Objective Response Rate (ORR)"
+      definition: "Proportion of patients achieving complete response (CR) or partial response (PR) per RECIST v1.1"
+      measure: "Risk Ratio (RR) or Odds Ratio (OR) with 95% CI"
+      direction: "Higher RR/OR favors intervention"
+
+    - name: "Clinical Benefit Rate (CBR)"
+      definition: "Proportion of patients achieving CR, PR, or stable disease (SD) ≥24 weeks"
+      measure: "Risk Ratio (RR) or Odds Ratio (OR) with 95% CI"
+      direction: "Higher RR/OR favors intervention"
+
+    - name: "Grade 3-4 Adverse Events (Overall)"
+      definition: "Proportion of patients experiencing any grade 3-4 adverse event (CTCAE v4.0 or v5.0)"
+      measure: "Risk Ratio (RR) with 95% CI"
+      direction: "Lower RR favors intervention"
+
+    - name: "Specific Adverse Events"
+      subtypes:
+        - "Grade 3-4 neutropenia"
+        - "Grade 3-4 diarrhea"
+        - "Grade 3-4 hepatotoxicity (ALT/AST elevation)"
+        - "QTc prolongation (grade ≥2)"
+        - "Grade 3-4 nausea/vomiting"
+      measure: "Risk Ratio (RR) with 95% CI"
+      direction: "Lower RR favors intervention"
+
+    - name: "Treatment Discontinuation Due to Adverse Events"
+      definition: "Proportion of patients discontinuing treatment due to toxicity"
+      measure: "Risk Ratio (RR) with 95% CI"
+      direction: "Lower RR favors intervention"
+
+    - name: "Treatment-Related Deaths"
+      definition: "Deaths attributed to treatment toxicity"
+      measure: "Risk Ratio (RR) with 95% CI"
+      direction: "Lower RR favors intervention"
+
+    - name: "Quality of Life (QoL)"
+      definition: "Change from baseline in patient-reported outcomes (EORTC QLQ-C30, FACT-B)"
+      measure: "Mean Difference (MD) or Standardized Mean Difference (SMD)"
+      direction: "Higher score favors intervention (if QoL scale)"
+
+study_design:
+  eligible_designs:
+    - "Randomized Controlled Trials (RCTs) - Phase II or III"
+    - "Post-hoc analyses of major RCTs in post-CDK4/6 populations"
+    - "Large prospective cohort studies (n ≥100) for real-world evidence"
+
+  exclusion_criteria:
+    - "Case reports and case series (n <30)"
+    - "Retrospective studies with high risk of bias (Cochrane RoB 2 assessment)"
+    - "Conference abstracts without full-text publication (unless essential data from authors)"
+    - "Studies with <3 months median follow-up"
+    - "Non-comparative studies (single-arm trials without external control)"
+
+search_strategy:
+  databases:
+    - name: "PubMed/MEDLINE"
+      date_range: "2015-01-01 to 2025-01-31"
+      interface: "Entrez API"
+
+    - name: "Scopus"
+      date_range: "2015-01-01 to 2025-01-31"
+      interface: "Scopus API"
+
+    - name: "Embase"
+      date_range: "2015-01-01 to 2025-01-31"
+      interface: "Embase API"
+
+    - name: "Cochrane Central Register of Controlled Trials (CENTRAL)"
+      date_range: "2015-01-01 to 2025-01-31"
+      interface: "Cochrane Library"
+
+    - name: "ClinicalTrials.gov"
+      date_range: "All"
+      interface: "ClinicalTrials.gov API"
+
+  key_terms:
+    population:
+      - "breast cancer"
+      - "breast neoplasm"
+      - "breast carcinoma"
+      - "HR positive"
+      - "hormone receptor positive"
+      - "ER positive"
+      - "estrogen receptor positive"
+      - "HER2 negative"
+      - "metastatic"
+      - "advanced"
+
+    intervention:
+      - "CDK4/6 inhibitor"
+      - "palbociclib"
+      - "ribociclib"
+      - "abemaciclib"
+      - "cyclin dependent kinase"
+      - "progression"
+      - "resistance"
+      - "post-CDK"
+      - "everolimus"
+      - "sacituzumab govitecan"
+      - "datopotamab deruxtecan"
+      - "elacestrant"
+      - "imlunestrant"
+      - "capivasertib"
+      - "alpelisib"
+
+    study_design:
+      - "randomized controlled trial"
+      - "clinical trial"
+      - "phase II"
+      - "phase III"
+      - "phase 2"
+      - "phase 3"
+
+  language: "English (primary), Chinese publications reviewed if relevant"
+
+  search_limits:
+    - "Humans only"
+    - "Adults (≥18 years)"
+    - "Clinical trials and comparative studies"
+
+risk_of_bias:
+  tool: "Cochrane Risk of Bias 2 (RoB 2) for RCTs"
+  domains:
+    - "Randomization process"
+    - "Deviations from intended interventions"
+    - "Missing outcome data"
+    - "Measurement of the outcome"
+    - "Selection of the reported result"
+
+  assessment_levels:
+    - "Low risk"
+    - "Some concerns"
+    - "High risk"
+
+  reviewers: "Dual independent review with third-party adjudication for discrepancies"
+
+data_synthesis:
+  primary_analysis: "Network Meta-Analysis (NMA)"
+
+  statistical_methods:
+    approach: "Frequentist random-effects NMA using multivariate meta-analysis framework"
+    software: "R (netmeta package, version ≥2.0)"
+    ranking: "P-score (frequentist analogue of SUCRA)"
+    consistency: "Design-by-treatment interaction model (global inconsistency test)"
+    local_inconsistency: "Node-splitting approach for loops"
+
+  heterogeneity:
+    measures:
+      - "I² statistic (>50% = substantial heterogeneity)"
+      - "τ² (between-study variance)"
+      - "Prediction intervals (95%)"
+    interpretation: "I² <25% = low, 25-50% = moderate, >50% = substantial, >75% = considerable"
+
+  sensitivity_analyses:
+    - "Exclude high risk-of-bias studies"
+    - "Exclude studies with median follow-up <6 months"
+    - "Fixed-effect model vs random-effects model"
+    - "Exclude post-hoc analyses (RCTs only)"
+    - "Exclude real-world studies (RCTs only)"
+
+  subgroup_analyses:
+    - "By prior CDK4/6 inhibitor type (palbociclib vs ribociclib vs abemaciclib)"
+    - "By endocrine sensitivity (sensitive vs resistant)"
+    - "By treatment line (1st-line vs ≥2nd-line CDK4/6 failure)"
+    - "By visceral metastases (present vs absent)"
+    - "By biomarker status (PIK3CA, ESR1, TROP2)"
+
+  publication_bias:
+    methods:
+      - "Comparison-adjusted funnel plot (if ≥10 studies in network)"
+      - "Egger's test for small-study effects"
+      - "Trim-and-fill method"
+    threshold: "Requires ≥10 studies for reliable assessment"
+
+grade_assessment:
+  tool: "GRADE (Grading of Recommendations Assessment, Development and Evaluation)"
+
+  domains:
+    - name: "Risk of bias"
+      direction: "downgrade"
+    - name: "Inconsistency"
+      direction: "downgrade"
+    - name: "Indirectness"
+      direction: "downgrade"
+    - name: "Imprecision"
+      direction: "downgrade"
+    - name: "Publication bias"
+      direction: "downgrade"
+    - name: "Large effect"
+      direction: "upgrade"
+    - name: "Dose-response gradient"
+      direction: "upgrade"
+
+  certainty_levels:
+    - "High"
+    - "Moderate"
+    - "Low"
+    - "Very low"
+
+  application: "Applied to each pairwise comparison for primary and key secondary outcomes"
+
+reporting:
+  guidelines:
+    - "PRISMA 2020 (Preferred Reporting Items for Systematic Reviews and Meta-Analyses)"
+    - "PRISMA-NMA extension (Network Meta-Analysis)"
+
+  registration: "PROSPERO (International Prospective Register of Systematic Reviews)"
+
+  transparency:
+    - "Protocol published before data extraction"
+    - "All deviations from protocol documented"
+    - "Raw data and R code deposited in public repository (OSF or GitHub)"
+
+timeline:
+  protocol_finalization: "Week 1"
+  search_execution: "Week 1-2"
+  screening_title_abstract: "Week 2-4"
+  full_text_review: "Week 4-6"
+  data_extraction: "Week 6-8"
+  risk_of_bias_assessment: "Week 6-8"
+  statistical_analysis: "Week 8-10"
+  manuscript_drafting: "Week 10-12"
+  grade_assessment: "Week 12-13"
+  final_qa: "Week 13-14"
+
+  total_duration: "14-17 weeks"
+
+contact:
+  lead_investigator: "htlin"
+  email: "TBD"
+  affiliation: "TBD"
+
+conflicts_of_interest: "None declared"
+
+funding: "None"
+
+amendments:
+  - date: "2026-02-06"
+    version: "1.0"
+    changes: "Initial protocol creation"
