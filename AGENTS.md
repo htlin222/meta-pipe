@@ -201,6 +201,8 @@ uv run ../../ma-search-bibliography/scripts/zotero_sync.py \
   --in-bib ../../02_search/round-01/dedupe.bib --collection-key "<key>"
 ```
 
+**📖 See**: [Zotero Setup Guide](docs/ZOTERO_SETUP.md) for detailed Zotero configuration
+
 </details>
 
 <details>
@@ -218,6 +220,8 @@ uv run bib_to_csv.py \
 This creates a CSV with columns: `record_id, entry_type, authors, year, title, journal, abstract, doi, pmid, keywords, decision_r1, decision_r2, final_decision, exclusion_reason, notes`
 
 Fill in `decision_r1` and `decision_r2` columns during screening.
+
+**📖 See**: [Rayyan Setup Guide](docs/RAYYAN_SETUP.md) for web-based collaborative screening alternative
 
 </details>
 
@@ -311,6 +315,10 @@ uv run ../../ma-fulltext-management/scripts/download_oa_pdfs.py \
 - 40-60% PDFs downloaded automatically (Gold/Green OA)
 - Remaining PDFs need manual retrieval via institutional access
 - See `unpaywall_summary.md` for retrieval statistics
+
+**📖 See**:
+- [Unpaywall Robust Implementation](docs/UNPAYWALL_ROBUST.md) - Error handling details
+- [Unpaywall vs Alternatives](docs/UNPAYWALL_COMPARISON.md) - Compare with other PDF sources
 
 </details>
 

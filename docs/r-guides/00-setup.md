@@ -25,6 +25,7 @@ install.packages(c(
 ```
 
 **Why this combination?**
+
 - Based on expert recommendation: `metafor + meta + dmetar + clubSandwich + PublicationBias`
 - Covers ~95% of meta-analysis needs
 - Minimal package count (5 packages)

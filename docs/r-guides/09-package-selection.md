@@ -47,13 +47,13 @@ install.packages("gemtc")        # Bayesian NMA
 
 **Why this stack?**
 
-| Package            | Role                                             | Coverage |
-| ------------------ | ------------------------------------------------ | -------- |
-| **metafor**        | Foundation - handles 80% of all analyses         | 80%      |
-| **meta**           | Quick visualization - publication-ready plots    | +10%     |
-| **dmetar**         | Publication bias helpers - p-curve, diagnostics  | +5%      |
-| **clubSandwich**   | Advanced models - robust variance for multilevel | +3%      |
-| **PublicationBias** | Sensitivity - Mathur & VanderWeele methods      | +2%      |
+| Package             | Role                                             | Coverage |
+| ------------------- | ------------------------------------------------ | -------- |
+| **metafor**         | Foundation - handles 80% of all analyses         | 80%      |
+| **meta**            | Quick visualization - publication-ready plots    | +10%     |
+| **dmetar**          | Publication bias helpers - p-curve, diagnostics  | +5%      |
+| **clubSandwich**    | Advanced models - robust variance for multilevel | +3%      |
+| **PublicationBias** | Sensitivity - Mathur & VanderWeele methods       | +2%      |
 
 **Total coverage**: ~95-98% of typical meta-analysis workflows
 
@@ -411,6 +411,7 @@ install.packages(c(
 ```
 
 **Why this combination?**
+
 - `metafor` handles 80% of analysis tasks
 - `meta` adds quick visualization (+10%)
 - `dmetar` + `PublicationBias` cover publication bias (+5%)
@@ -697,6 +698,7 @@ trimfill(res)     # Trim-and-fill
 **metafor is the backbone of meta-analysis in R**
 
 It covers ~80% of what you need. Supplement with:
+
 - **meta** for quick forest plots
 - **dmetar** for convenient bias tools
 - **PublicationBias** for sensitivity analyses
@@ -720,26 +722,29 @@ install.packages(c("metafor", "meta", "dmetar", "clubSandwich", "PublicationBias
 
 ### Use Cases by Complexity
 
-| Complexity   | Packages Needed                                                  | Coverage |
-| ------------ | ---------------------------------------------------------------- | -------- |
-| **Simple**   | `meta` (metabin, metacont) + `metafor` (effect sizes)            | 90%      |
-| **Standard** | Add `dmetar` + `PublicationBias` for publication bias            | 95%      |
-| **Advanced** | Add `clubSandwich` for multilevel models                         | 98%      |
-| **Network**  | Add `netmeta` (frequentist) or `gemtc` (Bayesian)               | 99%      |
-| **Bayesian** | Add `brms` for full Bayesian inference                           | 99.5%    |
+| Complexity   | Packages Needed                                       | Coverage |
+| ------------ | ----------------------------------------------------- | -------- |
+| **Simple**   | `meta` (metabin, metacont) + `metafor` (effect sizes) | 90%      |
+| **Standard** | Add `dmetar` + `PublicationBias` for publication bias | 95%      |
+| **Advanced** | Add `clubSandwich` for multilevel models              | 98%      |
+| **Network**  | Add `netmeta` (frequentist) or `gemtc` (Bayesian)     | 99%      |
+| **Bayesian** | Add `brms` for full Bayesian inference                | 99.5%    |
 
 ### The 80/20 Rule
 
 **Core Stack (80% of analyses)**:
+
 - `metafor` - Effect sizes, models, heterogeneity, meta-regression
 - `meta` - Quick forest plots for simple RCTs
 
 **Essential Supplements (90-95% of analyses)**:
+
 - `dmetar` - Helper functions and p-curve
 - `clubSandwich` - Robust variance for multilevel models
 - `PublicationBias` - Sensitivity analyses
 
 **Advanced Extensions (95-99% of analyses)**:
+
 - `netmeta`/`gemtc` - Network meta-analysis
 - `PRISMA2020` - Flow diagrams
 - `brms` - Bayesian inference
@@ -749,6 +754,7 @@ install.packages(c("metafor", "meta", "dmetar", "clubSandwich", "PublicationBias
 **Key Takeaway**:
 
 **Start with the recommended stack:**
+
 ```r
 metafor + meta + dmetar + clubSandwich + PublicationBias
 ```
