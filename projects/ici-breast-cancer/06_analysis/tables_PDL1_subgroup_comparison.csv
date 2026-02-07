@@ -1,0 +1,3 @@
+Subgroup,N_Trials,N_Patients,Pooled_RR,CI_95,P_value,I2_percent
+PD-L1 Positive,3,1212,1.27,"[1.1, 1.45]",0.01817,0%
+PD-L1 Negative,2,284,1.75,"[0.09, 33.96]",0.2516,29.9%

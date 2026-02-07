@@ -1,0 +1,5 @@
+Trial,First_Author,ICI_Agent,N_Total,N_ICI,N_Control,HR,CI_95,P_value,EFS_5yr_ICI_pct,EFS_5yr_Control_pct,Followup_months
+KEYNOTE-522,Schmid 2024,pembrolizumab,1174,784,390,0.65,0.51-0.83,NR,81.2%,72.2%,75.1
+IMpassion031,Mittendorf 2025,atezolizumab,333,165,168,0.76,0.47-1.21,NR,NR,NR,39
+GeparNuevo,Loibl 2022,durvalumab,174,88,86,0.54,0.27-1.09,0.056,84.9%,76.9%,36
+Pooled (Random-Effects),,,1681,1037,644,0.66,0.51-0.86,0.021,—,—,

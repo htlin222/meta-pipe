@@ -1,0 +1,628 @@
+# PICO Framework for Meta-Analysis
+# Triple-Negative Breast Cancer Neoadjuvant Immunotherapy
+# Date: 2026-02-07
+# Version: 1.0
+
+metadata:
+  title: "Neoadjuvant Immunotherapy Plus Chemotherapy versus Chemotherapy Alone for Early Triple-Negative Breast Cancer: A Systematic Review and Meta-Analysis"
+  title_chinese: "早期三陰性乳癌術前免疫治療合併化療相較於單用化療之系統性回顧與統合分析"
+  protocol_date: "2026-02-07"
+  prospero_id: "" # To be filled after registration
+  registration_date: "" # To be filled after approval
+  version: "1.0"
+  last_updated: "2026-02-07"
+
+# Research Question
+research_question: |
+  Does adding immune checkpoint inhibitors to neoadjuvant chemotherapy improve
+  pathologic complete response and survival outcomes in early or locally advanced
+  triple-negative breast cancer (TNBC) compared with chemotherapy alone?
+
+# PICO Components
+
+population:
+  description: "Patients with early-stage or locally advanced triple-negative breast cancer"
+
+  inclusion_criteria:
+    disease:
+      - "Histologically confirmed invasive breast cancer"
+      - "Triple-negative phenotype: ER-negative, PR-negative, HER2-negative"
+      - "ER/PR negative: <1% nuclear staining by immunohistochemistry (IHC)"
+      - "HER2 negative: IHC 0-1+, or IHC 2+ with negative FISH/ISH (HER2/CEP17 ratio <2.0)"
+
+    stage:
+      - "Early-stage: Clinical stage I-III"
+      - "Locally advanced: T2-4, N0-3, M0"
+      - "Resectable disease at diagnosis"
+      - "Candidate for curative-intent surgery"
+
+    treatment_setting:
+      - "Neoadjuvant (preoperative) systemic therapy"
+      - "No prior systemic therapy for current breast cancer"
+
+    patient_characteristics:
+      - "Adults: Age ≥18 years"
+      - "ECOG performance status 0-2 (or equivalent)"
+      - "Adequate organ function for chemotherapy and immunotherapy"
+
+  exclusion_criteria:
+    disease:
+      - "Metastatic disease (stage IV, M1)"
+      - "Inflammatory breast cancer (unless explicitly eligible in trial)"
+      - "Bilateral breast cancer (unless both are TNBC)"
+      - "Recurrent breast cancer"
+      - "HER2-positive or hormone receptor-positive disease"
+
+    treatment:
+      - "Prior systemic therapy (chemotherapy, targeted therapy, immunotherapy) for current breast cancer"
+      - "Prior chest wall radiotherapy"
+      - "Contraindications to immunotherapy or chemotherapy"
+
+    other:
+      - "Active autoimmune disease requiring systemic therapy"
+      - "Concurrent malignancy (except adequately treated basal cell carcinoma or cervical carcinoma in situ)"
+      - "Pregnancy or lactation"
+
+intervention:
+  description: "Immune checkpoint inhibitor plus neoadjuvant chemotherapy"
+
+  immunotherapy:
+    agents:
+      - name: "Pembrolizumab"
+        target: "PD-1"
+        dose_examples: ["200 mg Q3W", "400 mg Q6W"]
+
+      - name: "Atezolizumab"
+        target: "PD-L1"
+        dose_examples: ["840 mg Q2W", "1200 mg Q3W"]
+
+      - name: "Durvalumab"
+        target: "PD-L1"
+        dose_examples: ["1500 mg Q4W"]
+
+      - name: "Nivolumab"
+        target: "PD-1"
+        dose_examples: ["240 mg Q2W", "360 mg Q3W"]
+
+      - name: "Camrelizumab"
+        target: "PD-1"
+        dose_examples: ["200 mg Q2W", "200 mg Q3W"]
+
+      - name: "Other PD-1/PD-L1 inhibitors"
+        target: "PD-1 or PD-L1"
+        dose_examples: []
+
+    timing: "Given concurrently with neoadjuvant chemotherapy"
+    duration: "Typically 4-8 cycles during neoadjuvant phase"
+
+  chemotherapy:
+    regimens:
+      anthracycline_taxane:
+        - "AC followed by paclitaxel/docetaxel (sequential)"
+        - "Dose-dense AC followed by paclitaxel"
+        - "TAC (docetaxel, doxorubicin, cyclophosphamide)"
+
+      platinum_taxane:
+        - "Carboplatin plus paclitaxel"
+        - "Carboplatin plus docetaxel"
+        - "Carboplatin plus nab-paclitaxel"
+
+      combination:
+        - "Platinum-taxane followed by anthracycline-cyclophosphamide"
+        - "Four-drug regimen (anthracycline, cyclophosphamide, taxane, platinum)"
+
+    notes:
+      - "Standard doses and schedules as per trial protocol"
+      - "Neoadjuvant chemotherapy must be completed before definitive surgery"
+
+  adjuvant_phase:
+    immunotherapy_continuation:
+      - "May continue same ICI after surgery (adjuvant phase)"
+      - "Typical duration: 9-13 cycles post-surgery"
+      - "Will extract and analyze separately"
+
+comparator:
+  description: "Neoadjuvant chemotherapy alone (same regimen as intervention arm)"
+
+  control_type:
+    - "Placebo plus chemotherapy (preferred)"
+    - "Chemotherapy alone (if no placebo)"
+
+  chemotherapy:
+    requirement: "Identical chemotherapy regimen to intervention arm"
+    timing: "Same schedule and duration as intervention arm"
+
+  adjuvant_phase:
+    - "May receive placebo or no additional treatment"
+    - "Standard adjuvant therapy as per trial protocol"
+
+outcomes:
+  primary:
+    - name: "Pathologic Complete Response (pCR)"
+      definition: "ypT0/Tis ypN0"
+      description: "No residual invasive cancer in breast and axillary lymph nodes"
+      alternative_definitions:
+        - "ypT0 ypN0 (no residual invasive or in situ cancer)"
+        - "ypT0/Tis (breast only, regardless of nodal status)"
+      timing: "At time of definitive surgery"
+      measurement: "Histopathological assessment by local pathologist"
+      effect_measure: "Risk Ratio (RR) with 95% CI"
+
+  secondary:
+    survival:
+      - name: "Event-Free Survival (EFS)"
+        definition: "Time from randomization to first occurrence of: disease progression preventing surgery, locoregional recurrence, distant recurrence, second primary cancer, or death from any cause"
+        timing: "From randomization to event or last follow-up"
+        measurement: "Clinical assessment, imaging, biopsy"
+        effect_measure: "Hazard Ratio (HR) with 95% CI"
+
+      - name: "Overall Survival (OS)"
+        definition: "Time from randomization to death from any cause"
+        timing: "From randomization to death or last follow-up"
+        measurement: "Vital status"
+        effect_measure: "Hazard Ratio (HR) with 95% CI"
+
+      - name: "Disease-Free Survival (DFS)"
+        definition: "Time from surgery to disease recurrence or death from any cause"
+        timing: "From surgery to event or last follow-up"
+        measurement: "Clinical assessment, imaging"
+        effect_measure: "Hazard Ratio (HR) with 95% CI"
+        notes: "May be reported instead of EFS in some trials"
+
+    safety:
+      - name: "Grade 3-4 Adverse Events"
+        definition: "Treatment-related adverse events grade 3 or higher per CTCAE"
+        timing: "During treatment and follow-up period"
+        measurement: "CTCAE version 4.0 or 5.0"
+        effect_measure: "Risk Ratio (RR) with 95% CI"
+
+      - name: "Immune-Related Adverse Events (irAEs)"
+        definition: "Adverse events of special interest related to immune checkpoint inhibition"
+        subtypes:
+          - "Endocrine: hypothyroidism, hyperthyroidism, adrenal insufficiency"
+          - "Gastrointestinal: colitis, hepatitis, pancreatitis"
+          - "Pulmonary: pneumonitis"
+          - "Dermatologic: rash, pruritus, vitiligo"
+          - "Other: nephritis, myocarditis, myositis, neurologic"
+        timing: "During treatment and extended follow-up"
+        measurement: "CTCAE criteria"
+        effect_measure: "Risk Ratio (RR) with 95% CI"
+
+      - name: "Treatment Discontinuation"
+        definition: "Permanent discontinuation of study treatment due to adverse events"
+        timing: "During neoadjuvant phase"
+        measurement: "Study records"
+        effect_measure: "Risk Ratio (RR) with 95% CI"
+
+    quality_of_life:
+      - name: "Quality of Life (QoL)"
+        definition: "Patient-reported outcomes using validated instruments"
+        instruments:
+          - "EORTC QLQ-C30"
+          - "FACT-B (Functional Assessment of Cancer Therapy - Breast)"
+          - "EQ-5D"
+        timing: "Baseline, during treatment, post-treatment"
+        measurement: "QoL questionnaires"
+        effect_measure: "Mean Difference (MD) or Standardized Mean Difference (SMD)"
+        notes: "Will analyze if reported in ≥3 studies"
+
+# Study Design Criteria
+
+study_design:
+  eligibility:
+    required:
+      - "Randomized controlled trials (RCTs)"
+      - "Parallel-group design"
+      - "Phase II or Phase III trials"
+      - "Minimum 20 patients per arm"
+
+    excluded:
+      - "Non-randomized studies"
+      - "Single-arm trials"
+      - "Cohort studies, case-control studies"
+      - "Case reports, case series"
+      - "Reviews, editorials, commentaries"
+      - "Protocols without results"
+      - "Phase I dose-finding studies"
+
+  blinding:
+    preference: "Double-blind, placebo-controlled"
+    acceptable: "Open-label if comparator is chemotherapy alone"
+
+  allocation:
+    requirement: "Random allocation to intervention vs control"
+    acceptable_methods:
+      - "Centralized randomization"
+      - "Stratified randomization"
+      - "Block randomization"
+      - "Minimization"
+
+# Search Strategy
+
+search:
+  databases:
+    primary:
+      - name: "PubMed/MEDLINE"
+        platform: "Entrez"
+      - name: "Embase"
+        platform: "Ovid or Embase.com"
+      - name: "Cochrane CENTRAL"
+        platform: "Cochrane Library"
+
+    trial_registries:
+      - name: "ClinicalTrials.gov"
+        url: "https://clinicaltrials.gov"
+      - name: "WHO ICTRP"
+        url: "https://www.who.int/clinical-trials-registry-platform"
+
+    grey_literature:
+      - "Conference abstracts: ASCO, ESMO, SABCS"
+      - "Regulatory documents: FDA, EMA"
+      - "Pharmaceutical company trial results repositories"
+
+  date_range:
+    from: "2015-01-01"
+    to: "Present (2026)"
+    rationale: "Immunotherapy in TNBC emerged around 2015-2016"
+
+  language:
+    restriction: "None"
+    notes: "Will translate non-English articles if necessary"
+
+  search_terms:
+    population:
+      - "triple-negative breast cancer"
+      - "triple negative breast neoplasm"
+      - "TNBC"
+      - "ER-negative AND PR-negative AND HER2-negative"
+
+    intervention:
+      - "immune checkpoint inhibitor"
+      - "immunotherapy"
+      - "PD-1 inhibitor"
+      - "PD-L1 inhibitor"
+      - "pembrolizumab"
+      - "atezolizumab"
+      - "durvalumab"
+      - "nivolumab"
+      - "camrelizumab"
+
+    setting:
+      - "neoadjuvant"
+      - "preoperative"
+      - "pre-operative"
+      - "primary systemic therapy"
+
+    design:
+      - "randomized controlled trial"
+      - "randomized"
+      - "randomised"
+      - "clinical trial"
+      - "RCT"
+
+# Subgroup Analyses
+
+subgroups:
+  planned:
+    - name: "PD-L1 Expression Status"
+      categories:
+        - "PD-L1 positive (CPS ≥1%)"
+        - "PD-L1 negative (CPS <1%)"
+      additional_cutoffs:
+        - "CPS ≥10"
+        - "CPS ≥20"
+      rationale: "PD-L1 is a predictive biomarker for ICI response"
+
+    - name: "Immune Checkpoint Inhibitor Type"
+      categories:
+        - "Pembrolizumab (PD-1 inhibitor)"
+        - "Atezolizumab (PD-L1 inhibitor)"
+        - "Durvalumab (PD-L1 inhibitor)"
+        - "Camrelizumab (PD-1 inhibitor)"
+        - "Other ICIs"
+      rationale: "Different ICIs may have different efficacy profiles"
+
+    - name: "ICI Target"
+      categories:
+        - "PD-1 inhibitors"
+        - "PD-L1 inhibitors"
+      rationale: "PD-1 vs PD-L1 targeting may differ in efficacy"
+
+    - name: "Chemotherapy Backbone"
+      categories:
+        - "Anthracycline-taxane based"
+        - "Platinum-taxane based"
+        - "Anthracycline-free regimens"
+      rationale: "Chemotherapy regimen may influence ICI synergy"
+
+    - name: "Disease Stage"
+      categories:
+        - "Early stage (T1-2, N0-1)"
+        - "Locally advanced (T3-4 or N2-3)"
+      rationale: "Stage may affect treatment response"
+
+    - name: "Adjuvant ICI Continuation"
+      categories:
+        - "ICI continued into adjuvant phase"
+        - "ICI stopped after neoadjuvant phase"
+      rationale: "Adjuvant ICI may contribute to survival benefit"
+
+    - name: "Tumor-Infiltrating Lymphocytes (TILs)"
+      categories:
+        - "TILs-high (≥20%)"
+        - "TILs-low (<20%)"
+      rationale: "TILs reflect immune microenvironment and may predict ICI response"
+      notes: "Analyze if data available in ≥3 studies"
+
+    - name: "TNBC Molecular Subtype"
+      categories:
+        - "Basal-like"
+        - "Non-basal"
+      rationale: "TNBC subtypes may have different immunogenicity"
+      notes: "Analyze if data available"
+
+    - name: "Androgen Receptor (AR) Status"
+      categories:
+        - "AR-positive (≥1%)"
+        - "AR-negative (<1%)"
+      rationale: "AR status defines LAR (luminal androgen receptor) subtype"
+      notes: "Analyze if data available"
+
+# Sensitivity Analyses
+
+sensitivity_analyses:
+  - name: "Study Quality"
+    method: "Exclude studies with high risk of bias"
+    rationale: "Assess robustness of findings"
+
+  - name: "Trial Phase"
+    method: "Restrict to Phase III trials only"
+    rationale: "Phase III trials are more definitive"
+
+  - name: "Sample Size"
+    method: "Exclude trials with <100 patients per arm"
+    rationale: "Assess influence of small studies"
+
+  - name: "Publication Type"
+    method: "Exclude conference abstracts (full publications only)"
+    rationale: "Ensure complete data and peer review"
+
+  - name: "Fixed-Effects Model"
+    method: "Re-analyze using fixed-effects model"
+    rationale: "Compare with random-effects results"
+
+  - name: "Leave-One-Out"
+    method: "Iteratively exclude each study"
+    rationale: "Assess influence of individual studies (especially KEYNOTE-522)"
+
+  - name: "Adjuvant ICI"
+    method: "Exclude or separately analyze trials with adjuvant ICI continuation"
+    rationale: "Isolate neoadjuvant effect"
+
+# Statistical Methods
+
+statistics:
+  effect_measures:
+    binary_outcomes:
+      measure: "Risk Ratio (RR)"
+      confidence_interval: "95%"
+      rationale: "RR is more intuitive than OR and suitable for common outcomes like pCR"
+
+    time_to_event_outcomes:
+      measure: "Hazard Ratio (HR)"
+      confidence_interval: "95%"
+      rationale: "HR accounts for censoring in survival data"
+
+    continuous_outcomes:
+      measure: "Mean Difference (MD) or Standardized Mean Difference (SMD)"
+      confidence_interval: "95%"
+      rationale: "SMD if different QoL scales used"
+
+  meta_analysis_model:
+    primary: "Random-effects model (DerSimonian-Laird)"
+    rationale: "Expect moderate heterogeneity due to different ICIs and chemo regimens"
+    alternative: "Hartung-Knapp adjustment if ≤5 studies"
+
+  heterogeneity:
+    measures:
+      - "I² statistic"
+      - "Cochran's Q test (p-value)"
+      - "τ² (between-study variance)"
+
+    interpretation:
+      - "I² 0-40%: Low heterogeneity"
+      - "I² 40-60%: Moderate heterogeneity"
+      - "I² 60-100%: Substantial heterogeneity"
+
+    action:
+      - "If I² >60%, explore sources via subgroup analysis"
+      - "Consider meta-regression if ≥10 studies"
+
+  publication_bias:
+    methods:
+      - "Funnel plot (visual inspection)"
+      - "Egger's regression test"
+      - "Begg's rank correlation test"
+
+    requirement: "Assess if ≥10 studies available"
+
+  software:
+    primary: "R (meta, metafor packages)"
+    alternative: "RevMan 5.4 (Cochrane)"
+
+# Risk of Bias Assessment
+
+risk_of_bias:
+  tool: "Cochrane Risk of Bias 2 (RoB 2) for randomized trials"
+  version: "RoB 2 (2019 version)"
+
+  domains:
+    - name: "Bias arising from the randomization process"
+      signaling_questions:
+        - "Was the allocation sequence random?"
+        - "Was the allocation sequence concealed?"
+
+    - name: "Bias due to deviations from intended interventions"
+      signaling_questions:
+        - "Were participants aware of their assigned intervention?"
+        - "Were carers and people delivering the interventions aware?"
+        - "Were there deviations from the intended intervention?"
+
+    - name: "Bias due to missing outcome data"
+      signaling_questions:
+        - "Were data available for all participants?"
+        - "Is there evidence that result was not biased by missing outcome data?"
+
+    - name: "Bias in measurement of the outcome"
+      signaling_questions:
+        - "Was the outcome measurement appropriate?"
+        - "Could measurement have differed between groups?"
+
+    - name: "Bias in selection of the reported result"
+      signaling_questions:
+        - "Was the trial analyzed in accordance with a pre-specified plan?"
+        - "Is the result likely to have been selected based on multiple analyses?"
+
+  judgement:
+    categories:
+      - "Low risk"
+      - "Some concerns"
+      - "High risk"
+
+  process:
+    - "Dual independent assessment"
+    - "Resolve disagreements by consensus or third reviewer"
+    - "Contact study authors for clarification if needed"
+
+# GRADE Assessment
+
+grade:
+  purpose: "Assess certainty of evidence for each outcome"
+
+  domains:
+    - name: "Risk of bias"
+      action: "Downgrade if >25% of participants from studies with high/some concerns RoB"
+
+    - name: "Inconsistency"
+      action: "Downgrade if I² >60% with no explanation"
+
+    - name: "Indirectness"
+      action: "Downgrade if PICO differs from review question"
+
+    - name: "Imprecision"
+      action: "Downgrade if 95% CI crosses both benefit and harm thresholds"
+
+    - name: "Publication bias"
+      action: "Downgrade if funnel plot asymmetry or suspected selective reporting"
+
+  upgrade_criteria:
+    - "Large effect (RR >2 or <0.5)"
+    - "Dose-response gradient"
+    - "All plausible confounding would reduce effect"
+
+  certainty_levels:
+    - "High: Very confident in effect estimate"
+    - "Moderate: Moderately confident; true effect likely close to estimate"
+    - "Low: Limited confidence; true effect may differ substantially"
+    - "Very low: Very little confidence; true effect likely substantially different"
+
+# Differentiation from Existing Meta-Analysis
+
+differentiation:
+  competitor:
+    citation: "Villacampa et al. 2024 (JAMA Oncology, PMID: 39207778)"
+    scope: "Neoadjuvant ICIs in early breast cancer across all molecular phenotypes (ER+, HER2+, TNBC)"
+
+  our_approach:
+    focus: "TNBC-exclusive (triple-negative subtype only)"
+
+    advantages:
+      - "TNBC-specific analysis with deeper subgroup exploration"
+      - "Include 2025 data (CamRelief and other recent studies)"
+      - "TNBC-specific biomarker analyses (PD-L1, TILs, AR status)"
+      - "Long-term survival emphasis (KEYNOTE-522 OS with 75-month follow-up)"
+      - "TNBC-specific adverse event profile"
+
+    rationale: |
+      While Villacampa provides breadth across all breast cancer subtypes,
+      our analysis provides depth in the most aggressive subtype (TNBC) where
+      immunotherapy has shown the most promise and clinical adoption.
+
+# Project Timeline
+
+timeline:
+  protocol_prospero: "Weeks 1-2 (10-15 hours)"
+  literature_search: "Week 3 (5-8 hours)"
+  screening: "Weeks 4-5 (15-20 hours)"
+  fulltext_review: "Weeks 6-7 (10-15 hours)"
+  data_extraction: "Weeks 8-9 (5-10 hours)"
+  risk_of_bias: "Week 9 (5 hours)"
+  meta_analysis: "Weeks 10-11 (10-15 hours)"
+  manuscript: "Weeks 12-14 (20-30 hours)"
+  submission: "Week 15 (5 hours)"
+
+  total_duration: "15 weeks (3.75 months)"
+  expected_submission_date: "2026-05-20"
+
+# Team
+
+team:
+  reviewers:
+    screening: 2 # Dual independent screening
+    extraction: 2 # Dual independent extraction
+    rob_assessment: 2 # Dual independent RoB assessment
+
+  statistician: 1 # Meta-analysis
+
+  roles:
+    - "Lead investigator"
+    - "Co-investigators"
+    - "Statistical consultant"
+    - "Librarian (search strategy)"
+
+# Funding and Conflicts
+
+funding:
+  source: "" # To be specified
+  conflicts_of_interest: "None declared" # To be verified
+
+# References
+
+key_expected_studies:
+  - trial_name: "KEYNOTE-522"
+    pmid: "32101663"
+    intervention: "Pembrolizumab + carboplatin/paclitaxel-AC"
+    sample_size: 1174
+    primary_result: "pCR 64.8% vs 51.2%"
+
+  - trial_name: "IMpassion031"
+    pmid: "32966830"
+    intervention: "Atezolizumab + nab-paclitaxel-AC"
+    sample_size: 333
+    primary_result: "pCR 57.6% vs 41.1%"
+
+  - trial_name: "GeparNuevo"
+    pmid: "39207778"
+    intervention: "Durvalumab + nab-paclitaxel-EC"
+    sample_size: 174
+    primary_result: "pCR improved, survival benefit independent of pCR"
+
+  - trial_name: "CamRelief"
+    pmid: "39671272"
+    intervention: "Camrelizumab + chemotherapy"
+    sample_size: "TBD"
+    primary_result: "pCR results expected"
+
+  - trial_name: "NeoPACT"
+    pmid: "37991778"
+    intervention: "Pembrolizumab + carboplatin-docetaxel"
+    sample_size: "TBD"
+    primary_result: "Anthracycline-free regimen"
+
+# Version Control
+
+version_history:
+  - version: "1.0"
+    date: "2026-02-07"
+    changes: "Initial PICO definition"
+    author: "Meta-analysis team"

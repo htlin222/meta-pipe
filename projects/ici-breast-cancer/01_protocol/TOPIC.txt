@@ -1,0 +1,185 @@
+# Meta-Analysis Research Topic
+
+## Title (English)
+Neoadjuvant Immunotherapy Plus Chemotherapy versus Chemotherapy Alone for Early Triple-Negative Breast Cancer: A Systematic Review and Meta-Analysis of Randomized Controlled Trials
+
+## Title (中文)
+早期三陰性乳癌術前免疫治療合併化療相較於單用化療之系統性回顧與統合分析
+
+---
+
+## Research Question
+Does adding immune checkpoint inhibitors to neoadjuvant chemotherapy improve pathologic complete response and survival outcomes in early or locally advanced triple-negative breast cancer (TNBC) compared with chemotherapy alone?
+
+---
+
+## PICO Framework
+
+### Population (研究對象)
+**Inclusion:**
+- Patients with early-stage or locally advanced triple-negative breast cancer (TNBC)
+- Candidates for neoadjuvant (preoperative) systemic therapy
+- Resectable disease at diagnosis
+- Confirmed TNBC: ER-negative, PR-negative, HER2-negative by standard immunohistochemistry/FISH criteria
+- Adults (typically ≥18 years)
+
+**Exclusion:**
+- Metastatic or stage IV disease
+- Inflammatory breast cancer (unless specified as eligible in trial)
+- Prior systemic therapy for current breast cancer
+- HER2-positive or hormone receptor-positive disease
+
+---
+
+### Intervention (介入措施)
+- Immune checkpoint inhibitor (pembrolizumab, atezolizumab, durvalumab, nivolumab, or similar PD-1/PD-L1 inhibitor) PLUS neoadjuvant chemotherapy
+- Standard neoadjuvant chemotherapy regimens:
+  - Anthracycline-taxane based (e.g., AC-T, dose-dense AC-T)
+  - Platinum-containing regimens (e.g., carboplatin-paclitaxel)
+- Timing: Given before definitive surgery
+- May continue immunotherapy into adjuvant setting per protocol
+
+---
+
+### Comparator (對照組)
+- Neoadjuvant chemotherapy alone (same regimen as intervention arm)
+- With or without placebo
+- Standard of care neoadjuvant chemotherapy
+
+---
+
+### Outcomes (結果指標)
+
+**Primary:**
+1. Pathologic complete response (pCR)
+   - Definition: ypT0/Tis ypN0 (no residual invasive cancer in breast and axillary lymph nodes)
+   - Alternative definitions acceptable if clearly defined
+   - Measured at time of definitive surgery
+
+**Secondary:**
+1. Event-free survival (EFS)
+   - Time from randomization to disease progression, recurrence, second primary cancer, or death from any cause
+2. Overall survival (OS)
+   - Time from randomization to death from any cause
+3. Disease-free survival (DFS) - if reported instead of EFS
+4. Treatment-related adverse events
+   - Grade 3-4 adverse events (CTCAE criteria)
+   - Immune-related adverse events (irAEs)
+5. Quality of life (if reported)
+
+---
+
+## Study Design
+- Randomized controlled trials (RCTs) only
+- Phase II or Phase III trials
+- Parallel-group design
+- Minimum 20 patients per arm (to ensure meaningful estimates)
+
+## Date Range
+- From: 2015 (earliest immunotherapy trials in TNBC)
+- To: Present (2026)
+
+## Language
+- No language restrictions (will translate if necessary)
+
+## Databases to Search
+- PubMed/MEDLINE
+- Embase
+- Cochrane CENTRAL
+- ClinicalTrials.gov (for unpublished data)
+- Conference abstracts: ASCO, ESMO, SABCS (San Antonio Breast Cancer Symposium)
+
+## Planned Subgroup Analyses
+1. By PD-L1 status (positive ≥1% vs negative <1%)
+2. By immune checkpoint inhibitor type (pembrolizumab vs atezolizumab vs others)
+3. By chemotherapy backbone (anthracycline-based vs platinum-containing)
+4. By disease stage (early T1-2 vs locally advanced T3-4)
+5. By continuation of immunotherapy into adjuvant phase (yes vs no)
+
+## Risk of Bias Assessment
+- Tool: Cochrane Risk of Bias 2 (RoB 2) for RCTs
+- Domains: Randomization, deviations from protocol, missing outcome data, outcome measurement, selective reporting
+
+## Effect Measures
+- Risk Ratio (RR) with 95% CI for pCR (binary outcome)
+- Hazard Ratio (HR) with 95% CI for EFS, DFS, OS (time-to-event outcomes)
+- Meta-analysis model: Random-effects (DerSimonian-Laird or restricted maximum likelihood)
+- Heterogeneity: I² statistic, Cochran's Q test, τ²
+
+## Feasibility Assessment (2026-02-07)
+**PubMed search results:**
+- 105 RCTs on neoadjuvant immunotherapy in TNBC
+- 68 studies reporting pCR ✅
+- 35 studies reporting EFS ✅
+- 34 studies reporting OS ✅
+- 15 studies reporting DFS ✅
+
+**Conclusion: EXCELLENT feasibility**
+- Expected to include 5-10 high-quality RCTs
+- Sufficient statistical power for meta-analysis
+- Adequate data for subgroup analyses
+
+## Key Expected Studies
+- KEYNOTE-522: Pembrolizumab + chemotherapy (landmark trial, n=1174)
+- IMpassion031: Atezolizumab + nab-paclitaxel + AC
+- NeoTRIPaPDL1: Atezolizumab + carboplatin-paclitaxel
+- GeparNuevo: Durvalumab + nab-paclitaxel + EC
+
+## Clinical Significance
+- TNBC represents 15-20% of breast cancers but accounts for disproportionate mortality
+- Limited treatment options beyond chemotherapy historically
+- Immunotherapy represents paradigm shift in TNBC management
+- pCR strongly associated with long-term survival in TNBC (>90% EFS if pCR achieved)
+- Current clinical guidelines increasingly incorporate immunotherapy, but optimal patient selection and regimen remain uncertain
+- This meta-analysis will provide pooled evidence to inform treatment decisions and guideline updates
+
+## Timeline Estimate
+- Protocol & PROSPERO registration: 1-2 weeks
+- Literature search & screening: 2-3 weeks
+- Full-text review & data extraction: 3-4 weeks
+- Risk of bias assessment: 1 week
+- Meta-analysis & sensitivity analyses: 1-2 weeks
+- Manuscript writing: 2-3 weeks
+- **Total: 10-15 weeks (2.5-4 months)**
+
+## Notes
+- Fast-moving field: Check for newly published trials during search updates
+- Industry-sponsored trials common: assess funding bias
+- OS data may be immature in some trials: plan to use available follow-up data
+- Consider contacting trial authors for unpublished subgroup data (PD-L1 stratification)
+
+---
+
+## Differentiation from Existing Meta-Analysis
+
+**Villacampa et al. 2024** (JAMA Oncology, PMID: 39207778):
+- **Their scope**: Neoadjuvant ICIs in early breast cancer **across all molecular phenotypes** (ER+, HER2+, TNBC)
+- **Their conclusion**: Broad overview of ICI efficacy across subtypes
+
+**Our differentiation strategy**:
+1. ✅ **TNBC-exclusive focus** - Deep dive into triple-negative subtype specifically
+2. ✅ **Include 2025 data** - CamRelief (Chen et al. 2025) and other recent studies
+3. ✅ **TNBC-specific subgroup analyses**:
+   - PD-L1 expression levels in TNBC (CPS <1, 1-9, 10-19, ≥20)
+   - Basal vs non-basal TNBC (if data available)
+   - Androgen receptor (AR) status in TNBC
+   - Tumor-infiltrating lymphocytes (TILs) levels
+4. ✅ **Long-term survival emphasis** - Latest OS data from KEYNOTE-522 (2024) with 75-month follow-up
+5. ✅ **TNBC-specific adverse events** - Immune-related AEs profile in TNBC population
+
+**Rationale**: While Villacampa provides breadth across subtypes, we provide **depth** in the most aggressive subtype (TNBC) where immunotherapy has shown the most promise and clinical adoption.
+
+---
+
+## Status
+✅ Topic defined and feasibility confirmed (Score: 15/16, 94%)
+✅ 4-hour feasibility assessment completed (2026-02-07)
+✅ Differentiation strategy from Villacampa 2024 established
+📋 **READY TO PROCEED**: Initialize project and start protocol development
+⏭️ Next step: Initialize project structure and begin PROSPERO protocol
+
+## Date Created
+2026-02-07
+
+## Last Updated
+2026-02-07 (Post-feasibility assessment)
