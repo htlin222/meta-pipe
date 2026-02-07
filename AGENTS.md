@@ -244,12 +244,23 @@ uv run ../../ma-search-bibliography/scripts/bib_subset_by_ids.py \
   --in-bib ../../02_search/round-01/dedupe.bib \
   --out-bib ../../04_fulltext/round-01/fulltext_subset.bib
 
-# Query Unpaywall API for Open Access status
-uv run ../../ma-fulltext-management/scripts/unpaywall_fetch.py \
+# Query Unpaywall API for Open Access status (ROBUST VERSION - recommended)
+# This version handles HTTP 422 errors and other API issues gracefully
+uv run ../../ma-fulltext-management/scripts/unpaywall_fetch_robust.py \
   --in-bib ../../04_fulltext/round-01/fulltext_subset.bib \
   --out-csv ../../04_fulltext/round-01/unpaywall_results.csv \
   --out-log ../../04_fulltext/round-01/unpaywall_fetch.log \
-  --email "your@email.com"
+  --out-json ../../04_fulltext/round-01/unpaywall_results.json \
+  --email "your@email.com" \
+  --continue-on-error \
+  --max-retries 3
+
+# Alternative: Original version (less robust, may fail on problematic DOIs)
+# uv run ../../ma-fulltext-management/scripts/unpaywall_fetch.py \
+#   --in-bib ../../04_fulltext/round-01/fulltext_subset.bib \
+#   --out-csv ../../04_fulltext/round-01/unpaywall_results.csv \
+#   --out-log ../../04_fulltext/round-01/unpaywall_fetch.log \
+#   --email "your@email.com"
 
 # Analyze Unpaywall results
 uv run ../../ma-fulltext-management/scripts/analyze_unpaywall.py \
