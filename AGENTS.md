@@ -38,6 +38,7 @@ Example prompts that trigger this:
 **📖 See**: [Manuscript Assembly Guide](docs/MANUSCRIPT_ASSEMBLY.md)
 
 Use the **meta-manuscript-assembly** skill - it will guide you through:
+
 - Tables Creation (2-3h)
 - Figure Assembly (1-2h)
 - References Management (1-2h)
@@ -317,6 +318,7 @@ uv run ../../ma-fulltext-management/scripts/download_oa_pdfs.py \
 - See `unpaywall_summary.md` for retrieval statistics
 
 **📖 See**:
+
 - [Unpaywall Robust Implementation](docs/UNPAYWALL_ROBUST.md) - Error handling details
 - [Unpaywall vs Alternatives](docs/UNPAYWALL_COMPARISON.md) - Compare with other PDF sources
 
@@ -324,6 +326,57 @@ uv run ../../ma-fulltext-management/scripts/download_oa_pdfs.py \
 
 <details>
 <summary><strong>Stage 05: Extraction</strong></summary>
+
+**Choose extraction approach based on PDF availability:**
+
+1. **Web-Based Extraction** (NEW) - No PDFs needed, 2-4 hours, 70-80% completeness
+2. **PDF-Based Extraction** - Requires PDFs, 8-12 hours, 100% completeness
+3. **Hybrid Approach** (RECOMMENDED) - Best of both, 4-6 hours, 90-95% completeness
+
+**📖 See**: [Web-Based Extraction Guide](docs/WEB_EXTRACTION.md) for detailed comparison and workflow
+
+---
+
+### Option 1: Web-Based Extraction (No PDFs Needed)
+
+**Use when**: No institutional access to PDFs, time-sensitive, or preliminary analysis
+
+```bash
+cd /Users/htlin/meta-pipe/tooling/python
+
+# Step 1: Prepare study identifiers
+uv run extract_study_identifiers.py \
+  --in-csv ../../03_screening/round-01/decisions_screened.csv \
+  --filter-column final_decision \
+  --filter-value Include \
+  --out-csv ../../05_extraction/round-01/web_extraction_manifest.csv
+
+# Step 2: Web search for each study (PubMed API, ClinicalTrials.gov, etc.)
+uv run web_search_study_data.py \
+  --manifest ../../05_extraction/round-01/web_extraction_manifest.csv \
+  --data-dict ../../05_extraction/data-dictionary.md \
+  --out-jsonl ../../05_extraction/round-01/web_extracted.jsonl \
+  --out-log ../../05_extraction/round-01/web_search.log
+
+# Step 3: AI-assisted field population with confidence scores
+uv run ai_populate_extraction.py \
+  --web-data ../../05_extraction/round-01/web_extracted.jsonl \
+  --data-dict ../../05_extraction/data-dictionary.md \
+  --out-csv ../../05_extraction/round-01/extraction_web.csv \
+  --confidence-threshold 0.7
+
+# Step 4: Flag low-confidence fields for manual review
+uv run flag_low_confidence.py \
+  --extraction ../../05_extraction/round-01/extraction_web.csv \
+  --confidence-threshold 0.7 \
+  --out-md ../../05_extraction/round-01/needs_verification.md
+```
+
+**Expected**: 70-80% data completeness, 2-4 hours total time
+
+---
+
+### Option 2: PDF-Based Extraction (Full Access Required)
 
 **Recommended: LLM-Assisted Extraction (using Claude CLI)**
 
@@ -432,6 +485,7 @@ dev.off()
 ```
 
 **R Package Resources**:
+
 - **CRAN**: https://cran.r-project.org/ (official repository)
 - **Tidyverse**: https://www.tidyverse.org/ (ggplot2, dplyr)
 - **Bioconductor**: https://bioconductor.org/ (bioinformatics)
@@ -582,6 +636,7 @@ uv run ../../ma-end-to-end/scripts/checkpoint.py --restore --name pre-analysis -
 ## Documentation
 
 **Essential**:
+
 - [Time Investment Guidance](docs/TIME_GUIDANCE.md) - Realistic timeline expectations (22-32 hours)
 - [Manuscript Assembly](docs/MANUSCRIPT_ASSEMBLY.md) - Stage 07 complete workflow (6-8 hours)
 - [R Figure Generation](docs/R_FIGURE_GUIDE.md) - Task-based guides (Progressive Disclosure)
@@ -591,6 +646,8 @@ uv run ../../ma-end-to-end/scripts/checkpoint.py --restore --name pre-analysis -
 - [Journal Formatting](docs/JOURNAL_FORMATTING.md) - Lancet/JAMA/Nature Medicine requirements
 
 **Reference**:
+
+- [Web-Based Extraction](docs/WEB_EXTRACTION.md) - Alternative to PDF extraction (NEW)
 - [Skill Generalization](docs/SKILL_GENERALIZATION.md) - Extract workflows at 95%+ completion
 - [API Setup](docs/API_SETUP.md) - Configure API keys for Scopus/Embase
 - [Getting Started](GETTING_STARTED.md) - Detailed step-by-step guide
