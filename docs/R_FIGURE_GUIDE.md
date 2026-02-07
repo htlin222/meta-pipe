@@ -55,6 +55,7 @@ library(dmetar)    # Companion to "Doing Meta-Analysis in R"
 ```
 
 **Documentation**:
+
 - meta: https://cran.r-project.org/web/packages/meta/
 - metafor: https://www.metafor-project.org/
 - dmetar: https://dmetar.protectlab.org/
@@ -111,6 +112,7 @@ install.packages(c(
 ### Professional Themes & Color Palettes
 
 **Why use professional themes?**
+
 - **Consistency**: Journal-quality aesthetics across all figures
 - **Accessibility**: Colorblind-friendly palettes (viridis, scico)
 - **Impact**: Professional appearance increases credibility
@@ -184,6 +186,7 @@ ggthemr_reset()
 ```
 
 **Best themes for publications**:
+
 - `fresh` — Clean, modern (recommended for most journals)
 - `pale` — Soft colors, high contrast
 - `flat` — Minimal, professional
@@ -207,6 +210,7 @@ theme_ipsum_tw()  # Titillium Web
 ```
 
 **Why use hrbrthemes?**
+
 - Professional typography out-of-the-box
 - High contrast for readability
 - Minimal grid lines (focuses attention on data)
@@ -232,6 +236,7 @@ scale_color_jco()    # Journal of Clinical Oncology
 ```
 
 **When to use**:
+
 - Submitting to specific journal → use that journal's palette
 - General medical journal → use NEJM or Lancet
 - Oncology → use JCO palette
@@ -261,6 +266,7 @@ p <- ggplot(data, aes(x, y, color = group)) +
 ```
 
 **Mandatory use cases**:
+
 - Heatmaps
 - Continuous color scales
 - Any plot where color represents data value
@@ -521,13 +527,13 @@ ggsave("07_manuscript/figures/figure4_rob.png",
 
 **Choose theme based on target journal**:
 
-| Journal Type | Recommended Theme | Color Palette | Reason |
-|-------------|------------------|---------------|--------|
-| Nature, Science, Cell | hrbrthemes + ggsci | `scale_color_npg()` | Professional typography, journal colors |
-| Lancet, NEJM, JAMA | hrbrthemes | `scale_color_lancet()` | Medical journal standards |
-| PLOS ONE | ggthemr("fresh") | viridis | Open access, colorblind-safe required |
-| Oncology journals | hrbrthemes | `scale_color_jco()` | Specialty palette |
-| Any journal (safe choice) | hrbrthemes + viridis | `scale_color_viridis_d()` | Accessible, professional |
+| Journal Type              | Recommended Theme    | Color Palette             | Reason                                  |
+| ------------------------- | -------------------- | ------------------------- | --------------------------------------- |
+| Nature, Science, Cell     | hrbrthemes + ggsci   | `scale_color_npg()`       | Professional typography, journal colors |
+| Lancet, NEJM, JAMA        | hrbrthemes           | `scale_color_lancet()`    | Medical journal standards               |
+| PLOS ONE                  | ggthemr("fresh")     | viridis                   | Open access, colorblind-safe required   |
+| Oncology journals         | hrbrthemes           | `scale_color_jco()`       | Specialty palette                       |
+| Any journal (safe choice) | hrbrthemes + viridis | `scale_color_viridis_d()` | Accessible, professional                |
 
 **Meta-analysis specific recommendations**:
 
@@ -910,15 +916,15 @@ browseVignettes("meta")
 
 ### When to Use Each Package
 
-| Package | Best For | Pros | Cons | Install |
-|---------|---------|------|------|---------|
-| **hrbrthemes** | All publications | Professional typography, minimal design | Requires font installation | CRAN |
-| **ggthemr** | Quick styling | One-line setup, applies globally | Limited customization | GitHub |
-| **ggthemes** | Matching specific styles | Economist, WSJ, Tufte themes | Some themes too stylized | CRAN |
-| **viridis** | Color scales | Colorblind-safe, perceptually uniform | Limited to continuous scales | CRAN |
-| **scico** | Heatmaps | Scientific colormaps, 30+ palettes | Overkill for simple plots | CRAN |
-| **ggsci** | Medical journals | Exact journal color matching | Only discrete colors | CRAN |
-| **tvthemes** | Presentations | Fun, eye-catching | Not professional enough for publication | GitHub |
+| Package        | Best For                 | Pros                                    | Cons                                    | Install |
+| -------------- | ------------------------ | --------------------------------------- | --------------------------------------- | ------- |
+| **hrbrthemes** | All publications         | Professional typography, minimal design | Requires font installation              | CRAN    |
+| **ggthemr**    | Quick styling            | One-line setup, applies globally        | Limited customization                   | GitHub  |
+| **ggthemes**   | Matching specific styles | Economist, WSJ, Tufte themes            | Some themes too stylized                | CRAN    |
+| **viridis**    | Color scales             | Colorblind-safe, perceptually uniform   | Limited to continuous scales            | CRAN    |
+| **scico**      | Heatmaps                 | Scientific colormaps, 30+ palettes      | Overkill for simple plots               | CRAN    |
+| **ggsci**      | Medical journals         | Exact journal color matching            | Only discrete colors                    | CRAN    |
+| **tvthemes**   | Presentations            | Fun, eye-catching                       | Not professional enough for publication | GitHub  |
 
 ### Complete Setup Example
 
@@ -1072,6 +1078,7 @@ cat("🎨 Theme: hrbrthemes + Lancet colors\n")
 ### Why These Packages Matter
 
 **Before (default ggplot2)**:
+
 ```r
 # Default ggplot2 — looks amateur
 ggplot(data, aes(x, y, color = group)) +
@@ -1080,6 +1087,7 @@ ggplot(data, aes(x, y, color = group)) +
 ```
 
 **After (professional themes)**:
+
 ```r
 # With hrbrthemes + ggsci — publication-ready
 library(hrbrthemes)
@@ -1096,6 +1104,7 @@ ggplot(data, aes(x, y, color = group)) +
 ```
 
 **Key Benefits**:
+
 1. **Speed**: No trial-and-error with colors and fonts
 2. **Consistency**: All figures have matching style
 3. **Accessibility**: Colorblind-safe palettes prevent exclusion

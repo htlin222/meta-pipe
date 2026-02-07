@@ -19,6 +19,7 @@
 #### `/Users/htlin/meta-pipe/docs/R_FIGURE_GUIDE.md` (630+ 行)
 
 **內容**:
+
 - R 套件生態系統參考 (CRAN, Bioconductor, Tidyverse, rOpenSci, R-universe)
 - 完整工作流程範例 (森林圖、多面板圖、亞組分析)
 - 發表品質匯出設定 (ggsave, dpi=300)
@@ -27,10 +28,12 @@
 - 專業主題套件 (ggthemr, hrbrthemes, viridis, ggsci)
 
 **使用時機**:
+
 - Stage 06 (Analysis): 產生所有統計圖表
 - Stage 07 (Manuscript): 組裝多面板圖表
 
 **套件資源**:
+
 1. **CRAN** (cran.r-project.org) — R 套件官方總倉庫
 2. **Bioconductor** (bioconductor.org) — 生物資訊學專用套件庫
 3. **Tidyverse** (tidyverse.org) — 資料科學核心套件群 (dplyr、ggplot2)
@@ -44,6 +47,7 @@
 #### `CLAUDE.md` (主要代理指令檔)
 
 **變更**:
+
 - 新增 "R Figure Generation" 到 Essential 文件列表
 - Stage 06 (Analysis) 現在強調 **R-only 工作流程**
 - 移除 Python 圖表產生參考
@@ -51,6 +55,7 @@
 - 加入 `ggsave()` 範例 (300 DPI 要求)
 
 **關鍵指令更新**:
+
 ```r
 # 原本 (Python)
 # python assemble_figures.py figure1.png vertical ...
@@ -66,6 +71,7 @@ ggsave("figure1.png", width=10, height=12, dpi=300)
 #### `docs/MANUSCRIPT_ASSEMBLY.md`
 
 **變更**:
+
 - Phase 3 (Figure Assembly) 現在使用 R 套件 (patchwork, cowplot)
 - 移除 Python PIL/Pillow 參考
 - 新增 R 多面板組裝範例
@@ -73,6 +79,7 @@ ggsave("figure1.png", width=10, height=12, dpi=300)
 - 新增「不要使用 Python 繪圖」指南
 
 **新工作流程**:
+
 ```r
 # 使用 patchwork 組合圖表
 library(patchwork)
@@ -95,6 +102,7 @@ ggsave("figure.png", width=10, height=12, dpi=300)
 #### `~/.claude/skills/scientific-figure-assembly/SKILL.md`
 
 **變更**:
+
 - 技能描述改為強調 R 工作流程
 - `allowed-tools` 改為包含 `Rscript`
 - 重新結構化內容：
@@ -103,6 +111,7 @@ ggsave("figure.png", width=10, height=12, dpi=300)
   - **不推薦**: Python 方法 (標記為 Legacy)
 
 **新範例**:
+
 ```r
 # 完整 meta-analysis 森林圖組裝
 library(meta)
