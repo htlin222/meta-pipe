@@ -9,13 +9,16 @@ AI-assisted, end-to-end meta-analysis with reproducible tooling.
 cp .env.example .env        # Add your API keys
 cd tooling/python && uv init
 
-# 2. Edit your research question
-# Open TOPIC.txt and paste your topic
+# 2. Create a new project
+uv run tooling/python/init_project.py --name my-meta-analysis
 
-# 3. Launch Claude Code and say:
+# 3. Edit your research question
+# Open projects/my-meta-analysis/TOPIC.txt and paste your topic
+
+# 4. Launch Claude Code and say:
 ```
 
-> **"See TOPIC.txt and start"**
+> **"Start project my-meta-analysis"** or **"See projects/my-meta-analysis/TOPIC.txt and start"**
 
 That's it. Claude will handle the rest.
 
@@ -23,18 +26,21 @@ That's it. Claude will handle the rest.
 
 > **"Help me brainstorm a topic"**
 
-Claude will guide you through an interactive session to develop your research question.
+Claude will guide you through an interactive session to develop your research question and create the project for you.
 
 ---
 
 ## What Claude Does
 
-1. Reads your topic from `TOPIC.txt`
-2. Asks clarifying questions (databases, outcomes, dates)
-3. Runs the 9-stage pipeline automatically
-4. Generates manuscript-ready outputs
+1. Creates your project in `projects/<your-project-name>/`
+2. Reads your topic from `projects/<your-project-name>/TOPIC.txt`
+3. Asks clarifying questions (databases, outcomes, dates)
+4. Runs the 9-stage pipeline automatically
+5. Generates manuscript-ready outputs
 
 ## Pipeline Overview
+
+All stages are created inside `projects/<your-project-name>/`:
 
 | Stage         | Output                    |
 | ------------- | ------------------------- |
@@ -62,37 +68,32 @@ This is a **99% complete meta-analysis** on immune checkpoint inhibitors in trip
 - **Time invested**: ~14 hours (vs 100+ hours manual)
 
 **Quick tour**:
+
 1. `projects/ici-breast-cancer/README.md` - Project overview
 2. `projects/ici-breast-cancer/00_overview/FINAL_PROJECT_SUMMARY.md` - Key findings
 3. `projects/ici-breast-cancer/07_manuscript/` - Complete manuscript (5 sections)
 
 **Use as template** for your own meta-analysis workflow.
 
-## Utility Scripts
+## Project Structure
 
-### Project Consolidation
-
-After completing a project (99%+), organize all outputs:
-
-```bash
-uv run tooling/python/consolidate_project_outputs.py --project-name your-project
+```
+meta-pipe/
+├── ma-*/                    # Framework code modules
+├── docs/                    # Framework documentation
+├── tooling/                 # Shared tools and scripts
+└── projects/                # All your meta-analysis projects
+    ├── ici-breast-cancer/   # Example: complete meta-analysis
+    ├── legacy/              # Historical data (pre-2026-02-08)
+    └── your-project/        # Your new projects
+        ├── 01_protocol/
+        ├── 02_search/
+        ├── ...
+        ├── 09_qa/
+        └── TOPIC.txt
 ```
 
-Creates `projects/your-project/` with:
-
-- 10 organized directories (00_overview → 09_scripts)
-- INDEX.md with complete file listings
-- README.md with navigation guide
-
-### Root Directory Cleanup
-
-After consolidation, remove duplicate files:
-
-```bash
-./tooling/scripts/cleanup_root_markdown.sh
-```
-
-Keeps only essential files in root directory. See [tooling/scripts/README.md](tooling/scripts/README.md).
+**Note**: Projects are isolated and NOT tracked by Git (see `.gitignore`). Only the example project `ici-breast-cancer/` is tracked for reference.
 
 ---
 

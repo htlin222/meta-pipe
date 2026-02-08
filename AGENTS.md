@@ -20,18 +20,43 @@ AI-assisted meta-analysis pipeline. This file is auto-loaded by Claude Code.
 A **real, 99% complete meta-analysis** on immune checkpoint inhibitors in triple-negative breast cancer (TNBC):
 
 **Key Metrics**:
+
 - 5 RCTs, N=2,402 patients
 - Primary outcome: RR 1.26 (95% CI 1.16-1.37), p=0.0015, ⊕⊕⊕⊕ HIGH quality
 - Manuscript: 4,921 words (compliant with Lancet Oncology, JAMA Oncology)
 - Time invested: ~14 hours (vs 100+ hours manual)
 
 **Quick Tour**:
+
 1. `projects/ici-breast-cancer/README.md` - Complete navigation guide
 2. `projects/ici-breast-cancer/00_overview/FINAL_PROJECT_SUMMARY.md` - All findings (415 lines)
 3. `projects/ici-breast-cancer/07_manuscript/` - Full manuscript (5 sections + 7 tables)
 4. `projects/ici-breast-cancer/06_analysis/` - All R scripts + results
 
 **Use this as a template** when starting your own meta-analysis.
+
+---
+
+## 📁 Project Structure (IMPORTANT)
+
+**All projects are now in `projects/<project-name>/` directory.**
+
+```
+meta-pipe/
+├── ma-*/                    # Framework code modules
+├── docs/                    # Framework documentation
+├── tooling/                 # Shared tools and scripts
+└── projects/                # All your meta-analysis projects
+    ├── legacy/              # Historical data (migrated 2026-02-08)
+    ├── ici-breast-cancer/   # Example: complete meta-analysis
+    └── your-project/        # Your new projects go here
+        ├── 01_protocol/
+        ├── 02_search/
+        ├── ...
+        └── TOPIC.txt
+```
+
+**When running commands**: Replace `<project-name>` with your actual project name.
 
 ---
 
@@ -80,19 +105,22 @@ Use the **meta-manuscript-assembly** skill - it will guide you through:
 
 Then proceed:
 
-1. **Read `TOPIC.txt`** to understand the research question
-2. **Check project state** - which stages are complete?
-3. **Ask only essential questions** before proceeding:
+1. **Ask for project name** if not already specified
+2. **Read `projects/<project-name>/TOPIC.txt`** to understand the research question
+3. **Check project state** - which stages are complete in `projects/<project-name>/`?
+4. **Ask only essential questions** before proceeding:
    - Databases to search (PubMed, Scopus, Embase, Cochrane?)
    - Date range limits?
    - Language restrictions?
    - Study design (RCTs only, or include observational?)
-4. **Initialize project** if not done:
+5. **Initialize project** if not done:
    ```bash
-   cd /Users/htlin/meta-pipe/tooling/python
-   uv run ../../ma-end-to-end/scripts/init_project.py --root ../..
+   cd /Users/htlin/meta-pipe
+   uv run tooling/python/init_project.py --name <project-name>
    ```
-5. **Execute pipeline stages** in order, validating at each step
+6. **Execute pipeline stages** in order, validating at each step
+
+**⚠️ IMPORTANT**: All project data is in `projects/<project-name>/`. All commands below assume you're working with a specific project.
 
 ---
 
@@ -155,8 +183,8 @@ cd /Users/htlin/meta-pipe/tooling/python
 # Generate PROSPERO registration document from pico.yaml
 uv add pyyaml
 uv run generate_prospero_protocol.py \
-  --pico ../../01_protocol/pico.yaml \
-  --out ../../01_protocol/prospero_registration.md
+  --pico ../../projects/<project-name>/01_protocol/pico.yaml \
+  --out ../../projects/<project-name>/01_protocol/prospero_registration.md
 ```
 
 Review the generated document, edit as needed, then submit to PROSPERO.
@@ -172,57 +200,57 @@ cd /Users/htlin/meta-pipe/tooling/python
 
 # Build queries from PICO
 uv run ../../ma-search-bibliography/scripts/build_queries.py \
-  --pico ../../01_protocol/pico.yaml \
-  --out ../../02_search/round-01/queries.txt
+  --pico ../../projects/<project-name>/01_protocol/pico.yaml \
+  --out ../../projects/<project-name>/02_search/round-01/queries.txt
 
 # With MeSH expansion
 uv run ../../ma-search-bibliography/scripts/expand_terms.py \
-  --pico ../../01_protocol/pico.yaml \
-  --out ../../02_search/round-01/expanded_terms.yaml
+  --pico ../../projects/<project-name>/01_protocol/pico.yaml \
+  --out ../../projects/<project-name>/02_search/round-01/expanded_terms.yaml
 
 # PubMed search
 uv add biopython requests bibtexparser pyyaml
 uv run ../../ma-search-bibliography/scripts/pubmed_fetch.py \
   --query "<query>" --email "you@example.com" \
-  --out-bib ../../02_search/round-01/results.bib \
-  --out-log ../../02_search/round-01/log.md
+  --out-bib ../../projects/<project-name>/02_search/round-01/results.bib \
+  --out-log ../../projects/<project-name>/02_search/round-01/log.md
 
 # Scopus search (requires SCOPUS_API_KEY in .env)
 uv run ../../ma-search-bibliography/scripts/scopus_fetch.py \
-  --query "<query>" --out-bib ../../02_search/round-01/scopus.bib
+  --query "<query>" --out-bib ../../projects/<project-name>/02_search/round-01/scopus.bib
 
 # Embase search (requires EMBASE_API_KEY in .env)
 uv run ../../ma-search-bibliography/scripts/embase_fetch.py \
-  --query "<query>" --out-bib ../../02_search/round-01/embase.bib
+  --query "<query>" --out-bib ../../projects/<project-name>/02_search/round-01/embase.bib
 
 # Cochrane search
 uv run ../../ma-search-bibliography/scripts/cochrane_fetch.py \
-  --query "<query>" --out-bib ../../02_search/round-01/cochrane.bib
+  --query "<query>" --out-bib ../../projects/<project-name>/02_search/round-01/cochrane.bib
 
 # Multi-DB merge and dedupe
 uv run ../../ma-search-bibliography/scripts/multi_db_dedupe.py \
-  --in-bib ../../02_search/round-01/results.bib \
-  --in-bib ../../02_search/round-01/scopus.bib \
-  --in-bib ../../02_search/round-01/embase.bib \
-  --out-merged ../../02_search/round-01/merged.bib \
-  --out-bib ../../02_search/round-01/dedupe.bib
+  --in-bib ../../projects/<project-name>/02_search/round-01/results.bib \
+  --in-bib ../../projects/<project-name>/02_search/round-01/scopus.bib \
+  --in-bib ../../projects/<project-name>/02_search/round-01/embase.bib \
+  --out-merged ../../projects/<project-name>/02_search/round-01/merged.bib \
+  --out-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib
 
 # Or run all databases at once
 uv run ../../ma-search-bibliography/scripts/run_multi_db_search.py \
-  --root ../.. --round round-01 --email "you@example.com"
+  --root ../../projects/<project-name>/../projects/<project-name> --round round-01 --email "you@example.com"
 
 # Single-source dedupe
 uv run ../../ma-search-bibliography/scripts/dedupe_bib.py \
-  --in-bib ../../02_search/round-01/results.bib \
-  --out-bib ../../02_search/round-01/dedupe.bib \
-  --out-log ../../02_search/round-01/dedupe.log
+  --in-bib ../../projects/<project-name>/02_search/round-01/results.bib \
+  --out-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib \
+  --out-log ../../projects/<project-name>/02_search/round-01/dedupe.log
 
 # Zotero integration (optional)
 uv run ../../ma-search-bibliography/scripts/zotero_fetch.py \
-  --collection-key "<key>" --out-bib ../../02_search/round-01/zotero.bib
+  --collection-key "<key>" --out-bib ../../projects/<project-name>/02_search/round-01/zotero.bib
 
 uv run ../../ma-search-bibliography/scripts/zotero_sync.py \
-  --in-bib ../../02_search/round-01/dedupe.bib --collection-key "<key>"
+  --in-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib --collection-key "<key>"
 ```
 
 **📖 See**: [Zotero Setup Guide](docs/ZOTERO_SETUP.md) for detailed Zotero configuration
@@ -237,8 +265,8 @@ cd /Users/htlin/meta-pipe/tooling/python
 
 # Convert BibTeX to CSV for screening
 uv run bib_to_csv.py \
-  --in-bib ../../02_search/round-01/dedupe.bib \
-  --out-csv ../../03_screening/round-01/decisions.csv
+  --in-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib \
+  --out-csv ../../projects/<project-name>/03_screening/round-01/decisions.csv
 ```
 
 This creates a CSV with columns: `record_id, entry_type, authors, year, title, journal, abstract, doi, pmid, keywords, decision_r1, decision_r2, final_decision, exclusion_reason, notes`
@@ -259,9 +287,9 @@ cd /Users/htlin/meta-pipe/tooling/python
 
 # Dual-review agreement analysis
 uv run ../../ma-screening-quality/scripts/dual_review_agreement.py \
-  --file ../../03_screening/round-01/decisions.csv \
+  --file ../../projects/<project-name>/03_screening/round-01/decisions.csv \
   --col-a decision_r1 --col-b decision_r2 \
-  --out ../../03_screening/round-01/agreement.md
+  --out ../../projects/<project-name>/03_screening/round-01/agreement.md
 ```
 
 </details>
@@ -274,39 +302,39 @@ cd /Users/htlin/meta-pipe/tooling/python
 
 # Extract BibTeX subset for full-text review (from screening results)
 uv run ../../ma-search-bibliography/scripts/bib_subset_by_ids.py \
-  --in-csv ../../03_screening/round-01/decisions_screened.csv \
-  --in-bib ../../02_search/round-01/dedupe.bib \
-  --out-bib ../../04_fulltext/round-01/fulltext_subset.bib \
+  --in-csv ../../projects/<project-name>/03_screening/round-01/decisions_screened.csv \
+  --in-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib \
+  --out-bib ../../projects/<project-name>/04_fulltext/round-01/fulltext_subset.bib \
   --filter-column final_decision \
   --filter-value Include
 
 # Alternative: Extract ALL records for full-text (Include + Uncertain)
 uv run ../../ma-search-bibliography/scripts/bib_subset_by_ids.py \
-  --in-csv ../../04_fulltext/round-01/pdf_retrieval_manifest.csv \
-  --in-bib ../../02_search/round-01/dedupe.bib \
-  --out-bib ../../04_fulltext/round-01/fulltext_subset.bib
+  --in-csv ../../projects/<project-name>/04_fulltext/round-01/pdf_retrieval_manifest.csv \
+  --in-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib \
+  --out-bib ../../projects/<project-name>/04_fulltext/round-01/fulltext_subset.bib
 
 # Query Unpaywall API for Open Access status (ROBUST VERSION - recommended)
 # This version handles HTTP 422 errors and other API issues gracefully
 uv run ../../ma-fulltext-management/scripts/unpaywall_fetch_robust.py \
-  --in-bib ../../04_fulltext/round-01/fulltext_subset.bib \
-  --out-csv ../../04_fulltext/round-01/unpaywall_results.csv \
-  --out-log ../../04_fulltext/round-01/unpaywall_fetch.log \
-  --out-json ../../04_fulltext/round-01/unpaywall_results.json \
+  --in-bib ../../projects/<project-name>/04_fulltext/round-01/fulltext_subset.bib \
+  --out-csv ../../projects/<project-name>/04_fulltext/round-01/unpaywall_results.csv \
+  --out-log ../../projects/<project-name>/04_fulltext/round-01/unpaywall_fetch.log \
+  --out-json ../../projects/<project-name>/04_fulltext/round-01/unpaywall_results.json \
   --email "your@email.com" \
   --continue-on-error \
   --max-retries 3
 
 # Analyze Unpaywall results
 uv run ../../ma-fulltext-management/scripts/analyze_unpaywall.py \
-  --in-csv ../../04_fulltext/round-01/unpaywall_results.csv \
-  --out-md ../../04_fulltext/round-01/unpaywall_summary.md
+  --in-csv ../../projects/<project-name>/04_fulltext/round-01/unpaywall_results.csv \
+  --out-md ../../projects/<project-name>/04_fulltext/round-01/unpaywall_summary.md
 
 # Download Open Access PDFs automatically
 uv run ../../ma-fulltext-management/scripts/download_oa_pdfs.py \
-  --in-csv ../../04_fulltext/round-01/unpaywall_results.csv \
-  --pdf-dir ../../04_fulltext/round-01/pdfs \
-  --out-log ../../04_fulltext/round-01/pdf_download.log \
+  --in-csv ../../projects/<project-name>/04_fulltext/round-01/unpaywall_results.csv \
+  --pdf-dir ../../projects/<project-name>/04_fulltext/round-01/pdfs \
+  --out-log ../../projects/<project-name>/04_fulltext/round-01/pdf_download.log \
   --sleep 1 \
   --max-retries 3
 ```
@@ -346,30 +374,30 @@ cd /Users/htlin/meta-pipe/tooling/python
 
 # Step 1: Prepare study identifiers
 uv run extract_study_identifiers.py \
-  --in-csv ../../03_screening/round-01/decisions_screened.csv \
+  --in-csv ../../projects/<project-name>/03_screening/round-01/decisions_screened.csv \
   --filter-column final_decision \
   --filter-value Include \
-  --out-csv ../../05_extraction/round-01/web_extraction_manifest.csv
+  --out-csv ../../projects/<project-name>/05_extraction/round-01/web_extraction_manifest.csv
 
 # Step 2: Web search for each study (PubMed API, ClinicalTrials.gov, etc.)
 uv run web_search_study_data.py \
-  --manifest ../../05_extraction/round-01/web_extraction_manifest.csv \
-  --data-dict ../../05_extraction/data-dictionary.md \
-  --out-jsonl ../../05_extraction/round-01/web_extracted.jsonl \
-  --out-log ../../05_extraction/round-01/web_search.log
+  --manifest ../../projects/<project-name>/05_extraction/round-01/web_extraction_manifest.csv \
+  --data-dict ../../projects/<project-name>/05_extraction/data-dictionary.md \
+  --out-jsonl ../../projects/<project-name>/05_extraction/round-01/web_extracted.jsonl \
+  --out-log ../../projects/<project-name>/05_extraction/round-01/web_search.log
 
 # Step 3: AI-assisted field population with confidence scores
 uv run ai_populate_extraction.py \
-  --web-data ../../05_extraction/round-01/web_extracted.jsonl \
-  --data-dict ../../05_extraction/data-dictionary.md \
-  --out-csv ../../05_extraction/round-01/extraction_web.csv \
+  --web-data ../../projects/<project-name>/05_extraction/round-01/web_extracted.jsonl \
+  --data-dict ../../projects/<project-name>/05_extraction/data-dictionary.md \
+  --out-csv ../../projects/<project-name>/05_extraction/round-01/extraction_web.csv \
   --confidence-threshold 0.7
 
 # Step 4: Flag low-confidence fields for manual review
 uv run flag_low_confidence.py \
-  --extraction ../../05_extraction/round-01/extraction_web.csv \
+  --extraction ../../projects/<project-name>/05_extraction/round-01/extraction_web.csv \
   --confidence-threshold 0.7 \
-  --out-md ../../05_extraction/round-01/needs_verification.md
+  --out-md ../../projects/<project-name>/05_extraction/round-01/needs_verification.md
 ```
 
 **Expected**: 70-80% data completeness, 2-4 hours total time
@@ -388,47 +416,47 @@ cd /Users/htlin/meta-pipe/tooling/python
 # Step 1: Extract PDF text
 uv add pdfplumber
 uv run extract_pdf_text.py \
-  --pdf-dir ../../04_fulltext/round-01/pdfs \
-  --out-jsonl ../../05_extraction/round-01/pdf_texts.jsonl \
+  --pdf-dir ../../projects/<project-name>/04_fulltext/round-01/pdfs \
+  --out-jsonl ../../projects/<project-name>/05_extraction/round-01/pdf_texts.jsonl \
   --pattern "*.pdf"
 
 # Step 2: Create extraction template
 uv run create_extraction_template.py \
-  --pdf-jsonl ../../05_extraction/round-01/pdf_texts.jsonl \
-  --data-dict ../../05_extraction/data-dictionary.md \
-  --out-csv ../../05_extraction/round-01/extraction_template.csv
+  --pdf-jsonl ../../projects/<project-name>/05_extraction/round-01/pdf_texts.jsonl \
+  --data-dict ../../projects/<project-name>/05_extraction/data-dictionary.md \
+  --out-csv ../../projects/<project-name>/05_extraction/round-01/extraction_template.csv
 
 # Step 3: Create LLM manifest
 uv run create_pdf_manifest.py \
-  --pdf-jsonl ../../05_extraction/round-01/pdf_texts.jsonl \
-  --out-csv ../../05_extraction/round-01/manifest.csv
+  --pdf-jsonl ../../projects/<project-name>/05_extraction/round-01/pdf_texts.jsonl \
+  --out-csv ../../projects/<project-name>/05_extraction/round-01/manifest.csv
 
 # Step 4: LLM extraction using Claude CLI (no API key needed)
 uv run llm_extract_cli.py \
-  --pdf-jsonl ../../05_extraction/round-01/pdf_texts.jsonl \
-  --data-dict ../../05_extraction/data-dictionary.md \
-  --out-jsonl ../../05_extraction/round-01/llm_extracted_all.jsonl \
+  --pdf-jsonl ../../projects/<project-name>/05_extraction/round-01/pdf_texts.jsonl \
+  --data-dict ../../projects/<project-name>/05_extraction/data-dictionary.md \
+  --out-jsonl ../../projects/<project-name>/05_extraction/round-01/llm_extracted_all.jsonl \
   --cli claude
 
 # Step 5: Convert to CSV format
 uv run jsonl_to_extraction_csv.py \
-  --jsonl ../../05_extraction/round-01/llm_extracted_all.jsonl \
-  --data-dict ../../05_extraction/data-dictionary.md \
-  --out-csv ../../05_extraction/round-01/extraction.csv
+  --jsonl ../../projects/<project-name>/05_extraction/round-01/llm_extracted_all.jsonl \
+  --data-dict ../../projects/<project-name>/05_extraction/data-dictionary.md \
+  --out-csv ../../projects/<project-name>/05_extraction/round-01/extraction.csv
 
 # Step 6: Manual review and updates
 # (Edit extraction.csv manually to correct LLM errors)
 
 # Step 7: Update extraction with manual corrections
 uv run update_extraction_manual.py \
-  --llm-jsonl ../../05_extraction/round-01/llm_extracted_all.jsonl \
-  --manual-csv ../../05_extraction/round-01/extraction_manual.csv \
-  --out-csv ../../05_extraction/round-01/extraction.csv
+  --llm-jsonl ../../projects/<project-name>/05_extraction/round-01/llm_extracted_all.jsonl \
+  --manual-csv ../../projects/<project-name>/05_extraction/round-01/extraction_manual.csv \
+  --out-csv ../../projects/<project-name>/05_extraction/round-01/extraction.csv
 
 # Step 8: Validate extraction quality
 uv run validate_extraction.py \
-  --csv ../../05_extraction/round-01/extraction.csv \
-  --out-md ../../05_extraction/round-01/validation_report.md
+  --csv ../../projects/<project-name>/05_extraction/round-01/extraction.csv \
+  --out-md ../../projects/<project-name>/05_extraction/round-01/validation_report.md
 ```
 
 **Expected results**:
@@ -455,15 +483,15 @@ cd /Users/htlin/meta-pipe/tooling/python
 
 # RoB 2 for RCTs
 uv run ../../ma-peer-review/scripts/init_rob2_assessment.py \
-  --extraction ../../05_extraction/round-01/extraction.csv \
-  --out-csv ../../05_extraction/round-01/quality_rob2.csv \
-  --out-md ../../05_extraction/round-01/rob2_assessment.md
+  --extraction ../../projects/<project-name>/05_extraction/round-01/extraction.csv \
+  --out-csv ../../projects/<project-name>/05_extraction/round-01/quality_rob2.csv \
+  --out-md ../../projects/<project-name>/05_extraction/round-01/rob2_assessment.md
 
 # ROBINS-I for cohort/observational studies
 uv run ../../ma-peer-review/scripts/init_robins_i_assessment.py \
-  --extraction ../../05_extraction/round-01/extraction.csv \
-  --out-csv ../../05_extraction/round-01/quality_robins_i.csv \
-  --out-md ../../05_extraction/round-01/robins_i_assessment.md
+  --extraction ../../projects/<project-name>/05_extraction/round-01/extraction.csv \
+  --out-csv ../../projects/<project-name>/05_extraction/round-01/quality_robins_i.csv \
+  --out-md ../../projects/<project-name>/05_extraction/round-01/robins_i_assessment.md
 ```
 
 **Assessment domains:**
@@ -556,50 +584,50 @@ Use `renv` for reproducibility. Copy R scripts from asset folders to `06_analysi
 ```bash
 # PRISMA flow
 uv run ../../ma-manuscript-quarto/scripts/prisma_flow.py \
-  --root ../.. --round round-01 --decisions-column final_decision \
-  --out ../../07_manuscript/prisma_flow.md \
-  --out-svg ../../07_manuscript/prisma_flow.svg
+  --root ../../projects/<project-name>/../projects/<project-name> --round round-01 --decisions-column final_decision \
+  --out ../../projects/<project-name>/07_manuscript/prisma_flow.md \
+  --out-svg ../../projects/<project-name>/07_manuscript/prisma_flow.svg
 
 # Evidence map (verify what exists before writing Results)
 uv run ../../ma-manuscript-quarto/scripts/build_evidence_map.py \
-  --root ../.. --round round-01 \
-  --out 07_manuscript/evidence_map.md
+  --root ../../projects/<project-name>/../projects/<project-name> --round round-01 \
+  --out projects/<project-name>/07_manuscript/evidence_map.md
 
 # Result claims table
 uv run ../../ma-manuscript-quarto/scripts/init_result_claims.py \
-  --root ../.. --out 07_manuscript/result_claims.csv
+  --root ../../projects/<project-name>/.. --out projects/<project-name>/07_manuscript/result_claims.csv
 
 # Generate result paragraphs
 uv run ../../ma-manuscript-quarto/scripts/build_result_paragraphs.py \
-  --claims 07_manuscript/result_claims.csv \
-  --out 07_manuscript/result_paragraphs.md
+  --claims projects/<project-name>/07_manuscript/result_claims.csv \
+  --out projects/<project-name>/07_manuscript/result_paragraphs.md
 
 # Study characteristics table
 uv run ../../ma-manuscript-quarto/scripts/build_study_characteristics.py \
-  --extraction 05_extraction/extraction.csv \
-  --out-csv 07_manuscript/study_characteristics.csv \
-  --out-md 07_manuscript/study_characteristics.md \
-  --results 07_manuscript/03_results.qmd
+  --extraction projects/<project-name>/05_extraction/extraction.csv \
+  --out-csv projects/<project-name>/07_manuscript/study_characteristics.csv \
+  --out-md projects/<project-name>/07_manuscript/study_characteristics.md \
+  --results projects/<project-name>/07_manuscript/03_results.qmd
 
 # Assemble Results into 03_results.qmd
 uv run ../../ma-manuscript-quarto/scripts/assemble_results.py \
-  --results 07_manuscript/03_results.qmd \
-  --paragraphs 07_manuscript/result_paragraphs.qmd
+  --results projects/<project-name>/07_manuscript/03_results.qmd \
+  --paragraphs projects/<project-name>/07_manuscript/result_paragraphs.qmd
 
 # Submission checklist (journal-specific)
 uv run ../../ma-manuscript-quarto/scripts/init_submission_checklist.py \
-  --journal "<target journal>" \
-  --out 07_manuscript/submission_checklist.md
+  --project <project-name> --journal "<target journal>" \
+  --out projects/<project-name>/07_manuscript/submission_checklist.md
 
 # Results consistency report (QA)
 uv run ../../ma-manuscript-quarto/scripts/results_consistency_report.py \
-  --root ../.. \
-  --out 09_qa/results_consistency_report.md \
+  --root ../../projects/<project-name>/.. \
+  --out projects/<project-name>/09_qa/results_consistency_report.md \
   --strict
 
 # Render
 uv run ../../ma-manuscript-quarto/scripts/render_manuscript.py \
-  --root ../.. --index 07_manuscript/index.qmd
+  --root ../../projects/<project-name>/.. --index projects/<project-name>/07_manuscript/index.qmd
 ```
 
 </details>
@@ -609,13 +637,13 @@ uv run ../../ma-manuscript-quarto/scripts/render_manuscript.py \
 
 ```bash
 uv run ../../ma-peer-review/scripts/init_grade_summary.py \
-  --extraction ../../05_extraction/extraction.csv \
-  --out-csv ../../08_reviews/grade_summary.csv \
-  --out-md ../../08_reviews/grade_summary.md
+  --extraction ../../projects/<project-name>/05_extraction/extraction.csv \
+  --out-csv ../../projects/<project-name>/08_reviews/grade_summary.csv \
+  --out-md ../../projects/<project-name>/08_reviews/grade_summary.md
 
 uv run ../../ma-peer-review/scripts/auto_grade_suggestion.py \
-  --grade ../../08_reviews/grade_summary.csv \
-  --out-csv ../../08_reviews/grade_suggestions.csv
+  --grade ../../projects/<project-name>/08_reviews/grade_summary.csv \
+  --out-csv ../../projects/<project-name>/08_reviews/grade_suggestions.csv
 ```
 
 </details>
@@ -625,26 +653,26 @@ uv run ../../ma-peer-review/scripts/auto_grade_suggestion.py \
 
 ```bash
 uv run ../../ma-end-to-end/scripts/final_qa_report.py \
-  --root ../.. --round round-01 \
-  --out 09_qa/final_qa_report.md --out-json 09_qa/final_qa_report.json
+  --root ../../projects/<project-name>/../projects/<project-name> --round round-01 \
+  --out projects/<project-name>/09_qa/final_qa_report.md --out-json projects/<project-name>/09_qa/final_qa_report.json
 
 # Publication quality checks
 uv run ../../ma-publication-quality/scripts/init_reporting_checklists.py \
-  --root ../.. --include-moose
+  --root ../../projects/<project-name>/.. --include-moose
 
 uv run ../../ma-publication-quality/scripts/claim_audit.py \
-  --abstract ../../07_manuscript/00_abstract.qmd \
-  --results ../../07_manuscript/03_results.qmd \
-  --out ../../09_qa/claim_audit.md
+  --abstract ../../projects/<project-name>/07_manuscript/00_abstract.qmd \
+  --results ../../projects/<project-name>/07_manuscript/03_results.qmd \
+  --out ../../projects/<project-name>/09_qa/claim_audit.md
 
 uv run ../../ma-publication-quality/scripts/crossref_check.py \
-  --manuscript-dir ../../07_manuscript \
-  --figures-dir ../../06_analysis/figures \
-  --out ../../09_qa/crossref_report.md
+  --manuscript-dir ../../projects/<project-name>/07_manuscript \
+  --figures-dir ../../projects/<project-name>/06_analysis/figures \
+  --out ../../projects/<project-name>/09_qa/crossref_report.md
 
 # Hash artifacts for reproducibility audit
 uv run ../../ma-end-to-end/scripts/hash_artifacts.py \
-  --root ../.. --out 09_qa/artifact_hashes.json
+  --root ../../projects/<project-name>/.. --out projects/<project-name>/09_qa/artifact_hashes.json
 ```
 
 </details>

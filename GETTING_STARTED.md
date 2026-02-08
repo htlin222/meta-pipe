@@ -2,6 +2,25 @@
 
 Quick guide to run the meta-analysis pipeline with uv, R/renv, and Quarto.
 
+## 📁 Important: Project Structure
+
+**All projects are created in `projects/<project-name>/` directory.**
+
+This guide uses `<project-name>` as a placeholder. Replace it with your actual project name (e.g., `my-meta-analysis`).
+
+```
+meta-pipe/
+├── ma-*/                    # Framework code (don't modify)
+├── docs/                    # Documentation
+├── tooling/                 # Shared tools
+└── projects/                # Your projects go here
+    └── <project-name>/      # Your specific project
+        ├── 01_protocol/
+        ├── 02_search/
+        ├── ...
+        └── TOPIC.txt
+```
+
 ## Prerequisites
 
 - `uv` on PATH
@@ -20,13 +39,15 @@ Minimum: `PUBMED_API_KEY` — [Get from NCBI](https://www.ncbi.nlm.nih.gov/accou
 ## 1. Initialize Project
 
 ```bash
-cd tooling/python && uv init
-uv run ../../ma-end-to-end/scripts/init_project.py --root ../..
+cd /Users/htlin/meta-pipe
+uv run tooling/python/init_project.py --name <project-name>
 ```
+
+This creates `projects/<project-name>/` with all stage folders and a `TOPIC.txt` file.
 
 ## 2. Edit TOPIC.txt
 
-Write your research question in `TOPIC.txt`.
+Write your research question in `projects/<project-name>/TOPIC.txt`.
 
 ## 3. Create Protocol (Stage 01)
 
@@ -38,8 +59,8 @@ Use `ma-topic-intake` to generate: `pico.yaml`, `eligibility.md`, `outcomes.md`,
 cd tooling/python
 uv add pyyaml
 uv run generate_prospero_protocol.py \
-  --pico ../../01_protocol/pico.yaml \
-  --out ../../01_protocol/prospero_registration.md
+  --pico ../../projects/<project-name>/01_protocol/pico.yaml \
+  --out ../../projects/<project-name>/01_protocol/prospero_registration.md
 ```
 
 Review, edit, and submit to [PROSPERO](https://www.crd.york.ac.uk/prospero/). Update `prospero_id` in `pico.yaml` once registered.
@@ -54,12 +75,12 @@ cd tooling/python
 uv add biopython requests bibtexparser pyyaml
 uv run ../../ma-search-bibliography/scripts/pubmed_fetch.py \
   --query "<your query>" --email "you@example.com" \
-  --out-bib ../../02_search/round-01/results.bib \
-  --out-log ../../02_search/round-01/log.md
+  --out-bib ../../projects/<project-name>/02_search/round-01/results.bib \
+  --out-log ../../projects/<project-name>/02_search/round-01/log.md
 uv run ../../ma-search-bibliography/scripts/dedupe_bib.py \
-  --in-bib ../../02_search/round-01/results.bib \
-  --out-bib ../../02_search/round-01/dedupe.bib \
-  --out-log ../../02_search/round-01/dedupe.log
+  --in-bib ../../projects/<project-name>/02_search/round-01/results.bib \
+  --out-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib \
+  --out-log ../../projects/<project-name>/02_search/round-01/dedupe.log
 ```
 
 </details>
@@ -70,25 +91,25 @@ uv run ../../ma-search-bibliography/scripts/dedupe_bib.py \
 ```bash
 # Scopus
 uv run ../../ma-search-bibliography/scripts/scopus_fetch.py \
-  --query "<query>" --out-bib ../../02_search/round-01/scopus.bib
+  --query "<query>" --out-bib ../../projects/<project-name>/02_search/round-01/scopus.bib
 
 # Embase
 uv run ../../ma-search-bibliography/scripts/embase_fetch.py \
-  --query "<query>" --out-bib ../../02_search/round-01/embase.bib
+  --query "<query>" --out-bib ../../projects/<project-name>/02_search/round-01/embase.bib
 
 # Merge all
 uv run ../../ma-search-bibliography/scripts/multi_db_dedupe.py \
-  --in-bib ../../02_search/round-01/results.bib \
-  --in-bib ../../02_search/round-01/scopus.bib \
-  --out-merged ../../02_search/round-01/merged.bib \
-  --out-bib ../../02_search/round-01/dedupe.bib
+  --in-bib ../../projects/<project-name>/02_search/round-01/results.bib \
+  --in-bib ../../projects/<project-name>/02_search/round-01/scopus.bib \
+  --out-merged ../../projects/<project-name>/02_search/round-01/merged.bib \
+  --out-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib
 ```
 
 Or run all at once:
 
 ```bash
 uv run ../../ma-search-bibliography/scripts/run_multi_db_search.py \
-  --root ../.. --round round-01 --email "you@example.com"
+  --root ../../projects/<project-name> --round round-01 --email "you@example.com"
 ```
 
 </details>
@@ -98,13 +119,13 @@ uv run ../../ma-search-bibliography/scripts/run_multi_db_search.py \
 
 ```bash
 uv run ../../ma-search-bibliography/scripts/build_queries.py \
-  --pico ../../01_protocol/pico.yaml \
-  --out ../../02_search/round-01/queries.txt
+  --pico ../../projects/<project-name>/01_protocol/pico.yaml \
+  --out ../../projects/<project-name>/02_search/round-01/queries.txt
 
 # With MeSH expansion
 uv run ../../ma-search-bibliography/scripts/expand_terms.py \
-  --pico ../../01_protocol/pico.yaml \
-  --out ../../02_search/round-01/expanded_terms.yaml
+  --pico ../../projects/<project-name>/01_protocol/pico.yaml \
+  --out ../../projects/<project-name>/02_search/round-01/expanded_terms.yaml
 ```
 
 </details>
@@ -115,11 +136,11 @@ uv run ../../ma-search-bibliography/scripts/expand_terms.py \
 ```bash
 # Fetch from Zotero
 uv run ../../ma-search-bibliography/scripts/zotero_fetch.py \
-  --collection-key "<key>" --out-bib ../../02_search/round-01/zotero.bib
+  --collection-key "<key>" --out-bib ../../projects/<project-name>/02_search/round-01/zotero.bib
 
 # Sync back to Zotero
 uv run ../../ma-search-bibliography/scripts/zotero_sync.py \
-  --in-bib ../../02_search/round-01/dedupe.bib --collection-key "<key>"
+  --in-bib ../../projects/<project-name>/02_search/round-01/dedupe.bib --collection-key "<key>"
 ```
 
 </details>
@@ -130,9 +151,9 @@ Fill `03_screening/round-01/decisions.csv` with columns: `record_id, title, deci
 
 ```bash
 uv run ../../ma-screening-quality/scripts/dual_review_agreement.py \
-  --file ../../03_screening/round-01/decisions.csv \
+  --file ../../projects/<project-name>/03_screening/round-01/decisions.csv \
   --col-a decision_r1 --col-b decision_r2 \
-  --out ../../03_screening/round-01/agreement.md
+  --out ../../projects/<project-name>/03_screening/round-01/agreement.md
 ```
 
 ## 6. Collect Fulltext (Stage 04)
@@ -193,11 +214,11 @@ Use `renv` for reproducibility. Copy R scripts from asset folders to `06_analysi
 
 ```bash
 uv run ../../ma-manuscript-quarto/scripts/prisma_flow.py \
-  --root ../.. --round round-01 --decisions-column final_decision \
+  --root ../../projects/<project-name> --round round-01 --decisions-column final_decision \
   --out ../../07_manuscript/prisma_flow.md --out-svg ../../07_manuscript/prisma_flow.svg
 
 uv run ../../ma-manuscript-quarto/scripts/build_evidence_map.py \
-  --root ../.. --round round-01 \
+  --root ../../projects/<project-name> --round round-01 \
   --out 07_manuscript/evidence_map.md
 
 uv run ../../ma-manuscript-quarto/scripts/init_result_claims.py \
@@ -233,7 +254,7 @@ uv run ../../ma-manuscript-quarto/scripts/results_consistency_report.py \
   --strict
 
 uv run ../../ma-manuscript-quarto/scripts/insert_traceability_table.py \
-  --root ../.. --round round-01 \
+  --root ../../projects/<project-name> --round round-01 \
   --methods 07_manuscript/02_methods.qmd \
   --out-table 07_manuscript/traceability_table.md
 
@@ -252,7 +273,7 @@ uv run ../../ma-manuscript-quarto/scripts/render_manuscript.py \
 cd tooling/python
 uv run ../../ma-peer-review/scripts/init_rob2_assessment.py \
   --extraction ../../05_extraction/round-01/extraction.csv \
-  --out-csv ../../03_screening/round-01/quality_rob2.csv \
+  --out-csv ../../projects/<project-name>/03_screening/round-01/quality_rob2.csv \
   --out-md ../../03_screening/round-01/rob2_assessment.md
 ```
 
@@ -265,7 +286,7 @@ uv run ../../ma-peer-review/scripts/init_rob2_assessment.py \
 cd tooling/python
 uv run ../../ma-peer-review/scripts/init_robins_i_assessment.py \
   --extraction ../../05_extraction/round-01/extraction.csv \
-  --out-csv ../../03_screening/round-01/quality_robins_i.csv \
+  --out-csv ../../projects/<project-name>/03_screening/round-01/quality_robins_i.csv \
   --out-md ../../03_screening/round-01/robins_i_assessment.md
 ```
 
@@ -295,7 +316,7 @@ uv run ../../ma-peer-review/scripts/auto_grade_suggestion.py \
 
 ```bash
 uv run ../../ma-end-to-end/scripts/final_qa_report.py \
-  --root ../.. --round round-01 \
+  --root ../../projects/<project-name> --round round-01 \
   --out 09_qa/final_qa_report.md --out-json 09_qa/final_qa_report.json
 ```
 

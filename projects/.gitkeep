@@ -1,0 +1,2 @@
+# This file ensures the projects/ directory is tracked by Git
+# Individual project contents are ignored via .gitignore

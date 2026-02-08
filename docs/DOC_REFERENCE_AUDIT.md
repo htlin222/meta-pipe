@@ -17,18 +17,21 @@
 本次修復了 **3 個孤兒文件**，將它們連結到主工作流程：
 
 ### 1. `docs/RAYYAN_SETUP.md` (386 行)
+
 - **用途**: Web-based 協作篩選工具設定指南
 - **引用位置**: AGENTS.md (CLAUDE.md) Stage 03: Screening
 - **引用方式**: `[Rayyan Setup Guide](docs/RAYYAN_SETUP.md)`
 - **上下文**: 作為 CSV 篩選流程的替代方案
 
 ### 2. `docs/ZOTERO_SETUP.md` (612 行)
+
 - **用途**: Zotero 參考文獻管理系統詳細設定
 - **引用位置**: AGENTS.md (CLAUDE.md) Stage 02: Search
 - **引用方式**: `[Zotero Setup Guide](docs/ZOTERO_SETUP.md)`
 - **上下文**: Zotero integration 指令後的補充說明
 
 ### 3. `docs/UNPAYWALL_COMPARISON.md` (398 行)
+
 - **用途**: Unpaywall API 版本比較與決策指南
 - **引用位置**: AGENTS.md (CLAUDE.md) Stage 04: Fulltext
 - **引用方式**: `[Unpaywall vs Alternatives](docs/UNPAYWALL_COMPARISON.md)`
@@ -38,23 +41,23 @@
 
 ## 所有文件引用狀態
 
-| 文件 | 引用次數 | 主要引用位置 |
-|------|---------|------------|
-| `API_SETUP.md` | 4 | CLAUDE.md, GETTING_STARTED.md |
-| `JOURNAL_FORMATTING.md` | 1 | CLAUDE.md |
-| `MANUSCRIPT_ASSEMBLY.md` | 1 | CLAUDE.md |
-| `R_FIGURE_GUIDE.md` | 1 | CLAUDE.md |
-| `r-guides/00-setup.md` | 3 | R_FIGURE_GUIDE.md, r-guides/README.md, 09-package-selection.md |
-| `r-guides/01-forest-plots.md` | 5 | CLAUDE.md, R_FIGURE_GUIDE.md, r-guides/README.md, 00-setup.md, 09-package-selection.md |
-| `r-guides/05-table1-gtsummary.md` | 4 | CLAUDE.md, R_FIGURE_GUIDE.md, r-guides/README.md, 00-setup.md |
-| `r-guides/09-package-selection.md` | 2 | R_FIGURE_GUIDE.md, r-guides/README.md |
-| `r-guides/README.md` | 2 | R_FIGURE_GUIDE.md |
-| `RAYYAN_SETUP.md` | 1 | CLAUDE.md (Stage 03) ✅ **新增** |
-| `SKILL_GENERALIZATION.md` | 1 | CLAUDE.md |
-| `TIME_GUIDANCE.md` | 1 | CLAUDE.md |
-| `UNPAYWALL_COMPARISON.md` | 1 | CLAUDE.md (Stage 04) ✅ **新增** |
-| `UNPAYWALL_ROBUST.md` | 2 | CLAUDE.md, UNPAYWALL_COMPARISON.md |
-| `ZOTERO_SETUP.md` | 1 | CLAUDE.md (Stage 02) ✅ **新增** |
+| 文件                               | 引用次數 | 主要引用位置                                                                           |
+| ---------------------------------- | -------- | -------------------------------------------------------------------------------------- |
+| `API_SETUP.md`                     | 4        | CLAUDE.md, GETTING_STARTED.md                                                          |
+| `JOURNAL_FORMATTING.md`            | 1        | CLAUDE.md                                                                              |
+| `MANUSCRIPT_ASSEMBLY.md`           | 1        | CLAUDE.md                                                                              |
+| `R_FIGURE_GUIDE.md`                | 1        | CLAUDE.md                                                                              |
+| `r-guides/00-setup.md`             | 3        | R_FIGURE_GUIDE.md, r-guides/README.md, 09-package-selection.md                         |
+| `r-guides/01-forest-plots.md`      | 5        | CLAUDE.md, R_FIGURE_GUIDE.md, r-guides/README.md, 00-setup.md, 09-package-selection.md |
+| `r-guides/05-table1-gtsummary.md`  | 4        | CLAUDE.md, R_FIGURE_GUIDE.md, r-guides/README.md, 00-setup.md                          |
+| `r-guides/09-package-selection.md` | 2        | R_FIGURE_GUIDE.md, r-guides/README.md                                                  |
+| `r-guides/README.md`               | 2        | R_FIGURE_GUIDE.md                                                                      |
+| `RAYYAN_SETUP.md`                  | 1        | CLAUDE.md (Stage 03) ✅ **新增**                                                       |
+| `SKILL_GENERALIZATION.md`          | 1        | CLAUDE.md                                                                              |
+| `TIME_GUIDANCE.md`                 | 1        | CLAUDE.md                                                                              |
+| `UNPAYWALL_COMPARISON.md`          | 1        | CLAUDE.md (Stage 04) ✅ **新增**                                                       |
+| `UNPAYWALL_ROBUST.md`              | 2        | CLAUDE.md, UNPAYWALL_COMPARISON.md                                                     |
+| `ZOTERO_SETUP.md`                  | 1        | CLAUDE.md (Stage 02) ✅ **新增**                                                       |
 
 ---
 
@@ -105,22 +108,26 @@ done
 ## 維護建議
 
 ### 定期檢查（建議頻率）
+
 - ✅ 每次新增文件後立即檢查
 - ✅ 每月定期稽核一次
 - ✅ 重大重構後全面檢查
 
 ### 新增文件流程
+
 1. 創建新文件於 `docs/` 或 `docs/r-guides/`
 2. 立即在相關主文件中添加引用
 3. 運行孤兒檢查腳本驗證
 4. Commit 時包含引用更新
 
 ### 命名規範
+
 - ✅ 使用描述性名稱（如 `RAYYAN_SETUP.md`）
 - ✅ 大寫用於主題指南（SETUP, GUIDE, COMPARISON）
 - ✅ 小寫數字開頭用於順序指南（01-forest-plots.md）
 
 ### 引用原則
+
 - ✅ 主工作流程文件應引用所有重要指南
 - ✅ 使用 Progressive Disclosure（主文件→子指南）
 - ✅ 相關文件之間建立交叉引用

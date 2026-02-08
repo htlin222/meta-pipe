@@ -112,3 +112,12 @@ Thumbs.db
 !tests/fixtures/**/*.md
 !tests/fixtures/**/*.txt
 !tests/fixtures/**/*.svg
+
+# ==========================================
+# Projects Directory
+# ==========================================
+# Ignore all projects except documented examples
+projects/*
+!projects/.gitkeep
+!projects/ici-breast-cancer/
+!projects/legacy/README.md

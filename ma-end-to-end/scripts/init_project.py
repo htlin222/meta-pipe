@@ -13,11 +13,38 @@ def write_if_missing(path: Path, content: str) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Initialize meta-analysis project folders.")
-    parser.add_argument("--root", default=".", help="Project root (default: current directory)")
+    parser = argparse.ArgumentParser(
+        description="Initialize meta-analysis project folders."
+    )
+    parser.add_argument(
+        "--name",
+        required=True,
+        help="Project name (will be created in projects/<name>/)",
+    )
+    parser.add_argument(
+        "--root", help="Override: specify custom root directory (advanced users only)"
+    )
     args = parser.parse_args()
 
-    root = Path(args.root).resolve()
+    # Determine project root
+    if args.root:
+        # Advanced: user specified custom root
+        root = Path(args.root).resolve()
+    else:
+        # Default: create in projects/<name>/
+        # Assume script is in ma-end-to-end/scripts/, so go up 2 levels to repo root
+        script_dir = Path(__file__).resolve().parent
+        repo_root = script_dir.parent.parent
+        root = repo_root / "projects" / args.name
+
+        if root.exists():
+            print(f"⚠️  Project '{args.name}' already exists at: {root}")
+            response = input("Continue anyway? [y/N]: ")
+            if response.lower() != "y":
+                print("Aborted.")
+                return
+
+    print(f"📁 Creating project at: {root}")
 
     dirs = [
         "01_protocol",
@@ -51,6 +78,11 @@ def main() -> None:
 - [ ] 08_reviews complete (reviewer1, reviewer2, action items)
 """
     write_if_missing(root / "09_qa" / "pipeline-checklist.md", checklist)
+
+    print(f"✅ Project initialized at: {root}")
+    print(f"\nNext steps:")
+    print(f"1. Edit {root}/TOPIC.txt with your research question")
+    print(f"2. Launch Claude Code and say: 'Start project {args.name}'")
 
 
 if __name__ == "__main__":
