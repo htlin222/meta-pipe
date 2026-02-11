@@ -6,14 +6,17 @@ description: Act as Reviewer 1 and Reviewer 2 for a meta-analysis manuscript, ch
 # Ma Peer Review
 
 ## Overview
+
 Perform structured peer review and produce actionable feedback and validation checks.
 
 ## Inputs
+
 - `07_manuscript/` rendered outputs
 - `06_analysis/validation.md`
 - `01_protocol/` and `03_screening/` artifacts
 
 ## Outputs
+
 - `08_reviews/reviewer1.md`
 - `08_reviews/reviewer2.md`
 - `08_reviews/action-items.md`
@@ -27,6 +30,7 @@ Perform structured peer review and produce actionable feedback and validation ch
 - `03_screening/round-01/robins_i_assessment.md` (ROBINS-I narrative)
 
 ## Workflow
+
 1. Reviewer 1 focuses on methodology, inclusion criteria, and statistical validity.
 2. Reviewer 2 focuses on clarity, reporting completeness, and reproducibility.
 3. Record issues with severity, location, and recommended fixes.
@@ -35,6 +39,7 @@ Perform structured peer review and produce actionable feedback and validation ch
 6. Optionally generate preliminary GRADE suggestions with `scripts/auto_grade_suggestion.py`.
 
 ## Resources
+
 - `references/reporting-checks.md` for PRISMA-style reporting checks.
 - `references/grade-template.md` for GRADE evidence profiling.
 - `references/grade-summary-schema.md` for GRADE summary columns.
@@ -46,5 +51,14 @@ Perform structured peer review and produce actionable feedback and validation ch
 - `scripts/init_robins_i_assessment.py` for initializing ROBINS-I assessment tables.
 
 ## Validation
+
 - Verify that methods and results are consistent with the protocol.
 - Confirm that all outputs are reproducible from the stored data and scripts.
+
+## Pipeline Navigation
+
+| Step | Skill                     | Stage                       |
+| ---- | ------------------------- | --------------------------- |
+| Prev | `/ma-manuscript-quarto`   | 07 Manuscript Drafting      |
+| Next | `/ma-publication-quality` | 09 Publication Quality      |
+| All  | `/ma-end-to-end`          | Full pipeline orchestration |

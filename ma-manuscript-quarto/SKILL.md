@@ -6,14 +6,17 @@ description: Draft and render a meta-analysis manuscript with Quarto using an IM
 # Ma Manuscript Quarto
 
 ## Overview
+
 Create a Quarto manuscript with standard IMRaD sections and render to PDF and HTML.
 
 ## Inputs
+
 - `06_analysis/figures/`
 - `06_analysis/tables/`
 - `02_search/round-01/dedupe.bib` or final bibliography
 
 ## Outputs
+
 - `07_manuscript/00_abstract.qmd`
 - `07_manuscript/01_introduction.qmd`
 - `07_manuscript/02_methods.qmd`
@@ -38,6 +41,7 @@ Create a Quarto manuscript with standard IMRaD sections and render to PDF and HT
 - `09_qa/results_consistency_report.md`
 
 ## Workflow
+
 1. Initialize a Quarto project in `07_manuscript/`.
 2. Copy Quarto templates from `assets/quarto/` and adapt to the project.
 3. Embed figures and tables with captions and cross-references.
@@ -56,12 +60,14 @@ Create a Quarto manuscript with standard IMRaD sections and render to PDF and HT
 16. Render to PDF and HTML with `scripts/render_manuscript.py` (blocks if checklists incomplete).
 
 ## Discussion Guidance
+
 - Interpret the main effect estimates and clinical or practical significance.
 - Discuss heterogeneity, sensitivity analyses, and publication bias.
 - Compare findings to prior reviews and explain divergences.
 - State limitations, generalizability, and future research needs.
 
 ## Resources
+
 - `assets/quarto/` provides an IMRaD Quarto scaffold.
 - `scripts/prisma_flow.py` generates a PRISMA flow diagram summary and optional SVG.
 - `scripts/insert_search_report.py` injects search report content into Methods.
@@ -77,6 +83,7 @@ Create a Quarto manuscript with standard IMRaD sections and render to PDF and HT
 - `scripts/render_manuscript.py` validates checklists before rendering.
 
 ## Validation
+
 - Ensure all figures are 300 dpi and tables are reproducible.
 - Cross-check that every result in the text appears in the analysis outputs.
 - Review `07_manuscript/evidence_map.md` before drafting Results.
@@ -86,7 +93,15 @@ Create a Quarto manuscript with standard IMRaD sections and render to PDF and HT
 - Ensure `03_results.qmd` contains all claim IDs and their figure/table refs.
 - Ensure `09_qa/results_consistency_report.md` has no missing items.
 - Ensure each claim includes `citation_keys` and the citations appear in Results.
-Note: `citation_keys` should be comma-separated BibTeX keys present in `07_manuscript/references.bib`.
+  Note: `citation_keys` should be comma-separated BibTeX keys present in `07_manuscript/references.bib`.
 - Note: set `RESULTS_MIN_WORDS` to control minimum words per claim paragraph (default 25).
 - Ensure the study characteristics table is inserted into `03_results.qmd`.
 - Ensure `submission_checklist.md` is tailored to the target journal.
+
+## Pipeline Navigation
+
+| Step | Skill               | Stage                       |
+| ---- | ------------------- | --------------------------- |
+| Prev | `/ma-meta-analysis` | 06 Statistical Analysis     |
+| Next | `/ma-peer-review`   | 08 Peer Review & GRADE      |
+| All  | `/ma-end-to-end`    | Full pipeline orchestration |

@@ -6,13 +6,16 @@ description: Run statistical meta-analysis in R with renv, generate effect estim
 # Ma Meta Analysis
 
 ## Overview
+
 Analyze extracted data using standard meta-analysis methods and produce validated outputs.
 
 ## Inputs
+
 - `05_extraction/extraction.csv`
 - `05_extraction/data-dictionary.md`
 
 ## Outputs
+
 - `06_analysis/01_setup.R`
 - `06_analysis/02_effect_sizes.R`
 - `06_analysis/03_models.R`
@@ -28,6 +31,7 @@ Analyze extracted data using standard meta-analysis methods and produce validate
 - `06_analysis/renv.lock`
 
 ## Workflow
+
 1. Initialize `renv` in `06_analysis/` and record package versions.
 2. Copy the R templates from `assets/r/` into `06_analysis/` and adapt them to the study schema.
 3. Compute effect sizes with `metafor::escalc` for the outcome type.
@@ -39,9 +43,19 @@ Analyze extracted data using standard meta-analysis methods and produce validate
 9. Summarize key results and decisions in `06_analysis/validation.md`.
 
 ## Resources
+
 - `assets/r/` provides a scaffolded R workflow that maps to the standard steps.
 - `references/r-meta-roadmap.md` summarizes the expected analysis tasks.
 
 ## Validation
+
 - Reproduce key estimates from at least one study subset.
 - Confirm that effect sizes match the extraction units and directionality.
+
+## Pipeline Navigation
+
+| Step | Skill                   | Stage                       |
+| ---- | ----------------------- | --------------------------- |
+| Prev | `/ma-data-extraction`   | 05 Data Extraction          |
+| Next | `/ma-manuscript-quarto` | 07 Manuscript Drafting      |
+| All  | `/ma-end-to-end`        | Full pipeline orchestration |

@@ -6,19 +6,23 @@ description: Conduct literature searches for meta-analysis using Python with uv,
 # Ma Search Bibliography
 
 ## Overview
+
 Run reproducible database searches, capture the search strategy, and produce versioned `.bib` files.
 
 ## Inputs
+
 - `01_protocol/search-plan.md`
 - `01_protocol/pico.yaml`
 
 ## Outputs
+
 - `02_search/round-01/queries.txt`
 - `02_search/round-01/results.bib`
 - `02_search/round-01/dedupe.bib`
 - `02_search/round-01/log.md`
 
 ## Workflow
+
 1. Translate PICO terms into database-specific queries and save them in `queries.txt`.
 2. Initialize Python tooling with uv in `tooling/python/` using `uv init` and `uv add` dependencies.
 3. Run search scripts with `uv run` from `tooling/python/` (avoid direct `python3` calls).
@@ -29,12 +33,14 @@ Run reproducible database searches, capture the search strategy, and produce ver
 8. If running updates, increment the round folder name and record deltas.
 
 ## PubMed Implementation Notes
+
 - Use `scripts/pubmed_fetch.py` for the default PubMed pipeline with `uv run`.
 - Set an email and API key, respect rate limits, and use history for batch retrieval.
 - See `references/pubmed-eutils.md` for a compact tutorial and API notes.
 - Read API keys from `.env` in the project root.
 
 ## Resources
+
 - `scripts/pubmed_fetch.py` fetches PubMed records and writes BibTeX.
 - `scripts/dedupe_bib.py` removes duplicate records based on DOI, PMID, or title.
 - `scripts/build_queries.py` builds multi-DB queries from `pico.yaml`.
@@ -57,9 +63,19 @@ Run reproducible database searches, capture the search strategy, and produce ver
 - `references/emtree-synonyms-template.csv` provides a template for Emtree synonyms.
 
 ## Notes
+
 - Keep all rounds. Do not overwrite prior `.bib` files.
 - Add a short note in each `.bib` entry for the round (example: `note = {round-01}` ).
 
 ## Validation
+
 - Confirm query coverage matches the protocol scope.
 - Verify dedupe retains the best metadata per record.
+
+## Pipeline Navigation
+
+| Step | Skill                   | Stage                       |
+| ---- | ----------------------- | --------------------------- |
+| Prev | `/ma-topic-intake`      | 01 Protocol & PICO          |
+| Next | `/ma-screening-quality` | 03 Screening & Quality      |
+| All  | `/ma-end-to-end`        | Full pipeline orchestration |
