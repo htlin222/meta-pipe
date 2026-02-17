@@ -78,7 +78,7 @@ docs/archive/dev-logs/
 docs/archive/test-reports/
 
 # R environment files (should be in projects, not root)
-/renv.lock
+# renv.lock is now tracked for reproducibility
 
 # Data science conventional dirs (raw/intermediate outputs)
 # Note: plain-text artifacts are tracked; rely on the binary-extension ignores below.
