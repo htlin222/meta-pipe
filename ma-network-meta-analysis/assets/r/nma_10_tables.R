@@ -16,7 +16,10 @@ library(flextable)
 # This script focuses on the summary table and export formats.
 cat("Note: Full league table is in nma_08_league_table.R\n")
 
-# --- 2. Summary table: all treatments vs reference ---
+# --- 2. Compute P-score ranking (needed for summary table) ---
+ranking <- netrank(net_re, small.values = "undesirable")
+
+# --- 3. Summary table: all treatments vs reference ---
 ref_treat <- net_re$reference.group
 if (is.null(ref_treat)) {
   ref_treat <- sort(net_re$trts)[1]

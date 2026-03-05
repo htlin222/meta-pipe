@@ -218,7 +218,14 @@ Rate certainty of evidence per comparison across 6 domains. **Non-negotiable for
 
 **Judgment levels**: No concerns → Some concerns (-1) → Major concerns (-2)
 
-**Workflow**: Export NMA results + RoB → upload to CINeMA web app → rate each domain → download summary → include as Table S10 in supplement.
+**Workflow** (manual — CINeMA is web-only, no R automation exists):
+1. Export NMA results + RoB data from R
+2. Upload to [CINeMA web app](https://cinema.ispm.unibe.ch/)
+3. Rate each domain per pairwise comparison
+4. Download summary CSV → save as `08_reviews/cinema_assessment.csv`
+5. Include as Table S10 in supplement
+
+`nma_09_sensitivity.R` generates a blank `cinema_template.csv` to help structure your ratings.
 
 ## Validation
 

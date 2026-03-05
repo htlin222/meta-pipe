@@ -106,7 +106,32 @@ cat("\n=== High RoB Sensitivity ===\n")
 cat("Adapt this section with your risk-of-bias classifications.\n")
 
 # =============================================================================
-# SECTION D: CINeMA (GRADE FOR NMA) — FRAMEWORK
+# SECTION D: CONTRIBUTION MATRIX
+# =============================================================================
+
+cat("\n=== Contribution Matrix ===\n")
+cat("Shows how much each direct comparison contributes to each NMA estimate.\n\n")
+
+# netcontrib() requires netmeta >= 2.5.0
+if (packageVersion("netmeta") >= "2.5.0") {
+  nc <- netcontrib(net_re)
+  contrib_df <- as.data.frame(nc$random)
+  write.csv(contrib_df, file.path(TBL_DIR, "contribution_matrix.csv"), row.names = TRUE)
+  cat("Contribution matrix saved to", file.path(TBL_DIR, "contribution_matrix.csv"), "\n")
+
+  # Heatmap of contributions
+  png(file.path(FIG_DIR, "nma_contribution_heatmap.png"),
+      width = FIG_WIDTH + 2, height = FIG_HEIGHT + 2, units = "in", res = FIG_DPI)
+  netheat(net_re, random = TRUE)
+  dev.off()
+  cat("Contribution heatmap saved to", file.path(FIG_DIR, "nma_contribution_heatmap.png"), "\n")
+} else {
+  cat("netcontrib() requires netmeta >= 2.5.0. Skipping contribution matrix.\n")
+  cat("Update with: install.packages('netmeta')\n")
+}
+
+# =============================================================================
+# SECTION E: CINeMA (GRADE FOR NMA) — FRAMEWORK
 # =============================================================================
 
 cat("\n=== CINeMA Assessment Framework (GRADE for NMA) ===\n")
@@ -161,7 +186,7 @@ cat("CINeMA template saved to", file.path(TBL_DIR, "cinema_template.csv"), "\n")
 cat("Fill in each domain rating and overall certainty.\n")
 
 # =============================================================================
-# SECTION E: SAVE SENSITIVITY REPORT
+# SECTION F: SAVE SENSITIVITY REPORT
 # =============================================================================
 
 sink("nma_sensitivity_report.txt")
