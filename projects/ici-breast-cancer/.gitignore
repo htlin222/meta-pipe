@@ -1,0 +1,72 @@
+# Meta-analysis project .gitignore template
+# Generated for meta-pipe projects
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+renv/library/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/python/
+renv/sandbox/
+renv/staging/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+env/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+.#*
+
+# Large data files (optional - uncomment if needed)
+# *.pdf
+# *.docx
+# fulltext/
+# 04_fulltext/*.pdf
+
+# Sensitive data (uncomment if project contains PHI/PII)
+# *_sensitive.csv
+# *_identifiable.csv
+
+# Output files (keep source, ignore generated)
+*.log
+*.aux
+*.out
+*.synctex.gz
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Session logs (optional - keep if tracking progress)
+# *_session_log.md
+
+# Archive folders (optional - keep for history)
+# _archive/
