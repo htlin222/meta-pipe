@@ -36,3 +36,8 @@
 | L1 | Language | Language not meeting criteria |
 | D1 | Duplicate | Duplicate or superseded publication |
 | NONE | — | No exclusion (include or maybe) |
+
+## Usage by Stage
+
+- **Stage 03 (title/abstract screening)**: All codes apply. Decision can be `include`, `exclude`, or `maybe`.
+- **Stage 04b (full-text screening)**: All codes apply. Decision is `include` or `exclude` only (no `maybe` — full text should resolve uncertainty). Excluded studies and their codes feed into PRISMA 2020 flow diagram item 16.

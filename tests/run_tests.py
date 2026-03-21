@@ -151,6 +151,35 @@ def test_agreement():
         return False
 
 
+def test_fulltext_agreement():
+    """Test full-text dual-review agreement calculation."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_md = Path(tmpdir) / "ft_agreement.md"
+
+        success, output = run_cmd(
+            [
+                "uv",
+                "run",
+                str(SCRIPTS["agreement"]),
+                "--file",
+                str(FIXTURES / "04_fulltext" / "fulltext_decisions.csv"),
+                "--col-a",
+                "FT_Reviewer1_Decision",
+                "--col-b",
+                "FT_Reviewer2_Decision",
+                "--out",
+                str(out_md),
+            ],
+            "Calculate full-text dual-review agreement",
+        )
+
+        if success and out_md.exists():
+            content = out_md.read_text()
+            print(f"  Output preview: {content[:200]}...")
+            return "kappa" in content.lower() or "agreement" in content.lower()
+        return False
+
+
 def test_build_queries():
     """Test query building from PICO."""
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -187,6 +216,7 @@ def main():
         ("Deduplication", test_dedupe),
         ("Multi-DB Merge", test_multi_dedupe),
         ("Dual-Review Agreement", test_agreement),
+        ("Full-text Agreement", test_fulltext_agreement),
         ("Build Queries", test_build_queries),
     ]
 

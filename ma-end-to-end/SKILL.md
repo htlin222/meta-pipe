@@ -63,7 +63,15 @@ tooling/python/   # uv project
 4. Collect full texts and build a manifest in `04_fulltext/`.
    - Use `/ma-fulltext-management` skill
    - Write to `04_fulltext/manifest.csv`, `04_fulltext/*.pdf`
+4b. **Full-text eligibility screening** (PRISMA 2020 item 16 — mandatory).
+    - Use `/ma-fulltext-management` skill (Stage 04b section)
+    - Run `uv run tooling/python/ai_screen.py --project <name> --stage fulltext --reviewer 1`
+    - Run `uv run tooling/python/ai_screen.py --project <name> --stage fulltext --reviewer 2`
+    - Compute kappa: `uv run ma-screening-quality/scripts/dual_review_agreement.py --file 04_fulltext/fulltext_decisions.csv --col-a FT_Reviewer1_Decision --col-b FT_Reviewer2_Decision --out 04_fulltext/ft_agreement.md`
+    - Resolve conflicts, then only `FT_Final_Decision = include` rows proceed to Stage 05
+    - Write to `04_fulltext/fulltext_decisions.csv`, `04_fulltext/ft_agreement.md`
 5. Extract data into a normalized database in `05_extraction/`.
+   - **Input**: Only studies with `FT_Final_Decision = include` from `04_fulltext/fulltext_decisions.csv`
    - Use `/ma-data-extraction` skill
    - Write to `05_extraction/extraction.sqlite`, `05_extraction/extraction.csv`, `05_extraction/data-dictionary.md`
 6. Run meta-analysis in R with `renv`, generate figures and tables in `06_analysis/`.

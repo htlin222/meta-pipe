@@ -72,6 +72,7 @@ def main() -> None:
 - [ ] 02_search round-01 complete (queries, results, dedupe, log)
 - [ ] 03_screening round-01 complete (decisions, exclusions, quality, included)
 - [ ] 04_fulltext complete (manifest + PDFs)
+- [ ] 04b_fulltext_screening complete (fulltext_decisions.csv + ft_agreement.md)
 - [ ] 05_extraction complete (db, csv, data dictionary, log)
 - [ ] 06_analysis complete (scripts, figures, tables, validation)
 - [ ] 07_manuscript complete (IMRaD + renders)

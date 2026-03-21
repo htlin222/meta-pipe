@@ -28,9 +28,9 @@ STAGES = {
         "validation": lambda p: (p / "round-01" / "decisions.csv").exists(),
     },
     "04_fulltext": {
-        "name": "Full-text Retrieval",
-        "key_files": ["round-01/unpaywall_results.csv", "round-01/pdfs/"],
-        "validation": lambda p: (p / "round-01" / "unpaywall_results.csv").exists(),
+        "name": "Full-text Retrieval & Screening",
+        "key_files": ["manifest.csv", "fulltext_decisions.csv", "ft_agreement.md"],
+        "validation": lambda p: (p / "manifest.csv").exists(),
     },
     "05_extraction": {
         "name": "Data Extraction",

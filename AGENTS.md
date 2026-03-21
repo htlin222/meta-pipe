@@ -73,6 +73,7 @@ meta-pipe/
 | 03    | `/ma-screening-quality`     | Dual-review screening, kappa        | Use skill for detailed commands  |
 | 03b   | `/ma-screening-quality`     | **Analysis type confirmation gate** | Confirm NMA vs pairwise (Step 8) |
 | 04    | `/ma-fulltext-management`   | PDF retrieval, Unpaywall            | Use skill for detailed commands  |
+| 04b   | `/ma-fulltext-management`   | **Full-text eligibility screening** | `ai_screen.py --stage fulltext`  |
 | 05    | `/ma-data-extraction`       | Data extraction, RoB assessment     | Use skill for detailed commands  |
 | 06a   | `/ma-meta-analysis`         | Pairwise MA (R scripts 01-12)       | Use skill for detailed commands  |
 | 06b   | `/ma-network-meta-analysis` | NMA (R scripts nma_01-10)           | Use skill for detailed commands  |
