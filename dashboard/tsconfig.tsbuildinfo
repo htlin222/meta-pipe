@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/api.ts","./src/main.tsx","./src/types.ts","./src/vite-env.d.ts","./src/components/dependencygraph.tsx","./src/components/header.tsx","./src/components/projectcard.tsx","./src/components/stagetimeline.tsx","./src/hooks/useprojects.ts"],"version":"5.9.3"}
