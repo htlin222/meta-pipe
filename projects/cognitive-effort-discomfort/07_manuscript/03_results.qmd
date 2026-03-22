@@ -1,0 +1,80 @@
+# Results
+
+## Search Results
+
+The search across three databases yielded 4,136 records: PubMed contributed 3,295 (L1: 323, L2: 232, L3: 435, L4: 2,063, L5: 242), CrossRef contributed 550, and Semantic Scholar contributed 291 (47 from keyword search, 244 from citation chaining of 4 seed papers). After deduplication, 4,007 unique records remained.
+
+Round 1 screening identified 1,099 records as "include" and 162 as "maybe" (total 1,261; 31.5% of records). Round 2 screening applied stricter co-occurrence criteria, yielding 90 studies for full charting (2.2% of initial records, 7.1% of Round 1 inclusions).
+
+## Characteristics of Included Studies
+
+### Study Designs
+The 90 included studies comprised experimental studies (n=19), neuroimaging studies (n=2), theoretical/conceptual papers (n=5), and other designs (n=64). The predominance of behavioral experimental designs reflects the field's emphasis on task-based paradigms.
+
+### Populations
+Healthy adults were the most common study population (58%), followed by unspecified populations (24%), theoretical papers with no empirical sample (11%), mixed populations (4%), and tension-type headache patients (2%).
+
+### Temporal Distribution
+Publications spanned 2005-2026, with acceleration after 2016 (72% of included studies published 2016 or later), driven by the Expected Value of Control model [@shenhav2017] and the glutamate accumulation finding [@wiehler2022].
+
+## Layer-by-Layer Synthesis
+
+### Layer 1: Why Effort Is Aversive (n = 4)
+
+Three foundational theoretical papers define this layer. The Opportunity Cost Model [@kurzban2013] reframes fatigue not as resource depletion but as a motivating signal about the value of alternative resource uses. The Effort Paradox synthesis [@inzlicht2018] documents that effort is simultaneously costly and valued. The Expected Value of Control (EVC) framework [@shenhav2017] provides the mechanistic account, positioning dACC as the key arbitrator of effort allocation.
+
+**What this layer establishes**: Effort feels aversive because engaging in one task forecloses other activities; "fatigue" is a signal, not exhaustion.
+
+**What it does not address**: The specific discomfort *quality* of effort aversion — why it sometimes surfaces as somatic/head symptoms rather than purely as motivational withdrawal.
+
+### Layer 2: Neural Metabolic Cost (n = 10)
+
+The landmark finding is Wiehler et al.'s (2022) MRS demonstration that glutamate accumulates in lateral PFC (not visual cortex V1) after a day of cognitive control demands. This neuro-metabolic account shows that lPFC activation becomes progressively more costly as glutamate builds up, driving a shift toward low-effort, low-delay economic choices.
+
+Christie and Schrater (2015) complement this with a theoretical model proposing astrocytic glycogen as the energetic buffer: the brain rationally conserves activity to manage this finite budget. Otto et al. (2018) identify a left-lateralized fatigue-tracking network (anterior insula, ACC, striatum) using fMRI during simulated workday conditions.
+
+**What this layer establishes**: Cognitive effort has measurable metabolic costs in specific brain regions.
+
+**Critical limitation**: No study measures real-time discomfort simultaneously with metabolic markers. The Wiehler et al. study measured next-day decision shifts, not in-task phenomenology.
+
+### Layer 3: Effort as Aversive Signal (n = 8)
+
+The EVC model [@shenhav2013] positions dACC as computing the expected value of cognitive control allocation. Studies in this layer demonstrate dACC activation correlates with subjective effort reports and predicts effort-avoidance behavior. Yee et al. (2022) extend the framework to show how aversive motivation modulates cognitive control via dACC-dopamine-serotonin interactions.
+
+**What this layer establishes**: dACC functions as an "effort meter" whose signal has behavioral consequences.
+
+**What it does not address**: The model is silent on the conscious *experience* of fatigue — how the computational signal becomes a feeling, and whether that feeling has somatic content.
+
+### Layer 4: Predictive Processing / Allostatic Framing (n = 12)
+
+The Free Energy Principle [@friston2010] and Active Interoceptive Inference framework [@seth2016] provide the theoretical bridge. Under these accounts, the brain continuously predicts its own internal states. Sustained cognitive effort creates a discrepancy between the predicted state (resourced, rested) and the actual state (metabolically depleted). This interoceptive prediction error surfaces as conscious discomfort — a correctly generated allostatic signal to drive behavior change.
+
+This is the most theoretically adjacent layer to the core question: it explains *why effort has a feeling* and *why that feeling is aversive*. However, it is also the layer with the most inferential distance between theory and data: no study has experimentally tested interoceptive prediction error specifically during cognitive fatigue.
+
+### Layer 5: Pain/Headache Literature (n = 2)
+
+Cathcart et al. (2009, 2010) demonstrated stress-hyperalgesia in TTH patients: mental stress lowers pain thresholds, amplifying pericranial nociception. The ICHD-3 diagnostic framework establishes TTH as both peripherally and centrally mediated.
+
+**Critical isolation**: This layer studies diagnosed clinical populations exclusively. Its mechanistic account (peripheral sensitization + central modulation) is disconnected from the effort-economics and predictive-processing literatures. No study examines whether the headache-like quality of cognitive fatigue in healthy individuals involves the same peripheral mechanisms or is entirely central/interoceptive.
+
+## Evidence Gap Map
+
+Cross-tabulating literature layers against outcome types reveals seven critical gaps (see Table 2). The most important:
+
+1. **Head-localized discomfort × Layers 1-4**: No study in the effort, metabolic, EVC, or predictive processing literatures has measured head-specific discomfort.
+2. **Interoceptive accuracy × Layers 1-3**: Interoceptive sensitivity as a moderator of effort discomfort is untested.
+3. **Effort discounting × Layer 4-5**: Effort economics has never been combined with predictive processing or headache measures.
+4. **MRS metabolites × Layers 3-5**: Glutamate accumulation is established (1 study) but never replicated or combined with effort signals or headache assessment.
+
+## Revised Conceptual Model
+
+Integrating evidence from all five layers, we propose a six-step mechanistic pathway:
+
+1. Sustained cognitive control demand (L1, L3)
+2. Glutamate accumulation in lPFC + glycogen depletion in astrocytes (L2)
+3. lPFC activation becomes metabolically costly (L2)
+4. EVC signal in dACC: cost of further control exceeds expected benefit (L3)
+5. Interoceptive prediction error: internal state deviates from predicted optimum (L4)
+6. Discomfort surfaced to conscious awareness via anterior insula/dACC (L2-L4)
+
+The behavioral outcome then diverges: in non-sensitized individuals, vague fatigue and motivational withdrawal; in sensitized or migraine-prone individuals, pericranial referral producing headache-quality discomfort (L5).

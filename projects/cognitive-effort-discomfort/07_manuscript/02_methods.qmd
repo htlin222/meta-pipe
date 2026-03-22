@@ -1,0 +1,49 @@
+# Methods
+
+## Protocol and Registration
+
+This scoping review was conducted following the Arksey and O'Malley framework [@arksey2005] with enhancements from Levac et al. [@levac2010] and reported according to PRISMA-ScR guidelines [@tricco2018]. The protocol was developed prospectively and is available in the project repository.
+
+## Eligibility Criteria
+
+### Population
+Adults (age ≥ 18) without a current headache disorder diagnosis. Studies with diagnosed headache patients were included only if healthy control data were reported separately.
+
+### Concept
+Sustained cognitive effort and its relationship to somatic discomfort, including fatigue, aversion, effort avoidance, and head-localized discomfort. This encompasses both empirical studies measuring these phenomena and theoretical/conceptual papers proposing mechanistic frameworks.
+
+### Context
+Any setting, including laboratory experiments, simulated work environments, and ecological contexts. No geographic or temporal restrictions.
+
+### Study Designs
+All designs were eligible: randomized controlled trials, within-subjects experimental designs, observational studies, neuroimaging studies, narrative and systematic reviews, and theoretical/computational modeling papers. This inclusive approach reflects the scoping review's goal of mapping a heterogeneous cross-disciplinary terrain.
+
+### Exclusion Criteria
+Studies exclusively on diagnosed headache patients without healthy controls; animal studies; pediatric populations (age < 18); non-English full text; conference abstracts without sufficient methodological detail.
+
+## Information Sources and Search Strategy
+
+Three databases were searched on March 22, 2026: PubMed (primary), CrossRef (supplementary), and Semantic Scholar (supplementary with citation chaining). The search was structured around five pre-specified literature layers:
+
+- **Layer 1** (effort aversion): cognitive effort, mental effort, effort cost, aversive, opportunity cost, fatigue
+- **Layer 2** (metabolic cost): glutamate, glycogen, metabolic cost, neuro-metabolic, prefrontal, depletion
+- **Layer 3** (dACC/EVC): expected value of control, dorsal anterior cingulate, dACC, cognitive control cost
+- **Layer 4** (predictive processing): interoceptive, prediction error, allostatic, active inference, cognitive fatigue
+- **Layer 5** (headache bridging): cognitive/mental stress, headache, discomfort, healthy/non-clinical populations
+
+Five PubMed queries were executed using title/abstract field tags ([tiab]). Equivalent plain-text queries were run on CrossRef. Semantic Scholar was searched with keyword queries and citation chaining (forward and backward) from four seed papers with known DOIs [@wiehler2022; @christie2015; @otto2018; @yee2022]. Full query strings are provided in the supplementary materials.
+
+## Selection of Sources of Evidence
+
+Screening was conducted in two rounds using automated keyword matching followed by manual verification:
+
+- **Round 1**: Title/abstract screening against inclusion keywords (organized by layer) and exclusion patterns. Records matching at least one layer keyword or scoring ≥ 3 on a multi-term relevance index were retained. This reduced 4,007 records to 1,261.
+- **Round 2**: Tighter screening requiring both an effort-relevant term AND an outcome-relevant term to co-occur. Known seed papers were automatically included. This produced 90 studies for charting.
+
+## Data Charting
+
+A standardized charting table was developed with 18 fields: study identifiers (ID, authors, year, DOI), classification (literature layer, study design, population), methodological details (cognitive task, task duration, sample size), and outcomes (outcome measures, discomfort type, key finding, theoretical framework, limitations). Data were extracted from titles, abstracts, and available full texts. The charting table is available as a supplementary CSV file.
+
+## Synthesis of Results
+
+Results were synthesized narratively, organized by the five pre-specified literature layers. An evidence gap map was constructed cross-tabulating literature layers against outcome types and study designs. Critical gaps were identified as empty or near-empty cells in this matrix that represent important mechanistic questions.

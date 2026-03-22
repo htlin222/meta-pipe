@@ -1,0 +1,17 @@
+# Introduction
+
+Sustained cognitive effort is universally experienced as aversive. After hours of demanding intellectual work, individuals commonly report fatigue, difficulty concentrating, motivational withdrawal, and, notably, a diffuse discomfort that some describe in headache-like terms. This experience occurs in healthy individuals with no headache disorder, suggesting it reflects a fundamental feature of how the brain manages its computational resources rather than a pathological process.
+
+Despite its ubiquity, the question of *why thinking hard produces discomfort* has been approached by at least five largely disconnected research communities. Cognitive psychologists have modeled effort as an opportunity cost signal [@kurzban2013]. Neuroeconomists have identified dorsal anterior cingulate cortex (dACC) as the brain's "effort meter," computing the expected value of cognitive control [@shenhav2017; @shenhav2013]. Neurometabolic researchers have demonstrated that glutamate accumulates in lateral prefrontal cortex (lPFC) after sustained cognitive work, driving behavioral shifts toward low-effort choices [@wiehler2022]. Predictive processing theorists have proposed that discomfort arises from interoceptive prediction error — a mismatch between the brain's model of its own internal state and the actual metabolic reality [@friston2010; @seth2016]. Meanwhile, headache medicine has studied tension-type headache (TTH) as a stress-hyperalgesia phenomenon, largely ignoring the cognitive neuroscience of effort altogether [@cathcart2009; @cathcart2010].
+
+These five literatures speak to different aspects of the same phenomenon but rarely cite each other. The result is a fragmented understanding: we have models of why effort is costly (Layer 1), evidence of metabolic cost (Layer 2), neural mechanisms for effort computation (Layer 3), a theoretical framework for how internal signals become conscious discomfort (Layer 4), and clinical data on headache triggered by mental stress (Layer 5) — but no integrated account.
+
+## Aims
+
+This scoping review has three objectives:
+
+1. To map the breadth and distribution of research across these five literature layers, identifying what has been studied, with what methods, and in which populations.
+2. To identify critical gaps in the evidence base, particularly at the intersections between layers.
+3. To propose a revised conceptual model that integrates across layers and to identify the most productive empirical next steps.
+
+We follow the Arksey and O'Malley framework for scoping reviews [@arksey2005], enhanced by the PRISMA extension for Scoping Reviews (PRISMA-ScR) [@tricco2018]. This approach is appropriate because the field is characterized by heterogeneous outcome measures, diverse study designs spanning behavioral experiments to theoretical modeling, and cross-disciplinary fragmentation that precludes quantitative synthesis.

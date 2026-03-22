@@ -1,0 +1,17 @@
+---
+title: "The Cognitive Cost of Thinking Hard: A Scoping Review of Sustained Effortful Cognition and Somatic Discomfort"
+---
+
+## Abstract
+
+**Background.** Sustained cognitive effort commonly produces discomfort, including fatigue, aversion, and occasionally headache-like sensations, even in healthy individuals without headache disorders. The mechanisms underlying this phenomenon span at least five disconnected literatures: cognitive effort economics, neuro-metabolic fatigue, dorsal anterior cingulate cortex (dACC) signaling, predictive processing and interoception, and headache medicine. No existing review has mapped these literatures jointly.
+
+**Objectives.** To systematically map the breadth, nature, and gaps of research on why sustained cognitive effort produces somatic discomfort, and to identify opportunities for cross-disciplinary integration.
+
+**Methods.** We conducted a scoping review following the Arksey and O'Malley framework and PRISMA-ScR guidelines. Three databases were searched (PubMed, CrossRef, Semantic Scholar) with citation chaining from 11 seed papers. A total of 4,007 unique records were screened in two rounds; 90 studies met inclusion criteria and were charted across five pre-specified literature layers.
+
+**Results.** The review revealed substantial evidence that cognitive effort is aversive (Layer 1, n=4), has measurable metabolic costs in lateral prefrontal cortex (Layer 2, n=10), is computed by dACC as an expected-value-of-control signal (Layer 3, n=8), and can be framed as interoceptive prediction error under predictive processing accounts (Layer 4, n=12). However, the headache-specific literature (Layer 5, n=2) remains isolated from cognitive neuroscience, studying only clinical populations. Seven critical gaps were identified, most notably: no study has jointly measured effort-based decision shifts and somatic discomfort localization in the same paradigm; no experimental test of interoceptive prediction error during cognitive fatigue exists; and the healthy non-clinical population is absent from the discomfort-specific literature.
+
+**Conclusions.** The discomfort of sustained thinking is best understood as a correctly generated allostatic signal, not a pathological response. We propose a revised six-step mechanistic model integrating metabolic, computational, and interoceptive accounts. The evidence map reveals that the field is not ready for meta-analysis due to heterogeneous outcome operationalization. A specific experiment is proposed to fill the most critical identified gap.
+
+**Keywords:** cognitive effort, mental fatigue, expected value of control, interoceptive prediction error, allostasis, scoping review

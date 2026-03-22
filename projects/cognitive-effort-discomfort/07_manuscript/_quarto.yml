@@ -1,0 +1,28 @@
+project:
+  type: default
+  output-dir: _output
+
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    css: styles.css
+  pdf:
+    documentclass: article
+    geometry:
+      - margin=1in
+    fontsize: 11pt
+    linestretch: 1.5
+    number-sections: true
+  docx:
+    toc: true
+    number-sections: true
+
+bibliography: references.bib
+csl: frontiers.csl
+
+execute:
+  echo: false
+  warning: false

@@ -1,0 +1,113 @@
+title: >
+  The Cognitive Cost of Thinking Hard: Why sustained effortful cognition
+  produces discomfort — a scoping review
+
+type: scoping_review
+
+population:
+  description: Healthy adults without current headache disorder
+  inclusion:
+    - Adults (age >= 18)
+    - No current headache diagnosis (TTH, migraine)
+    - No migraine in past 3 months
+  exclusion:
+    - Diagnosed headache disorder patients (unless healthy control group reported)
+    - Children/adolescents
+    - Animal studies
+
+intervention:
+  description: Sustained cognitive task >= 30 minutes
+  examples:
+    - N-back (2-back, 3-back)
+    - Stroop task
+    - Working memory tasks
+    - Attentional control tasks
+    - Simulated workday paradigms
+    - Continuous performance tasks
+
+comparator:
+  description: Rest or low-demand control condition
+  examples:
+    - Passive rest
+    - Low-demand visual matching
+    - Button press without cognitive load
+
+outcomes:
+  primary:
+    - Somatic discomfort (VAS, NRS)
+    - Effort discounting (indifference points)
+    - Subjective fatigue ratings
+  secondary:
+    - Head-localized discomfort
+    - Pupillometry (cognitive load index)
+    - fMRI activation patterns (dACC, anterior insula, lPFC)
+    - MRS metabolic markers (glutamate, glycogen)
+    - Pericranial tenderness (PPT)
+    - Task performance metrics (d-prime, RT)
+
+study_designs:
+  - RCT
+  - Within-subjects experimental
+  - Between-subjects experimental
+  - Observational
+  - Theoretical/review (for framework papers)
+
+analysis_type:
+  preliminary: scoping_review
+  confirmed: scoping_review
+  rationale: >
+    Outcomes not consistently operationalized across studies.
+    Manipulations range from 15-min Stroop to 8-hour simulated workday.
+    Healthy non-clinical population nearly absent from existing literature.
+    Zero studies jointly measure interoceptive discomfort localization
+    and effort economics. Nothing to pool for meta-analysis.
+
+literature_layers:
+  L1:
+    name: Why effort is aversive
+    keywords:
+      - cognitive effort
+      - mental effort
+      - effort cost
+      - opportunity cost
+      - effort paradox
+  L2:
+    name: Neural metabolic cost
+    keywords:
+      - glutamate accumulation
+      - glycogen depletion
+      - neuro-metabolic
+      - prefrontal cortex fatigue
+      - metabolic cost cognition
+  L3:
+    name: Effort as aversive signal
+    keywords:
+      - expected value of control
+      - dorsal anterior cingulate
+      - dACC
+      - effort meter
+      - aversive motivation
+  L4:
+    name: Predictive processing / allostatic
+    keywords:
+      - interoceptive prediction error
+      - active inference
+      - allostatic
+      - free energy principle
+      - interoceptive
+  L5:
+    name: Pain/headache bridging
+    keywords:
+      - cognitive stress headache
+      - mental fatigue headache
+      - tension-type headache healthy
+      - stress hyperalgesia
+      - pericranial tenderness
+
+databases:
+  - PubMed
+  - CrossRef
+  - Semantic Scholar
+
+date_range: null  # no restriction
+language: English

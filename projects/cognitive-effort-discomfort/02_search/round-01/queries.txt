@@ -1,0 +1,49 @@
+# Search Queries — Scoping Review: Cognitive Cost of Thinking Hard
+# Date: 2026-03-22
+# Databases: PubMed, CrossRef, Semantic Scholar
+
+## PubMed Queries
+
+[L1-effort-aversion]
+("cognitive effort"[tiab] OR "mental effort"[tiab] OR "effort cost"[tiab]) AND ("aversive"[tiab] OR "opportunity cost"[tiab] OR "fatigue"[tiab] OR "discomfort"[tiab])
+
+[L2-metabolic-cost]
+("glutamate"[tiab] OR "glycogen"[tiab] OR "metabolic cost"[tiab] OR "neuro-metabolic"[tiab]) AND ("cognitive"[tiab] OR "prefrontal"[tiab] OR "working memory"[tiab]) AND ("fatigue"[tiab] OR "effort"[tiab] OR "depletion"[tiab])
+
+[L3-EVC-dACC]
+("expected value of control"[tiab] OR "dorsal anterior cingulate"[tiab] OR "dACC"[tiab]) AND ("effort"[tiab] OR "cognitive control"[tiab] OR "cost"[tiab])
+
+[L4-predictive-processing]
+("interoceptive"[tiab] OR "prediction error"[tiab] OR "allostatic"[tiab] OR "active inference"[tiab]) AND ("fatigue"[tiab] OR "discomfort"[tiab] OR "effort"[tiab] OR "cognitive"[tiab])
+
+[L5-headache-healthy]
+("cognitive"[tiab] OR "mental"[tiab]) AND ("stress"[tiab] OR "fatigue"[tiab]) AND ("headache"[tiab] OR "head pain"[tiab] OR "discomfort"[tiab]) AND ("healthy"[tiab] OR "non-clinical"[tiab] OR "normal"[tiab])
+
+## CrossRef Queries (plain text, relevance-ranked)
+
+[L1] cognitive effort aversive fatigue discomfort opportunity cost
+[L2] glutamate cognitive fatigue prefrontal metabolic effort depletion
+[L3] expected value of control dorsal anterior cingulate cognitive effort
+[L4] interoceptive prediction error allostatic active inference cognitive fatigue
+[L5] cognitive mental stress fatigue headache discomfort healthy normal
+
+## Semantic Scholar
+
+[keyword] cognitive effort aversive fatigue discomfort
+[keyword2] sustained cognitive effort metabolic cost headache interoceptive
+[citation-chain] DOIs: 10.1016/j.cub.2022.07.010, 10.3389/fnins.2015.00289, 10.1371/journal.pone.0198204, 10.1016/j.neubiorev.2021.12.016
+
+## Results Summary
+
+| Source | Records |
+|--------|---------|
+| PubMed L1 | 323 |
+| PubMed L2 | 232 |
+| PubMed L3 | 435 |
+| PubMed L4 | 2063 |
+| PubMed L5 | 242 |
+| CrossRef (5 layers) | 550 |
+| Semantic Scholar keyword | 47 |
+| Semantic Scholar citation chain | 244 |
+| **Total before dedup** | **4136** |
+| **After dedup** | **4007** |

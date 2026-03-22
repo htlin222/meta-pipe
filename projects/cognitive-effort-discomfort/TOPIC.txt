@@ -1,0 +1,43 @@
+Literature Map: The Cognitive Cost of Thinking Hard
+Why sustained effortful cognition produces discomfort — a cognitive neuroscience framing
+
+TYPE: Scoping Review (NOT meta-analysis — field not ready for quantitative synthesis)
+
+RESEARCH QUESTION:
+Why does sustained cognitive effort produce a discomfort signal, and why does that signal
+sometimes manifest as a headache-like sensation — even in healthy individuals with no
+headache disorder?
+
+PICO-S:
+  P: Healthy adults (no current headache diagnosis, no migraine in past 3 months)
+  I: Sustained cognitive task >= 30 min (N-back, Stroop, working memory, attentional control, simulated workday)
+  C: Rest or low-demand control condition
+  O: Somatic discomfort, effort discounting, fatigue ratings, head discomfort, pupillometry, fMRI/MRS metabolic markers
+  S: Any study design (RCT, within-subjects, observational, theoretical, review)
+
+FIVE LITERATURE LAYERS:
+  L1. Why effort is aversive (opportunity cost model, effort paradox, EVC)
+  L2. Neural metabolic cost of sustained cognitive work (glutamate accumulation, glycogen depletion, lPFC fatigue)
+  L3. Effort as aversive signal — the phenomenology (dACC as effort meter, aversive motivation)
+  L4. Predictive processing / allostatic framing (free energy principle, interoceptive prediction error)
+  L5. Pain/headache literature bridging (stress-hyperalgesia, pericranial tenderness, TTH mechanisms)
+
+SEED REFERENCES (11 papers):
+  - Kurzban et al. (2013) BBS — Opportunity Cost Model
+  - Inzlicht, Shenhav & Olivola (2018) TiCS — Effort Paradox
+  - Shenhav, Musslick et al. (2017) Annual Reviews Neuroscience — EVC model
+  - Wiehler, Pessiglione et al. (2022) Current Biology — Glutamate accumulation in lPFC [doi:10.1016/j.cub.2022.07.010]
+  - Christie & Schrater (2015) Frontiers in Neuroscience [doi:10.3389/fnins.2015.00289]
+  - Otto, Zijlstra & Goebel (2018) PLoS ONE [doi:10.1371/journal.pone.0198204]
+  - Shenhav et al. (2013) Neuron — EVC model
+  - Yee, Leng, Shenhav & Braver (2022) Neurosci Biobehav Rev [doi:10.1016/j.neubiorev.2021.12.016]
+  - Friston (2010) Nature Reviews Neuroscience — Free Energy Principle
+  - Seth & Friston (2016) Philosophical Transactions — Active interoceptive inference
+  - Cathcart et al. (2009, 2010) Eur J Neurol — Stress-hyperalgesia in TTH
+
+DATABASES: PubMed (primary), CrossRef (supplementary), Semantic Scholar (supplementary + citation chaining)
+DATE RANGE: No restriction (field spans ~2005-present)
+LANGUAGE: English only
+
+TARGET JOURNALS: Frontiers in Psychology, PLOS ONE, Neuropsychology Review, Neuroscience & Biobehavioral Reviews
+EXPECTED n STUDIES: 20-60
