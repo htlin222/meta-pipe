@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "meta-pipe"
+abstract: "AI-assisted, end-to-end meta-analysis pipeline with reproducible tooling."
+authors:
+  - family-names: Yeh
+    given-names: Jiunn-Tyng
+  - family-names: Lin
+    given-names: Hsieh-Ting
+repository-code: "https://github.com/htlin222/meta-pipe"
+url: "https://github.com/htlin222/meta-pipe"
+keywords:
+  - meta-analysis
+  - systematic-review
+  - reproducible-research
+  - ai-assisted
