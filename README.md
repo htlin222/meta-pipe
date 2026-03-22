@@ -112,3 +112,25 @@ meta-pipe/
 - R ≥ 4.2 + `renv`
 - Quarto
 - API keys in `.env`
+
+---
+
+## Citation
+
+If you use meta-pipe in your research, please cite it.
+
+**AMA format**:
+
+> Yeh JT, Lin HT. meta-pipe: AI-assisted, end-to-end meta-analysis pipeline with reproducible tooling. GitHub; 2026. Accessed March 22, 2026. https://github.com/htlin222/meta-pipe
+
+**BibTeX**:
+
+```bibtex
+@software{yeh2026metapipe,
+  author    = {Yeh, Jiunn-Tyng and Lin, Hsieh-Ting},
+  title     = {meta-pipe: AI-Assisted, End-to-End Meta-Analysis Pipeline with Reproducible Tooling},
+  year      = {2026},
+  url       = {https://github.com/htlin222/meta-pipe},
+  note      = {Software}
+}
+```
