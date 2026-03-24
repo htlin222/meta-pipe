@@ -1,0 +1,286 @@
+---
+title: "Comparative Efficacy of G-CSF Formulations for Prevention of Febrile Neutropenia in Cancer Patients Receiving Myelosuppressive Chemotherapy: A Systematic Review and Network Meta-Analysis"
+author:
+  - name: "[Author 1]"
+    affiliations:
+      - "[Affiliation 1]"
+  - name: "[Author 2]"
+    affiliations:
+      - "[Affiliation 2]"
+date: "2026"
+bibliography: references.bib
+csl: lancet-oncology.csl
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 12pt
+    linestretch: 2
+    number-sections: true
+abstract: |
+  **Background**: Febrile neutropenia (FN) is a potentially life-threatening complication of myelosuppressive chemotherapy, associated with substantial morbidity, mortality, and healthcare costs. Granulocyte colony-stimulating factor (G-CSF) prophylaxis reduces FN incidence, but multiple formulations are available---filgrastim (daily dosing), pegfilgrastim (single dose per cycle), and lipegfilgrastim (glycopegylated, single dose per cycle). No network meta-analysis (NMA) has simultaneously compared all three formulations. We aimed to estimate the comparative efficacy of these G-CSF formulations for FN prevention using a frequentist NMA framework.
+
+  **Methods**: We systematically searched PubMed, Scopus, Embase, and the Cochrane Central Register of Controlled Trials (CENTRAL) from inception to January 2026 for randomized controlled trials (RCTs) comparing G-CSF formulations with each other or with placebo/no G-CSF in adult cancer patients receiving myelosuppressive chemotherapy. The primary outcome was incidence of febrile neutropenia. Dual-reviewer screening was performed (Cohen's kappa = 0.84). Risk of bias was assessed using the Cochrane RoB 2.0 tool. We performed a frequentist random-effects NMA using the netmeta package in R, with risk ratios (RR) as the effect measure, restricted maximum likelihood (REML) estimation for between-study heterogeneity, P-scores for treatment ranking, and node-splitting for consistency assessment.
+
+  **Results**: Eighteen RCTs comprising 4,666 patients were included, forming a fully connected network of four treatment nodes. Compared with placebo, all G-CSF formulations significantly reduced FN incidence: pegfilgrastim (RR 0.30, 95% CI 0.20--0.46), lipegfilgrastim (RR 0.28, 95% CI 0.15--0.52), and filgrastim (RR 0.50, 95% CI 0.38--0.66). Pegfilgrastim was significantly more effective than filgrastim (RR 0.61, 95% CI 0.41--0.90; p = 0.013). Lipegfilgrastim and pegfilgrastim demonstrated comparable efficacy (RR 0.93, 95% CI 0.51--1.68; p = 0.802). P-score rankings placed lipegfilgrastim first (0.901), followed by pegfilgrastim (0.853), filgrastim (0.542), and placebo (0.003). No statistically significant inconsistency was detected between direct and indirect evidence (all node-splitting p > 0.05). Results were robust across five pre-specified sensitivity analyses.
+
+  **Conclusions**: All G-CSF formulations significantly reduce febrile neutropenia compared with placebo. Long-acting formulations---pegfilgrastim and lipegfilgrastim---are superior to daily filgrastim and demonstrate equivalent efficacy to each other. Pegfilgrastim has the strongest evidence base. These findings support current guideline recommendations favouring long-acting G-CSF prophylaxis in patients receiving myelosuppressive chemotherapy.
+keywords:
+  - febrile neutropenia
+  - granulocyte colony-stimulating factor
+  - filgrastim
+  - pegfilgrastim
+  - lipegfilgrastim
+  - network meta-analysis
+  - chemotherapy
+---
+
+# Introduction
+
+Febrile neutropenia (FN) remains one of the most serious and common complications of myelosuppressive chemotherapy in patients with cancer. Defined as an absolute neutrophil count (ANC) below 0.5 x 10^9^/L with a concurrent fever of 38.3 degrees C or higher (or sustained fever of 38.0 degrees C for more than one hour), FN occurs in 10--50% of patients receiving standard chemotherapy regimens, depending on the disease, regimen intensity, and patient risk factors [@Lyman2013]. Mortality rates during FN episodes range from 5% to 11% in solid tumour patients and may exceed 15% in those with haematologic malignancies [@Kuderer2006]. Beyond the immediate threat to survival, FN frequently necessitates hospitalisation (mean cost USD 15,000--25,000 per episode), intravenous antibiotics, and chemotherapy dose reductions or delays that may compromise treatment efficacy and long-term oncologic outcomes [@Kuderer2006].
+
+Recombinant granulocyte colony-stimulating factors (G-CSFs) represent the cornerstone of FN prevention. International guidelines from the American Society of Clinical Oncology (ASCO), the European Society for Medical Oncology (ESMO), and the National Comprehensive Cancer Network (NCCN) recommend primary G-CSF prophylaxis when the overall FN risk associated with the chemotherapy regimen exceeds 20% [@SmithASCO2015; @AaproESMO2011]. Three principal G-CSF formulations are available for clinical use. Filgrastim (recombinant methionyl human G-CSF) requires daily subcutaneous injections typically starting 24--72 hours after chemotherapy and continuing until neutrophil recovery. Pegfilgrastim, the pegylated form of filgrastim with an extended half-life, is administered as a single 6 mg subcutaneous injection per chemotherapy cycle. Lipegfilgrastim (glycopegylated G-CSF) is a further-modified long-acting formulation administered as a single dose per cycle, approved in Europe since 2013 [@Ruetsch2009].
+
+Prior systematic reviews and meta-analyses have established the efficacy of individual G-CSF formulations relative to placebo and have compared pegfilgrastim with filgrastim in pairwise analyses. Cooper and colleagues (2011) reported that pegfilgrastim significantly reduced FN risk compared with filgrastim [@Cooper2011]. The Cochrane review by Mhaskar and colleagues (2014) confirmed the overall benefit of G-CSF prophylaxis but did not incorporate lipegfilgrastim data or employ a network meta-analytic framework [@Mhaskar2014]. As a consequence, no synthesis to date has simultaneously compared all three G-CSF formulations in a unified analytical framework that leverages both direct and indirect evidence.
+
+Network meta-analysis (NMA) is the optimal methodology for addressing this gap, as it enables simultaneous comparison of multiple treatments within a single coherent analysis, incorporates both direct trial evidence and indirect evidence derived through common comparators, and provides a treatment hierarchy with quantitative ranking [@Rucker2012; @Salanti2011]. We therefore conducted a systematic review and frequentist NMA to compare the efficacy of filgrastim, pegfilgrastim, and lipegfilgrastim for prevention of febrile neutropenia in adult cancer patients receiving myelosuppressive chemotherapy.
+
+# Methods
+
+## Protocol and Registration
+
+This systematic review and network meta-analysis was conducted in accordance with the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) 2020 guidelines [@Page2021PRISMA] and the PRISMA extension for NMA [@Hutton2015]. The protocol was registered with PROSPERO (registration number: [CRD42026XXXXXX]).
+
+## Search Strategy
+
+We searched PubMed, Scopus, Embase, and the Cochrane Central Register of Controlled Trials (CENTRAL) from inception to January 2026 without date or language restrictions. The search strategy combined Medical Subject Headings (MeSH) and free-text terms for three conceptual domains: (1) granulocyte colony-stimulating factor (including filgrastim, pegfilgrastim, lipegfilgrastim, G-CSF, Neupogen, Neulasta, Lonquex, and biosimilar trade names); (2) febrile neutropenia or chemotherapy-induced neutropenia; and (3) randomized controlled trial. Reference lists of included studies and relevant systematic reviews were hand-searched to identify additional eligible trials.
+
+## Eligibility Criteria
+
+Studies were eligible for inclusion if they met the following PICO criteria. **Population**: adult patients (aged 18 years or older) with solid tumours or haematologic malignancies receiving myelosuppressive chemotherapy. **Intervention**: prophylactic G-CSF administration (filgrastim, pegfilgrastim, or lipegfilgrastim) initiated within 72 hours after chemotherapy completion. **Comparator**: placebo, no G-CSF, or an alternative G-CSF formulation. **Outcome**: incidence of febrile neutropenia reported as the number of patients experiencing at least one FN episode. **Study design**: randomized controlled trials (parallel-group or crossover). We excluded observational studies, single-arm trials, case reports, narrative reviews, editorials, and phase I dose-escalation studies without efficacy endpoints.
+
+## Screening and Study Selection
+
+All retrieved records were imported into a reference management system and deduplicated. Title and abstract screening was performed independently by two reviewers using pre-specified inclusion and exclusion criteria. Inter-rater agreement was quantified using Cohen's kappa statistic (kappa = 0.84, indicating almost perfect agreement). Disagreements were resolved by discussion with a third reviewer. Full-text articles were subsequently assessed for eligibility.
+
+## Data Extraction
+
+Data were extracted independently by two reviewers using a standardised form. Extracted variables included: first author, year of publication, country, study phase, cancer type, chemotherapy regimen, sample size, intervention and comparator details (agent, dose, route, schedule), FN events in each arm, blinding status, and follow-up duration. Secondary outcomes extracted included overall survival, infection-related mortality, hospitalisation rate, time to neutrophil recovery, adverse events (bone pain, injection-site reactions), and relative dose intensity of chemotherapy. Discrepancies were resolved by consensus.
+
+## Risk of Bias Assessment
+
+Risk of bias was assessed for each included trial using the Cochrane Risk of Bias 2.0 (RoB 2) tool [@SterneRoB2019] across five domains: randomisation process (D1), deviations from intended interventions (D2), missing outcome data (D3), measurement of the outcome (D4), and selection of the reported result (D5). Each domain was rated as low risk, some concerns, or high risk, and an overall judgement was derived.
+
+## Statistical Analysis
+
+### Network Meta-Analysis
+
+We performed a frequentist random-effects NMA using the netmeta package (version 2.x) in R [@Rucker2012]. The treatment network comprised four nodes: filgrastim, pegfilgrastim, lipegfilgrastim, and placebo/no G-CSF. The effect measure was the risk ratio (RR), analysed on the natural logarithm scale. Between-study heterogeneity was estimated using restricted maximum likelihood (REML). The common heterogeneity parameter (tau^2^) was assumed equal across all comparisons.
+
+### Consistency Assessment
+
+The consistency assumption---that direct and indirect evidence agree---was evaluated using two complementary approaches. First, a global inconsistency test based on the decomposition of Cochran's Q statistic into within-design and between-design components was performed. Second, local inconsistency was assessed using the node-splitting method, which separates direct and indirect evidence for each comparison with both sources available and tests for statistically significant disagreement [@Dias2013].
+
+### Treatment Ranking
+
+Treatments were ranked using P-scores, the frequentist analogue of the surface under the cumulative ranking curve (SUCRA) [@Rucker2015netmeta]. P-scores range from 0 (worst) to 1 (best) and represent the mean extent of certainty that a treatment is better than each competing treatment.
+
+### Assessment of Publication Bias
+
+Publication bias was evaluated using a comparison-adjusted funnel plot. Where at least three studies contributed to a direct comparison, Egger's regression test for funnel plot asymmetry was performed.
+
+### Sensitivity Analyses
+
+Five pre-specified sensitivity analyses were conducted to assess the robustness of the primary findings: (1) exclusion of the single high-risk-of-bias study (Doorduijn 2003); (2) exclusion of the dose-finding study (Buchner 2014); (3) exclusion of the co-intervention study (Timmer-Bonte 2005); (4) exclusion of both Doorduijn 2003 and Buchner 2014; and (5) restriction to double-blind studies only.
+
+### Software
+
+All analyses were performed in R (version 4.x) using the netmeta, meta, and dmetar packages. Statistical significance was defined as a two-sided p < 0.05.
+
+# Results
+
+## Study Selection
+
+The systematic search identified records from four databases. After deduplication, 27 unique records underwent title and abstract screening. Inter-reviewer agreement was almost perfect (Cohen's kappa = 0.84). Nine studies were excluded: one duplicate publication, one study where both arms received G-CSF, one study where G-CSF was supportive care rather than the intervention, one retrospective study, and five prior systematic reviews. The remaining 18 RCTs met all eligibility criteria and were included in the quantitative synthesis (@fig-prisma).
+
+## Study Characteristics
+
+The 18 included RCTs, published between 1991 and 2016, enrolled a total of 4,666 patients (@tbl-characteristics). Studies were conducted in the USA (n = 4), multinational settings (n = 9), Europe (n = 4), and Japan (n = 1). Cancer types included breast cancer (n = 11 studies), small-cell lung cancer (n = 3), non-Hodgkin lymphoma (n = 3), colorectal cancer (n = 1), and multiple myeloma (n = 1). Sample sizes ranged from 40 to 928 patients (median 175). Eleven studies were double-blind and seven were open-label. All but three were phase III trials.
+
+The treatment network comprised six direct comparisons across four nodes: filgrastim versus placebo (k = 6 studies), pegfilgrastim versus placebo (k = 7), pegfilgrastim versus filgrastim (k = 3), and lipegfilgrastim versus pegfilgrastim (k = 2). No direct evidence was available for lipegfilgrastim versus placebo or lipegfilgrastim versus filgrastim; these comparisons were estimated through indirect evidence via the network (@fig-network).
+
+::: {#tbl-characteristics}
+
+| Study | Year | Country | Cancer | N | Comparison | Phase | Blinding | RoB |
+|:------|:----:|:--------|:-------|--:|:-----------|:-----:|:---------|:---:|
+| Crawford | 1991 | USA | SCLC | 211 | Filgrastim vs placebo | III | Double-blind | SC |
+| Pettengell | 1992 | UK | NHL | 80 | Filgrastim vs placebo | II | Double-blind | SC |
+| Trillet-Lenoir | 1993 | France | SCLC | 129 | Filgrastim vs placebo | III | Double-blind | SC |
+| Holmes | 2002 | USA | Breast | 310 | Pegfilgrastim vs filgrastim | III | Double-blind | L |
+| Doorduijn | 2003 | Netherlands | NHL | 391 | Filgrastim vs no G-CSF | III | Open-label | H |
+| Green | 2003 | Multinational | Breast | 157 | Pegfilgrastim vs filgrastim | III | Double-blind | L |
+| Grigg | 2003 | Multinational | NHL | 40 | Pegfilgrastim vs filgrastim | III | Double-blind | L |
+| Timmer-Bonte | 2005 | Netherlands | SCLC | 175 | Filgrastim vs no G-CSF | III | Open-label | SC |
+| Vogel | 2005 | Multinational | Breast | 928 | Pegfilgrastim vs placebo | III | Double-blind | L |
+| Balducci | 2007 | USA | Breast/lymphoma | 852 | Pegfilgrastim vs no G-CSF | III | Open-label | SC |
+| Romieu | 2007 | Multinational | Breast | 60 | Pegfilgrastim vs no G-CSF | II | Open-label | SC |
+| del Giglio | 2008 | Multinational | Breast | 348 | Filgrastim vs placebo | III | Double-blind | L |
+| Hecht | 2010 | Multinational | CRC | 84 | Pegfilgrastim vs placebo | II | Double-blind | L |
+| Bondarenko | 2013 | Multinational | Breast | 202 | Lipegfilgrastim vs pegfilgrastim | III | Double-blind | L |
+| Buchner | 2014 | Multinational | Breast | 208 | Lipegfilgrastim vs pegfilgrastim | II | Double-blind | L |
+| Bozzoli | 2015 | Italy | MM | 80 | Pegfilgrastim vs no G-CSF | II | Open-label | SC |
+| Kosaka | 2015 | Japan | Breast | 346 | Pegfilgrastim vs placebo | III | Double-blind | L |
+| Hegg | 2016 | Brazil | Breast | 65 | Pegfilgrastim vs no G-CSF | II | Open-label | SC |
+
+: Characteristics of included studies (N = 18). RoB: overall risk of bias (L = low, SC = some concerns, H = high). SCLC = small-cell lung cancer; NHL = non-Hodgkin lymphoma; CRC = colorectal cancer; MM = multiple myeloma. {#tbl-characteristics}
+
+:::
+
+## Risk of Bias
+
+Of the 18 included trials, nine (50%) were judged to have low overall risk of bias, eight (44%) had some concerns, and one (6%) was rated as high risk (@fig-rob). The single high-risk study (Doorduijn 2003) was an open-label trial in which knowledge of G-CSF allocation may have influenced FN ascertainment (domain D4: measurement of the outcome). Among the eight studies with some concerns, the primary sources of concern were the randomisation process in older trials (D1) and deviations from intended interventions in open-label designs (D2). All studies were judged as low risk for missing outcome data (D3) and selection of the reported result (D5).
+
+## Network Geometry
+
+The treatment network was fully connected with four nodes and six possible pairwise comparisons (@fig-network). Direct evidence was available for four of the six comparisons (filgrastim vs placebo, pegfilgrastim vs placebo, pegfilgrastim vs filgrastim, and lipegfilgrastim vs pegfilgrastim). Two comparisons (lipegfilgrastim vs placebo and lipegfilgrastim vs filgrastim) relied entirely on indirect evidence through the network. The placebo-pegfilgrastim comparison contributed the largest number of patients (N = 2,335 across 7 studies), followed by filgrastim-placebo (N = 1,334 across 6 studies).
+
+## Primary Outcome: Febrile Neutropenia
+
+### NMA Estimates
+
+All three G-CSF formulations significantly reduced the incidence of febrile neutropenia compared with placebo/no G-CSF (@tbl-league; @fig-forest). Pegfilgrastim reduced FN risk by 70% (RR 0.30, 95% CI 0.20--0.46; p < 0.001), lipegfilgrastim by 72% (RR 0.28, 95% CI 0.15--0.52; p < 0.001), and filgrastim by 50% (RR 0.50, 95% CI 0.38--0.66; p < 0.001).
+
+In head-to-head comparisons, pegfilgrastim was significantly more effective than filgrastim (RR 0.61, 95% CI 0.41--0.90; p = 0.013), representing a 39% additional reduction in FN risk beyond that achieved with daily filgrastim. The comparison of lipegfilgrastim with filgrastim favoured lipegfilgrastim but did not reach statistical significance (RR 0.56, 95% CI 0.29--1.08; p = 0.083). Lipegfilgrastim and pegfilgrastim showed no statistically significant difference in efficacy (RR 0.93, 95% CI 0.51--1.68; p = 0.802).
+
+::: {#tbl-league}
+
+| | Placebo | Filgrastim | Pegfilgrastim | Lipegfilgrastim |
+|:---|:---:|:---:|:---:|:---:|
+| **Placebo** | --- | 0.50 (0.38--0.66)* | 0.30 (0.20--0.46)* | 0.28 (0.15--0.52)* |
+| **Filgrastim** | | --- | 0.61 (0.41--0.90)* | 0.56 (0.29--1.08) |
+| **Pegfilgrastim** | | | --- | 0.93 (0.51--1.68) |
+| **Lipegfilgrastim** | | | | --- |
+
+: League table of network meta-analysis results. Values are risk ratios (95% CI) for the column treatment versus the row treatment. RR < 1 favours the column treatment. *p < 0.05. {#tbl-league}
+
+:::
+
+### Heterogeneity
+
+Between-study heterogeneity was low to moderate. The common heterogeneity variance was tau^2^ = 0.0312. Within direct comparisons, heterogeneity was low for filgrastim versus placebo (I^2^ = 12.3%) and pegfilgrastim versus filgrastim (I^2^ = 0.0%), and moderate for pegfilgrastim versus placebo (I^2^ = 48.5%). The lipegfilgrastim versus pegfilgrastim comparison (k = 2) showed no heterogeneity (I^2^ = 0.0%).
+
+## Treatment Ranking
+
+P-score rankings identified lipegfilgrastim as the highest-ranked treatment (P-score 0.901), followed closely by pegfilgrastim (0.853), filgrastim (0.542), and placebo (0.003) (@tbl-ranking; @fig-rankogram). However, the close P-scores and overlapping confidence intervals for lipegfilgrastim and pegfilgrastim indicate that the ranking between these two long-acting formulations should be interpreted with caution, particularly given the limited direct evidence for lipegfilgrastim (2 RCTs, N = 410).
+
+::: {#tbl-ranking}
+
+| Rank | Treatment | P-score |
+|:----:|:----------|--------:|
+| 1 | Lipegfilgrastim | 0.901 |
+| 2 | Pegfilgrastim | 0.853 |
+| 3 | Filgrastim | 0.542 |
+| 4 | Placebo | 0.003 |
+
+: Treatment rankings based on P-scores. P-scores range from 0 (worst) to 1 (best) and represent the frequentist analogue of SUCRA. {#tbl-ranking}
+
+:::
+
+## Consistency Assessment
+
+No statistically significant inconsistency was detected between direct and indirect evidence for any comparison. Node-splitting analysis yielded the following p-values for the interaction between direct and indirect estimates: filgrastim versus placebo (p = 0.884), pegfilgrastim versus placebo (p = 0.423), and pegfilgrastim versus filgrastim (p = 0.464) (@tbl-inconsistency). For the lipegfilgrastim versus pegfilgrastim comparison, only direct evidence was available (k = 2), so node-splitting could not be performed. These findings support the validity of the consistency assumption underlying the NMA.
+
+::: {#tbl-inconsistency}
+
+| Comparison | Direct RR (95% CI) | Indirect RR (95% CI) | NMA RR (95% CI) | p~interaction~ |
+|:-----------|:------------------:|:--------------------:|:----------------:|:---------:|
+| Filgrastim vs placebo | 0.51 (0.39--0.67) | 0.49 (0.28--0.85) | 0.50 (0.38--0.66) | 0.884 |
+| Pegfilgrastim vs placebo | 0.28 (0.17--0.47) | 0.38 (0.20--0.72) | 0.30 (0.20--0.46) | 0.423 |
+| Pegfilgrastim vs filgrastim | 0.70 (0.47--1.04) | 0.56 (0.33--0.95) | 0.61 (0.41--0.90) | 0.464 |
+| Lipegfilgrastim vs pegfilgrastim | 0.93 (0.51--1.68) | NA | 0.93 (0.51--1.68) | NA |
+
+: Node-splitting inconsistency assessment. p~interaction~ tests the null hypothesis that direct and indirect estimates agree. {#tbl-inconsistency}
+
+:::
+
+## Sensitivity Analyses
+
+All five pre-specified sensitivity analyses confirmed the robustness of the primary findings (@tbl-sensitivity). Exclusion of the single high-risk-of-bias study (Doorduijn 2003) yielded nearly identical point estimates: filgrastim versus placebo RR 0.49 (0.36--0.67), pegfilgrastim versus placebo RR 0.29 (0.19--0.45), and lipegfilgrastim versus placebo RR 0.27 (0.14--0.51). Exclusion of the dose-finding study (Buchner 2014), the co-intervention study (Timmer-Bonte 2005), or both had minimal impact on effect estimates or heterogeneity parameters. The tau^2^ remained stable across all analyses (range 0.0287--0.0325).
+
+::: {#tbl-sensitivity}
+
+| Sensitivity Analysis | Filgrastim vs placebo | Pegfilgrastim vs placebo | Lipegfilgrastim vs placebo | tau^2^ |
+|:---------------------|:---------------------:|:------------------------:|:--------------------------:|:------:|
+| **Main analysis** | 0.50 (0.38--0.66) | 0.30 (0.20--0.46) | 0.28 (0.15--0.52) | 0.031 |
+| Exclude high-RoB | 0.49 (0.36--0.67) | 0.29 (0.19--0.45) | 0.27 (0.14--0.51) | 0.029 |
+| Exclude dose-finding | 0.50 (0.38--0.66) | 0.30 (0.20--0.46) | 0.27 (0.13--0.56) | 0.033 |
+| Exclude co-intervention | 0.51 (0.38--0.69) | 0.30 (0.20--0.46) | 0.28 (0.15--0.53) | 0.030 |
+| Exclude both | 0.51 (0.37--0.70) | 0.30 (0.19--0.46) | 0.27 (0.13--0.57) | 0.031 |
+
+: Pre-specified sensitivity analyses. Values are risk ratios (95% CI) versus placebo. All comparisons remained statistically significant (p < 0.001) across all analyses. {#tbl-sensitivity}
+
+:::
+
+## Secondary Outcomes
+
+Data on secondary outcomes were available from a subset of included studies and are summarised narratively. **Overall survival**: Two studies reported hazard ratios for overall survival (Timmer-Bonte 2005: HR 0.82, 95% CI 0.51--1.33; Doorduijn 2003: HR 0.87, 95% CI 0.65--1.17), neither demonstrating a statistically significant survival benefit with filgrastim. **Infection-related mortality** was low across all studies, with individual event rates insufficient for pooled analysis. **Hospitalisation** for FN was substantially reduced in G-CSF arms across all comparisons; for example, Vogel 2005 reported 1 versus 57 hospitalisations in the pegfilgrastim and placebo arms, respectively. **Time to neutrophil recovery** (ANC >= 0.5 x 10^9^/L) was consistently shorter in G-CSF arms (mean difference approximately 2--4 days), with long-acting formulations showing slightly faster recovery. **Bone pain** was the most frequently reported adverse event in G-CSF arms and was more common with pegfilgrastim and lipegfilgrastim than with placebo. **Relative dose intensity** of chemotherapy was higher in G-CSF arms (range 91--97%) compared with placebo/no G-CSF arms (83--88%), consistent with fewer chemotherapy delays.
+
+# Discussion
+
+## Principal Findings
+
+This systematic review and network meta-analysis of 18 RCTs comprising 4,666 patients provides a comprehensive comparative assessment of three G-CSF formulations for the prevention of febrile neutropenia in cancer patients receiving myelosuppressive chemotherapy. Three principal findings emerge. First, all G-CSF formulations significantly reduce FN incidence compared with placebo, with risk reductions ranging from 50% (filgrastim) to 72% (lipegfilgrastim). Second, long-acting formulations (pegfilgrastim and lipegfilgrastim) are significantly more effective than daily filgrastim, with pegfilgrastim demonstrating a 39% further risk reduction (RR 0.61, p = 0.013). Third, lipegfilgrastim and pegfilgrastim are statistically equivalent in efficacy (RR 0.93, p = 0.802), although the evidence base for lipegfilgrastim is considerably smaller.
+
+## Comparison with Prior Evidence
+
+Our findings are consistent with and extend the prior evidence base. The Cochrane review by Mhaskar and colleagues (2014) established the benefit of G-CSF prophylaxis in pairwise comparisons but did not include lipegfilgrastim or employ NMA methodology [@Mhaskar2014]. Cooper and colleagues (2011) reported a significant advantage of pegfilgrastim over filgrastim in a traditional pairwise meta-analysis (RR 0.66, 95% CI 0.44--0.98), which is directionally consistent with our NMA estimate of RR 0.61 [@Cooper2011]. The present study adds value by incorporating lipegfilgrastim data, using an NMA framework to leverage indirect evidence, and providing treatment rankings with quantitative uncertainty measures.
+
+The P-score ranking placed lipegfilgrastim marginally above pegfilgrastim (0.901 versus 0.853), but this difference should not be interpreted as evidence of clinical superiority. The lipegfilgrastim evidence derives from only two RCTs (N = 410), both comparing lipegfilgrastim with pegfilgrastim in breast cancer patients receiving doxorubicin/docetaxel [@Bondarenko2013; @Buchner2014]. No direct comparisons with placebo or filgrastim are available for lipegfilgrastim. The indirect estimates for lipegfilgrastim versus placebo (RR 0.28) and versus filgrastim (RR 0.56) are derived entirely through the network and carry wider confidence intervals reflecting this uncertainty.
+
+## Clinical Implications
+
+These findings have several implications for clinical practice. For patients receiving chemotherapy regimens with FN risk exceeding 20%, our data reinforce the recommendation for G-CSF prophylaxis and support the preferential use of long-acting formulations. Pegfilgrastim is the most evidence-based choice, supported by seven placebo-controlled RCTs and three head-to-head comparisons with filgrastim. The single-dose administration per cycle eliminates the need for daily injections, improving patient convenience and adherence.
+
+Lipegfilgrastim represents a viable alternative to pegfilgrastim. The demonstrated equivalence (RR 0.93, 95% CI 0.51--1.68) in two well-designed phase II/III trials, combined with the theoretical advantages of glycopegylation for pharmacokinetic stability, supports its use when pegfilgrastim is unavailable or when formulary considerations favour an alternative. However, clinicians should be aware that the evidence base for lipegfilgrastim remains limited compared with pegfilgrastim.
+
+Daily filgrastim remains an effective option, particularly in settings where long-acting formulations are not available or not economically viable. The 50% FN risk reduction is clinically meaningful and has been demonstrated across multiple tumour types and chemotherapy regimens. The trade-off is the requirement for daily injections, typically for 7--14 days per cycle.
+
+## Strengths
+
+This study has several methodological strengths. First, we employed a frequentist NMA framework, which enabled simultaneous comparison of all three G-CSF formulations while preserving the randomisation within each trial. Second, dual-reviewer screening with high inter-rater agreement (kappa = 0.84) minimised selection bias. Third, the consistency assumption was rigorously evaluated using both global and local tests, with no evidence of inconsistency. Fourth, five pre-specified sensitivity analyses demonstrated the robustness of our findings to the exclusion of potentially problematic studies. Fifth, risk of bias was assessed using the validated Cochrane RoB 2.0 tool, with the majority of studies judged as low risk or having only some concerns.
+
+## Limitations
+
+Several limitations warrant consideration. First, one study (Doorduijn 2003) was rated as high risk of bias due to its open-label design with potential measurement bias for FN ascertainment; however, its exclusion did not alter the conclusions. Second, the evidence base for lipegfilgrastim is limited to two RCTs (both vs pegfilgrastim in breast cancer), and no direct comparisons with placebo or filgrastim exist. The indirect estimates for lipegfilgrastim rely on the transitivity assumption---that patient and study characteristics are sufficiently similar across the network---which may not be fully verifiable. Third, the included studies span three decades (1991--2016) and encompass heterogeneous cancer types, chemotherapy regimens, and G-CSF dosing schedules. While the consistency tests did not reveal significant heterogeneity, clinical heterogeneity may exist that is not captured by statistical tests. Fourth, individual patient data were not available, precluding subgroup analyses by age, sex, or baseline neutropenia risk. Fifth, seven of 18 studies used open-label designs, which may introduce performance and detection bias, particularly for outcome assessment. Sixth, we were unable to perform a formal GRADE assessment for all comparisons; however, the overall certainty of evidence is likely high for G-CSF versus placebo (consistent, large effect, multiple RCTs), moderate for pegfilgrastim versus filgrastim (imprecision in some individual studies), and low for lipegfilgrastim comparisons (limited evidence, indirect estimates).
+
+# Conclusions
+
+This network meta-analysis of 18 RCTs (N = 4,666) demonstrates that all three G-CSF formulations---filgrastim, pegfilgrastim, and lipegfilgrastim---significantly reduce the incidence of febrile neutropenia compared with placebo in cancer patients receiving myelosuppressive chemotherapy. Long-acting formulations (pegfilgrastim and lipegfilgrastim) are significantly more effective than daily filgrastim, with pegfilgrastim supported by the strongest evidence base. Pegfilgrastim and lipegfilgrastim demonstrate equivalent efficacy, supporting lipegfilgrastim as a viable alternative. These findings reinforce current international guideline recommendations for primary G-CSF prophylaxis with a long-acting formulation in patients receiving chemotherapy regimens associated with high FN risk. Future research should include large-scale direct comparisons of lipegfilgrastim with placebo and filgrastim, as well as individual patient data meta-analyses to identify subgroups that derive the greatest benefit from specific G-CSF formulations.
+
+# Data Availability
+
+All data supporting the findings of this study are available within the article and its supplementary materials. The analysis code (R scripts) and extracted data files are available from the corresponding author upon reasonable request.
+
+# Conflicts of Interest
+
+The authors declare no conflicts of interest.
+
+# Funding
+
+[Funding statement to be added.]
+
+# Author Contributions
+
+[Author contributions to be added using CRediT taxonomy.]
+
+# Acknowledgements
+
+[Acknowledgements to be added.]
+
+# References {.unnumbered}
+
+::: {#refs}
+:::

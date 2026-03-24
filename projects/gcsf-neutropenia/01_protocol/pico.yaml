@@ -1,0 +1,61 @@
+population:
+  description: "Adult cancer patients receiving myelosuppressive chemotherapy at risk of neutropenia"
+  age_range: ">=18 years"
+  condition: "Solid tumors or hematologic malignancies treated with myelosuppressive chemotherapy"
+intervention:
+  description: "Prophylactic G-CSF administration (filgrastim, pegfilgrastim, or lipegfilgrastim) initiated within 72 hours after chemotherapy completion"
+comparison:
+  description: "Placebo or no G-CSF prophylaxis (standard supportive care without G-CSF)"
+outcomes:
+  primary:
+    - name: "Incidence of febrile neutropenia"
+      type: "dichotomous"
+      unit: "events/patients"
+      effect_measure: "RR"
+  secondary:
+    - name: "Overall survival"
+      type: "time-to-event"
+      unit: "HR"
+      effect_measure: "HR"
+    - name: "Infection-related mortality"
+      type: "dichotomous"
+      unit: "events/patients"
+      effect_measure: "RR"
+    - name: "Hospitalization rate due to febrile neutropenia"
+      type: "dichotomous"
+      unit: "events/patients"
+      effect_measure: "RR"
+    - name: "Time to neutrophil recovery (ANC >= 0.5 x 10^9/L)"
+      type: "continuous"
+      unit: "days"
+      effect_measure: "MD"
+    - name: "Adverse events (bone pain, injection site reactions)"
+      type: "dichotomous"
+      unit: "events/patients"
+      effect_measure: "RR"
+    - name: "Relative dose intensity of chemotherapy"
+      type: "continuous"
+      unit: "percentage"
+      effect_measure: "MD"
+setting:
+  timeframe: "No date restriction (inception to present)"
+  geography: "No geographic restriction"
+study_types:
+  include:
+    - "Randomized controlled trials (RCTs)"
+    - "Parallel-group or crossover designs"
+  exclude:
+    - "Observational studies"
+    - "Single-arm trials"
+    - "Case reports and case series"
+    - "Narrative reviews and editorials"
+    - "Animal studies"
+    - "Phase I dose-finding trials"
+analysis_type:
+  preliminary: "nma_candidate"
+  confirmed: ""
+  confirmation_stage: ""
+  rationale: "Three distinct G-CSF formulations (filgrastim, pegfilgrastim, lipegfilgrastim) are compared against placebo/no G-CSF, yielding >=3 treatment nodes suitable for network meta-analysis"
+  single_arm_proportion: "low (<10% expected)"
+  transitivity_plausible: "uncertain"
+  network_connected: "unknown"

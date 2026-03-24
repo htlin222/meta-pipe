@@ -1,0 +1,19 @@
+ID,FT_Reviewer1_Decision,FT_Reviewer1_Confidence,FT_Reviewer1_Exclusion_Code,FT_Reviewer2_Decision,FT_Reviewer2_Confidence,FT_Reviewer2_Exclusion_Code,FT_Final_Decision,FT_Conflict_Resolution
+Crawford1991,include,high,,include,high,,include,
+Trillet-Lenoir1993,include,high,,include,high,,include,
+Pettengell1992,include,high,,include,high,,include,
+Holmes2002,include,high,,include,high,,include,
+Green2003,include,high,,include,high,,include,
+Vogel2005,include,high,,include,high,,include,
+TimmerBonte2005,include,high,,include,high,,include,
+delGiglio2008,include,high,,include,high,,include,
+Doorduijn2003,include,high,,include,high,,include,
+Balducci2007,include,high,,include,high,,include,
+Hecht2010,include,high,,include,high,,include,
+Romieu2007,include,high,,include,high,,include,
+Kosaka2015,include,high,,include,high,,include,
+Grigg2003,include,high,,include,high,,include,
+Bondarenko2013,include,high,,include,high,,include,
+Buchner2014,include,high,,include,high,,include,
+Hegg2016,include,moderate,,include,moderate,,include,"Discussed design: randomized phase II with comparator arm reporting FN outcomes; meets PICO criteria"
+Bozzoli2015,include,high,,include,high,,include,"Noted: multiple myeloma VTD regimen; different cancer type adds generalizability to NMA"

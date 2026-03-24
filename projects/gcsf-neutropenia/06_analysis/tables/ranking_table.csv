@@ -1,0 +1,5 @@
+treatment,p_score,rank
+lipegfilgrastim,0.9012,1
+pegfilgrastim,0.8534,2
+filgrastim,0.5421,3
+placebo,0.0033,4

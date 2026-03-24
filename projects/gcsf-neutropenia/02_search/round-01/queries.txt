@@ -1,0 +1,93 @@
+# Search Queries — G-CSF Neutropenia Prophylaxis NMA
+# Project: gcsf-neutropenia
+# Round: 01
+# Date: 2026-03-24
+
+================================================================================
+DATABASE 1: PubMed/MEDLINE (via PubMed.gov)
+================================================================================
+
+("Granulocyte Colony-Stimulating Factor"[MeSH] OR "Granulocyte Colony-Stimulating Factor"[Pharmacological Action] OR "G-CSF"[tiab] OR "G CSF"[tiab] OR "granulocyte colony stimulating factor"[tiab] OR "granulocyte colony-stimulating factor"[tiab] OR "filgrastim"[tiab] OR "filgrastim"[Supplementary Concept] OR "Neupogen"[tiab] OR "pegfilgrastim"[tiab] OR "pegfilgrastim"[Supplementary Concept] OR "Neulasta"[tiab] OR "lipegfilgrastim"[tiab] OR "lipegfilgrastim"[Supplementary Concept] OR "Lonquex"[tiab] OR "Zarxio"[tiab] OR "Nivestym"[tiab] OR "Udenyca"[tiab] OR "Fulphila"[tiab] OR "Nyvepria"[tiab] OR "lenograstim"[tiab] OR "Granocyte"[tiab])
+AND
+("Neutropenia"[MeSH] OR "Febrile Neutropenia"[MeSH] OR "neutropenia"[tiab] OR "febrile neutropenia"[tiab] OR "neutropenic fever"[tiab] OR "granulocytopenia"[tiab] OR "chemotherapy-induced neutropenia"[tiab] OR "chemotherapy induced neutropenia"[tiab] OR "FN"[tiab] OR "CIN"[tiab])
+AND
+("Neoplasms"[MeSH] OR "cancer"[tiab] OR "tumor"[tiab] OR "tumour"[tiab] OR "malignancy"[tiab] OR "malignancies"[tiab] OR "carcinoma"[tiab] OR "lymphoma"[tiab] OR "leukemia"[tiab] OR "sarcoma"[tiab] OR "chemotherapy"[tiab] OR "antineoplastic"[tiab] OR "myelosuppressive"[tiab] OR "cytotoxic"[tiab])
+AND
+("randomized controlled trial"[pt] OR "controlled clinical trial"[pt] OR "randomized"[tiab] OR "randomised"[tiab] OR "placebo"[tiab] OR "randomly"[tiab] OR "trial"[tiab] OR "RCT"[tiab])
+NOT
+("animals"[MeSH] NOT "humans"[MeSH])
+
+# Notes:
+# - Added lenograstim (Granocyte) to capture European trials
+# - Added Supplementary Concept entries for drug names
+# - Added Pharmacological Action subheading for G-CSF
+# - Added NOT animals filter for specificity
+# - No date restriction applied
+# - No language restriction applied
+
+================================================================================
+DATABASE 2: Scopus (via scopus.com)
+================================================================================
+
+TITLE-ABS-KEY(
+  ("G-CSF" OR "filgrastim" OR "pegfilgrastim" OR "lipegfilgrastim" OR
+   "lenograstim" OR "granulocyte colony-stimulating factor" OR
+   "Neupogen" OR "Neulasta" OR "Lonquex" OR "Granocyte" OR
+   "Zarxio" OR "Udenyca" OR "Fulphila")
+  AND
+  ("neutropenia" OR "febrile neutropenia" OR "granulocytopenia" OR
+   "neutropenic fever" OR "chemotherapy-induced neutropenia")
+  AND
+  ("cancer" OR "neoplasm" OR "malignancy" OR "chemotherapy" OR
+   "tumor" OR "tumour" OR "carcinoma" OR "lymphoma" OR "leukemia" OR
+   "sarcoma" OR "myelosuppressive" OR "cytotoxic")
+  AND
+  ("randomized" OR "randomised" OR "RCT" OR "placebo" OR "trial" OR
+   "randomly" OR "controlled trial")
+)
+AND DOCTYPE(ar OR cp)
+
+# Notes:
+# - DOCTYPE filter limits to articles (ar) and conference papers (cp)
+# - No date restriction applied
+# - No language restriction applied
+
+================================================================================
+DATABASE 3: Embase (via Ovid)
+================================================================================
+
+1. exp granulocyte colony stimulating factor/
+2. (G-CSF or "granulocyte colony stimulating factor" or filgrastim or pegfilgrastim or lipegfilgrastim or lenograstim or Neupogen or Neulasta or Lonquex or Granocyte or Zarxio or Udenyca or Fulphila or Nivestym or Nyvepria).tw.
+3. 1 or 2
+4. exp neutropenia/ or exp febrile neutropenia/
+5. (neutropenia or "febrile neutropenia" or granulocytopenia or "neutropenic fever" or "chemotherapy induced neutropenia").tw.
+6. 4 or 5
+7. exp neoplasm/ or exp chemotherapy/
+8. (cancer or tumor* or tumour* or malignan* or carcinoma or lymphoma or leukemia or sarcoma or chemotherapy or antineoplastic or myelosuppressive or cytotoxic).tw.
+9. 7 or 8
+10. exp randomized controlled trial/ or exp controlled clinical trial/
+11. (randomized or randomised or placebo or randomly or trial or RCT).tw.
+12. 10 or 11
+13. 3 and 6 and 9 and 12
+14. limit 13 to human
+
+================================================================================
+DATABASE 4: Cochrane CENTRAL (via Cochrane Library)
+================================================================================
+
+#1 MeSH descriptor: [Granulocyte Colony-Stimulating Factor] explode all trees
+#2 ("G-CSF" OR "filgrastim" OR "pegfilgrastim" OR "lipegfilgrastim" OR "lenograstim" OR "Neupogen" OR "Neulasta" OR "Lonquex" OR "Granocyte"):ti,ab,kw
+#3 #1 OR #2
+#4 MeSH descriptor: [Neutropenia] explode all trees
+#5 MeSH descriptor: [Febrile Neutropenia] explode all trees
+#6 ("neutropenia" OR "febrile neutropenia" OR "granulocytopenia" OR "neutropenic fever"):ti,ab,kw
+#7 #4 OR #5 OR #6
+#8 MeSH descriptor: [Neoplasms] explode all trees
+#9 ("cancer" OR "neoplasm" OR "malignancy" OR "chemotherapy" OR "myelosuppressive"):ti,ab,kw
+#10 #8 OR #9
+#11 #3 AND #7 AND #10
+#12 limit #11 to Trials
+
+# Notes:
+# - Cochrane CENTRAL inherently contains trial records; filter used for precision
+# - No date or language restrictions

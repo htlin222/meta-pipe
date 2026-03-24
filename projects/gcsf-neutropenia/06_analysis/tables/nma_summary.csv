@@ -1,0 +1,7 @@
+treatment,comparator,RR,ci_lower,ci_upper,p_value,I2_percent,n_studies,n_direct_studies
+filgrastim,placebo,0.50,0.38,0.66,0.0001,12.3,6,6
+pegfilgrastim,placebo,0.30,0.20,0.46,0.0001,48.5,7,7
+lipegfilgrastim,placebo,0.28,0.15,0.52,0.0001,NA,0,0
+pegfilgrastim,filgrastim,0.61,0.41,0.90,0.0128,0.0,3,3
+lipegfilgrastim,filgrastim,0.56,0.29,1.08,0.0831,NA,0,0
+lipegfilgrastim,pegfilgrastim,0.93,0.51,1.68,0.8023,0.0,2,2

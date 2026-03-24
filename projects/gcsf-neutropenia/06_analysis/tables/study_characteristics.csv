@@ -1,0 +1,19 @@
+study_id,first_author,year,country,cancer_type,n_total,intervention,comparator,nma_comparison,fn_events_int,fn_events_ctrl,fn_rr,risk_of_bias,blinding,phase
+Crawford1991,Crawford,1991,USA,SCLC,211,filgrastim 5mcg/kg/day,placebo,filgrastim_vs_placebo,28,57,0.51,some_concerns,double-blind,III
+Trillet-Lenoir1993,Trillet-Lenoir,1993,France,SCLC,129,filgrastim 5mcg/kg/day,placebo,filgrastim_vs_placebo,15,26,0.57,some_concerns,double-blind,III
+Pettengell1992,Pettengell,1992,UK,NHL,80,filgrastim 5mcg/kg/day,placebo,filgrastim_vs_placebo,9,18,0.53,some_concerns,double-blind,II
+TimmerBonte2005,Timmer-Bonte,2005,Netherlands,SCLC,175,filgrastim + antibiotics,antibiotics alone,filgrastim_vs_placebo,10,24,0.43,some_concerns,open-label,III
+delGiglio2008,del Giglio,2008,multinational,breast cancer,348,filgrastim-XM02 5mcg/kg/day,placebo,filgrastim_vs_placebo,18,38,0.47,low,double-blind,III
+Doorduijn2003,Doorduijn,2003,Netherlands,NHL,391,filgrastim 5mcg/kg/day,CHOP alone,filgrastim_vs_placebo,27,44,0.62,high,open-label,III
+Holmes2002,Holmes,2002,USA,breast cancer,310,pegfilgrastim 6mg,filgrastim 5mcg/kg/day,pegfilgrastim_vs_filgrastim,20,29,0.67,low,double-blind,III
+Green2003,Green,2003,multinational,breast cancer,157,pegfilgrastim 6mg,filgrastim 5mcg/kg/day,pegfilgrastim_vs_filgrastim,10,14,0.72,low,double-blind,III
+Grigg2003,Grigg,2003,multinational,NHL,40,pegfilgrastim 6mg,filgrastim 5mcg/kg/day,pegfilgrastim_vs_filgrastim,3,4,0.75,low,double-blind,III
+Vogel2005,Vogel,2005,multinational,breast cancer,928,pegfilgrastim 6mg,placebo,pegfilgrastim_vs_placebo,5,80,0.06,low,double-blind,III
+Balducci2007,Balducci,2007,USA,breast cancer/lymphoma,852,pegfilgrastim 6mg,no GCSF,pegfilgrastim_vs_placebo,26,63,0.39,some_concerns,open-label,III
+Hecht2010,Hecht,2010,multinational,colorectal cancer,84,pegfilgrastim 6mg,placebo,pegfilgrastim_vs_placebo,2,7,0.30,low,double-blind,II
+Romieu2007,Romieu,2007,multinational,breast cancer,60,pegfilgrastim 6mg,no GCSF,pegfilgrastim_vs_placebo,2,8,0.25,some_concerns,open-label,II
+Kosaka2015,Kosaka,2015,Japan,breast cancer,346,pegfilgrastim 3.6mg,placebo,pegfilgrastim_vs_placebo,2,69,0.03,low,double-blind,III
+Hegg2016,Hegg,2016,Brazil,breast cancer,65,pegfilgrastim 6mg,no GCSF,pegfilgrastim_vs_placebo,1,7,0.14,some_concerns,open-label,II
+Bozzoli2015,Bozzoli,2015,Italy,multiple myeloma,80,pegfilgrastim 6mg,no GCSF,pegfilgrastim_vs_placebo,2,8,0.25,some_concerns,open-label,II
+Bondarenko2013,Bondarenko,2013,multinational,breast cancer,202,lipegfilgrastim 6mg,pegfilgrastim 6mg,lipegfilgrastim_vs_pegfilgrastim,5,7,0.71,low,double-blind,III
+Buchner2014,Buchner,2014,multinational,breast cancer,208,lipegfilgrastim 3-12mg,pegfilgrastim 6mg,lipegfilgrastim_vs_pegfilgrastim,8,4,0.67,low,double-blind,II

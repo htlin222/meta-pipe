@@ -1,0 +1,16 @@
+G-CSF (granulocyte colony-stimulating factor) prophylaxis
+in cancer chemotherapy-induced neutropenia
+
+Population: Adult cancer patients receiving myelosuppressive chemotherapy
+Intervention: G-CSF prophylaxis (filgrastim, pegfilgrastim, lipegfilgrastim)
+Comparator: Placebo or no G-CSF prophylaxis
+Outcomes:
+  Primary: Incidence of febrile neutropenia (FN)
+  Secondary:
+    - Overall survival
+    - Infection-related mortality
+    - Hospitalization rate due to FN
+    - Time to neutrophil recovery (ANC >= 0.5 x 10^9/L)
+    - Adverse events (bone pain, injection site reactions)
+    - Relative dose intensity of chemotherapy
+Study designs: Randomized controlled trials (RCTs)

@@ -1,0 +1,9 @@
+outcome,comparison,assumed_risk_control,corresponding_risk_intervention,relative_effect,n_participants,n_studies,certainty,comments
+FN incidence,Filgrastim vs placebo,280 per 1000,140 per 1000 (106-185),RR 0.50 (0.38-0.66),1334,6,HIGH,Consistent large reduction across cancer types; NNT=7
+FN incidence,Pegfilgrastim vs placebo,280 per 1000,84 per 1000 (56-129),RR 0.30 (0.20-0.46),2415,7,HIGH,Largest absolute risk reduction; NNT=5; includes landmark Vogel 2005
+FN incidence,Lipegfilgrastim vs placebo,280 per 1000,78 per 1000 (42-146),RR 0.28 (0.15-0.52),NA (indirect),0,LOW,Indirect estimate only via NMA; no direct placebo-controlled trials; wide CI
+FN incidence,Pegfilgrastim vs filgrastim,140 per 1000,85 per 1000 (57-126),RR 0.61 (0.41-0.90),507,3,MODERATE,Statistically significant advantage; all breast cancer populations; I2=0%
+FN incidence,Lipegfilgrastim vs pegfilgrastim,84 per 1000,78 per 1000 (43-141),RR 0.93 (0.51-1.68),410,2,LOW,No significant difference; imprecise estimate; non-inferiority not formally tested
+Overall survival,G-CSF vs no G-CSF,--,--,HR 0.85 (0.60-1.20),566,2,LOW,Insufficient evidence; underpowered for survival endpoint; trials not designed for OS
+Infection-related mortality,G-CSF vs no G-CSF,17 per 1000,9 per 1000 (5-17),RR 0.55 (0.30-1.01),2994,10,MODERATE,Borderline significance; very rare events limit precision
+Hospitalization for FN,G-CSF vs no G-CSF,230 per 1000,81 per 1000 (60-110),RR 0.35 (0.26-0.48),3636,13,MODERATE,Large consistent reduction; some open-label bias concerns
