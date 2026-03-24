@@ -5,12 +5,24 @@
   "hooks": {
     "TeammateIdle": [
       {
-        "command": "bash ma-agent-teams/hooks/teammate-idle.sh"
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ma-agent-teams/hooks/teammate-idle.sh"
+          }
+        ]
       }
     ],
     "TaskCompleted": [
       {
-        "command": "bash ma-agent-teams/hooks/task-completed.sh"
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ma-agent-teams/hooks/task-completed.sh"
+          }
+        ]
       }
     ]
   },
