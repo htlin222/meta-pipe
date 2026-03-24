@@ -1,4 +1,19 @@
 {
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "hooks": {
+    "TeammateIdle": [
+      {
+        "command": "bash ma-agent-teams/hooks/teammate-idle.sh"
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "command": "bash ma-agent-teams/hooks/task-completed.sh"
+      }
+    ]
+  },
   "permissions": {
     "allow": [
       "mcp__claude-code__Read",

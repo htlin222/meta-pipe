@@ -101,6 +101,45 @@ tooling/python/   # uv project
     - Use `scripts/checkpoint.py`
     - Creates `.checkpoint/` snapshots
 
+## Agent Teams (Parallel Mode)
+
+When running with agent teams enabled (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`), the pipeline can leverage parallel teammates for independent stages.
+
+### Parallelism Opportunities
+
+| Phase | Stages | Parallelism | Teammates |
+|-------|--------|-------------|-----------|
+| Foundation | 00-02 | Sequential (hard dependencies) | protocol-architect → search-specialist |
+| Screening | 03 | **Parallel** (dual independent review) | screener-a + screener-b simultaneously |
+| Processing | 04-06 | Sequential (each depends on prior) | fulltext-manager → data-extractor → statistician |
+| Synthesis | 07-09 | **Parallel** (independent outputs) | manuscript-writer + qa-auditor simultaneously |
+
+### How to Start
+
+1. User says "create a team for [project]" or "start team mode"
+2. Lead reads `/ma-agent-teams` skill for the orchestration playbook
+3. Lead creates shared task list with 12 tasks and dependencies
+4. Lead spawns teammates in phased order (see SKILL.md for details)
+5. Hooks enforce quality gates at stage transitions
+
+### Quality Gates (Lead Enforces)
+
+- **Stage 03→04**: Screening kappa ≥ 0.60 (lead computes after both reviewers finish)
+- **Stage 04→05**: FT screening kappa ≥ 0.60
+- **Stage 05→06**: Extraction completeness (all included studies extracted)
+- **Stage 06→07**: All figures ≥ 300 DPI
+- **Stage 09**: PRISMA 27/27 (or 32/32 for NMA), publication readiness ≥ 95%
+
+### Generate Spawn Prompts
+
+```bash
+uv run tooling/python/team_spawn_helper.py --project <project-name> --role <role-name>
+```
+
+See `ma-agent-teams/SKILL.md` for complete orchestration details.
+
+---
+
 ## Resources
 - `scripts/init_project.py` creates the numbered folder tree and a checklist.
 - `scripts/run_robustness_checks.py` runs agreement stats, PRISMA flow, and GRADE summaries.
