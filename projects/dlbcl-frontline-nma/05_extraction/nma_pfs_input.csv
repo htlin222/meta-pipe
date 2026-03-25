@@ -1,0 +1,8 @@
+trial,intervention,comparator,n_intervention,n_comparator,pfs_hr,pfs_hr_lci,pfs_hr_uci,pfs_p,os_hr,os_hr_lci,os_hr_uci,os_p,cr_intervention,cr_comparator,gr3ae_intervention,gr3ae_comparator,trm_intervention,trm_comparator,median_fu_months,population,data_maturity
+POLARIX_5y,Pola-R-CHP,R-CHOP,440,439,0.77,0.62,0.97,NA,0.85,0.63,1.15,NA,0.780,0.740,0.607,0.598,0.030,0.023,64.1,All DLBCL (IPI 2-5),5-year
+PHOENIX,R-CHOP+ibrutinib,R-CHOP,419,419,0.917,0.710,1.183,0.5027,0.991,0.712,1.380,0.9593,0.673,0.680,0.899,0.871,0.043,0.029,34.8,Non-GCB DLBCL only,3-year
+ROBUST,R2-CHOP,R-CHOP,285,285,0.85,0.63,1.14,0.29,NA,NA,NA,NA,0.690,0.650,0.780,0.710,NA,NA,27.1,ABC DLBCL only,2-year
+ECOG-E1412,R2CHOP,R-CHOP,145,135,0.66,0.43,1.01,0.03,0.67,NA,NA,0.05,0.730,0.680,NA,NA,0.012,0.041,36.0,All DLBCL (IPI >=2),3-year
+REMoDL-B_5y,RB-CHOP,R-CHOP,459,459,0.81,NA,NA,0.085,0.86,NA,NA,0.32,NA,NA,0.502,0.425,0.009,0.011,64.0,All DLBCL,5-year
+GOYA,G-CHOP,R-CHOP,704,710,0.94,0.78,1.12,0.48,1.02,0.81,1.29,0.84,0.565,0.591,0.751,0.658,0.061,0.044,48.0,All DLBCL,4-year
+CALGB_50303,DA-EPOCH-R,R-CHOP,241,250,0.93,0.68,1.27,0.65,1.09,0.75,1.59,0.64,0.585,0.596,0.983,0.782,0.021,0.021,62.4,All DLBCL,5-year

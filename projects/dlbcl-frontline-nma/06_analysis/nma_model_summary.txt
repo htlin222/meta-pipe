@@ -1,0 +1,27 @@
+========================================
+FRONTLINE DLBCL NMA - PFS (PRIMARY)
+========================================
+
+PRIMARY: Bayesian (gemtc)
+
+
+
+Convergence:
+Potential scale reduction factors:
+
+                   Point est. Upper C.I.
+d.RCHOP.BortRCHOP           1          1
+d.RCHOP.DA_EPOCH_R          1          1
+d.RCHOP.GCHOP               1          1
+d.RCHOP.IbrutRCHOP          1          1
+d.RCHOP.LenaRCHOP           1          1
+d.RCHOP.PolaRCHP            1          1
+sd.d                        1          1
+
+Multivariate psrf
+
+1
+
+
+SENSITIVITY: Frequentist (netmeta)
+

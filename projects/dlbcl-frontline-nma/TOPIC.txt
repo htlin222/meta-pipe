@@ -1,0 +1,105 @@
+# Meta-Analysis Topic
+# Generated: 2026-03-25
+# Feasibility: Quick-check passed (update of existing 2023 NMA)
+
+## Research Question
+Which frontline chemoimmunotherapy regimen achieves the best progression-free survival in previously untreated diffuse large B-cell lymphoma (DLBCL)? An updated network meta-analysis of Phase III randomized controlled trials with subgroup analyses by cell-of-origin, IPI risk, double-expressor status, and age.
+
+## PICO Elements
+
+**Population**: Adults (≥18 years) with previously untreated DLBCL (de novo, any stage)
+**Intervention**: Novel frontline regimens tested in Phase III RCTs:
+  - Pola-R-CHP (polatuzumab vedotin + R-CHP)
+  - R-CHOP + ibrutinib
+  - R-CHOP + lenalidomide
+  - R-CHOP + bortezomib
+  - G-CHOP (obinutuzumab-CHOP)
+  - DA-EPOCH-R (dose-adjusted EPOCH + rituximab)
+**Comparator**: R-CHOP (network common node)
+**Outcomes**:
+  - Primary: Progression-free survival (PFS) — HR with 95% CI
+  - Secondary: Overall survival (OS) — HR with 95% CI
+  - Secondary: Complete response rate (CR) — RR or OR
+  - Secondary: Grade ≥3 adverse events — RR
+  - Secondary: Treatment-related mortality
+
+## Study Design
+Phase III randomized controlled trials only
+- Exclude Phase II, single-arm, and retrospective studies
+- Include both published papers and conference abstracts with sufficient data (HR + CI)
+
+## Key Trials (Expected Network)
+
+| Trial | Regimen | Comparator | N | Status |
+|---|---|---|---|---|
+| POLARIX | Pola-R-CHP | R-CHOP | 879 | 5-year data (JCO 2026) |
+| PHOENIX | R-CHOP + ibrutinib | R-CHOP | 838 | Published (Lancet Oncol 2021) |
+| ROBUST | R-CHOP + lenalidomide | R-CHOP | 570 | Published (JCO 2021, ABC only) |
+| R2-CHOP/ECOG-E1412 | R-CHOP + lenalidomide | R-CHOP | 349 | Published (JCO 2022) |
+| REMoDL-B | R-CHOP + bortezomib | R-CHOP | 918 | Published (JCO 2019) |
+| GOYA | G-CHOP | R-CHOP | 1,418 | Published (JCO 2018) |
+| Alliance/CALGB 50303 | DA-EPOCH-R | R-CHOP | 491 | Published (JCO 2019) |
+
+Total estimated: ~5,400 patients across 7+ RCTs
+
+## Feasibility Notes (from brainstorming)
+- Estimated studies: 7-10 Phase III RCTs (star-shaped network, R-CHOP = common node)
+- Existing reviews: 2023 NMA exists (PMID: 36947214, Ann Hematol) — OUTDATED
+  - Missing: POLARIX 5-year update, comprehensive subgroup analyses
+  - Our value-add: Updated data + subgroup NMA (COO, IPI, DEL, age)
+- Heterogeneity risk: LOW-MODERATE
+  - All trials use R-CHOP as comparator (consistent node)
+  - Population differences: some trials enriched for ABC/high-risk
+  - Outcome reporting: PFS/OS universally reported; subgroup data variable
+- Network geometry: Star-shaped (all connect to R-CHOP)
+  - No direct comparisons between novel regimens
+  - Transitivity assumption reasonable (similar eligibility criteria)
+- Data concerns: Subgroup HRs may need extraction from KM curves
+
+## Analysis Type
+nma
+- Justification: ≥6 treatments with R-CHOP as connected common comparator
+- Network structure: Star-shaped (all vs R-CHOP)
+- Framework: Bayesian (gemtc) primary + frequentist (netmeta) sensitivity
+
+## Planned Subgroup Analyses (Key Innovation)
+
+1. **Cell-of-origin (COO)**: ABC/non-GCB vs GCB
+   - Rationale: POLARIX 5y shows ABC benefit (OS HR dramatic); PHOENIX designed for ABC; ROBUST enrolled ABC only
+2. **IPI risk score**: IPI 0-2 (low) vs IPI 3-5 (high)
+   - Rationale: POLARIX shows differential benefit by IPI; "ceiling effect" in low-risk
+3. **Double-expressor lymphoma (DEL)**: MYC+BCL2 co-expression
+   - Rationale: POLARIX HR 0.64 in DEL — strongest signal
+4. **Age**: ≤60 vs >60 (or >70 if data available)
+   - Rationale: POLARIX shows benefit in >70; safety profiles differ
+
+## Search Strategy Notes
+- Databases: PubMed, Scopus, Embase, Cochrane CENTRAL
+- Date range: 2010-2026 (modern era of DLBCL treatment)
+- Language: English
+- Key search terms: DLBCL, diffuse large B-cell lymphoma, frontline, first-line,
+  untreated, R-CHOP, randomized, phase III
+- MeSH: "Lymphoma, Large B-Cell, Diffuse/drug therapy"[MeSH]
+
+## Potential Challenges
+1. Star-shaped network limits indirect comparisons between novel agents
+2. Subgroup data (COO, DEL) not reported in all trials
+3. Different PFS definitions across trials (IRC vs investigator)
+4. ROBUST enrolled ABC-only — population heterogeneity
+5. Variable follow-up durations (2-5 years)
+
+## Mitigation Strategies
+1. Use consistency model; report SUCRA rankings with uncertainty
+2. Perform subgroup NMA only with ≥3 trials reporting; note missing data
+3. Sensitivity analysis by PFS definition
+4. ROBUST handled as ABC-subgroup data; integrate with ABC subgroups from other trials
+5. Use most mature data available; note follow-up in evidence table
+
+## TP53 Mutation Gap (Future Direction)
+- Identified as "Critical Gap" — neither Pola-R-CHP nor DA-EPOCH-R overcomes TP53mut
+- Insufficient data for NMA subgroup analysis (few trials report TP53 outcomes)
+- Flag in Discussion as unmet need: venetoclax combinations, bispecific antibodies, CAR-T
+
+---
+**Status**: Ready for 4-hour feasibility assessment
+**Created by**: Brainstorming session 2026-03-25

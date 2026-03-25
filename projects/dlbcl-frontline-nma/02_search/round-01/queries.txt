@@ -1,0 +1,20 @@
+# PubMed Query (Round 01)
+# Date: 2026-03-25
+# Database: PubMed/MEDLINE
+
+## Main Query
+("diffuse large B-cell lymphoma"[MeSH] OR "DLBCL"[tiab] OR "diffuse large B cell"[tiab] OR "diffuse large B-cell"[tiab]) AND ("first-line"[tiab] OR "frontline"[tiab] OR "untreated"[tiab] OR "newly diagnosed"[tiab] OR "treatment-naive"[tiab] OR "previously untreated"[tiab]) AND ("randomized controlled trial"[pt] OR "randomized"[tiab] OR "phase III"[tiab] OR "phase 3"[tiab]) AND ("R-CHOP"[tiab] OR "rituximab"[tiab] OR "chemoimmunotherapy"[tiab])
+
+## Filters
+- Date: 2010/01/01 to 2026/03/25
+- Language: English
+- Species: Humans
+
+## Supplementary Trial-Name Queries (Round 02)
+POLARIX[tiab] AND DLBCL
+PHOENIX[tiab] AND DLBCL AND ibrutinib
+ROBUST[tiab] AND DLBCL AND lenalidomide
+"ECOG-E1412"[tiab] OR ("E1412"[tiab] AND DLBCL AND lenalidomide)
+"REMoDL-B"[tiab] AND DLBCL
+GOYA[tiab] AND DLBCL AND obinutuzumab
+"CALGB 50303"[tiab] OR ("Alliance 50303"[tiab] AND DLBCL)

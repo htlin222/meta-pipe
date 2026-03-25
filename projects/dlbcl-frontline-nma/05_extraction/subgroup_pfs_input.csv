@@ -1,0 +1,26 @@
+trial,intervention,subgroup_type,subgroup_value,pfs_hr,pfs_hr_lci,pfs_hr_uci,pfs_p,source
+POLARIX,Pola-R-CHP,COO,ABC,0.34,0.21,0.56,NA,FDA Clinical Review (2y data)
+POLARIX,Pola-R-CHP,COO,GCB,1.18,0.75,1.84,NA,FDA Clinical Review (2y data)
+POLARIX,Pola-R-CHP,IPI,3-5,0.71,0.53,0.95,NA,FDA Clinical Review (2y data)
+POLARIX,Pola-R-CHP,DEL,DEL+,0.63,0.42,0.94,NA,FDA Clinical Review (2y data)
+POLARIX,Pola-R-CHP,Age,>=70,0.63,0.41,0.96,NA,Kuhnl 2025 (5y data)
+POLARIX,Pola-R-CHP,Bulky,No bulky,0.59,0.42,0.83,NA,FDA Clinical Review (2y data)
+PHOENIX,R-CHOP+ibrutinib,Age,<60,0.556,0.359,0.860,NA,Younes 2019 (PFS)
+PHOENIX,R-CHOP+ibrutinib,Age,>=60,1.200,0.866,1.664,NA,Younes 2019 (PFS)
+PHOENIX,R-CHOP+ibrutinib,COO,ABC (by GEP),0.949,0.704,1.279,0.7311,Younes 2019 (EFS not PFS)
+PHOENIX,R-CHOP+ibrutinib,DEL,All DE,0.646,0.424,0.984,0.040,Bartlett 2023 (EFS not PFS)
+PHOENIX,R-CHOP+ibrutinib,DEL_Age,DE + Age<60,0.381,0.193,0.752,0.004,Bartlett 2023 (EFS)
+PHOENIX,R-CHOP+ibrutinib,DEL_Age,DE + Age>=60,0.924,0.530,1.609,0.78,Bartlett 2023 (EFS)
+REMoDL-B_5y,RB-CHOP,COO,ABC,0.65,0.43,0.98,0.041,Davies 2023
+REMoDL-B_5y,RB-CHOP,COO,GCB,1.05,0.74,1.50,0.77,Davies 2023
+REMoDL-B_5y,RB-CHOP,COO,MHG,0.46,0.26,0.84,0.011,Davies 2023
+GOYA,G-CHOP,COO,GCB,0.80,0.58,1.12,NA,Sehn 2020
+GOYA,G-CHOP,COO,ABC,0.91,0.61,1.36,NA,Sehn 2020
+GOYA,G-CHOP,COO,Unclassified,1.10,0.65,1.88,NA,Sehn 2020
+GOYA,G-CHOP,IPI,Low-intermediate,0.93,0.71,1.23,NA,Sehn 2020
+GOYA,G-CHOP,IPI,High-intermediate,0.73,0.53,1.01,NA,Sehn 2020
+GOYA,G-CHOP,IPI,High,1.27,0.87,1.86,NA,Sehn 2020
+ECOG-E1412,R2CHOP,COO,ABC,0.68,NA,NA,0.10,Nowakowski 2021
+ECOG-E1412,R2CHOP,COO,GCB,0.82,NA,NA,NA,Nowakowski 2021
+ECOG-E1412,R2CHOP,COO,Unclassified,0.83,NA,NA,NA,Nowakowski 2021
+CALGB_50303,DA-EPOCH-R,IPI,4-5 (post hoc),0.46,0.21,1.01,0.052,Bartlett 2019

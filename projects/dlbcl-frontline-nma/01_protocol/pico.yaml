@@ -1,0 +1,60 @@
+population:
+  description: "Adults with previously untreated diffuse large B-cell lymphoma (DLBCL)"
+  age_range: "≥18 years"
+  condition: "De novo DLBCL, any stage (Ann Arbor I-IV)"
+intervention:
+  description: "Novel frontline chemoimmunotherapy regimens: Pola-R-CHP, R-CHOP+ibrutinib, R-CHOP+lenalidomide, R-CHOP+bortezomib, G-CHOP (obinutuzumab-CHOP), DA-EPOCH-R"
+comparison:
+  description: "R-CHOP (rituximab, cyclophosphamide, doxorubicin, vincristine, prednisone) as common network node"
+outcomes:
+  primary:
+    - name: "Progression-free survival"
+      type: "time-to-event"
+      unit: "HR with 95% CI"
+  secondary:
+    - name: "Overall survival"
+      type: "time-to-event"
+      unit: "HR with 95% CI"
+    - name: "Complete response rate"
+      type: "binary"
+      unit: "RR with 95% CI"
+    - name: "Grade ≥3 adverse events"
+      type: "binary"
+      unit: "RR with 95% CI"
+    - name: "Treatment-related mortality"
+      type: "binary"
+      unit: "RR with 95% CI"
+setting:
+  timeframe: "2010-2026"
+  geography: "Global (multinational trials)"
+study_types:
+  include:
+    - "Phase III randomized controlled trials"
+  exclude:
+    - "Phase I/II trials"
+    - "Single-arm studies"
+    - "Retrospective/observational studies"
+    - "Trials in relapsed/refractory DLBCL"
+    - "Trials in primary mediastinal B-cell lymphoma (PMBCL) only"
+    - "Trials in transformed lymphoma only"
+analysis_type:
+  preliminary: "nma_candidate"
+  confirmed: "nma"
+  confirmation_stage: "03_screening"
+  rationale: "≥6 distinct treatments all compared against R-CHOP; star-shaped network expected"
+  single_arm_proportion: "0%"
+  transitivity_plausible: "yes"
+  network_connected: "yes"
+subgroup_analyses:
+  - name: "Cell-of-origin (COO)"
+    variable: "ABC/non-GCB vs GCB"
+    rationale: "POLARIX 5y ABC OS 84.6% vs 69.9%; PHOENIX designed for non-GCB"
+  - name: "IPI risk score"
+    variable: "IPI 0-2 vs IPI 3-5"
+    rationale: "Differential benefit; ceiling effect in low-risk"
+  - name: "Double-expressor lymphoma (DEL)"
+    variable: "MYC+BCL2 co-expression"
+    rationale: "POLARIX HR 0.64 in DEL"
+  - name: "Age"
+    variable: "≤60 vs >60 (or >70)"
+    rationale: "POLARIX benefit in >70; safety profiles differ"
