@@ -84,6 +84,8 @@ meta-pipe/
 
 **Orchestration**: `/ma-end-to-end` - Complete workflow management | `/ma-agent-teams` - Agent team coordination
 
+**Share your work**: `/post-to-discussion` - Post your completed project to [GitHub Discussions](https://github.com/htlin222/meta-pipe/discussions) with figures and results
+
 **Note**: Skills are invoked using the `Skill` tool. Each skill contains both workflow guidance and complete command references.
 
 ---
