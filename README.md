@@ -1,6 +1,19 @@
+<div align="center">
+
 # Meta-Analysis Pipeline
 
-AI-assisted, end-to-end meta-analysis with reproducible tooling.
+[![GitHub stars](https://img.shields.io/github/stars/htlin222/meta-pipe?style=flat-square)](https://github.com/htlin222/meta-pipe/stargazers)
+[![Last commit](https://img.shields.io/github/last-commit/htlin222/meta-pipe?style=flat-square)](https://github.com/htlin222/meta-pipe/commits/main)
+[![License](https://img.shields.io/badge/license-Academic%20%26%20Non--Commercial-blue?style=flat-square)](LICENSE)
+[![Python](https://img.shields.io/badge/python-%E2%89%A53.12-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org)
+
+**AI-assisted, end-to-end meta-analysis with reproducible tooling.**
+
+*From research question to manuscript-ready output -- powered by Claude Code.*
+
+</div>
+
+---
 
 ## Quick Start
 
