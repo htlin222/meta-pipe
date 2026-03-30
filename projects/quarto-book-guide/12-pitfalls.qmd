@@ -1,0 +1,245 @@
+# 常見問題與陷阱排除 {#sec-pitfalls}
+
+這一章收集了初學者最常遇到的問題和錯誤。當你的 Quarto 文件出了問題，先來這裡找找有沒有答案。
+
+## 問題一：YAML 格式錯誤 {#sec-pitfall-yaml}
+
+**症狀**：`quarto render` 時出現類似以下的錯誤訊息：
+
+```
+ERROR: YAML parse error
+```
+
+**常見原因與解法**：
+
+:::{.callout-caution}
+## 縮排問題（最常見！）
+
+```yaml
+# 錯誤：用了 Tab 縮排
+format:
+→   html:           # ← 這裡用了 Tab
+→   →   toc: true   # ← 這裡也是 Tab
+
+# 正確：用空格縮排
+format:
+  html:
+    toc: true
+```
+
+**解法**：在 VS Code 中按 `Ctrl + Shift + P`，輸入 "Convert Indentation to Spaces"，一鍵轉換。
+:::
+
+:::{.callout-caution}
+## 冒號後缺少空格
+
+```yaml
+# 錯誤
+title:"我的文件"
+
+# 正確
+title: "我的文件"
+```
+:::
+
+:::{.callout-caution}
+## 特殊字元未加引號
+
+```yaml
+# 錯誤：冒號被誤認為 YAML 語法
+title: 我的書：完整版
+
+# 正確
+title: "我的書：完整版"
+```
+
+**規則**：如果值裡面有 `:`、`#`、`[`、`]`、`{`、`}`、`,`、`&`、`*`、`?`、`|`、`>`、`!`、`%`、`@` 等字元，就用引號包住。
+:::
+
+## 問題二：圖片找不到 {#sec-pitfall-images}
+
+**症狀**：輸出的文件中圖片顯示為破損的圖示或空白。
+
+:::{.callout-caution}
+## 路徑錯誤
+
+**最常見的原因是路徑不正確。**
+
+```markdown
+# 錯誤：使用絕對路徑
+![](C:/Users/me/Desktop/photo.jpg)
+
+# 錯誤：路徑大小寫不符（Linux 區分大小寫）
+![](images/Photo.jpg)    # 但實際檔名是 photo.jpg
+
+# 正確：使用相對路徑，大小寫一致
+![](images/photo.jpg)
+```
+
+**除錯步驟**：
+
+1. 確認圖片檔案確實存在
+2. 確認路徑是相對於 `.qmd` 檔案的位置
+3. 確認檔名大小寫完全一致
+4. 確認沒有中文或空格在路徑中
+:::
+
+## 問題三：中文 PDF 亂碼 {#sec-pitfall-chinese-pdf}
+
+**症狀**：PDF 中的中文字變成方塊、問號或完全消失。
+
+:::{.callout-caution}
+## 未設定中文字型
+
+**解法**：在 YAML 中指定中文字型（詳見 @sec-render）：
+
+```yaml
+format:
+  pdf:
+    pdf-engine: xelatex
+    CJKmainfont: "Noto Serif CJK TC"
+```
+
+如果你不確定系統有哪些中文字型，可以在終端機中執行：
+
+```bash
+# macOS
+fc-list :lang=zh
+
+# Linux
+fc-list :lang=zh
+
+# Windows PowerShell
+Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts' |
+  Select-Object -Property * | Where-Object { $_.PSChildName -match "CJK|Ming|Hei|Kai|Song" }
+```
+:::
+
+:::{.callout-tip}
+## 替代方案：使用 Typst
+如果 LaTeX + 字型的設定讓你頭痛，考慮改用 Typst 引擎：
+
+```yaml
+format:
+  typst:
+    mainfont: "Noto Serif CJK TC"
+```
+
+Typst 對中文的支援更簡單直覺，不需要煩惱 LaTeX 的複雜設定。
+:::
+
+## 問題四：交叉引用失效 {#sec-pitfall-crossref}
+
+**症狀**：文中出現原樣的 `@fig-xxx` 或 `@tbl-xxx`，沒有被替換成編號。
+
+:::{.callout-caution}
+## 檢查以下幾點
+
+1. **標籤前綴是否正確？**（見 @tbl-prefixes）
+   - 圖片必須用 `#fig-`，表格必須用 `#tbl-`
+2. **標籤是否有底線或大寫？**
+   - `#fig-my_image` → 改為 `#fig-my-image`
+   - `#fig-MyImage` → 改為 `#fig-my-image`
+3. **圖片是否有說明文字？**
+   - `![](path.jpg){#fig-x}` 不會生效
+   - `![說明文字](path.jpg){#fig-x}` 才會生效
+4. **引用的標籤名稱是否拼對？**
+   - 拼錯不會報錯，只會原樣顯示
+:::
+
+## 問題五：參考文獻不顯示 {#sec-pitfall-bibliography}
+
+**症狀**：文中的 `[@key]` 沒有變成引用格式，或者文末沒有參考文獻清單。
+
+:::{.callout-caution}
+## 檢查以下幾點
+
+1. **`references.bib` 檔案是否存在？**
+   - 確認路徑正確
+2. **YAML 中是否有指定 `bibliography`？**
+   ```yaml
+   bibliography: references.bib
+   ```
+3. **引用鍵是否正確？**
+   - `references.bib` 中的鍵是 `smith2023`，你寫的是 `[@smith2023]` 嗎？
+4. **Book 專案是否有 `references.qmd`？**
+   - 確認 `_quarto.yml` 的 `chapters` 中包含 `references.qmd`
+:::
+
+## 問題六：`quarto render` 失敗 {#sec-pitfall-render-fail}
+
+**症狀**：執行 `quarto render` 時出現錯誤。
+
+:::{.callout-tip}
+## 系統性除錯步驟
+
+1. **仔細閱讀錯誤訊息**
+   - 錯誤訊息通常會告訴你問題在哪個檔案的哪一行
+
+2. **縮小範圍**
+   - 如果是 Book 專案，試試只 render 單一章節：
+   ```bash
+   quarto render 01-intro.qmd
+   ```
+   - 找到出問題的那個檔案
+
+3. **檢查 YAML 格式**
+   - 大部分的 render 失敗都是 YAML 問題
+   - 用 [YAML 線上驗證器](https://www.yamllint.com/) 檢查
+
+4. **嘗試最小化**
+   - 建立一個只有幾行的測試檔案，確認基本功能正常
+   - 然後逐步加入內容，找出導致問題的部分
+
+5. **更新 Quarto**
+   - 有時候問題是 bug，更新到最新版本可能就解決了：
+   ```bash
+   quarto update
+   ```
+:::
+
+## 問題七：Book 專案新增章節不出現 {#sec-pitfall-missing-chapter}
+
+**症狀**：建立了新的 `.qmd` 檔案，但在書中看不到。
+
+:::{.callout-caution}
+## 忘了更新 `_quarto.yml`
+這是最常見的原因。新增 `.qmd` 檔案後，**必須**在 `_quarto.yml` 的 `chapters` 列表中加入該檔案。
+
+詳見 @sec-add-chapter。
+:::
+
+## 問題八：預覽時瀏覽器沒有自動更新 {#sec-pitfall-preview}
+
+:::{.callout-tip}
+## 解法
+1. 確認你有**儲存**檔案（`Ctrl + S`）
+2. 如果還是不更新，在終端機中按 `Ctrl + C` 停止預覽，再重新執行 `quarto preview`
+3. 嘗試清除瀏覽器快取（`Ctrl + Shift + R`）
+:::
+
+## 急救包：最後手段 {#sec-last-resort}
+
+如果以上都沒有解決你的問題：
+
+:::{.callout-tip}
+## 求助管道
+
+1. **Quarto 官方討論區**：[GitHub Discussions](https://github.com/quarto-dev/quarto-cli/discussions)
+   - 搜尋是否有人遇到過相同問題
+   - 發文時附上：Quarto 版本（`quarto --version`）、作業系統、錯誤訊息、最小重現範例
+
+2. **Stack Overflow**：用 `[quarto]` 標籤搜尋或發問
+
+3. **Quarto 官方文件**：[quarto.org](https://quarto.org/docs/guide/)
+   - 每個功能頁面的最下方通常有 FAQ 和常見問題
+:::
+
+## 本章小結 {.unnumbered}
+
+- YAML 錯誤是最常見的問題來源（縮排、冒號、引號）
+- 圖片問題通常是路徑錯誤
+- 中文 PDF 需要設定字型（或改用 Typst）
+- 交叉引用和參考文獻拼錯不會報錯，需要手動檢查
+- 系統性除錯：讀錯誤訊息 → 縮小範圍 → 最小化重現
+- 善用 Quarto 社群資源求助

@@ -1,0 +1,193 @@
+# 參考文獻管理 {#sec-citations}
+
+如果你在撰寫學術論文或技術報告，參考文獻管理是不可避免的工作。Quarto 內建了強大的引用功能，可以自動產生格式正確的參考文獻清單。
+
+## BibTeX 格式簡介 {#sec-bibtex}
+
+Quarto 使用 **BibTeX** 格式來儲存參考文獻資料。BibTeX 是學術界最常用的參考文獻格式之一。
+
+:::{.callout-note}
+## 什麼是 BibTeX？
+BibTeX 是一種純文字的參考文獻格式。每一筆文獻用一個固定的結構來描述，包括作者、標題、年份、期刊等資訊。雖然看起來有點複雜，但你通常不需要手動撰寫——大部分的文獻管理工具都能自動匯出 BibTeX 格式。
+:::
+
+### BibTeX 條目範例
+
+```bibtex
+@article{smith2023,
+  author = {John Smith and Jane Doe},
+  title = {A Study on Quarto Publishing},
+  journal = {Journal of Open Science},
+  year = {2023},
+  volume = {15},
+  pages = {100--115},
+  doi = {10.1234/example}
+}
+```
+
+每個條目的組成：
+
+- `@article`：文獻類型（也可以是 `@book`、`@inproceedings`、`@online` 等）
+- `smith2023`：引用鍵（key），你在文中引用時會用到這個名稱
+- 大括號內：文獻的詳細資訊
+
+## 建立 `references.bib` 檔案 {#sec-create-bib}
+
+在你的專案資料夾中建立一個 `references.bib` 檔案，把所有參考文獻放在裡面：
+
+```bibtex
+@article{smith2023,
+  author = {John Smith and Jane Doe},
+  title = {A Study on Quarto Publishing},
+  journal = {Journal of Open Science},
+  year = {2023},
+  volume = {15},
+  pages = {100--115}
+}
+
+@book{knuth1984,
+  author = {Donald E. Knuth},
+  title = {The TeXbook},
+  publisher = {Addison-Wesley},
+  year = {1984}
+}
+```
+
+然後在 `_quarto.yml`（Book 專案）或 YAML 前置區塊（單一文件）中指定這個檔案：
+
+```yaml
+bibliography: references.bib
+```
+
+## 在文中引用文獻 {#sec-cite-in-text}
+
+Quarto 提供兩種引用方式：
+
+### 括號式引用
+
+```markdown
+最近的研究顯示了重要的發現 [@smith2023]。
+```
+
+呈現效果：最近的研究顯示了重要的發現 (Smith & Doe, 2023)。
+
+### 敘述式引用
+
+```markdown
+根據 @smith2023 的研究...
+```
+
+呈現效果：根據 Smith & Doe (2023) 的研究...
+
+### 多篇引用
+
+```markdown
+多項研究支持這個結論 [@smith2023; @knuth1984]。
+```
+
+呈現效果：多項研究支持這個結論 (Smith & Doe, 2023; Knuth, 1984)。
+
+### 加上頁碼
+
+```markdown
+如同 Smith 所述 [@smith2023, p. 105]。
+```
+
+## 參考文獻清單 {#sec-bibliography-list}
+
+Quarto 會自動在文件末尾（或你指定的位置）產生完整的參考文獻清單。在 Book 專案中，通常會建立一個 `references.qmd` 檔案：
+
+```markdown
+# 參考文獻 {.unnumbered}
+```
+
+只需要這一行！Quarto 會自動在這個頁面插入所有被引用過的文獻。
+
+:::{.callout-important}
+## 只有被引用的文獻會出現
+參考文獻清單只會列出你在文中實際引用過的文獻。即使 `references.bib` 裡有 100 筆資料，如果你只引用了其中 5 筆，清單中就只會出現這 5 筆。
+:::
+
+## 引用樣式（CSL） {#sec-csl}
+
+不同的學術期刊要求不同的引用格式。Quarto 使用 **CSL**（Citation Style Language）檔案來控制引用格式。
+
+在 YAML 中指定 CSL 檔案：
+
+```yaml
+bibliography: references.bib
+csl: apa.csl
+```
+
+:::{.callout-tip}
+## 哪裡找 CSL 檔案？
+[Zotero Style Repository](https://www.zotero.org/styles) 收錄了超過 10,000 種引用樣式。你可以：
+
+1. 搜尋你的目標期刊名稱
+2. 下載 `.csl` 檔案
+3. 放到專案資料夾中
+4. 在 YAML 中指定 `csl: 檔案名.csl`
+:::
+
+## 取得 BibTeX 條目的方法 {#sec-get-bibtex}
+
+:::{.callout-tip}
+## 方法一：從 Zotero 匯出
+[Zotero](https://www.zotero.org/) 是一個免費的文獻管理工具。你可以：
+
+1. 在 Zotero 中收集文獻
+2. 選取要匯出的文獻
+3. 右鍵 → 匯出項目 → 選擇 BibTeX 格式
+4. 儲存為 `references.bib`
+:::
+
+:::{.callout-tip}
+## 方法二：從 DOI 自動產生
+如果你有文獻的 DOI（數位物件識別碼），可以用以下方式取得 BibTeX：
+
+1. 前往 [doi2bib](https://www.doi2bib.org/)
+2. 輸入 DOI（例如 `10.1234/example`）
+3. 網站會自動產生 BibTeX 條目
+4. 複製貼到你的 `references.bib` 中
+:::
+
+:::{.callout-tip}
+## 方法三：從 Google Scholar 取得
+1. 在 [Google Scholar](https://scholar.google.com/) 搜尋文獻
+2. 點擊文獻下方的「引用」（雙引號圖示）
+3. 點擊「BibTeX」
+4. 複製產生的條目
+:::
+
+## 常見問題 {#sec-citation-issues}
+
+:::{.callout-warning}
+## 引用鍵拼錯不會報錯
+這是最容易踩到的坑：如果你寫了 `[@smiht2023]`（拼錯了），Quarto **不會報錯**。它會在輸出中顯示一個問號或原樣的文字，讓你的文件看起來有瑕疵但不會有明確的錯誤訊息。
+
+**建議**：完成文件後，搜尋 `[@` 確認所有引用都正確顯示。
+:::
+
+:::{.callout-caution}
+## `references.bib` 路徑必須正確
+如果 Quarto 找不到 `references.bib` 檔案，所有引用都會失效。確保：
+
+1. 檔案確實存在於你指定的位置
+2. YAML 中的路徑是相對於 `_quarto.yml` 或 `.qmd` 檔案的位置
+3. 檔案名稱大小寫正確（Linux 系統區分大小寫）
+:::
+
+## 本章小結 {.unnumbered}
+
+- 參考文獻用 BibTeX 格式存在 `references.bib` 檔案中
+- 括號式引用：`[@key]`，敘述式引用：`@key`
+- 參考文獻清單會自動產生
+- 可以用 CSL 檔案控制引用格式
+- 引用鍵拼錯不會報錯，需要手動檢查
+- 下一章我們將深入了解 YAML 設定（見 @sec-yaml）
+
+:::{.callout-tip}
+## 延伸閱讀
+- [Quarto Citations（官方）](https://quarto.org/docs/authoring/citations.html) [@quarto-citations]
+- [Zotero 免費文獻管理工具](https://www.zotero.org/)
+:::

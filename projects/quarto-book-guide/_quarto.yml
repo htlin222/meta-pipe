@@ -1,0 +1,45 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Quarto 完全入門指南"
+  subtitle: "從零開始，寫出你的第一本書"
+  author: "Meta-Pipe Project"
+  date: today
+  date-format: "YYYY年MM月DD日"
+  lang: zh-TW
+
+  chapters:
+    - index.qmd
+    - part: "基礎篇"
+      chapters:
+        - 01-intro.qmd
+        - 02-install.qmd
+        - 03-markdown.qmd
+        - 04-first-doc.qmd
+    - part: "進階篇"
+      chapters:
+        - 05-book-project.qmd
+        - 06-callouts.qmd
+        - 07-figures-tables.qmd
+        - 08-crossref.qmd
+    - part: "實戰篇"
+      chapters:
+        - 09-citations.qmd
+        - 10-yaml.qmd
+        - 11-render.qmd
+        - 12-pitfalls.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-copy: true
+    code-overflow: wrap
+    lang: zh-TW

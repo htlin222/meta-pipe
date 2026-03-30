@@ -1,0 +1,193 @@
+# Book 專案架構 {#sec-book-project}
+
+到目前為止，我們已經學會了建立單一的 `.qmd` 文件。但如果你要寫的是一本書——有很多章節、目錄、索引——就需要用到 Quarto 的 **Book 專案**功能。
+
+事實上，你正在閱讀的這本書，就是一個 Book 專案。
+
+## 什麼是 Book 專案？ {#sec-what-is-book}
+
+Book 專案是 Quarto 的一種專案類型，它可以：
+
+- 把多個 `.qmd` 檔案組合成一本完整的書
+- 自動產生目錄、章節編號、導覽列
+- 支援「上一章 / 下一章」的翻頁功能
+- 一次輸出成 HTML、PDF、EPUB 等多種格式
+
+:::{.callout-note}
+## Book vs 單一文件
+| | 單一文件 | Book 專案 |
+|---|---|---|
+| 檔案數量 | 1 個 `.qmd` | 多個 `.qmd` |
+| 適合用途 | 短文、報告 | 書籍、長篇論文 |
+| 目錄 | 章節內目錄 | 跨章節目錄 |
+| 章節編號 | 文件內 | 全書連續 |
+| 設定檔 | YAML 前置區塊 | `_quarto.yml` |
+:::
+
+## 快速建立 Book 專案 {#sec-create-book}
+
+最簡單的方式是用 Quarto 的內建指令：
+
+```bash
+quarto create project book my-book
+```
+
+這會建立一個名為 `my-book` 的資料夾，裡面包含基本的檔案結構。
+
+:::{.callout-tip}
+## 快速上手
+如果你想馬上看到效果，執行以下兩個指令：
+
+```bash
+quarto create project book my-book
+quarto preview my-book
+```
+
+瀏覽器會自動打開，你就能看到一本書的雛形了！
+:::
+
+## 專案結構說明 {#sec-book-structure}
+
+一個典型的 Book 專案長這樣：
+
+```
+my-book/
+├── _quarto.yml      ← 專案設定檔（最重要！）
+├── index.qmd        ← 前言 / 首頁
+├── 01-chapter1.qmd  ← 第一章
+├── 02-chapter2.qmd  ← 第二章
+├── 03-chapter3.qmd  ← 第三章
+├── references.qmd   ← 參考文獻頁
+├── references.bib   ← 參考文獻資料庫
+└── images/          ← 圖片資料夾
+    └── cover.png
+```
+
+### `_quarto.yml`：專案的靈魂
+
+`_quarto.yml` 是整個 Book 專案最重要的檔案。它定義了書的標題、作者、章節順序、輸出格式等所有設定。
+
+以下是一個基本的範例：
+
+```yaml
+project:
+  type: book
+
+book:
+  title: "我的第一本書"
+  author: "你的名字"
+  date: today
+  chapters:
+    - index.qmd
+    - 01-chapter1.qmd
+    - 02-chapter2.qmd
+    - 03-chapter3.qmd
+    - references.qmd
+
+format:
+  html:
+    theme: cosmo
+```
+
+:::{.callout-important}
+## `chapters` 的順序就是書的順序
+`_quarto.yml` 中 `chapters` 列表的排列順序，就是書中章節的出現順序。如果你新增了一個 `.qmd` 檔案但忘了加到這個列表中，它就不會出現在書裡。
+:::
+
+:::{.callout-warning}
+## `_quarto.yml` 的縮排
+YAML 檔案對縮排非常敏感。縮排錯誤是初學者最常遇到的問題之一。
+
+**正確：**
+```yaml
+book:
+  title: "我的書"
+  chapters:
+    - index.qmd
+```
+
+**錯誤（縮排不一致）：**
+```yaml
+book:
+  title: "我的書"
+    chapters:
+    - index.qmd
+```
+
+我們會在 @sec-yaml 詳細介紹 YAML 的規則。
+:::
+
+## 使用「部分」來分組章節 {#sec-parts}
+
+如果你的書有很多章節，可以用 `part` 來分組：
+
+```yaml
+book:
+  title: "我的程式教學書"
+  chapters:
+    - index.qmd
+    - part: "基礎篇"
+      chapters:
+        - 01-variables.qmd
+        - 02-functions.qmd
+    - part: "進階篇"
+      chapters:
+        - 03-classes.qmd
+        - 04-modules.qmd
+    - references.qmd
+```
+
+這會在書的目錄中產生清楚的分組標題，就像你在本書左側目錄看到的「基礎篇」、「進階篇」、「實戰篇」一樣。
+
+## 新增一個章節 {#sec-add-chapter}
+
+新增章節只需要兩步：
+
+1. **建立新的 `.qmd` 檔案**，例如 `05-new-chapter.qmd`
+2. **在 `_quarto.yml` 的 `chapters` 中加入這個檔案**
+
+```yaml
+chapters:
+  - index.qmd
+  - 01-chapter1.qmd
+  - 05-new-chapter.qmd    # ← 新增這一行
+  - references.qmd
+```
+
+:::{.callout-caution}
+## 別忘了更新 `_quarto.yml`
+這是初學者最常犯的錯誤之一：建立了新的 `.qmd` 檔案，但忘了把它加到 `_quarto.yml` 的 `chapters` 列表中。結果新章節不會出現在書裡，讓人困惑不已。
+:::
+
+## 附錄 {#sec-appendices}
+
+如果你的書需要附錄，可以在 `_quarto.yml` 中加上 `appendices`：
+
+```yaml
+book:
+  title: "我的書"
+  chapters:
+    - index.qmd
+    - 01-intro.qmd
+    - references.qmd
+  appendices:
+    - appendix-a.qmd
+    - appendix-b.qmd
+```
+
+附錄的章節編號會自動使用英文字母（A、B、C...）。
+
+## 本章小結 {.unnumbered}
+
+- Book 專案可以把多個 `.qmd` 檔案組合成一本書
+- `_quarto.yml` 是專案的核心設定檔
+- `chapters` 列表定義了章節順序
+- 可以用 `part` 來分組章節
+- 新增章節時，**必須**同時更新 `_quarto.yml`
+- 下一章我們將學習 Quarto 的特色功能——提示框（見 @sec-callouts）
+
+:::{.callout-tip}
+## 延伸閱讀
+- [Quarto Books（官方）](https://quarto.org/docs/books/) [@quarto-books]
+- [Quarto Book 結構設定](https://quarto.org/docs/books/book-structure.html)
+:::

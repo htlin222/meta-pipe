@@ -1,0 +1,192 @@
+# 圖片與表格 {#sec-figures-tables}
+
+圖片和表格是文件中不可或缺的元素。在 @sec-markdown 中我們已經學過基本的圖片和表格語法，這一章將介紹 Quarto 提供的進階功能，包括標籤、自動編號和排版控制。
+
+## 插入圖片 {#sec-insert-figures}
+
+### 基本語法
+
+```markdown
+![圖片說明文字](圖片路徑)
+```
+
+例如：
+
+```markdown
+![美麗的夕陽](images/sunset.jpg)
+```
+
+### 調整圖片大小
+
+用 `width` 屬性來控制圖片寬度：
+
+```markdown
+![美麗的夕陽](images/sunset.jpg){width=50%}
+```
+
+也可以用像素：
+
+```markdown
+![美麗的夕陽](images/sunset.jpg){width=300px}
+```
+
+:::{.callout-tip}
+## 建議使用百分比
+使用百分比（如 `width=80%`）比使用固定像素更好，因為它能自動適應不同螢幕大小。
+:::
+
+### 圖片對齊
+
+```markdown
+![置中的圖片](images/photo.jpg){fig-align="center"}
+![靠左的圖片](images/photo.jpg){fig-align="left"}
+![靠右的圖片](images/photo.jpg){fig-align="right"}
+```
+
+## 為圖片加上標籤 {#sec-figure-labels}
+
+如果你要在文中引用某張圖片（例如「如 @fig-sunset 所示」），就需要為圖片加上標籤：
+
+```markdown
+![美麗的夕陽](images/sunset.jpg){#fig-sunset}
+```
+
+加上標籤之後，Quarto 會自動幫這張圖編號（例如「圖 1」）。
+
+:::{.callout-important}
+## 圖片標籤的命名規則
+圖片標籤**必須**以 `fig-` 開頭。例如：
+
+- 正確：`#fig-sunset`、`#fig-result-chart`
+- 錯誤：`#sunset`、`#image-1`
+
+如果不以 `fig-` 開頭，Quarto 不會把它當作圖片標籤來處理。
+:::
+
+:::{.callout-caution}
+## 標籤命名禁忌
+
+- **不能有底線**：`#fig-my_image` 是錯的，用 `#fig-my-image`
+- **不能有大寫**：`#fig-MyImage` 是錯的，用 `#fig-my-image`
+- **只能用小寫英文、數字和連字號**
+:::
+
+## 多張圖片並排 {#sec-subfigures}
+
+Quarto 可以把多張圖片排成一列：
+
+```markdown
+::: {#fig-comparison layout-ncol=2}
+
+![白天](images/day.jpg){#fig-day}
+
+![夜晚](images/night.jpg){#fig-night}
+
+白天與夜晚的比較
+:::
+```
+
+`layout-ncol=2` 表示排成兩欄。最後一行文字會成為整組圖片的說明。
+
+每張子圖片會被標記為 (a)、(b)、(c)...，你可以分別引用它們（例如 `@fig-day`）或引用整組（`@fig-comparison`）。
+
+## Markdown 表格 {#sec-markdown-tables}
+
+### 基本語法
+
+```markdown
+| 姓名   | 年齡 | 城市   |
+|--------|------|--------|
+| 小明   | 25   | 台北   |
+| 小華   | 30   | 台中   |
+| 小美   | 28   | 高雄   |
+```
+
+呈現效果：
+
+| 姓名   | 年齡 | 城市   |
+|--------|------|--------|
+| 小明   | 25   | 台北   |
+| 小華   | 30   | 台中   |
+| 小美   | 28   | 高雄   |
+
+### 欄位對齊
+
+用冒號 `:` 來控制對齊方式：
+
+```markdown
+| 左對齊   | 置中對齊  | 右對齊   |
+|:---------|:---------:|---------:|
+| 靠左     | 置中      | 靠右     |
+| 文字     | 文字      | 數字 123 |
+```
+
+| 左對齊   | 置中對齊  | 右對齊   |
+|:---------|:---------:|---------:|
+| 靠左     | 置中      | 靠右     |
+| 文字     | 文字      | 數字 123 |
+
+:::{.callout-tip}
+## 表格對齊小技巧
+一般來說，**文字欄位用靠左對齊**，**數字欄位用靠右對齊**，這樣最容易閱讀。
+:::
+
+## 為表格加上標籤 {#sec-table-labels}
+
+和圖片一樣，表格也可以加標籤來自動編號：
+
+```markdown
+| 姓名 | 分數 |
+|------|------|
+| 小明 | 95   |
+| 小華 | 88   |
+
+: 期末考試成績 {#tbl-scores}
+```
+
+| 姓名 | 分數 |
+|------|------|
+| 小明 | 95   |
+| 小華 | 88   |
+
+: 期末考試成績 {#tbl-scores}
+
+注意：表格標題用 `:` 開頭，放在表格的**下方**。
+
+:::{.callout-important}
+## 表格標籤的命名規則
+表格標籤**必須**以 `tbl-` 開頭。例如：
+
+- 正確：`#tbl-scores`、`#tbl-comparison`
+- 錯誤：`#scores`、`#table-1`
+
+這和圖片標籤必須以 `fig-` 開頭是同樣的邏輯。完整的標籤前綴規則會在 @sec-crossref 中說明。
+:::
+
+:::{.callout-caution}
+## 圖片路徑問題
+插入圖片時，路徑必須是**相對路徑**（相對於 `.qmd` 檔案的位置）。
+
+- 正確：`![](images/photo.jpg)` 或 `![](../images/photo.jpg)`
+- 錯誤：`![](C:/Users/me/photos/photo.jpg)`（絕對路徑在別人的電腦上會失效）
+
+建議在專案資料夾內建立一個 `images/` 子資料夾，把所有圖片放在裡面。
+:::
+
+:::{.callout-tip}
+## 表格產生器工具
+手動對齊 Markdown 表格的 `|` 和 `-` 很累？試試線上工具：
+
+- [Tables Generator](https://www.tablesgenerator.com/markdown_tables)：視覺化編輯表格，自動產生 Markdown 語法
+- VS Code 的 **Markdown All in One** 擴充套件也有表格格式化功能
+:::
+
+## 本章小結 {.unnumbered}
+
+- 圖片語法：`![說明](路徑){#fig-標籤 width=大小}`
+- 表格標題用 `: 標題 {#tbl-標籤}` 放在表格下方
+- 圖片標籤以 `fig-` 開頭，表格標籤以 `tbl-` 開頭
+- 用 `layout-ncol` 可以讓多張圖片並排
+- 用 `:` 控制表格欄位對齊方式
+- 圖片路徑要用相對路徑
+- 下一章我們將學習如何引用這些圖表（見 @sec-crossref）

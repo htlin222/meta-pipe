@@ -1,0 +1,225 @@
+# 輸出與發布 {#sec-render}
+
+你已經學會了用 Quarto 撰寫內容，現在讓我們把成品交付出去。Quarto 可以把你的 `.qmd` 檔案輸出成多種格式，也可以直接發布到網路上。
+
+## `quarto render`：輸出文件 {#sec-render-command}
+
+最基本的輸出指令：
+
+```bash
+# 輸出單一文件
+quarto render my-document.qmd
+
+# 輸出整個 Book 專案
+quarto render
+```
+
+在 Book 專案的根目錄（包含 `_quarto.yml` 的資料夾）執行 `quarto render`，就會一次輸出整本書。
+
+## 輸出格式 {#sec-output-formats}
+
+### HTML（網頁）
+
+```yaml
+format:
+  html:
+    theme: cosmo
+    toc: true
+```
+
+- **優點**：不需要額外安裝、互動功能（搜尋、摺疊）、響應式設計
+- **用途**：線上文件、部落格、教學書（如本書）
+
+:::{.callout-tip}
+## HTML 是最簡單的入門格式
+如果你不確定要用哪種格式，先從 HTML 開始。它不需要任何額外安裝，而且功能最豐富。
+:::
+
+### PDF
+
+```yaml
+format:
+  pdf:
+    documentclass: article
+    toc: true
+```
+
+- **優點**：固定版面、適合列印、學術投稿標準格式
+- **用途**：學術論文、正式報告、印刷品
+
+:::{.callout-warning}
+## PDF 需要安裝 TinyTeX
+如果還沒安裝，請執行：
+
+```bash
+quarto install tinytex
+```
+
+安裝過程可能需要幾分鐘，之後就不需要再安裝了。
+:::
+
+:::{.callout-caution}
+## 中文 PDF 需要設定字型
+如果你的文件包含中文，直接輸出 PDF 可能會出現亂碼或缺字。你需要在 YAML 中指定中文字型：
+
+```yaml
+format:
+  pdf:
+    pdf-engine: xelatex
+    mainfont: "Noto Serif CJK TC"
+    sansfont: "Noto Sans CJK TC"
+    monofont: "Noto Sans Mono CJK TC"
+    CJKmainfont: "Noto Serif CJK TC"
+```
+
+如果你用的是 macOS，也可以使用系統內建的字型：
+
+```yaml
+format:
+  pdf:
+    pdf-engine: xelatex
+    mainfont: "PingFang TC"
+    CJKmainfont: "PingFang TC"
+```
+
+或者使用 Typst 引擎（更簡單）：
+
+```yaml
+format:
+  typst:
+    mainfont: "Noto Serif CJK TC"
+```
+:::
+
+### Word（DOCX）
+
+```yaml
+format:
+  docx:
+    toc: true
+```
+
+- **優點**：與他人協作方便、客戶/老師通常接受 Word 格式
+- **用途**：需要他人審閱修改的文件
+
+:::{.callout-tip}
+## 自訂 Word 模板
+如果你需要特定的 Word 格式（例如公司模板），可以提供一個參考文件：
+
+```yaml
+format:
+  docx:
+    reference-doc: my-template.docx
+```
+:::
+
+### EPUB（電子書）
+
+```yaml
+format:
+  epub:
+    toc: true
+    cover-image: images/cover.png
+```
+
+- **優點**：適合在電子書閱讀器上閱讀
+- **用途**：出版電子書
+
+## `quarto preview`：即時預覽 {#sec-preview-command}
+
+在寫作過程中，用 `quarto preview` 可以即時看到效果：
+
+```bash
+quarto preview
+```
+
+這會啟動一個本地伺服器，自動在瀏覽器中打開預覽。當你修改並儲存 `.qmd` 檔案時，瀏覽器會自動重新整理。
+
+按 `Ctrl + C` 可以停止預覽伺服器。
+
+## 發布到網路 {#sec-publish}
+
+### GitHub Pages
+
+如果你有 GitHub 帳號，可以免費把書發布到 GitHub Pages：
+
+```bash
+quarto publish gh-pages
+```
+
+Quarto 會自動幫你處理所有 Git 操作，把輸出的 HTML 檔案推送到 `gh-pages` 分支。
+
+**前置條件**：
+
+1. 你的專案是一個 Git 倉庫
+2. 已經推送到 GitHub
+3. 在 GitHub 倉庫設定中啟用 Pages（選擇 `gh-pages` 分支）
+
+:::{.callout-note}
+## 什麼是 GitHub Pages？
+GitHub Pages 是 GitHub 提供的免費靜態網站託管服務。你可以把 HTML 網站放上去，讓任何人透過網址存取。非常適合用來發布 Quarto 書籍或文件。
+:::
+
+### Quarto Pub
+
+Quarto 官方也提供了一個免費的發布平台：
+
+```bash
+quarto publish quarto-pub
+```
+
+第一次使用時會要求你登入 Quarto Pub 帳號。
+
+:::{.callout-tip}
+## `quarto publish` 一鍵發布
+不管你選擇哪個平台，`quarto publish` 都會幫你完成「輸出 + 上傳」兩個步驟。你不需要手動複製檔案。
+:::
+
+### Netlify
+
+```bash
+quarto publish netlify
+```
+
+Netlify 提供更多進階功能，例如自訂網域、表單處理等。
+
+## 輸出目錄 {#sec-output-dir}
+
+Book 專案的輸出檔案會放在 `_book/` 資料夾（或 `_quarto.yml` 中 `output-dir` 指定的位置）：
+
+```
+my-book/
+├── _quarto.yml
+├── index.qmd
+├── ...
+└── _book/              ← 輸出的檔案在這裡
+    ├── index.html
+    ├── 01-intro.html
+    └── ...
+```
+
+:::{.callout-tip}
+## 把 `_book/` 加入 `.gitignore`
+如果你使用 Git 版本控制，建議把輸出目錄加入 `.gitignore`，避免把產生的檔案也納入版本控制：
+
+```
+# .gitignore
+_book/
+```
+:::
+
+## 本章小結 {.unnumbered}
+
+- `quarto render` 輸出文件，`quarto preview` 即時預覽
+- HTML 最簡單，PDF 需要 TinyTeX，Word 方便協作
+- 中文 PDF 需要額外設定字型
+- `quarto publish` 一鍵發布到 GitHub Pages、Quarto Pub 或 Netlify
+- 輸出檔案在 `_book/` 目錄中
+- 下一章是常見問題與陷阱排除（見 @sec-pitfalls）
+
+:::{.callout-tip}
+## 延伸閱讀
+- [Quarto Publishing（官方）](https://quarto.org/docs/publishing/) [@quarto-publishing]
+- [Quarto HTML 格式](https://quarto.org/docs/output-formats/html-basics.html)
+- [Quarto PDF 格式](https://quarto.org/docs/output-formats/pdf-basics.html)
+:::

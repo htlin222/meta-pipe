@@ -1,0 +1,160 @@
+# 交叉引用 {#sec-crossref}
+
+交叉引用是 Quarto 最強大的功能之一。它可以讓你在文中自動引用圖片、表格、章節的編號，而且當你新增或刪除內容時，所有編號都會自動更新。
+
+再也不用手動修改「如圖 3 所示」了——因為 Quarto 會幫你搞定一切。
+
+## 什麼是交叉引用？ {#sec-what-is-crossref}
+
+假設你的文件中有一張圖片是「圖 1」，後來你在前面插入了一張新圖，原本的「圖 1」就變成了「圖 2」。如果你在文中寫了「如圖 1 所示」，那就得手動修改成「圖 2」。
+
+交叉引用讓你改成寫 `@fig-xxx`，Quarto 會自動替換成正確的編號。無論圖片順序怎麼變，引用永遠是對的。
+
+## 引用圖片 {#sec-ref-figures}
+
+首先，圖片需要有標籤（見 @sec-figure-labels）：
+
+```markdown
+![Quarto 的標誌](images/logo.png){#fig-logo}
+```
+
+然後在文中用 `@fig-logo` 來引用：
+
+```markdown
+如 @fig-logo 所示，Quarto 的標誌非常簡潔。
+```
+
+Quarto 會自動把 `@fig-logo` 替換成「圖 1」（或對應的編號）。
+
+## 引用表格 {#sec-ref-tables}
+
+表格也一樣，先加標籤：
+
+```markdown
+| 項目 | 數量 |
+|------|------|
+| A    | 10   |
+| B    | 20   |
+
+: 項目統計 {#tbl-stats}
+```
+
+然後引用：
+
+```markdown
+根據 @tbl-stats 的資料，項目 B 的數量是 A 的兩倍。
+```
+
+## 引用章節 {#sec-ref-sections}
+
+要引用某個章節，首先為章節加上標籤：
+
+```markdown
+## 安裝步驟 {#sec-installation}
+```
+
+然後引用：
+
+```markdown
+詳細的安裝步驟請參考 @sec-installation。
+```
+
+:::{.callout-tip}
+## 跨章節引用
+在 Book 專案中，交叉引用可以跨越不同的 `.qmd` 檔案。例如，你可以在第三章中引用第一章的某張圖片。Quarto 會自動處理檔案間的連結。
+
+本書就大量使用了跨章節引用，例如前幾章中出現的「見 @sec-crossref」就是引用到你正在閱讀的這一章。
+:::
+
+## 標籤前綴規則 {#sec-label-prefixes}
+
+:::{.callout-important}
+## 必須使用正確的前綴
+Quarto 的交叉引用系統依賴標籤前綴來判斷元素類型。以下是規則：
+
+| 元素類型 | 標籤前綴 | 範例 |
+|----------|----------|------|
+| 圖片 | `fig-` | `#fig-result` |
+| 表格 | `tbl-` | `#tbl-data` |
+| 章節 | `sec-` | `#sec-methods` |
+| 方程式 | `eq-` | `#eq-formula` |
+| 程式碼列表 | `lst-` | `#lst-example` |
+| 定理 | `thm-` | `#thm-proof` |
+
+: 交叉引用標籤前綴規則 {#tbl-prefixes}
+
+如果前綴不正確，交叉引用就不會生效。
+:::
+
+## 引用的顯示格式 {#sec-ref-format}
+
+`@` 引用會自動產生完整的編號文字：
+
+| 你寫的 | 顯示結果（範例） |
+|--------|------------------|
+| `@fig-logo` | 圖 1 |
+| `@tbl-stats` | 表 1 |
+| `@sec-install` | 章 2 |
+
+如果你不想要前綴文字（例如只要數字），可以用方括號：
+
+```markdown
+詳見圖 [@fig-logo]。
+```
+
+## 常見錯誤排除 {#sec-crossref-troubleshooting}
+
+:::{.callout-caution}
+## 交叉引用不生效的常見原因
+
+1. **忘了加前綴**：`#logo` 不行，必須是 `#fig-logo`
+2. **標籤有底線**：`#fig-my_image` 不行，改用 `#fig-my-image`
+3. **標籤有大寫**：`#fig-Logo` 不行，改用 `#fig-logo`
+4. **圖片沒有說明文字**：`![](path.jpg){#fig-x}` 不行，方括號內必須有文字
+5. **引用時打錯字**：`@fig-lgo`（少了一個 `o`）不會報錯，而是原樣顯示 `@fig-lgo`
+:::
+
+:::{.callout-warning}
+## 引用打錯字不會報錯！
+這是 Quarto 交叉引用最「危險」的地方：如果你引用了一個不存在的標籤，Quarto **不會報錯**，而是直接把 `@fig-xxx` 原樣顯示出來。
+
+**建議**：每次輸出文件後，搜尋一下 `@fig-`、`@tbl-`、`@sec-` 等字串，檢查是否有未被替換的引用。
+:::
+
+## 完整範例 {#sec-crossref-example}
+
+以下是一個結合圖片、表格和交叉引用的完整範例：
+
+```markdown
+## 研究結果 {#sec-results}
+
+本研究的主要結果如 @fig-chart 和 @tbl-results 所示。
+
+![研究結果分佈圖](images/chart.png){#fig-chart}
+
+| 組別   | 平均值 | 標準差 |
+|--------|--------|--------|
+| 實驗組 | 85.3   | 12.1   |
+| 對照組 | 72.8   | 15.4   |
+
+: 各組統計結果 {#tbl-results}
+
+根據 @tbl-results，實驗組的平均值顯著高於對照組。
+@fig-chart 則顯示了兩組數據的分佈情況。
+
+更多細節請參考 @sec-methods 中的研究方法說明。
+```
+
+## 本章小結 {.unnumbered}
+
+- 交叉引用用 `@` 符號加上標籤名稱
+- 標籤必須使用正確的前綴（`fig-`、`tbl-`、`sec-` 等）
+- 標籤只能用小寫英文、數字和連字號
+- 引用會自動替換成正確的編號
+- 打錯標籤名稱不會報錯，需要手動檢查
+- 下一章我們將學習參考文獻管理（見 @sec-citations）
+
+:::{.callout-tip}
+## 延伸閱讀
+- [Quarto Cross References（官方）](https://quarto.org/docs/authoring/cross-references.html) [@quarto-crossref]
+:::

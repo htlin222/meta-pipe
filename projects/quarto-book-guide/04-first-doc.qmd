@@ -1,0 +1,174 @@
+# 建立第一份文件 {#sec-first-doc}
+
+學會了 Markdown 基礎語法（@sec-markdown），現在讓我們動手建立第一份 Quarto 文件吧！
+
+## 建立 `.qmd` 檔案 {#sec-create-qmd}
+
+1. 打開 VS Code
+2. 按 `Ctrl + N`（macOS 為 `Cmd + N`）建立新檔案
+3. 按 `Ctrl + S`（macOS 為 `Cmd + S`）儲存，檔名取為 `my-first-doc.qmd`
+
+:::{.callout-caution}
+## 檔名注意事項
+- **不要**用中文檔名（例如 `我的文件.qmd`）→ 可能導致路徑錯誤
+- **不要**用空格（例如 `my first doc.qmd`）→ 改用連字號 `-`
+- **建議**使用全小寫英文加連字號（例如 `my-first-doc.qmd`）
+:::
+
+## YAML 前置區塊 {#sec-yaml-frontmatter}
+
+每份 Quarto 文件的最開頭，都可以有一個 **YAML 前置區塊**，用來設定文件的基本資訊。它被兩行 `---` 包住：
+
+```yaml
+---
+title: "我的第一份文件"
+author: "你的名字"
+date: today
+format: html
+---
+```
+
+:::{.callout-note}
+## 什麼是 YAML？
+YAML 是一種簡單的設定格式，用「鍵: 值」的方式來定義設定項目。你不需要深入了解它，只要記住基本的格式就好。我們會在 @sec-yaml 做更詳細的介紹。
+:::
+
+### 常用的 YAML 設定
+
+| 設定項 | 說明 | 範例 |
+|--------|------|------|
+| `title` | 文件標題 | `title: "我的報告"` |
+| `author` | 作者名稱 | `author: "王小明"` |
+| `date` | 日期 | `date: today` 或 `date: "2024-01-15"` |
+| `format` | 輸出格式 | `format: html` 或 `format: pdf` |
+| `toc` | 是否顯示目錄 | `toc: true` |
+| `number-sections` | 是否為章節編號 | `number-sections: true` |
+
+: 常用 YAML 前置區塊設定 {#tbl-yaml-basics}
+
+## 撰寫內容 {#sec-write-content}
+
+在 YAML 前置區塊之後，就可以開始撰寫內容了。讓我們寫一份完整的範例文件：
+
+```markdown
+---
+title: "我的第一份 Quarto 文件"
+author: "你的名字"
+date: today
+format: html
+toc: true
+number-sections: true
+---
+
+# 前言
+
+這是我用 Quarto 建立的第一份文件。
+
+# 什麼是 Quarto
+
+Quarto 是一個開源的出版系統，可以用來製作：
+
+- 文件與報告
+- 簡報
+- 網站
+- 書籍
+
+## 為什麼選擇 Quarto
+
+Quarto 有以下優點：
+
+1. **免費開源**：完全不用花錢
+2. **跨平台**：Windows、macOS、Linux 都能用
+3. **多格式輸出**：一份原始檔，輸出成 HTML、PDF、Word
+
+# 結語
+
+> 千里之行，始於足下。
+
+恭喜你完成了第一份 Quarto 文件！
+```
+
+## 預覽文件 {#sec-preview}
+
+寫好之後，讓我們來看看成品！
+
+### 方法一：VS Code 即時預覽
+
+如果你安裝了 Quarto 擴充套件：
+
+1. 打開 `.qmd` 檔案
+2. 按下右上角的「預覽」按鈕（或按 `Ctrl + Shift + K`）
+3. 畫面右側會出現即時預覽
+
+:::{.callout-tip}
+## 即時預覽的好處
+VS Code 的即時預覽會在你每次儲存檔案時自動更新。你可以左邊寫內容、右邊看效果，非常方便。
+:::
+
+### 方法二：終端機指令
+
+在終端機中，切換到檔案所在的資料夾，然後輸入：
+
+```bash
+quarto preview my-first-doc.qmd
+```
+
+這會自動打開瀏覽器顯示預覽結果，而且會在你修改檔案時自動重新整理。
+
+## 輸出文件 {#sec-render-first}
+
+預覽滿意後，就可以正式輸出文件：
+
+```bash
+quarto render my-first-doc.qmd
+```
+
+這會在同一個資料夾中產生一個 `my-first-doc.html` 檔案。用瀏覽器打開就能看到最終成品。
+
+### 輸出成不同格式
+
+只要修改 YAML 中的 `format`：
+
+```yaml
+# 輸出 Word
+format: docx
+
+# 輸出 PDF（需要安裝 TinyTeX，見 @sec-install-tinytex）
+format: pdf
+```
+
+或者在終端機中指定格式：
+
+```bash
+quarto render my-first-doc.qmd --to docx
+quarto render my-first-doc.qmd --to pdf
+```
+
+:::{.callout-warning}
+## PDF 輸出需要額外安裝
+如果你還沒有安裝 TinyTeX，PDF 輸出會失敗。請回到 @sec-install-tinytex 完成安裝。HTML 和 Word 格式則不需要額外安裝任何東西。
+:::
+
+## 練習時間 {#sec-practice-first-doc}
+
+試試看自己動手做：
+
+1. 建立一個名為 `practice.qmd` 的檔案
+2. 加上 YAML 前置區塊（設定標題、作者、日期）
+3. 使用至少三種 Markdown 語法（標題、清單、粗體等）
+4. 用 `quarto preview` 預覽結果
+5. 用 `quarto render` 輸出成 HTML
+
+:::{.callout-tip}
+## 不要怕犯錯
+Quarto 不會「搞壞」你的電腦。最壞的情況就是輸出的文件不如預期，修改 `.qmd` 檔案再重新渲染就好了。多嘗試、多實驗是最好的學習方式。
+:::
+
+## 本章小結 {.unnumbered}
+
+- `.qmd` 檔案 = YAML 前置區塊 + Markdown 內容
+- YAML 設定標題、作者、輸出格式等基本資訊
+- `quarto preview` 即時預覽
+- `quarto render` 正式輸出
+- 可以輸出成 HTML、Word、PDF 等格式
+- 下一章我們將學習如何建立一個完整的 Book 專案（見 @sec-book-project）

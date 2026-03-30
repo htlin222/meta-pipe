@@ -1,0 +1,262 @@
+# 提示框與標注 {#sec-callouts}
+
+提示框（Callout Blocks）是 Quarto 最實用的功能之一。它們可以讓你在文件中加入醒目的彩色方塊，用來強調重要資訊、提供小提示、或警告讀者注意某些事項。
+
+你在本書中已經看到了大量的提示框——現在讓我們學習如何自己製作。
+
+## 五種提示框類型 {#sec-callout-types}
+
+Quarto 提供五種內建的提示框，各有不同的顏色和圖示：
+
+### 1. Note（補充說明）
+
+```markdown
+:::{.callout-note}
+這是一個補充說明，提供額外的背景資訊。
+:::
+```
+
+:::{.callout-note}
+這是一個補充說明，提供額外的背景資訊。
+:::
+
+### 2. Tip（小提示）
+
+```markdown
+:::{.callout-tip}
+這是一個實用的小技巧，幫助你更有效率。
+:::
+```
+
+:::{.callout-tip}
+這是一個實用的小技巧，幫助你更有效率。
+:::
+
+### 3. Warning（注意事項）
+
+```markdown
+:::{.callout-warning}
+這是一個需要特別留意的事項。
+:::
+```
+
+:::{.callout-warning}
+這是一個需要特別留意的事項。
+:::
+
+### 4. Important（重要觀念）
+
+```markdown
+:::{.callout-important}
+這是一個非常重要的觀念，務必記住。
+:::
+```
+
+:::{.callout-important}
+這是一個非常重要的觀念，務必記住。
+:::
+
+### 5. Caution（常見陷阱）
+
+```markdown
+:::{.callout-caution}
+這是一個常見的錯誤，小心不要踩到。
+:::
+```
+
+:::{.callout-caution}
+這是一個常見的錯誤，小心不要踩到。
+:::
+
+## 基本語法 {#sec-callout-syntax}
+
+提示框的語法結構如下：
+
+```markdown
+:::{.callout-類型}
+提示框的內容。
+:::
+```
+
+:::{.callout-important}
+## 語法要點
+
+1. 開頭的 `:::` 至少要三個冒號
+2. 大括號 `{}` 內放提示框的類型
+3. 結尾的 `:::` 必須獨立一行
+4. 類型名稱前面要有一個點 `.`
+:::
+
+:::{.callout-caution}
+## 冒號數量
+開頭和結尾的冒號至少要**三個**。以下寫法是**錯誤的**：
+
+```markdown
+::{.callout-note}
+只有兩個冒號，不會產生提示框。
+::
+```
+
+如果提示框裡面要嵌套另一個提示框，外層需要用更多的冒號（例如四個 `::::`）。
+:::
+
+## 自訂標題 {#sec-callout-title}
+
+在提示框內加上 `##` 標題就能自訂標題：
+
+```markdown
+:::{.callout-tip}
+## 節省時間的好方法
+使用鍵盤快捷鍵可以大幅提升效率。
+:::
+```
+
+:::{.callout-tip}
+## 節省時間的好方法
+使用鍵盤快捷鍵可以大幅提升效率。
+:::
+
+如果不加 `##` 標題，提示框會顯示預設標題（例如 "Note"、"Tip" 等）。
+
+## 摺疊式提示框 {#sec-callout-collapse}
+
+如果內容很長，可以讓提示框預設摺疊起來，讀者需要點擊才能展開：
+
+```markdown
+:::{.callout-note collapse="true"}
+## 點我展開詳細說明
+這裡是很長的詳細內容...
+可以有很多段落...
+:::
+```
+
+:::{.callout-note collapse="true"}
+## 點我展開詳細說明
+這裡是很長的詳細內容。
+
+摺疊式提示框非常適合用來放：
+
+- 進階的補充說明
+- 詳細的步驟教學
+- 可選閱讀的背景知識
+
+這樣不會讓主要內容顯得太冗長，但有需要的讀者仍然可以展開閱讀。
+:::
+
+## 無圖示提示框 {#sec-callout-no-icon}
+
+如果你不想顯示圖示，可以加上 `icon=false`：
+
+```markdown
+:::{.callout-note icon=false}
+## 自訂標題
+這個提示框沒有圖示。
+:::
+```
+
+:::{.callout-note icon=false}
+## 自訂標題
+這個提示框沒有圖示。
+:::
+
+## 提示框的外觀樣式 {#sec-callout-appearance}
+
+提示框有三種外觀：
+
+- `default`：完整樣式（有背景色、邊框、圖示）
+- `simple`：簡化樣式（只有左邊框線）
+- `minimal`：最簡樣式（無邊框）
+
+```markdown
+:::{.callout-tip appearance="simple"}
+這是簡化樣式的提示框。
+:::
+```
+
+:::{.callout-tip appearance="simple"}
+這是簡化樣式的提示框。
+:::
+
+```markdown
+:::{.callout-tip appearance="minimal"}
+這是最簡樣式的提示框。
+:::
+```
+
+:::{.callout-tip appearance="minimal"}
+這是最簡樣式的提示框。
+:::
+
+## 提示框內的豐富內容 {#sec-callout-rich-content}
+
+提示框內可以使用所有 Markdown 語法：
+
+```markdown
+:::{.callout-tip}
+## 提示框內可以放很多東西
+
+你可以使用：
+
+- **粗體**和*斜體*
+- [連結](https://quarto.org)
+- 清單
+- 程式碼：`quarto render`
+
+甚至可以放表格：
+
+| 欄位 A | 欄位 B |
+|--------|--------|
+| 值 1   | 值 2   |
+:::
+```
+
+:::{.callout-tip}
+## 提示框內可以放很多東西
+
+你可以使用：
+
+- **粗體**和*斜體*
+- [連結](https://quarto.org)
+- 清單
+- 程式碼：`quarto render`
+
+甚至可以放表格：
+
+| 欄位 A | 欄位 B |
+|--------|--------|
+| 值 1   | 值 2   |
+:::
+
+## 使用建議 {#sec-callout-best-practices}
+
+:::{.callout-tip}
+## 什麼時候用哪種提示框？
+
+| 類型 | 適合用途 | 範例 |
+|------|----------|------|
+| `note` | 補充說明、背景知識 | 「YAML 的全名是...」 |
+| `tip` | 實用技巧、捷徑 | 「你也可以用快捷鍵...」 |
+| `warning` | 需要注意的行為差異 | 「Windows 和 macOS 的操作不同」 |
+| `important` | 必須記住的規則 | 「檔名不能有空格」 |
+| `caution` | 常見錯誤、陷阱 | 「忘了加空行會導致...」 |
+:::
+
+:::{.callout-warning}
+## 不要過度使用提示框
+提示框雖然好用，但如果每一段都放一個提示框，反而會讓讀者眼花繚亂，失去強調的效果。建議每個小節最多放 2-3 個提示框。
+:::
+
+## 本章小結 {.unnumbered}
+
+- Quarto 有五種提示框：`note`、`tip`、`warning`、`important`、`caution`
+- 基本語法：`:::{.callout-類型}` ... `:::`
+- 用 `## 標題` 自訂提示框標題
+- 用 `collapse="true"` 建立可摺疊的提示框
+- 用 `appearance` 控制外觀樣式
+- 提示框內可以使用所有 Markdown 語法
+- 下一章我們將學習圖片和表格的進階用法（見 @sec-figures-tables）
+
+:::{.callout-tip}
+## 延伸閱讀
+- [Quarto Callout Blocks（官方）](https://quarto.org/docs/authoring/callouts.html) [@quarto-callouts]
+:::

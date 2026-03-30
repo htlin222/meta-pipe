@@ -1,0 +1,267 @@
+# YAML 設定詳解 {#sec-yaml}
+
+我們在前面的章節中已經多次接觸到 YAML——無論是文件的前置區塊（@sec-yaml-frontmatter）還是 Book 專案的 `_quarto.yml`（@sec-book-project）。這一章將系統性地介紹 YAML 的語法規則和 Quarto 常用的設定選項。
+
+## YAML 是什麼？ {#sec-what-is-yaml}
+
+YAML 是 "YAML Ain't Markup Language" 的縮寫（是的，這是一個遞迴縮寫）。它是一種簡單、易讀的設定檔格式。
+
+在 Quarto 中，YAML 用在兩個地方：
+
+1. **文件前置區塊**：每個 `.qmd` 檔案開頭的 `---` 區塊
+2. **專案設定檔**：`_quarto.yml`
+
+## 基本語法 {#sec-yaml-syntax}
+
+### 鍵值對
+
+YAML 最基本的結構是「鍵: 值」：
+
+```yaml
+title: "我的文件"
+author: "王小明"
+date: "2024-01-15"
+```
+
+:::{.callout-important}
+## 冒號後面必須有空格
+`title:"我的文件"` 是**錯誤的**。冒號和值之間**必須有一個空格**：
+
+```yaml
+# 正確
+title: "我的文件"
+
+# 錯誤
+title:"我的文件"
+```
+:::
+
+### 巢狀結構
+
+用縮排來表示層級關係：
+
+```yaml
+format:
+  html:
+    toc: true
+    number-sections: true
+```
+
+這表示 `toc` 和 `number-sections` 是 `html` 底下的設定，而 `html` 是 `format` 底下的設定。
+
+:::{.callout-caution}
+## YAML 只能用空格縮排，不能用 Tab
+這是 YAML 最常見的錯誤來源。**必須使用空格**來縮排，按 Tab 鍵產生的縮排會導致解析錯誤。
+
+**建議**：在 VS Code 中設定 Tab 鍵自動轉換為空格。設定方式：
+
+1. 開啟 VS Code 設定（`Ctrl + ,`）
+2. 搜尋 "tab size"
+3. 設定為 2
+4. 確保 "Insert Spaces" 選項已勾選
+:::
+
+### 清單
+
+用 `-` 開頭表示清單項目：
+
+```yaml
+chapters:
+  - index.qmd
+  - 01-intro.qmd
+  - 02-methods.qmd
+```
+
+### 布林值
+
+```yaml
+toc: true
+number-sections: false
+```
+
+### 多行文字
+
+用 `|` 保留換行：
+
+```yaml
+abstract: |
+  這是第一行。
+  這是第二行。
+  每一行都會保留原本的換行。
+```
+
+## 文件層級 vs 專案層級 {#sec-yaml-levels}
+
+### 文件層級（YAML 前置區塊）
+
+只影響單一 `.qmd` 檔案：
+
+```yaml
+---
+title: "這一章的標題"
+author: "作者名"
+---
+```
+
+### 專案層級（`_quarto.yml`）
+
+影響整個專案中的所有檔案：
+
+```yaml
+project:
+  type: book
+
+format:
+  html:
+    theme: cosmo
+```
+
+:::{.callout-important}
+## 優先順序
+如果文件層級和專案層級有衝突，**文件層級的設定會覆蓋專案層級**。例如，`_quarto.yml` 設定了 `theme: cosmo`，但某個 `.qmd` 檔案設定了 `theme: darkly`，那這個檔案就會使用 `darkly` 主題。
+:::
+
+## 常用設定選項 {#sec-yaml-common}
+
+### 目錄（Table of Contents）
+
+```yaml
+format:
+  html:
+    toc: true          # 顯示目錄
+    toc-depth: 3       # 目錄深度（顯示到第幾級標題）
+    toc-title: "目錄"  # 目錄標題
+```
+
+### 章節編號
+
+```yaml
+format:
+  html:
+    number-sections: true       # 啟用章節編號
+    number-depth: 3             # 編號深度
+```
+
+### 主題
+
+Quarto 內建多種 HTML 主題：
+
+```yaml
+format:
+  html:
+    theme: cosmo    # 預設主題
+```
+
+可用的主題包括：`cosmo`、`flatly`、`darkly`、`journal`、`lumen`、`sandstone`、`simplex`、`united` 等。
+
+:::{.callout-tip}
+## 嘗試不同主題
+你可以把 `theme` 改成不同的值，然後用 `quarto preview` 看看效果。找到喜歡的主題後再確定。完整主題列表請見 [Quarto HTML 主題](https://quarto.org/docs/output-formats/html-themes.html)。
+:::
+
+### 語言設定
+
+```yaml
+lang: zh-TW    # 繁體中文（影響自動產生的文字，如「目錄」、「圖」、「表」等）
+```
+
+| `lang` 值 | 語言 |
+|-----------|------|
+| `zh-TW` | 繁體中文 |
+| `zh-CN` | 簡體中文 |
+| `en` | 英文 |
+| `ja` | 日文 |
+| `ko` | 韓文 |
+
+: 常用語言代碼 {#tbl-lang-codes}
+
+### 多格式輸出
+
+在 `_quarto.yml` 中可以同時設定多種輸出格式：
+
+```yaml
+format:
+  html:
+    theme: cosmo
+    toc: true
+  pdf:
+    documentclass: article
+    toc: true
+  docx:
+    toc: true
+```
+
+然後用指令選擇輸出哪種格式：
+
+```bash
+quarto render --to html
+quarto render --to pdf
+quarto render --to docx
+quarto render           # 輸出所有格式
+```
+
+## 常見的 YAML 錯誤 {#sec-yaml-errors}
+
+:::{.callout-caution}
+## 錯誤一：縮排不一致
+
+```yaml
+# 錯誤：混用了不同的縮排層級
+format:
+  html:
+    toc: true
+      number-sections: true    # 多了一層縮排！
+```
+
+```yaml
+# 正確
+format:
+  html:
+    toc: true
+    number-sections: true
+```
+:::
+
+:::{.callout-caution}
+## 錯誤二：遺漏冒號後的空格
+
+```yaml
+# 錯誤
+title:"沒有空格"
+
+# 正確
+title: "有空格"
+```
+:::
+
+:::{.callout-caution}
+## 錯誤三：字串中包含特殊字元
+
+如果值裡面有冒號、井號等特殊字元，需要用引號包住：
+
+```yaml
+# 錯誤：冒號會被誤認為 YAML 語法
+title: 我的書：第一版
+
+# 正確：用引號包住
+title: "我的書：第一版"
+```
+:::
+
+:::{.callout-caution}
+## 錯誤四：使用 Tab 縮排
+
+YAML 不接受 Tab 字元。如果你的編輯器按 Tab 產生的是真正的 Tab 字元（而不是空格），YAML 就會解析失敗。
+
+在 VS Code 的狀態列（底部）檢查是否顯示「Spaces: 2」。如果顯示「Tab Size: 2」，點擊它並選擇「Indent Using Spaces」。
+:::
+
+## 本章小結 {.unnumbered}
+
+- YAML 用「鍵: 值」格式定義設定
+- 冒號後面必須有空格
+- 縮排必須用空格，不能用 Tab
+- 文件層級設定會覆蓋專案層級設定
+- 常用設定：`toc`、`number-sections`、`theme`、`lang`
+- 可以同時設定多種輸出格式
+- 下一章我們將學習如何輸出和發布文件（見 @sec-render）

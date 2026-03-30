@@ -1,0 +1,130 @@
+# 安裝與環境設定 {#sec-install}
+
+在開始使用 Quarto 之前，我們需要先安裝它以及一個好用的文字編輯器。別擔心，整個過程大約只需要 10 分鐘。
+
+## 第一步：安裝 Quarto CLI {#sec-install-quarto}
+
+Quarto CLI（命令列介面）是 Quarto 的核心程式。
+
+:::{.callout-note}
+## 什麼是 CLI？
+CLI 是 Command Line Interface（命令列介面）的縮寫。簡單來說，就是一個讓你透過打字輸入指令來操作電腦的工具，而不是用滑鼠點擊。聽起來很嚇人，但我們只需要用到幾個很簡單的指令。
+:::
+
+### 下載與安裝
+
+1. 前往 [Quarto 官方下載頁面](https://quarto.org/docs/get-started/)
+2. 選擇你的作業系統（Windows、macOS 或 Linux）
+3. 下載安裝檔
+4. 按照提示完成安裝
+
+:::{.callout-warning}
+## Windows / macOS / Linux 差異
+
+- **Windows**：下載 `.msi` 安裝檔，雙擊安裝即可
+- **macOS**：下載 `.pkg` 安裝檔，雙擊安裝。如果出現「無法打開，因為它來自未識別的開發者」的提示，請到「系統偏好設定 → 安全性與隱私」中允許安裝
+- **Linux**：下載 `.deb`（Ubuntu/Debian）或 `.tar.gz` 套件，透過終端機安裝
+:::
+
+## 第二步：安裝 VS Code {#sec-install-vscode}
+
+VS Code（Visual Studio Code）是一個免費的文字編輯器，是目前撰寫 Quarto 文件最推薦的工具。
+
+1. 前往 [VS Code 官方網站](https://code.visualstudio.com/)
+2. 下載並安裝
+
+### 安裝 Quarto 擴充套件
+
+安裝好 VS Code 之後，我們需要加裝 Quarto 擴充套件：
+
+1. 打開 VS Code
+2. 按下左側邊欄的「擴充功能」圖示（看起來像四個方塊）
+3. 在搜尋欄輸入 `Quarto`
+4. 找到 **Quarto** 擴充套件（由 Quarto 官方發布）
+5. 點擊「安裝」
+
+:::{.callout-tip}
+## 推薦的 VS Code 設定
+安裝 Quarto 擴充套件後，你會得到以下好處：
+
+- `.qmd` 檔案的語法高亮顯示
+- 即時預覽功能
+- 自動完成提示
+- 一鍵渲染文件
+
+你也可以安裝以下額外的擴充套件來提升體驗：
+
+- **Chinese (Traditional) Language Pack**：將 VS Code 介面改為繁體中文
+- **Markdown All in One**：增強 Markdown 編輯功能
+:::
+
+## 第三步：驗證安裝 {#sec-verify-install}
+
+安裝完成後，讓我們確認一切正常。
+
+### 開啟終端機
+
+:::{.callout-note}
+## 什麼是終端機？
+終端機是一個讓你輸入文字指令來操作電腦的視窗。
+
+- **Windows**：按 `Win + R`，輸入 `cmd`，按 Enter
+- **macOS**：打開「應用程式 → 工具程式 → 終端機」
+- **VS Code 內建**：按 `` Ctrl + ` ``（鍵盤左上角的反引號鍵）
+:::
+
+### 檢查 Quarto 版本
+
+在終端機中輸入以下指令：
+
+```bash
+quarto check
+```
+
+如果安裝成功，你會看到類似以下的輸出：
+
+```
+Quarto 1.6.x
+[✓] Checking versions of quarto binary dependencies...
+[✓] Checking versions of quarto dependencies......OK
+[✓] Checking Quarto installation......OK
+```
+
+:::{.callout-caution}
+## 常見安裝失敗原因
+
+1. **「找不到 quarto 指令」**：表示 Quarto 沒有正確加入系統路徑。嘗試重新啟動終端機，或重新安裝 Quarto
+2. **權限不足**：在 macOS/Linux 上，可能需要使用 `sudo` 權限安裝
+3. **防毒軟體攔截**：某些防毒軟體會阻擋安裝，請暫時關閉或加入例外
+4. **舊版本衝突**：如果之前安裝過舊版 Quarto，請先解除安裝再重新安裝
+:::
+
+## 第四步（選擇性）：安裝 TinyTeX {#sec-install-tinytex}
+
+如果你需要輸出 PDF 格式的文件，就需要安裝 TinyTeX（一個精簡版的 LaTeX 套件）。
+
+在終端機中輸入：
+
+```bash
+quarto install tinytex
+```
+
+:::{.callout-note}
+## 不確定需不需要？
+如果你只打算輸出 HTML 或 Word 格式，可以先跳過這一步。等到需要 PDF 的時候再來安裝也不遲。我們在 @sec-render 會詳細介紹各種輸出格式。
+:::
+
+## 本章小結 {.unnumbered}
+
+- 安裝 Quarto CLI：從 [quarto.org](https://quarto.org/docs/get-started/) 下載
+- 安裝 VS Code + Quarto 擴充套件
+- 用 `quarto check` 驗證安裝
+- （選擇性）安裝 TinyTeX 以支援 PDF 輸出
+- 下一章我們將學習 Markdown 基礎語法（見 @sec-markdown）
+
+:::{.callout-tip}
+## 延伸閱讀
+- [Quarto 安裝指南（官方）](https://quarto.org/docs/get-started/)
+- [VS Code 下載頁面](https://code.visualstudio.com/)
+- [Quarto VS Code 擴充套件](https://quarto.org/docs/tools/vscode.html)
+:::
