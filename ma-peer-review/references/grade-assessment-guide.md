@@ -213,6 +213,18 @@ regtest(res)  # Egger's test
    - Shows % contribution of each study to each network estimate
    - If indirect estimate relies on high-risk studies → downgrade
 
+### **Staged Assessment Workflow (Brignardello-Petersen 2018)**
+
+The GRADE Working Group recommends a **sequential 4-stage process** for rating NMA certainty:
+1. Assess direct evidence (without imprecision)
+2. Check efficiency shortcut (high certainty + dominant contribution → skip indirect)
+3. Assess indirect evidence (starting from lowest certainty in first-order loop)
+4. Derive network estimate (higher of direct/indirect → coherence → imprecision)
+
+**Full guide**: `ma-network-meta-analysis/references/nma-grade-certainty-workflow.md`
+
+**Reference**: Brignardello-Petersen R, et al. *J Clin Epidemiol*. 2018;93:36-44. PMID: 29051107.
+
 ### **CINeMA Judgment Levels** (3 levels, not GRADE's 4)
 
 - **No concerns**: No downgrade
@@ -252,6 +264,8 @@ regtest(res)  # Egger's test
 2. **Design-by-treatment interaction** (global inconsistency)
    - Tests overall network coherence
    - Same p-value thresholds
+
+**WARNING**: Do NOT rely solely on global incoherence tests (Lu-Ades model, design-by-treatment interaction) — these are **frequently underpowered**. A non-significant global p-value does NOT mean no incoherence exists. Always perform **local node-splitting** for each comparison as the primary assessment. See `ma-network-meta-analysis/references/nma-grade-certainty-workflow.md` (Stage 4b).
 
 **Pipeline check**:
 ```bash
