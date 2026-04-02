@@ -231,6 +231,10 @@ Save as: `08_reviews/cinema_assessment.csv`
 
 ❌ **Forgetting to assess incoherence** (6th domain unique to NMA)
 
+❌ **Relying on global incoherence test alone** (Lu-Ades, design-by-treatment — frequently underpowered; always do local node-splitting per comparison)
+
+❌ **Assessing imprecision before combining direct + indirect evidence** (imprecision applies to network estimate, not to direct/indirect components separately — see staged workflow)
+
 ---
 
 ## 🕒 **Time Budget**
@@ -244,6 +248,23 @@ Save as: `08_reviews/cinema_assessment.csv`
 | **Total for N=5 comparisons** | **~2 hours** |
 
 **Example**: 5 treatments = 10 comparisons = **2.5 hours**
+
+---
+
+## 📖 **Staged Workflow (Brignardello-Petersen 2018)**
+
+For the sequential 4-stage process of combining direct → indirect → network certainty:
+
+See `ma-network-meta-analysis/references/nma-grade-certainty-workflow.md`
+
+Key additions beyond CINeMA:
+- Imprecision deferred to network estimate stage only
+- Efficiency shortcut for high-certainty direct evidence
+- Indirect evidence starts from lowest certainty in first-order loop
+- Network estimate = higher of direct/indirect as starting point
+- Explicit warning about underpowered global incoherence tests
+
+**Reference**: Brignardello-Petersen R, et al. *J Clin Epidemiol*. 2018;93:36-44. PMID: 29051107.
 
 ---
 

@@ -124,6 +124,15 @@
   - **Reference**: Nikolakopoulou et al. BMJ 2020;371:m3983
   - **Guide**: `ma-peer-review/references/grade-assessment-guide.md`
 
+- [ ] **15b. Staged certainty workflow applied (Brignardello-Petersen 2018)**
+  - Direct evidence rated WITHOUT imprecision first (4 domains only)
+  - Efficiency shortcut evaluated (high certainty direct + dominant contribution?)
+  - Indirect evidence rated from lowest certainty in first-order loop (if applicable)
+  - Network estimate certainty = higher of direct/indirect, then coherence + imprecision
+  - Local incoherence checked per comparison (not just global test)
+  - When incoherence detected, higher-certainty estimate noted for clinical decisions
+  - **Guide**: `ma-network-meta-analysis/references/nma-grade-certainty-workflow.md`
+
 - [ ] **16. Limitations acknowledged**
   - **Network structure**: Sparse comparisons, lack of direct evidence
   - **Transitivity**: Potential violations (different populations, doses)

@@ -25,6 +25,13 @@ if (dd$Q.decomp$pval[2] < 0.05) {
   cat("No significant between-designs inconsistency detected.\n")
 }
 
+# NOTE (Brignardello-Petersen et al. 2018): Global inconsistency tests
+# (design decomposition, Lu-Ades model) are frequently underpowered.
+# A non-significant p-value does NOT confirm coherence across all comparisons.
+# Always interpret the node-splitting (local) results below as the primary
+# evidence for incoherence assessment per comparison.
+# See: ma-network-meta-analysis/references/nma-grade-certainty-workflow.md
+
 # --- 2. Net heat plot ---
 cat("\nGenerating net heat plot...\n")
 png(file.path(FIG_DIR, "netheat.png"),
