@@ -4,6 +4,10 @@ All notable changes to meta-pipe are documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+- Replace deprecated `datetime.utcnow()` with timezone-aware `datetime.now(timezone.utc)` across 13 files (29 call sites). Output string shape preserved (`...Z` suffix, no `+00:00`). Eliminates all pytest `DeprecationWarning`s
+- `tests/test_project_status.py::test_all_stages_complete` — update fixture to create `04_fulltext/manifest.csv` matching the current validation lambda (was creating `round-01/unpaywall_results.csv` from an earlier schema)
+
 ### Added
 - Sprint 3 of pipeline design fixes (#38)
   - `session_log.py append` subcommand — writes append-only provenance stamps to `09_qa/sessions/artifact_stamps.jsonl` (who/stage/deviations) and attaches to the active session when one exists

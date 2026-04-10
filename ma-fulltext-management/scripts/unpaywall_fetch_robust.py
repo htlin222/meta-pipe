@@ -290,7 +290,7 @@ def main() -> None:
         out_json.write_text(
             json.dumps(
                 {
-                    "timestamp": dt.datetime.utcnow().isoformat() + "Z",
+                    "timestamp": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "") + "Z",
                     "requested": len(targets),
                     "missing_doi": missing_doi,
                     "success_count": success_count,
@@ -308,7 +308,7 @@ def main() -> None:
     log_lines = [
         f"# Unpaywall Fetch Log (Robust Version)",
         f"",
-        f"**Date**: {dt.datetime.utcnow().isoformat()}Z",
+        f"**Date**: {dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z",
         f"**Input BibTeX**: {args.in_bib}",
         f"**API Base**: {args.api_base}",
         f"",

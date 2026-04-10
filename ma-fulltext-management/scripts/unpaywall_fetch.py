@@ -155,7 +155,7 @@ def main() -> None:
         out_json.write_text(
             json.dumps(
                 {
-                    "timestamp": dt.datetime.utcnow().isoformat() + "Z",
+                    "timestamp": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "") + "Z",
                     "requested": len(targets),
                     "missing_doi": missing_doi,
                     "payloads": payloads,
@@ -167,7 +167,7 @@ def main() -> None:
     out_log = Path(args.out_log)
     out_log.parent.mkdir(parents=True, exist_ok=True)
     log_lines = [
-        f"date: {dt.datetime.utcnow().isoformat()}Z",
+        f"date: {dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z",
         f"input_bib: {args.in_bib}",
         f"records_in_bib: {len(entries)}",
         f"missing_doi: {missing_doi}",

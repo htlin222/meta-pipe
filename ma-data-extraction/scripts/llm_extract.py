@@ -271,7 +271,7 @@ def main() -> None:
                     response_text = f"{exc.__class__.__name__}: {exc}"
 
             record = {
-                "timestamp": dt.datetime.utcnow().isoformat() + "Z",
+                "timestamp": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "") + "Z",
                 "record_id": row.get("record_id", ""),
                 "file_path": file_path,
                 "model": model,
@@ -287,7 +287,7 @@ def main() -> None:
     out_log = Path(args.out_log)
     out_log.parent.mkdir(parents=True, exist_ok=True)
     log_lines = [
-        f"date: {dt.datetime.utcnow().isoformat()}Z",
+        f"date: {dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z",
         f"manifest: {args.manifest}",
         f"records: {len(manifest_rows)}",
         f"processed: {processed}",

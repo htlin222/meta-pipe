@@ -193,7 +193,7 @@ def main() -> None:
     out_bib.write_text("\n".join(entries))
 
     log_lines = [
-        f"date: {dt.datetime.utcnow().isoformat()}Z",
+        f"date: {dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z",
         f"query: {args.query}",
         f"count: {count}",
         f"mindate: {args.mindate or ''}",

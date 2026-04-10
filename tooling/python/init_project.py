@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -36,7 +36,7 @@ def write_meta(root: Path, name: str, mode: str) -> None:
     meta = {
         "project_name": name,
         "quality_mode": mode,
-        "created_at": datetime.utcnow().isoformat() + "Z",
+        "created_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "schema_version": 1,
     }
     meta_path.write_text(json.dumps(meta, indent=2) + "\n")

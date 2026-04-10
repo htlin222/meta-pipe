@@ -5,9 +5,19 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional
+
+
+def _utc_iso() -> str:
+    """Return current UTC time as an ISO-8601 string with a Z suffix.
+
+    Replaces the deprecated ``_utc_iso()`` idiom
+    with a timezone-aware equivalent that produces an identical string
+    shape (``...+00:00`` normalized to ``...Z``).
+    """
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 class SessionLog:
@@ -42,7 +52,7 @@ class SessionLog:
         active) so it shows up in ``resume``.
         """
         stamp = {
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "timestamp": _utc_iso(),
             "stage": stage,
             "artifact": artifact,
             "generator": generator,
@@ -64,8 +74,8 @@ class SessionLog:
     def start_session(self, notes: Optional[str] = None) -> Dict:
         """Start a new work session."""
         session = {
-            "session_id": datetime.utcnow().strftime("%Y%m%d_%H%M%S"),
-            "start_time": datetime.utcnow().isoformat() + "Z",
+            "session_id": datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S"),
+            "start_time": _utc_iso(),
             "end_time": None,
             "stage": None,
             "tasks": [],
@@ -105,17 +115,17 @@ class SessionLog:
             session["stage"] = stage
         if task:
             session["tasks"].append({
-                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "timestamp": _utc_iso(),
                 "task": task,
             })
         if decision:
             session["decisions"].append({
-                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "timestamp": _utc_iso(),
                 "decision": decision,
             })
         if question:
             session["questions"].append({
-                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "timestamp": _utc_iso(),
                 "question": question,
             })
         if file_created:
@@ -132,7 +142,7 @@ class SessionLog:
             print("⚠️  No active session to end.")
             return
 
-        session["end_time"] = datetime.utcnow().isoformat() + "Z"
+        session["end_time"] = _utc_iso()
         if summary:
             session["summary"] = summary
 

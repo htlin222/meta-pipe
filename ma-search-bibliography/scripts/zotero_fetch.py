@@ -119,7 +119,7 @@ def main() -> None:
     out_bib.write_text("\n\n".join(chunks) + ("\n" if chunks else ""))
 
     log_lines = [
-        f"date: {dt.datetime.utcnow().isoformat()}Z",
+        f"date: {dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z",
         f"library_type: {library_type}",
         f"library_id: {library_id}",
         f"collection_key: {collection_key or ''}",

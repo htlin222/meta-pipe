@@ -52,7 +52,7 @@ def safe_extract(tar: tarfile.TarFile, path: Path) -> None:
 
 
 def create_checkpoint(root: Path, name: Optional[str]) -> Path:
-    ts = dt.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    ts = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d_%H%M%S")
     label = name or f"checkpoint_{ts}"
     checkpoint_dir = root / "09_qa" / "checkpoints"
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
@@ -119,7 +119,7 @@ def main() -> None:
         log_path = root / "09_qa" / "checkpoint.log"
         log_path.parent.mkdir(parents=True, exist_ok=True)
         log_lines = [
-            f"{dt.datetime.utcnow().isoformat()}Z\tcreate\t{out_path.name}",
+            f"{dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z\tcreate\t{out_path.name}",
         ]
         if args.note:
             log_lines.append(f"note: {args.note}")
@@ -141,7 +141,7 @@ def main() -> None:
         log_path = root / "09_qa" / "checkpoint.log"
         log_path.parent.mkdir(parents=True, exist_ok=True)
         log_lines = [
-            f"{dt.datetime.utcnow().isoformat()}Z\trestore\t{checkpoint.name}",
+            f"{dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z\trestore\t{checkpoint.name}",
         ]
         if args.note:
             log_lines.append(f"note: {args.note}")
@@ -153,7 +153,7 @@ def main() -> None:
         log_path = root / "09_qa" / "checkpoint.log"
         log_path.parent.mkdir(parents=True, exist_ok=True)
         log_lines = [
-            f"{dt.datetime.utcnow().isoformat()}Z\tskip\t-",
+            f"{dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z\tskip\t-",
         ]
         if args.note:
             log_lines.append(f"note: {args.note}")

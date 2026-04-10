@@ -158,7 +158,7 @@ def main() -> None:
             {
                 "query": args.query,
                 "retrieved": total_fetched,
-                "timestamp": dt.datetime.utcnow().isoformat() + "Z",
+                "timestamp": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "") + "Z",
                 "entries": entries,
             },
             indent=2,
@@ -178,7 +178,7 @@ def main() -> None:
     out_log = Path(args.out_log)
     out_log.parent.mkdir(parents=True, exist_ok=True)
     log_lines = [
-        f"date: {dt.datetime.utcnow().isoformat()}Z",
+        f"date: {dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z",
         f"query: {args.query}",
         f"retrieved: {total_fetched}",
         f"start: {args.start}",

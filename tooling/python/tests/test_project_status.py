@@ -87,8 +87,8 @@ class TestGetProjectStatus:
         (tmp_path / "03_screening" / "round-01").mkdir(parents=True)
         (tmp_path / "03_screening" / "round-01" / "decisions.csv").write_text("x\n")
 
-        (tmp_path / "04_fulltext" / "round-01").mkdir(parents=True)
-        (tmp_path / "04_fulltext" / "round-01" / "unpaywall_results.csv").write_text("x\n")
+        (tmp_path / "04_fulltext").mkdir(parents=True)
+        (tmp_path / "04_fulltext" / "manifest.csv").write_text("x\n")
 
         (tmp_path / "05_extraction" / "round-01").mkdir(parents=True)
         (tmp_path / "05_extraction" / "round-01" / "extraction.csv").write_text("x\n")

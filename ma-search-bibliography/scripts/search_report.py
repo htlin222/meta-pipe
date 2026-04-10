@@ -79,7 +79,7 @@ def main() -> None:
     lines = [
         "# Search Report",
         "",
-        f"Generated: {dt.datetime.utcnow().isoformat()}Z",
+        f"Generated: {dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z",
         "",
         "| Database | Retrieved |",
         "| --- | --- |",

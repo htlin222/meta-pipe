@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -112,7 +112,7 @@ def get_project_status(project_root: Path) -> Dict:
     status = {
         "project_name": project_root.name,
         "project_root": str(project_root),
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "stages": {},
         "current_stage": None,
         "completion_percentage": 0,
