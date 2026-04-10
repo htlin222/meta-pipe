@@ -4,6 +4,18 @@ All notable changes to meta-pipe are documented in this file.
 
 ## [Unreleased]
 
+### Added
+- Sprint 1 of pipeline design fixes (#38)
+  - `ma-search-bibliography/scripts/enrich_abstracts.py`: new abstract enrichment stage (Entrez → CrossRef → OpenAlex fallbacks) so dedupe.bib records reach screening with abstracts populated
+  - `tooling/python/CLAUDE_CLI_FLAGS.md`: documents required `claude` CLI flags, minimum version (2.1.100), and the `--bare` + `ANTHROPIC_API_KEY` auth interaction
+  - `scopus_fetch.py`: reports `opensearch:totalResults`, warns on silent truncation, adds `--strict-cap` flag
+  - `ai_screen.py`: startup `_assert_claude_cli()` check verifies `--bare` and `--output-format` flags exist
+
+### Changed
+- `ai_screen.py`: `_invoke_claude()` now uses `claude -p --bare --output-format json` when `ANTHROPIC_API_KEY` is set, cutting per-call input tokens from ~10k → ~1.5k; falls back to non-bare with a one-time warning when only OAuth is available
+- `ai_screen.py`: `META_PIPE_ROOT` resolved from `$MA_PIPE_ROOT` or module-relative path instead of hardcoded `/Users/htlin/meta-pipe`
+- `tooling/python/pyproject.toml`: pinned `rapidfuzz`, `lxml` (biopython, bibtexparser, requests were already present); ran `uv lock`
+
 ### Fixed
 - Fix hooks schema in `.claude/settings.local.json` (matcher + hooks array structure)
 

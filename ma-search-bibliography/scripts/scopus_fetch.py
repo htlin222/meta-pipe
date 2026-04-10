@@ -114,6 +114,11 @@ def main() -> None:
     parser.add_argument("--out-json", required=True, help="Output JSON path")
     parser.add_argument("--out-bib", required=True, help="Output BibTeX path")
     parser.add_argument("--out-log", required=True, help="Output log path")
+    parser.add_argument(
+        "--strict-cap",
+        action="store_true",
+        help="Exit non-zero if total results exceeds --max-records (silent truncation guard)",
+    )
     args = parser.parse_args()
 
     api_key = args.api_key or os.getenv("SCOPUS_API_KEY")
@@ -124,11 +129,24 @@ def main() -> None:
 
     start = args.start
     total_fetched = 0
+    total_available = 0
     entries: List[Dict[str, Any]] = []
 
     while True:
         data = fetch_page(api_key, inst_token, args.query, start, args.count, args.fields)
-        page_entries = data.get("search-results", {}).get("entry", [])
+        search_results = data.get("search-results", {})
+        if total_available == 0:
+            try:
+                total_available = int(search_results.get("opensearch:totalResults", 0))
+            except (TypeError, ValueError):
+                total_available = 0
+            if total_available:
+                target = min(total_available, args.max_records or total_available)
+                print(
+                    f"Scopus reports {total_available} total results; "
+                    f"fetching {target}."
+                )
+        page_entries = search_results.get("entry", [])
         if not page_entries:
             break
         entries.extend(page_entries)
@@ -139,6 +157,18 @@ def main() -> None:
         if len(page_entries) < args.count:
             break
         start += args.count
+
+    cap_hit = bool(
+        args.max_records
+        and total_available
+        and total_available > args.max_records
+    )
+    if cap_hit:
+        print(
+            f"WARNING: --max-records={args.max_records} truncated "
+            f"{total_available - args.max_records} records silently. "
+            f"Re-run with a larger cap or add --strict-cap to fail fast."
+        )
 
     out_json = Path(args.out_json)
     out_json.parent.mkdir(parents=True, exist_ok=True)
@@ -169,13 +199,21 @@ def main() -> None:
     log_lines = [
         f"date: {dt.datetime.utcnow().isoformat()}Z",
         f"query: {args.query}",
+        f"total_available: {total_available}",
         f"retrieved: {total_fetched}",
+        f"cap_hit: {cap_hit}",
         f"start: {args.start}",
         f"count: {args.count}",
         f"max_records: {args.max_records or ''}",
         f"fields: {args.fields}",
     ]
     out_log.write_text("\n".join(log_lines) + "\n")
+
+    if cap_hit and args.strict_cap:
+        raise SystemExit(
+            f"--strict-cap: Scopus returned {total_available} results but "
+            f"--max-records={args.max_records} truncated the response."
+        )
 
 
 if __name__ == "__main__":

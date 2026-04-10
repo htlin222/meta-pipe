@@ -20,11 +20,62 @@ Usage:
 
 import argparse
 import csv
+import json as _json
+import os
 import subprocess
 import sys
 from pathlib import Path
 
-META_PIPE_ROOT = Path("/Users/htlin/meta-pipe")
+
+def _resolve_meta_pipe_root() -> Path:
+    """Resolve the meta-pipe repo root.
+
+    Order: $MA_PIPE_ROOT env var → module-relative (tooling/python/../..).
+    The assert guards against the script being copied outside the repo.
+    """
+    env_root = os.environ.get("MA_PIPE_ROOT")
+    if env_root:
+        root = Path(env_root).resolve()
+    else:
+        root = Path(__file__).resolve().parent.parent.parent
+    assert (root / "projects").is_dir(), (
+        f"META_PIPE_ROOT={root} does not contain a projects/ directory. "
+        "Set MA_PIPE_ROOT to the repo root."
+    )
+    return root
+
+
+META_PIPE_ROOT = _resolve_meta_pipe_root()
+
+MIN_CLAUDE_CLI_VERSION = (2, 1, 0)
+
+
+def _assert_claude_cli() -> None:
+    """Verify `claude` is on PATH and supports the required flags."""
+    try:
+        help_out = subprocess.run(
+            ["claude", "-p", "--help"],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+    except FileNotFoundError:
+        raise SystemExit(
+            "ERROR: `claude` CLI not found on PATH. Install Claude Code >= "
+            f"{'.'.join(str(x) for x in MIN_CLAUDE_CLI_VERSION)}."
+        )
+    except subprocess.TimeoutExpired:
+        raise SystemExit("ERROR: `claude -p --help` timed out after 15s.")
+    if help_out.returncode != 0:
+        raise SystemExit(f"ERROR: `claude -p --help` failed: {help_out.stderr.strip()}")
+    missing = [flag for flag in ("--bare", "--output-format") if flag not in help_out.stdout]
+    if missing:
+        raise SystemExit(
+            "ERROR: installed `claude` CLI is missing required flag(s): "
+            f"{', '.join(missing)}. Upgrade to Claude Code >= "
+            f"{'.'.join(str(x) for x in MIN_CLAUDE_CLI_VERSION)}. "
+            "See tooling/python/CLAUDE_CLI_FLAGS.md."
+        )
 
 EXCLUSION_CODES = """\
 - P1: Wrong population
@@ -43,6 +94,64 @@ EXCLUSION_CODES = """\
 - L1: Language not meeting criteria
 - D1: Duplicate or superseded publication
 - NONE: No exclusion (use for INCLUDE or MAYBE decisions)"""
+
+
+_BARE_WARNING_EMITTED = False
+
+
+def _invoke_claude(prompt: str, timeout: int) -> str:
+    """Run `claude -p` and return the result text.
+
+    Uses --bare when ANTHROPIC_API_KEY is set, which skips hooks, LSP,
+    plugin sync, auto-memory, and CLAUDE.md auto-discovery — this is a
+    stateless single-shot call, not an interactive Claude Code session.
+    Cuts per-call input tokens from ~10k (full session context) down to
+    ~1.5k (just the prompt).
+
+    --bare explicitly refuses OAuth/keychain auth, so if only an OAuth
+    session is available we fall back to non-bare mode with a one-time
+    warning. Set ANTHROPIC_API_KEY to get the fast path.
+
+    --output-format json returns a stable envelope: {"result": "<text>", ...}.
+    We fall back to raw stdout if parsing fails so a CLI change doesn't
+    break screening.
+    """
+    global _BARE_WARNING_EMITTED
+
+    cmd = ["claude", "-p", "--output-format", "json", "--model", "haiku"]
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        cmd.insert(2, "--bare")
+    elif not _BARE_WARNING_EMITTED:
+        print(
+            "NOTE: ANTHROPIC_API_KEY not set — falling back to non-bare "
+            "`claude -p`. Screening will still work but each call pays the "
+            "full system-prompt overhead (~10k input tokens). Set "
+            "ANTHROPIC_API_KEY to drop to ~1.5k tokens per call.",
+            file=sys.stderr,
+        )
+        _BARE_WARNING_EMITTED = True
+
+    result = subprocess.run(
+        cmd,
+        input=prompt,
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"claude -p failed: {result.stderr.strip()}")
+    stdout = result.stdout.strip()
+    if not stdout:
+        return ""
+    try:
+        envelope = _json.loads(stdout)
+    except _json.JSONDecodeError:
+        return stdout
+    if isinstance(envelope, dict):
+        if envelope.get("is_error"):
+            raise RuntimeError(f"claude -p error: {envelope.get('result', envelope)}")
+        return str(envelope.get("result") or envelope.get("content") or stdout)
+    return stdout
 
 
 def load_eligibility_criteria(project_path: Path) -> str:
@@ -98,16 +207,7 @@ Exclusion codes:
 {EXCLUSION_CODES}
 """
 
-    result = subprocess.run(
-        ["claude", "-p", "--model", "haiku"],
-        input=prompt,
-        capture_output=True,
-        text=True,
-        timeout=120,
-    )
-
-    if result.returncode != 0:
-        raise RuntimeError(f"claude -p failed: {result.stderr.strip()}")
+    text = _invoke_claude(prompt, timeout=120)
 
     parsed = {
         "decision": "include",
@@ -115,7 +215,7 @@ Exclusion codes:
         "confidence": "LOW",
         "exclusion_code": "NONE",
     }
-    for line in result.stdout.strip().split("\n"):
+    for line in text.strip().split("\n"):
         line = line.strip()
         if line.startswith("DECISION:"):
             parsed["decision"] = line.split(":", 1)[1].strip().lower()
@@ -168,16 +268,7 @@ Exclusion codes:
 {EXCLUSION_CODES}
 """
 
-    result = subprocess.run(
-        ["claude", "-p", "--model", "haiku"],
-        input=prompt,
-        capture_output=True,
-        text=True,
-        timeout=60,
-    )
-
-    if result.returncode != 0:
-        raise RuntimeError(f"claude -p failed: {result.stderr.strip()}")
+    text = _invoke_claude(prompt, timeout=60)
 
     parsed = {
         "decision": "maybe",
@@ -185,7 +276,7 @@ Exclusion codes:
         "confidence": "LOW",
         "exclusion_code": "NONE",
     }
-    for line in result.stdout.strip().split("\n"):
+    for line in text.strip().split("\n"):
         line = line.strip()
         if line.startswith("DECISION:"):
             parsed["decision"] = line.split(":", 1)[1].strip().lower()
@@ -494,6 +585,8 @@ def main() -> None:
         help="Screening round directory name (default: round-01)",
     )
     args = parser.parse_args()
+
+    _assert_claude_cli()
 
     project_path = META_PIPE_ROOT / "projects" / args.project
 
