@@ -5,6 +5,11 @@ All notable changes to meta-pipe are documented in this file.
 ## [Unreleased]
 
 ### Added
+- Sprint 2 of pipeline design fixes (#38)
+  - `init_project.py`: `--mode {strict,draft}` flag. Draft mode writes `.ma_meta.json` with `quality_mode: draft` and a `DRAFT_MODE.md` notice so fast-prototype runs are explicit and non-publishable
+  - `tooling/python/project_meta.py`: shared helper that reads `.ma_meta.json` (single source of truth for project quality mode)
+  - `validate_pipeline.py`: reads quality mode and reports unchecked items as NOTES (exit 0) in draft mode, FAILURES (exit 2) in strict mode; added `--json` output for programmatic consumers
+  - `ma-data-extraction/templates/prognostic_factor.yaml` + `.md`: 19-field 2×2 extraction template for binary exposure → binary outcome studies. Plugs directly into `create_extraction_template.py`
 - Sprint 1 of pipeline design fixes (#38)
   - `ma-search-bibliography/scripts/enrich_abstracts.py`: new abstract enrichment stage (Entrez → CrossRef → OpenAlex fallbacks) so dedupe.bib records reach screening with abstracts populated
   - `tooling/python/CLAUDE_CLI_FLAGS.md`: documents required `claude` CLI flags, minimum version (2.1.100), and the `--bare` + `ANTHROPIC_API_KEY` auth interaction

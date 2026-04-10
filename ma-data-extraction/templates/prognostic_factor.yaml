@@ -1,0 +1,119 @@
+# Prognostic factor 2x2 extraction template.
+#
+# Schema reference for observational studies (cohort / case-control / registry)
+# that report a binary exposure → binary outcome contingency. Paired with
+# `prognostic_factor.md`, which is the markdown data dictionary that feeds
+# `tooling/python/create_extraction_template.py --data-dict`.
+#
+# Keep this YAML and the markdown in sync: every field here must also appear
+# backtick-quoted in prognostic_factor.md so the tooling picks it up.
+
+schema_version: 1
+template_name: prognostic_factor
+description: >
+  Binary exposure × binary outcome 2x2 extraction, including unadjusted
+  counts, effect estimate with confidence interval, and the adjustment set
+  used by the study authors.
+applicable_designs:
+  - prospective cohort
+  - retrospective cohort
+  - case-control
+  - nested case-control
+  - registry analysis
+
+fields:
+  # --- Identification ---
+  - name: record_id
+    type: string
+    required: true
+    description: Upstream record identifier (matches screening/manifest CSV).
+  - name: study_id
+    type: string
+    required: true
+    description: "First author + year (e.g., Smith2020)."
+
+  # --- Sample sizes ---
+  - name: n_total
+    type: int
+    required: true
+    description: Total analytic sample size for the 2x2.
+  - name: n_exposed
+    type: int
+    required: true
+    description: Number of participants with the prognostic factor present.
+  - name: n_unexposed
+    type: int
+    required: true
+    description: Number of participants without the prognostic factor.
+
+  # --- Events ---
+  - name: events_exposed
+    type: int
+    required: true
+    description: Number of outcome events among exposed.
+  - name: events_unexposed
+    type: int
+    required: true
+    description: Number of outcome events among unexposed.
+
+  # --- Effect estimate ---
+  - name: effect_measure
+    type: enum
+    values: [OR, RR, HR, IRR]
+    required: true
+    description: Effect measure reported for the prognostic factor.
+  - name: effect_estimate
+    type: float
+    required: true
+    description: Point estimate (adjusted if available, otherwise unadjusted).
+  - name: ci_lower
+    type: float
+    required: true
+    description: Lower bound of the 95% confidence interval.
+  - name: ci_upper
+    type: float
+    required: true
+    description: Upper bound of the 95% confidence interval.
+  - name: estimate_type
+    type: enum
+    values: [unadjusted, adjusted]
+    required: true
+    description: Whether the estimate above is crude or adjusted.
+
+  # --- Adjustment set ---
+  - name: adjustment_set
+    type: string
+    required: false
+    description: >
+      Comma-separated list of covariates adjusted for (e.g.,
+      "age, sex, stage, ECOG"). Empty if estimate_type is unadjusted.
+  - name: confounders_considered
+    type: string
+    required: false
+    description: >
+      Confounders the authors discussed but did not adjust for. Useful
+      for risk-of-bias rating (ROBINS-I D1).
+
+  # --- Outcome definition ---
+  - name: outcome_name
+    type: string
+    required: true
+    description: "Outcome label (e.g., 'overall mortality')."
+  - name: outcome_definition
+    type: string
+    required: true
+    description: How the outcome was ascertained (chart review, registry, etc.).
+  - name: follow_up_months
+    type: float
+    required: false
+    description: Median follow-up duration in months.
+
+  # --- Metadata ---
+  - name: data_source_page
+    type: string
+    required: false
+    description: "Where in the paper the 2x2 came from (e.g., 'Table 2')."
+  - name: extractor_notes
+    type: string
+    required: false
+    description: Free-text notes for the reviewer.
