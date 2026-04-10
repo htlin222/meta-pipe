@@ -111,6 +111,22 @@ uv run ma-screening-quality/scripts/dual_review_agreement.py \
 - Confirm all included studies meet eligibility criteria.
 - **If `nma_candidate`**: Confirm or change analysis type before proceeding to Stage 04.
 
+## Stage Exit: Stamp the artifact
+
+Before marking this stage complete, record provenance for the decisions
+CSV so downstream readers can tell whether screening was dual-review,
+single-reviewer, AI-only, etc. See
+[artifact-stamping.md](../ma-end-to-end/references/artifact-stamping.md)
+for the full convention.
+
+```bash
+uv run tooling/python/session_log.py --project <project-name> append \
+  --stage 03_screening \
+  --artifact 03_screening/round-01/decisions.csv \
+  --generator ai \
+  --deviation "single reviewer"  # omit if dual review completed
+```
+
 ## Pipeline Navigation
 
 | Step | Skill                     | Stage                       |

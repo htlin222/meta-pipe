@@ -116,6 +116,19 @@ Extract consistent data, capture provenance, and build a clean analysis dataset.
 - Reconcile any discrepancies between double entries before analysis.
 - Validate source coverage with `scripts/validate_sources.py` when sources are available.
 
+## Stage Exit: Stamp the artifact
+
+Record provenance for the locked extraction CSV. See
+[artifact-stamping.md](../ma-end-to-end/references/artifact-stamping.md).
+
+```bash
+uv run tooling/python/session_log.py --project <project-name> append \
+  --stage 05_extraction \
+  --artifact 05_extraction/extraction.csv \
+  --generator ai \
+  --deviation "single-extractor"  # omit if double-extracted
+```
+
 ## Pipeline Navigation
 
 | Step | Skill                     | Stage                       |

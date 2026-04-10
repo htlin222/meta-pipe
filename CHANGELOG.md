@@ -5,6 +5,10 @@ All notable changes to meta-pipe are documented in this file.
 ## [Unreleased]
 
 ### Added
+- Sprint 3 of pipeline design fixes (#38)
+  - `session_log.py append` subcommand — writes append-only provenance stamps to `09_qa/sessions/artifact_stamps.jsonl` (who/stage/deviations) and attaches to the active session when one exists
+  - `ma-end-to-end/references/artifact-stamping.md` — documents the stage-exit provenance convention
+  - Stage-exit stamping snippets wired into `ma-screening-quality`, `ma-data-extraction`, `ma-meta-analysis`, and `ma-manuscript-quarto` SKILL files
 - Sprint 2 of pipeline design fixes (#38)
   - `init_project.py`: `--mode {strict,draft}` flag. Draft mode writes `.ma_meta.json` with `quality_mode: draft` and a `DRAFT_MODE.md` notice so fast-prototype runs are explicit and non-publishable
   - `tooling/python/project_meta.py`: shared helper that reads `.ma_meta.json` (single source of truth for project quality mode)

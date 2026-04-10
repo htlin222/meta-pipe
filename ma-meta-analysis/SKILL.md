@@ -80,6 +80,19 @@ Run DerSimonian-Laird as sensitivity analysis for comparison, but REML + HKSJ is
 - Reproduce key estimates from at least one study subset.
 - Confirm that effect sizes match the extraction units and directionality.
 
+## Stage Exit: Stamp the artifact
+
+Record provenance for the primary analysis outputs. See
+[artifact-stamping.md](../ma-end-to-end/references/artifact-stamping.md).
+
+```bash
+uv run tooling/python/session_log.py --project <project-name> append \
+  --stage 06_analysis \
+  --artifact 06_analysis/results.rds \
+  --generator ai \
+  --notes "forestplot.png, league_table.csv generated from this run"
+```
+
 ## Pipeline Navigation
 
 | Step | Skill                   | Stage                       |

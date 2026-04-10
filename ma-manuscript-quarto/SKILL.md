@@ -603,6 +603,19 @@ uv run ma-manuscript-quarto/scripts/lint_qmd.py \
   - Word counts within journal targets.
   - All `[@key]` citations resolve in `references.bib`.
 
+## Stage Exit: Stamp the artifact
+
+Record provenance for the rendered manuscript. See
+[artifact-stamping.md](../ma-end-to-end/references/artifact-stamping.md).
+
+```bash
+uv run tooling/python/session_log.py --project <project-name> append \
+  --stage 07_manuscript \
+  --artifact 07_manuscript/index.qmd \
+  --generator ai \
+  --deviation "draft mode"  # omit in strict mode
+```
+
 ## Pipeline Navigation
 
 | Step | Skill               | Stage                       |

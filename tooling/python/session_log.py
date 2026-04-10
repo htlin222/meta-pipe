@@ -19,6 +19,47 @@ class SessionLog:
         self.log_dir.mkdir(parents=True, exist_ok=True)
         self.current_session_path = self.log_dir / "current_session.json"
         self.history_path = self.log_dir / "session_history.jsonl"
+        self.stamps_path = self.log_dir / "artifact_stamps.jsonl"
+
+    def append_stamp(
+        self,
+        stage: str,
+        artifact: str,
+        generator: str = "ai",
+        deviations: Optional[List[str]] = None,
+        notes: Optional[str] = None,
+    ) -> Dict:
+        """Append a provenance record for a pipeline artifact.
+
+        Each line in ``artifact_stamps.jsonl`` records who generated which
+        file, at what stage, and any deviations from the strict pipeline
+        (e.g., "single-reviewer screening", "PROSPERO deferred"). This is
+        the single place a future reader can go to answer "how was this
+        artifact produced?" without grep-hunting through scattered
+        agreement.md files.
+
+        The stamp is also reflected on the current session (if one is
+        active) so it shows up in ``resume``.
+        """
+        stamp = {
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "stage": stage,
+            "artifact": artifact,
+            "generator": generator,
+            "deviations": deviations or [],
+            "notes": notes or "",
+        }
+        with open(self.stamps_path, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(stamp, ensure_ascii=False) + "\n")
+
+        # Reflect on active session if one exists.
+        session = self.get_current_session()
+        if session:
+            session.setdefault("artifact_stamps", []).append(stamp)
+            self.current_session_path.write_text(
+                json.dumps(session, indent=2)
+            )
+        return stamp
 
     def start_session(self, notes: Optional[str] = None) -> Dict:
         """Start a new work session."""
@@ -227,6 +268,33 @@ def main() -> None:
     # Resume
     resume_parser = subparsers.add_parser("resume", help="Show resume summary")
 
+    # Append artifact provenance stamp
+    append_parser = subparsers.add_parser(
+        "append",
+        help="Append a provenance stamp for a pipeline artifact",
+    )
+    append_parser.add_argument(
+        "--stage", required=True, help="Stage identifier (e.g., 03_screening)"
+    )
+    append_parser.add_argument(
+        "--artifact", required=True, help="Artifact path or identifier"
+    )
+    append_parser.add_argument(
+        "--generator",
+        default="ai",
+        help="Who produced this artifact (ai, human, hybrid). Default: ai.",
+    )
+    append_parser.add_argument(
+        "--deviation",
+        action="append",
+        default=[],
+        help=(
+            "Deviation from strict pipeline (repeatable, e.g. "
+            '--deviation "single reviewer" --deviation "PROSPERO deferred")'
+        ),
+    )
+    append_parser.add_argument("--notes", help="Free-text notes")
+
     args = parser.parse_args()
 
     # Determine project root
@@ -261,6 +329,21 @@ def main() -> None:
 
     elif args.command == "resume":
         print(session_log.get_resume_summary())
+
+    elif args.command == "append":
+        stamp = session_log.append_stamp(
+            stage=args.stage,
+            artifact=args.artifact,
+            generator=args.generator,
+            deviations=args.deviation,
+            notes=args.notes,
+        )
+        print(
+            f"✅ Stamped {stamp['artifact']} "
+            f"(stage={stamp['stage']}, generator={stamp['generator']})"
+        )
+        if stamp["deviations"]:
+            print(f"   deviations: {', '.join(stamp['deviations'])}")
 
     else:
         parser.print_help()
