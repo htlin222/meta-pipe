@@ -313,6 +313,74 @@ net <- netmeta(TE, seTE, treat1, treat2, studlab,
 
 ---
 
+## Step 11: Component NMA (If Combination Treatments Exist)
+
+If your network includes combination treatments (e.g., "DrugA+DrugB"), use CNMA to decompose effects:
+
+```r
+# Frequentist CNMA (primary) — additive model
+cnma_add <- discomb(TE, seTE, treat1, treat2, studlab,
+                    data = nma_data, sm = "RR",
+                    random = TRUE, inactive = "placebo")
+forest(cnma_add)
+
+# Interaction model
+cnma_int <- discomb(TE, seTE, treat1, treat2, studlab,
+                    data = nma_data, sm = "RR",
+                    random = TRUE, inactive = "placebo",
+                    C.matrix = "full")
+
+# Test interaction significance
+q_diff <- cnma_add$Q - cnma_int$Q
+df_diff <- cnma_add$df.Q - cnma_int$df.Q
+p_interaction <- pchisq(q_diff, df = df_diff, lower.tail = FALSE)
+# p > 0.05 → additive model sufficient
+```
+
+**Full template**: `nma_11_cnma.R` | **Guide**: [CNMA Guide](cnma-guide.md)
+
+---
+
+## Step 12: NMA Meta-Regression (If Covariates Available)
+
+Explore heterogeneity sources with study-level covariates:
+
+```r
+# Continuous covariate
+reg <- netmetareg(net_re, ~ mean_age)
+bubble(reg)  # Bubble plot
+
+# Categorical covariate
+reg_cat <- netmetareg(net_re, ~ factor(risk_of_bias))
+
+# Compare tau² reduction
+cat("Baseline tau²:", net_re$tau2, "→ Adjusted:", reg$tau2)
+```
+
+**Full template**: `nma_12_meta_regression.R`
+
+---
+
+## Step 13: Statistical Transitivity Testing
+
+Supplement clinical transitivity assessment with quantitative tests:
+
+```r
+# Compare effect modifier distributions across comparisons
+kruskal.test(mean_age ~ comparison, data = nma_data)
+
+# Meta-regression as transitivity proxy
+# Large tau² changes when adjusting suggest modifier violates transitivity
+reg <- netmetareg(net_re, ~ modifier)
+
+# Direct vs full NMA comparison (Salanti 2012)
+ns <- netsplit(net_re)  # Already run in nma_05
+```
+
+**Full template**: `nma_13_transitivity_tests.R`
+
+---
+
 ## Common Pitfalls
 
 1. **Skipping convergence diagnostics**: Always check Rhat, ESS, and trace plots

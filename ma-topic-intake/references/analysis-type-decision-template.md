@@ -74,6 +74,24 @@ Transitivity requires that study populations across different comparisons are si
 
 **Overall transitivity**: Plausible / Uncertain / Implausible
 
+### 2c-bis. CNMA Suitability (If Combination Treatments Exist)
+
+> Complete this section only if the network includes combination therapies (e.g., "ACEI+ARB", "Chemo+Immuno"). Skip if all treatments are single-component.
+
+| Criterion | Value | Notes |
+|-----------|-------|-------|
+| Combination treatments present in network | Yes/No | List: [e.g., ACEI+ARB, Chemo+Immuno] |
+| Components identifiable from treatment labels | Yes/No | Can each treatment be decomposed into named components? |
+| Additivity assumption clinically plausible | Yes/No/Uncertain | Are component effects likely independent? |
+| Disconnected network that CNMA could reconnect | Yes/No | Does standard NMA fail due to disconnection? |
+| ≥3 studies involving combination treatments | Yes/No | Sufficient data for component estimation? |
+
+**CNMA recommendation**: Run nma_11_cnma.R / Skip CNMA
+
+**Rationale**: [1-2 sentences on whether CNMA adds value for this network]
+
+---
+
 ### 2d. Decision Matrix
 
 | Criterion | Threshold | Actual | Pass? |

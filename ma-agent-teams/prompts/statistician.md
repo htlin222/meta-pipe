@@ -38,6 +38,9 @@ Check `analysis_type.confirmed` in pico.yaml to determine which skill to follow:
 3. Generate network graph, league table, SUCRA rankings
 4. Run inconsistency diagnostics
 5. Create CINeMA GRADE assessment
+6. If combination treatments exist: run nma_11_cnma.R (CNMA extension)
+7. If covariates available: run nma_12_meta_regression.R
+8. Run nma_13_transitivity_tests.R for quantitative transitivity assessment
 
 ### Key Commands
 ```bash

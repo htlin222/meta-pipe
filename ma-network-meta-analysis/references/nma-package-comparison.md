@@ -10,6 +10,7 @@
 | Your Situation | Use This | Why |
 |---------------|----------|-----|
 | **Default NMA (recommended)** | **gemtc** (primary) + **netmeta** (sensitivity) | Bayesian primary per NICE/WHO/Cochrane; frequentist sensitivity in supplement |
+| **CNMA (combination treatments)** | **netmeta::discomb()** (primary) + **multinma** (Bayesian sensitivity) | discomb() is the reference CNMA implementation; multinma adds Bayesian robustness |
 | Need IPD + aggregate data | **multinma** | Modern Stan-based, handles both data types |
 | No JAGS available | **netmeta** only | Fall back to frequentist if JAGS install not possible |
 | Cochrane review | **gemtc** primary | Cochrane Handbook supports Bayesian NMA |
@@ -150,7 +151,7 @@ hn.prior <- mtc.hy.prior("dlnorm", -2.56, 1.74^(-2))
 
 | Feature | gemtc | netmeta | multinma |
 |---------|-------|---------|----------|
-| **Role in pipeline** | **Primary** | **Sensitivity** | Advanced |
+| **Role in pipeline** | **Primary** | **Sensitivity** | Advanced / CNMA Bayesian |
 | Install difficulty | Medium (JAGS) | Easy | Hard (Stan) |
 | Speed | Slow (MCMC) | Fast | Medium |
 | Learning curve | Medium | Low | High |
@@ -159,6 +160,8 @@ hn.prior <- mtc.hy.prior("dlnorm", -2.56, 1.74^(-2))
 | Priors | Turner/Rhodes or vague | N/A | Flexible |
 | Model comparison | DIC | — | LOO-IC |
 | IPD support | No | No | Yes |
+| **CNMA support** | No | **Yes (`discomb()`)** | **Yes (component regression)** |
+| **NMA meta-regression** | No | **Yes (`netmetareg()`)** | Yes |
 | Network visualization | Basic | Excellent | Basic |
 | NICE/WHO alignment | Yes | Partial | Yes |
 | External deps | JAGS | None | Stan |

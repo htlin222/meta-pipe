@@ -23,6 +23,10 @@ install.packages(c(
 
   # Sensitivity: Frequentist NMA
   "netmeta",       # Frequentist NMA (sensitivity analysis / supplement)
+                   # discomb() for CNMA, netmetareg() for meta-regression (>= 2.5)
+
+  # Advanced: Bayesian CNMA (multinma)
+  "multinma",      # Bayesian NMA with component regression (requires Stan)
 
   # Shared utilities
   "meta",          # Forest plots, pairwise helpers, pairwise()
@@ -46,6 +50,17 @@ jags_ok <- tryCatch({
 }, error = function(e) {
   warning("JAGS not found. Install from: https://mcmc-jags.sourceforge.io/")
   warning("Bayesian NMA (gemtc) requires JAGS. Falling back to netmeta only.")
+  FALSE
+})
+
+# --- 3b. Verify Stan/multinma installation (for Bayesian CNMA) ---
+multinma_ok <- tryCatch({
+  library(multinma)
+  cat("multinma version:", as.character(packageVersion("multinma")), "\n")
+  TRUE
+}, error = function(e) {
+  warning("multinma not available. Bayesian CNMA will be skipped.")
+  warning("Install: install.packages('multinma') (requires rstan or cmdstanr)")
   FALSE
 })
 
@@ -89,6 +104,8 @@ library(tidyr)
 
 cat("NMA environment setup complete.\n")
 cat("Primary: gemtc (Bayesian) | Sensitivity: netmeta (frequentist)\n")
+cat("CNMA: netmeta::discomb() (primary) | multinma (Bayesian sensitivity)\n")
 cat("gemtc version:", as.character(packageVersion("gemtc")), "\n")
 cat("netmeta version:", as.character(packageVersion("netmeta")), "\n")
 if (jags_ok) cat("JAGS: OK\n") else cat("JAGS: NOT FOUND\n")
+if (multinma_ok) cat("multinma: OK (Stan backend)\n") else cat("multinma: NOT FOUND\n")
