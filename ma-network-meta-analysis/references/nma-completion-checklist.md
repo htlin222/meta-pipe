@@ -196,6 +196,47 @@
 
 ---
 
+## 🧩 **CNMA Extension (If Combination Treatments Present)**
+
+> These items are **conditional** — only required if the network contains combination treatments (e.g., "DrugA+DrugB"). Skip if all treatments are single-component.
+
+- [ ] **26. Component effects estimated**
+  - Additive CNMA model fitted via `discomb()`
+  - Component-level effect estimates with CIs reported
+  - Forest plot of component effects: `figures/cnma_components_additive.png`
+  - **Missing?** Run `nma_11_cnma.R`
+
+- [ ] **27. Interaction test performed and reported**
+  - Additive vs interaction model comparison (Q-test)
+  - p-value reported; interpretation: additive sufficient or interaction present
+  - Interaction test CSV: `tables/cnma_interaction_test.csv`
+  - Model comparison CSV: `tables/cnma_model_comparison.csv`
+  - **Missing?** Run `nma_11_cnma.R`
+
+- [ ] **28. If disconnected network reconnected: additivity assumption discussed**
+  - Results flagged as **sensitivity analysis only**
+  - Clinical plausibility of additivity explicitly discussed
+  - Comparison with vs without disconnected treatments
+  - **Missing?** Check `cnma_report.txt`
+
+---
+
+## 📈 **Advanced Extensions (Optional)**
+
+- [ ] **29. NMA meta-regression (if covariates available)**
+  - Continuous and/or categorical covariates tested via `netmetareg()`
+  - tau² reduction quantified
+  - Bubble plots: `figures/nma_metareg_*.png`
+  - **Missing?** Run `nma_12_meta_regression.R`
+
+- [ ] **30. Statistical transitivity assessment**
+  - Effect modifier distributions compared across comparisons
+  - Traffic light table: `tables/transitivity_tests.csv`
+  - Supplements clinical transitivity table (nma-assumptions.md)
+  - **Missing?** Run `nma_13_transitivity_tests.R`
+
+---
+
 ## ✅ **Completion Criteria**
 
 **Ready to submit if**:

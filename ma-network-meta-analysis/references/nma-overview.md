@@ -41,11 +41,16 @@ How many treatments?
 ├─ 2 treatments → Standard pairwise MA (ma-meta-analysis)
 └─ ≥3 treatments
    ├─ Are all treatments connected? (shared comparators)
-   │  ├─ No → Cannot do NMA. Consider separate pairwise MAs
+   │  ├─ No → Can CNMA reconnect via shared components?
+   │  │  ├─ Yes → Component NMA (nma_11_cnma.R) — additive model
+   │  │  └─ No → Cannot do NMA. Consider separate pairwise MAs
    │  └─ Yes
    │     ├─ Is transitivity plausible?
    │     │  ├─ No → Discuss limitations; consider sensitivity analyses
    │     │  └─ Yes → Network Meta-Analysis (ma-network-meta-analysis)
+   │     ├─ Do combination treatments exist?
+   │     │  ├─ Yes → Run CNMA extension (nma_11_cnma.R) after standard NMA
+   │     │  └─ No → Standard NMA sufficient
    │     └─ Do you need treatment rankings?
    │        ├─ Yes → NMA with SUCRA rankings (Bayesian)
    │        └─ No → NMA still valid for indirect comparisons
@@ -129,9 +134,37 @@ When `analysis_type: nma` is set in `pico.yaml`:
 
 ---
 
+## CNMA Extension (Combination Therapies)
+
+When your network includes **combination treatments** (e.g., Drug A + Drug B), Component NMA (CNMA) can:
+
+1. **Decompose** combination effects into individual component contributions
+2. **Test interactions** between components (synergy/antagonism)
+3. **Reconnect disconnected networks** by assuming additive component effects
+
+CNMA is run **after** the standard NMA workflow (nma_01–10) as an optional extension using `nma_11_cnma.R`.
+
+- **Frequentist** (primary): `netmeta::discomb()` — the reference implementation
+- **Bayesian** (sensitivity): `multinma::nma()` with component regression
+
+See [CNMA Guide](cnma-guide.md) for detailed decision criteria, data requirements, and reporting.
+
+---
+
+## Advanced Extensions
+
+| Extension | Script | When to Use |
+|---|---|---|
+| Component NMA (CNMA) | `nma_11_cnma.R` | Combination treatments in network |
+| NMA Meta-Regression | `nma_12_meta_regression.R` | Study-level covariates available |
+| Transitivity Testing | `nma_13_transitivity_tests.R` | Always (supplements clinical assessment) |
+
+---
+
 ## Further Reading
 
 - [NMA R Guide](nma-r-guide.md) — Step-by-step Bayesian NMA workflow with gemtc
 - [NMA Assumptions](nma-assumptions.md) — How to assess transitivity and consistency
 - [NMA Reporting Checklist](nma-reporting-checklist.md) — PRISMA-NMA 32-item checklist
 - [Package Comparison](nma-package-comparison.md) — gemtc vs netmeta vs multinma
+- [CNMA Guide](cnma-guide.md) — Component NMA for combination therapies

@@ -78,6 +78,10 @@ tooling/python/   # uv project
    - Route by `analysis_type.confirmed`: `pairwise` | `nma` | `pooled_proportion` | `narrative`
    - Use `/ma-meta-analysis` skill for pairwise
    - Use `/ma-network-meta-analysis` skill for NMA
+   - **NMA extensions** (run after nma_01-10 if applicable):
+     - If combination treatments exist → `nma_11_cnma.R` (Component NMA)
+     - If study-level covariates available → `nma_12_meta_regression.R`
+     - Always for NMA → `nma_13_transitivity_tests.R` (statistical transitivity assessment)
    - Write to `06_analysis/*.R`, `06_analysis/figures/*.png`, `06_analysis/tables/*.csv`, `06_analysis/renv.lock`
 7. Draft and render Quarto manuscript in `07_manuscript/`.
    - Use `/ma-manuscript-quarto` skill

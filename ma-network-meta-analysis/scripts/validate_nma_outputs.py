@@ -326,6 +326,98 @@ def check_sensitivity_analysis(project_root: Path) -> Tuple[bool, List[str]]:
     return True, issues
 
 
+def check_cnma_outputs(project_root: Path) -> Tuple[bool, List[str]]:
+    """Check CNMA outputs (optional — only if CNMA was run)."""
+    issues = []
+
+    # Check if CNMA was run (indicated by cnma_report.txt)
+    cnma_report = project_root / "06_analysis" / "cnma_report.txt"
+
+    if not cnma_report.exists():
+        # CNMA is optional — not an issue if not run
+        return True, ["ℹ️ CNMA not run (no combination treatments or not applicable)"]
+
+    # If CNMA was run, validate outputs
+    # Check component forest plot
+    component_plot = (
+        project_root / "06_analysis" / "figures" / "cnma_components_additive.png"
+    )
+    if not component_plot.exists():
+        issues.append("⚠️ CNMA component forest plot not found")
+
+    # Check interaction test results
+    interaction_csv = (
+        project_root / "06_analysis" / "tables" / "cnma_interaction_test.csv"
+    )
+    if not interaction_csv.exists():
+        issues.append(
+            "⚠️ CNMA interaction test results not found "
+            "(tables/cnma_interaction_test.csv)"
+        )
+
+    # Check model comparison table
+    model_comparison_csv = (
+        project_root / "06_analysis" / "tables" / "cnma_model_comparison.csv"
+    )
+    if not model_comparison_csv.exists():
+        issues.append(
+            "⚠️ CNMA model comparison table not found "
+            "(tables/cnma_model_comparison.csv)"
+        )
+
+    if not issues:
+        issues.append("✅ CNMA outputs complete (component effects + interaction test)")
+
+    return True, issues
+
+
+def check_meta_regression_outputs(project_root: Path) -> Tuple[bool, List[str]]:
+    """Check NMA meta-regression outputs (optional)."""
+    issues = []
+
+    metareg_report = project_root / "06_analysis" / "nma_metareg_report.txt"
+
+    if not metareg_report.exists():
+        return True, ["ℹ️ NMA meta-regression not run (no covariates or not applicable)"]
+
+    # Check regression results
+    metareg_csv = (
+        project_root / "06_analysis" / "tables" / "nma_metareg_results.csv"
+    )
+    if not metareg_csv.exists():
+        issues.append("⚠️ Meta-regression results CSV not found")
+
+    if not issues:
+        issues.append("✅ NMA meta-regression outputs present")
+
+    return True, issues
+
+
+def check_transitivity_tests(project_root: Path) -> Tuple[bool, List[str]]:
+    """Check statistical transitivity assessment outputs (optional)."""
+    issues = []
+
+    transit_report = (
+        project_root / "06_analysis" / "transitivity_assessment_report.txt"
+    )
+
+    if not transit_report.exists():
+        return True, [
+            "ℹ️ Statistical transitivity tests not run "
+            "(ensure clinical assessment in nma-assumptions.md is done)"
+        ]
+
+    # Check traffic light table
+    transit_csv = project_root / "06_analysis" / "tables" / "transitivity_tests.csv"
+    if not transit_csv.exists():
+        issues.append("⚠️ Transitivity test results CSV not found")
+
+    if not issues:
+        issues.append("✅ Statistical transitivity assessment complete")
+
+    return True, issues
+
+
 def generate_validation_report(project_root: Path, strict: bool = False) -> Dict:
     """Generate comprehensive NMA validation report."""
 
@@ -352,6 +444,9 @@ def generate_validation_report(project_root: Path, strict: bool = False) -> Dict
         ("CINeMA GRADE", check_cinema_assessment, [project_root]),
         ("Bayesian convergence", check_bayesian_convergence, [project_root]),
         ("Sensitivity analysis", check_sensitivity_analysis, [project_root]),
+        ("CNMA (component NMA)", check_cnma_outputs, [project_root]),
+        ("NMA meta-regression", check_meta_regression_outputs, [project_root]),
+        ("Transitivity tests", check_transitivity_tests, [project_root]),
     ]
 
     results = {
