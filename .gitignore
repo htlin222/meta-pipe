@@ -134,3 +134,7 @@ projects/*
 !projects/dlbcl-frontline-nma/
 !projects/legacy/README.md
 worktrees/
+
+# Dashboard
+dashboard/node_modules/
+dashboard/dist/
