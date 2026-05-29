@@ -1,0 +1,73 @@
+{
+  "k_studies": 5,
+  "model": "random-effects (DerSimonian-Laird)",
+  "effect_measure": "Hedges' g (SMD), positive favors game-based",
+  "pooled_g": 0.645,
+  "se": 0.206,
+  "ci95": [
+    0.242,
+    1.048
+  ],
+  "z": 3.134,
+  "p_value": 0.0017,
+  "Q": 13.889,
+  "df": 4,
+  "tau2": 0.142,
+  "I2_percent": 71.2,
+  "prediction_interval95": [
+    -0.721,
+    2.011
+  ],
+  "studies": [
+    {
+      "label": "Antikchi (2025)",
+      "g": 0.599,
+      "se": 0.226,
+      "outcome": "skill",
+      "ci": [
+        0.16,
+        1.04
+      ]
+    },
+    {
+      "label": "Nasirzade (2024)",
+      "g": 1.454,
+      "se": 0.347,
+      "outcome": "skill",
+      "ci": [
+        0.77,
+        2.13
+      ]
+    },
+    {
+      "label": "Ma (2021)",
+      "g": 0.609,
+      "se": 0.201,
+      "outcome": "knowledge",
+      "ci": [
+        0.22,
+        1.0
+      ]
+    },
+    {
+      "label": "Blani (2020)",
+      "g": 0.117,
+      "se": 0.166,
+      "outcome": "knowledge",
+      "ci": [
+        -0.21,
+        0.44
+      ]
+    },
+    {
+      "label": "Cheung (2024)",
+      "g": 0.788,
+      "se": 0.407,
+      "outcome": "skill",
+      "ci": [
+        -0.01,
+        1.59
+      ]
+    }
+  ]
+}

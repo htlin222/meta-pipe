@@ -45,7 +45,7 @@ def main() -> None:
     all_entries = []
     counts = []
     for bib_path in args.in_bib:
-        text = Path(bib_path).read_text()
+        text = Path(bib_path).read_text(encoding="utf-8")
         db = loads(text)
         counts.append((bib_path, len(db.entries)))
         all_entries.extend(db.entries)
@@ -77,12 +77,12 @@ def main() -> None:
 
     out_db = loads("")
     out_db.entries = list(deduped.values())
-    Path(args.out_bib).write_text(writer.write(out_db))
+    Path(args.out_bib).write_text(writer.write(out_db), encoding="utf-8")
 
     if args.out_merged:
         merged_db = loads("")
         merged_db.entries = all_entries
-        Path(args.out_merged).write_text(writer.write(merged_db))
+        Path(args.out_merged).write_text(writer.write(merged_db), encoding="utf-8")
 
     log_lines = ["inputs:"]
     for path, count in counts:
@@ -94,7 +94,7 @@ def main() -> None:
             f"collisions: {collisions}",
         ]
     )
-    Path(args.out_log).write_text("\n".join(log_lines) + "\n")
+    Path(args.out_log).write_text("\n".join(log_lines) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

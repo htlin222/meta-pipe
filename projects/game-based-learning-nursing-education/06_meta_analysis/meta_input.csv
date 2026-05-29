@@ -1,0 +1,9 @@
+record_id,study,year,outcome,int_mean,int_sd,int_n,ctrl_mean,ctrl_sd,ctrl_n,p,nwkm,note
+TokHH202641466157,A board game's impact on nursing students' knowledge about e,2026,knowledge,22.65,1.5,,21.42,2.2,,0.049,L2,"Reports posttest means/SD (intervention 22.65+/-1.5 vs control 21.42+/-2.2), p=0.049, d=0.65; group n not stated but baseline given too."
+MohammadiA202540761887,Nursing Students Learn Vaccination Using Kahoot! Gamificatio,2025,satisfaction,8.7,1.04,,7.5,1.34,,0.001,L1;L2,"Satisfaction intervention 8.7+/-1.04 vs control 7.5+/-1.34, t(70)=4.23 p<=0.001; total ~72; knowledge by ANCOVA F=27.208 p<=0.001 without means."
+AntikchiM202540269906,The effect of game-based scenario writing on the clinical re,2025,skill,14.57,3.9,41,12.3,3.6,41,0.05,L1;L2,"Post-intervention clinical reasoning means with SD and n for both groups, p<0.05."
+CheungYTD202438851019,Effect of narrative videos and mini-VR games in nursing smok,2024,other,,,13,,,13,0.049,L1;L2,"Reports Cohen's d (0.814) for empathy and betas, p-values; effect size usable but group means/SD not given."
+NasirzadeA202438840136,Comparison of the effects of burn assessment mission game wi,2024,skill,16.4,2.2,21,11.8,3.8,21,0.001,L2,"Skill scores 16.4(2.2) vs 11.8(3.8); knowledge 17.4(2.2) vs 14.7(2.6); n=42 split into two groups, p<.001."
+AlczarArteroPM202437666723,Teaching cardiopulmonary resuscitation using virtual reality,2024,skill,86.1,9.3,,74.8,9.5,,0.001,L2,"Chest compression quality 86.1%(9.3) vs 74.8%(9.5), mean diff 11.3% (95%CI 6.6-16.0), p<0.001; per-group n not given."
+MaD202133962185,Does theme game-based teaching promote better learning about,2021,knowledge,4.04,0.43,51,3.77,0.45,53,0.002,L2,"Overall disaster nursing competence 4.04±0.43 vs 3.77±0.45, p=0.002, with per-group n."
+BlaniA202032075641,Comparative value of a simulation by gaming and a traditiona,2020,knowledge,59,9,73,58,8,73,0.43,L1;L2,"Immediate SCT scores 59±9 (SG, n=73) vs 58±8 (TT, n=73), p=0.43."

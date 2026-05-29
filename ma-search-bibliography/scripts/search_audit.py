@@ -14,7 +14,7 @@ def parse_kv(path: Path) -> dict[str, str]:
     if not path.exists():
         return {}
     data: dict[str, str] = {}
-    for line in path.read_text().splitlines():
+    for line in path.read_text(encoding="utf-8").splitlines():
         if ":" not in line:
             continue
         key, value = line.split(":", 1)
@@ -26,7 +26,7 @@ def parse_kv(path: Path) -> dict[str, str]:
 
 
 def read_query(path: Path, section: str) -> str:
-    content = path.read_text().splitlines()
+    content = path.read_text(encoding="utf-8").splitlines()
     start = None
     for i, line in enumerate(content):
         if line.strip().lower() == f"[{section}]":
@@ -93,7 +93,7 @@ def main() -> None:
 
     out_path = Path(args.out) if args.out else round_dir / "search_audit.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(audit, indent=2) + "\n")
+    out_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

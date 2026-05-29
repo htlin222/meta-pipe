@@ -1,0 +1,2630 @@
+{
+  "query": "TITLE-ABS-KEY(\"serious game*\" OR gamification OR gamified OR \"game-based learning\" OR \"game based learning\" OR \"game-based\" OR gameful OR \"educational game*\" OR \"digital game*\" OR \"video game*\" OR \"computer game*\" OR \"board game*\" OR \"card game*\" OR \"escape room*\") AND TITLE-ABS-KEY(nursing OR nurse OR nurses OR \"nursing student*\" OR \"student nurse*\") AND TITLE-ABS-KEY(randomized OR randomised OR randomly OR \"randomized controlled trial\" OR \"randomised controlled trial\" OR RCT OR \"controlled trial\")",
+  "retrieved": 292,
+  "timestamp": "2026-05-29T15:18:06.456417Z",
+  "entries": [
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105030253187",
+      "dc:title": "The impact of gaming on functioning among people with schizophrenia: study protocol for a randomised controlled trial (GAME-A)",
+      "dc:creator": "Välimäki M.",
+      "prism:publicationName": "Trials",
+      "prism:coverDate": "2026-12-01",
+      "prism:doi": "10.1186/s13063-026-09456-2"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105031751741",
+      "dc:title": "The role of digital teaching methods in supporting practical skills training in the academic training of health professions – a scoping review",
+      "dc:creator": "Tjorven S.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2026-12-01",
+      "prism:doi": "10.1186/s12909-026-08785-9"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105039292055",
+      "dc:title": "Effects of different technology-based simulation on nursing students' self-confidence and critical thinking: A systematic review and network meta-analysis",
+      "dc:creator": "Wang H.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2026-10-01",
+      "prism:doi": "10.1016/j.nedt.2026.107166"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105036521406",
+      "dc:title": "Game-based learning in undergraduate nursing education: A systematic review and meta-analysis",
+      "dc:creator": "AlMekkawi M.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2026-09-01",
+      "prism:doi": "10.1016/j.nedt.2026.107124"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105037396648",
+      "dc:title": "Effects of a simulation-based learning tool (serious game) on nursing students' knowledge of risk of falls and prevention in older adults: the PREVISS-GAME multicentre, randomized, controlled trial",
+      "dc:creator": "Lafont C.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2026-09-01",
+      "prism:doi": "10.1016/j.nedt.2026.107132"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105037966218",
+      "dc:title": "Video game addiction moderates pathways from violent gaming to emotional blunting in adolescents: Serial mediation through desensitization and aggression",
+      "dc:creator": "Rashwan Z.I.",
+      "prism:publicationName": "Journal of Pediatric Nursing",
+      "prism:coverDate": "2026-07-01",
+      "prism:doi": "10.1016/j.pedn.2026.04.029"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105039087829",
+      "dc:title": "Peer education, role-play simulation, and virtual escape room: Comparing effects on therapeutic interaction skills in nursing students: A randomized controlled trial",
+      "dc:creator": "Aslan R.",
+      "prism:publicationName": "Clinical Simulation in Nursing",
+      "prism:coverDate": "2026-06-01",
+      "prism:doi": "10.1016/j.ecns.2026.101973"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105038933967",
+      "dc:title": "Design and application of a board game for pain management in school-aged children after tonsillectomy",
+      "dc:creator": "Zhang A.",
+      "prism:publicationName": "Chinese Journal of Nursing",
+      "prism:coverDate": "2026-05-20",
+      "prism:doi": "10.3761/j.issn.0254-1769.2026.10.012"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105035099929",
+      "dc:title": "The effect of serious games and interactive video-based education on nursing students' psychomotor skills, perceived stress, satisfaction and confidence levels in learning: A randomized controlled trial",
+      "dc:creator": "Çetki̇n T.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.1016/j.nepr.2026.104824"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105032897408",
+      "dc:title": "The effect of motivational interviewing-supported health education on digital game addiction and cyberbullying behaviors in adolescents: A randomized controlled trial",
+      "dc:creator": "Ayaz-Alkaya S.",
+      "prism:publicationName": "Public Health",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.1016/j.puhe.2026.106248"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105037541535",
+      "dc:title": "The Effect of Virtual Simulation Game on the Development of Nursing Students' Knowledge and Skills: A Randomized Controlled Trial",
+      "dc:creator": "Mercan Annak İ.",
+      "prism:publicationName": "Nursing Open",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.1002/nop2.70566"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105035397145",
+      "dc:title": "Comparing teaching methods on novice nurses’ and medical residents' resuscitation teamwork knowledge and team performance: A longitudinal randomized controlled trial",
+      "dc:creator": "Chen H.W.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.1016/j.nepr.2026.104827"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105034586760",
+      "dc:title": "Surgery completed, care continues: Nursing students’ learning outcomes in postoperative patient admission using game-based virtual reality - A randomized controlled trial",
+      "dc:creator": "Yücel B.O.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.1016/j.nepr.2026.104808"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105032901246",
+      "dc:title": "Fostering role clarity and team coordination in cardiopulmonary resuscitation among nursing students using an educational escape room: A randomized controlled trial",
+      "dc:creator": "Bakhshi F.",
+      "prism:publicationName": "Clinical Simulation in Nursing",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.1016/j.ecns.2026.101932"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105033048531",
+      "dc:title": "Escape room and high-fidelity clinical simulation in neonatal nursing education: A randomized clinical trial",
+      "dc:creator": "Santano-Mogena E.",
+      "prism:publicationName": "Clinical Simulation in Nursing",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.1016/j.ecns.2026.101938"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105037878352",
+      "dc:title": "Integration of Game-Based Chatbot With Kahoot! for High-Alert Medication Education for Newly Graduated Nurses: A Randomized Controlled Trial",
+      "dc:creator": "He T.I.",
+      "prism:publicationName": "Journal of Continuing Education in Nursing",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.3928/00220124-20260216-03"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105035699146",
+      "dc:title": "Corrigendum to ‘Effect of a gamified simulation on nursing students' communication skills in end-of-life care: A randomized controlled trial’ Clinical Simulation in Nursing, 109, 101850 (Clinical Simulation in Nursing (2025) 109, (S1876139925001665), (10.1016/j.ecns.2025.101850))",
+      "dc:creator": "Pedrotti M.",
+      "prism:publicationName": "Clinical Simulation in Nursing",
+      "prism:coverDate": "2026-05-01",
+      "prism:doi": "10.1016/j.ecns.2026.101953"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105035299637",
+      "dc:title": "Construction and application of gamification therapy for children with congenital heart disease surgery",
+      "dc:creator": "Fan N.",
+      "prism:publicationName": "Chinese Journal of Nursing",
+      "prism:coverDate": "2026-04-10",
+      "prism:doi": "10.3761/j.issn.0254-1769.2026.07.007"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105032252721",
+      "dc:title": "Impact of Gamified Infection Control Education on Cognitive Achievement, Academic Self-Efficacy and Learning Motivation in Nursing Students: A Randomized Controlled Trial in Turkiye",
+      "dc:creator": "Oner B.",
+      "prism:publicationName": "International Journal of Nursing Practice",
+      "prism:coverDate": "2026-04-01",
+      "prism:doi": "10.1111/ijn.70128"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105016130541",
+      "dc:title": "Effects of exergaming with a resistance component versus traditional resistance training on sarcopenia in pre-frail and frail nursing home residents: a pilot randomized controlled trial",
+      "dc:creator": "Liu T.W.",
+      "prism:publicationName": "European Geriatric Medicine",
+      "prism:coverDate": "2026-04-01",
+      "prism:doi": "10.1007/s41999-025-01294-w"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105037444373",
+      "dc:title": "Effectiveness of Gamification with a Narrative Adapted to the Player’s Profile in Obstetric Nursing Competencies: A Cluster Randomized Controlled Pilot Trial Protocol",
+      "dc:creator": "Mies-Padilla S.",
+      "prism:publicationName": "Nursing Reports",
+      "prism:coverDate": "2026-04-01",
+      "prism:doi": "10.3390/nursrep16040104"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105034644013",
+      "dc:title": "The Effect of Motivational Interviewing Based on Stages of Change on Digital Game Addiction Levels of Nursing Students: A Randomized Controlled Trial",
+      "dc:creator": "Balkaya F.",
+      "prism:publicationName": "Journal of Nursology",
+      "prism:coverDate": "2026-03-29",
+      "prism:doi": "10.17049/jnursology.1630948"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105021437975",
+      "dc:title": "MEDILEGACY: A gamified platform for enhancing medical terminology learning through engagement and retention",
+      "dc:creator": "Wang Y.F.",
+      "prism:publicationName": "Health Education Journal",
+      "prism:coverDate": "2026-03-01",
+      "prism:doi": "10.1177/00178969251389388"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105029666947",
+      "dc:title": "Design and application of a rapid gamified exercise board for enhancing recovery for pediatric patients undergoing laparoscopic appendectomy",
+      "dc:creator": "He X.",
+      "prism:publicationName": "Chinese Journal of Nursing",
+      "prism:coverDate": "2026-02-20",
+      "prism:doi": "10.3761/j.issn.0254-1769.2026.04.007"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105029115418",
+      "dc:title": "The effects of digital games on pain, fear, anxiety, and physiological responses in children during port catheter needle insertion: A randomized controlled study",
+      "dc:creator": "Azak M.",
+      "prism:publicationName": "European Journal of Oncology Nursing",
+      "prism:coverDate": "2026-02-01",
+      "prism:doi": "10.1016/j.ejon.2025.103037"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105025771231",
+      "dc:title": "Effectiveness of a Virtual Hospital Experience Game for Nursing Students’ Patient Safety Learning: A Quasi-Randomized Trial",
+      "dc:creator": "Shin S.H.",
+      "prism:publicationName": "Western Journal of Nursing Research",
+      "prism:coverDate": "2026-02-01",
+      "prism:doi": "10.1177/01939459251396769"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105031448497",
+      "dc:title": "Effect of Cognitive Rehabilitation Nursing on Cognitive Impairment in Patients With Schizophrenia: A Comprehensive Systematic Review and Meta-Analysis",
+      "dc:creator": "Di X.",
+      "prism:publicationName": "Journal of Cognitive Psychotherapy",
+      "prism:coverDate": "2026-02-01",
+      "prism:doi": "10.1891/JCP-2025-0012"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105035921196",
+      "dc:title": "The Effect of Interactive Digital Game on Nursing Students’ Intramuscular Injection Skills, Exam Anxiety, and Satisfaction: A Randomized Controlled Trial",
+      "dc:creator": "Demirel N.",
+      "prism:publicationName": "CIN Computers Informatics Nursing",
+      "prism:coverDate": "2026-01-23",
+      "prism:doi": "10.1097/CIN.0000000000001482"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105027821306",
+      "dc:title": "Values and wishes at the end of life among women with advanced cancer: An analysis using the Go Wish Cards Game",
+      "dc:creator": "Paiva B.S.R.",
+      "prism:publicationName": "Palliative and Supportive Care",
+      "prism:coverDate": "2026-01-20",
+      "prism:doi": "10.1017/S1478951525101491"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105029479217",
+      "dc:title": "Effects of digital game-based learning as a tool for laparoscopy training in surgical nursing",
+      "dc:creator": "Akbari HajiAbad F.",
+      "prism:publicationName": "Plos One",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1371/journal.pone.0336400"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105026413347",
+      "dc:title": "A board game’s impact on nursing students’ knowledge about elder neglect and abuse: a randomized controlled educational intervention",
+      "dc:creator": "Tok H.H.",
+      "prism:publicationName": "Journal of Elder Abuse and Neglect",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1080/08946566.2025.2611157"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105022056582",
+      "dc:title": "Effectiveness of game-based VR simulation on nursing students’ mastery of level D PPE: A quasi-experimental design",
+      "dc:creator": "Ryu Y.S.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1016/j.nepr.2025.104643"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105038824992",
+      "dc:title": "The effect of gamified breastfeeding education on breastfeedinself-efficacy and ınfant feeding attitudes of pregnant women: a randomized controlled study",
+      "dc:creator": "Bulut O.U.",
+      "prism:publicationName": "Revista Da Associacao Medica Brasileira",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1590/1806-9282.20251003"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105022255429",
+      "dc:title": "Effect of computer-based gaming on constipation management in children: A randomized controlled trial",
+      "dc:creator": "Atak M.",
+      "prism:publicationName": "Journal of Pediatric Nursing",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1016/j.pedn.2025.11.023"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105013673954",
+      "dc:title": "Gamified learning enhances psychiatric symptom knowledge in nursing students",
+      "dc:creator": "Moonchai K.",
+      "prism:publicationName": "Teaching and Learning in Nursing",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1016/j.teln.2025.07.028"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105033457593",
+      "dc:title": "A randomized controlled trial of an escape laboratory challenge through gamified learning to improve cardiopulmonary resuscitation performance among nursing students",
+      "dc:creator": "Wulan D.R.",
+      "prism:publicationName": "Journal of Holistic Nursing Science",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.31603/jhns.v13i1.15182"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105029448324",
+      "dc:title": "Extracorporeal membrane oxygenation escape room simulation teamwork dynamics and effectiveness",
+      "dc:creator": "Vidovich C.",
+      "prism:publicationName": "Perfusion United Kingdom",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1177/02676591261423409"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105029567866",
+      "dc:title": "Game-Based Learning Versus Model Arm Training for Intravenous Cannulation in Dental Education",
+      "dc:creator": "Vural Ç.",
+      "prism:publicationName": "European Journal of Dental Education",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1111/eje.70106"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105025194630",
+      "dc:title": "Playing solo, against rivals, or in a team? Exploring individual, competitive, and cooperative dynamics in gamified digital education",
+      "dc:creator": "Coelho F.",
+      "prism:publicationName": "Entertainment Computing",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1016/j.entcom.2025.101065"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105029088010",
+      "dc:title": "Effectiveness of an mHealth Exercise Program on Fall Incidence, Fall Risk, and Fear of Falling in Nursing Home Residents: The Cluster Randomized Controlled BeSt Age Trial",
+      "dc:creator": "Diener J.",
+      "prism:publicationName": "Sports",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.3390/sports14010041"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105036422837",
+      "dc:title": "Active learning in diabetes education for health professions students: a narrative synthesis of effectiveness and implementation considerations",
+      "dc:creator": "Zhou H.",
+      "prism:publicationName": "Medical Education Online",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.1080/10872981.2026.2656830"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105028799894",
+      "dc:title": "The Effects of Gamified Virtual Reality on Muscle Strength and Physical Function in the Oldest Old—A Pilot Study on Sarcopenia-Related Functional Outcomes",
+      "dc:creator": "Grzywacz Ż.",
+      "prism:publicationName": "Journal of Clinical Medicine",
+      "prism:coverDate": "2026-01-01",
+      "prism:doi": "10.3390/jcm15020621"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105020878365",
+      "dc:title": "Effectiveness of a digital game based study guide on head trauma assessment on knowledge and practical skills of nursing students: a quasi-experimental study",
+      "dc:creator": "Bashiri Bonab E.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1186/s12909-025-08122-6"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85218681663",
+      "dc:title": "Gamification in midwifery education: a systematic review",
+      "dc:creator": "Fathi Najafi T.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1186/s12909-025-06880-x"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85217356995",
+      "dc:title": "Game-thinking; utilizing serious games and gamification in nursing education – a systematic review and meta-analysis",
+      "dc:creator": "Nylén-Eriksen M.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1186/s12909-024-06531-7"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105017652798",
+      "dc:title": "A comparison of 3D game-based simulation versus traditional methods in vital signs education",
+      "dc:creator": "Tanrıkulu F.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1186/s12909-025-07980-4"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105020313786",
+      "dc:title": "Should I play or should I watch: the effects of active and passive distraction methods on children’s pain, fear and anxiety during invasive procedures: a randomized controlled clinical trial",
+      "dc:creator": "Gökoğlu A.",
+      "prism:publicationName": "BMC Pediatrics",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1186/s12887-025-06188-1"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105019402820",
+      "dc:title": "Evaluating student nurses satisfaction with educational escape rooms as a pedagogical approach to teaching professional nursing values",
+      "dc:creator": "Rowley N.",
+      "prism:publicationName": "BMC Nursing",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1186/s12912-025-03912-1"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105003319996",
+      "dc:title": "The effect of game-based scenario writing on the clinical reasoning of internship nursing students in cardiovascular emergencies and critical care units",
+      "dc:creator": "Antikchi M.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1186/s12909-025-07079-w"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105021249139",
+      "dc:title": "Effect of a gamified simulation on nursing students' communication skills in end-of-life care: A randomized controlled trial",
+      "dc:creator": "Pedrotti M.",
+      "prism:publicationName": "Clinical Simulation in Nursing",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1016/j.ecns.2025.101850"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105007604909",
+      "dc:title": "Effects of virtual reality on pain, anxiety, and delirium in pediatric surgery: a systematic review and meta-analysis",
+      "dc:creator": "Taylan S.",
+      "prism:publicationName": "Pediatric Surgery International",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1007/s00383-025-06084-w"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105021322674",
+      "dc:title": "Cognitive training for breast cancer patients with cancer-related cognitive impairment: a scoping review",
+      "dc:creator": "Yang P.",
+      "prism:publicationName": "Supportive Care in Cancer",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1007/s00520-025-10108-5"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105005776534",
+      "dc:title": "The effects of e-learning vs. gamification-based training on ICU nurses’ knowledge and attitudes toward organ donation candidates: a study based on the psychological security and empowerment model",
+      "dc:creator": "Hossein M.P.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2025-12-01",
+      "prism:doi": "10.1186/s12909-025-07299-0"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105006652505",
+      "dc:title": "Impact of Modern Board Games on Executive Functions and Quality of Life in the Elderly: A Randomized Controlled Trial",
+      "dc:creator": "Herrero A.J.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2025-11-01",
+      "prism:doi": "10.1089/g4h.2024.0195"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105016024701",
+      "dc:title": "Action Maze and Role Playing in comparison: A Randomized Field Trial on simulation-based teaching methodologies in critical care",
+      "dc:creator": "Colacci T.",
+      "prism:publicationName": "Annali Di Igiene Medicina Preventiva E Di Comunita",
+      "prism:coverDate": "2025-11-01",
+      "prism:doi": "10.7416/ai.2025.2698"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105025647467",
+      "dc:title": "Digital Therapeutics for Attention-deficit/Hyperactivity Disorder: Literature Review of Current Evidence, Target Population, and Implementation Challenges",
+      "dc:creator": "Hwang S.",
+      "prism:publicationName": "Journal of Korean Academy of Psychiatric and Mental Health Nursing",
+      "prism:coverDate": "2025-11-01",
+      "prism:doi": "10.12934/jkpmhn.2025.34.S1.36"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105014622694",
+      "dc:title": "The effect of the “Tears of Life” situational puzzle board game on death anxiety among nursing students: A randomized controlled trial",
+      "dc:creator": "Qian W.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-10-01",
+      "prism:doi": "10.1016/j.nepr.2025.104539"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105017454815",
+      "dc:title": "Learning With Fun: The Effect of Flipped Learning and Escape Room Method on Nursing Students' Infection Control Knowledge and Learning Skills",
+      "dc:creator": "Acun A.",
+      "prism:publicationName": "International Journal of Nursing Practice",
+      "prism:coverDate": "2025-10-01",
+      "prism:doi": "10.1111/ijn.70067"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105018265431",
+      "dc:title": "Effects of a Virtual Reality Game or Autogenic Relaxation on Pruritus, Anxiety and Dermatologic Quality of Life in Haemodialysis Patients: A Randomized Controlled Trial",
+      "dc:creator": "Altınok Ersoy N.",
+      "prism:publicationName": "International Journal of Nursing Practice",
+      "prism:coverDate": "2025-10-01",
+      "prism:doi": "10.1111/ijn.70071"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105022214312",
+      "dc:title": "Effect of Online Learning on Nursing Students Satisfaction, Confidence and Skill Performance: A Systematic Review",
+      "dc:creator": "Wahid N.N.A.",
+      "prism:publicationName": "Malaysian Journal of Nursing",
+      "prism:coverDate": "2025-10-01",
+      "prism:doi": "10.31674/mjn.2025.v17i02.026"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105016787218",
+      "dc:title": "The effect of gamified workshops on nurses’ evidence-based practice competence: A randomized controlled trial",
+      "dc:creator": "Chien L.Y.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-10-01",
+      "prism:doi": "10.1016/j.nepr.2025.104569"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105006572954",
+      "dc:title": "Effects of motivational interviews and hippotherapy on the digital game addiction levels of adolescents: Randomized controlled clinical trial",
+      "dc:creator": "Memis A.",
+      "prism:publicationName": "Journal of Pediatric Nursing",
+      "prism:coverDate": "2025-09-01",
+      "prism:doi": "10.1016/j.pedn.2025.05.024"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105012893209",
+      "dc:title": "Debriefing the escape: Sequential patterns in facilitator strategies for nursing simulations",
+      "dc:creator": "Kim C.",
+      "prism:publicationName": "Clinical Simulation in Nursing",
+      "prism:coverDate": "2025-09-01",
+      "prism:doi": "10.1016/j.ecns.2025.101789"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105017423165",
+      "dc:title": "Enhancing Nursing Students’ Engagement and Critical Thinking in Anatomy and Physiology Through Gamified Teaching: A Non-Equivalent Quasi-Experimental Study",
+      "dc:creator": "Alturaiki S.M.",
+      "prism:publicationName": "Nursing Reports",
+      "prism:coverDate": "2025-09-01",
+      "prism:doi": "10.3390/nursrep15090333"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105017428520",
+      "dc:title": "Gamification Strategies in Undergraduate Nursing Education: A Systematic Review Protocol",
+      "dc:creator": "Elia R.A.",
+      "prism:publicationName": "Nursing Reports",
+      "prism:coverDate": "2025-09-01",
+      "prism:doi": "10.3390/nursrep15090331"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105014946773",
+      "dc:title": "The effect of gamification on the medication knowledge, performance and satisfaction of nurses in continued medical education: A quasi-experimental study",
+      "dc:creator": "Ghafouri R.",
+      "prism:publicationName": "Plos One",
+      "prism:coverDate": "2025-09-01",
+      "prism:doi": "10.1371/journal.pone.0331372"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105002926864",
+      "dc:title": "The effect of game-based interventions on the nursing students' level of knowledge: A systematic review and meta-analysis of randomized controlled trials",
+      "dc:creator": "Celik F.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2025-08-01",
+      "prism:doi": "10.1016/j.nedt.2025.106746"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105013481436",
+      "dc:title": "The effect of patient safety escape rooms on nursing students’ knowledge level and team cooperation",
+      "dc:creator": "Yilmaz A.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-08-01",
+      "prism:doi": "10.1016/j.nepr.2025.104507"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105002666349",
+      "dc:title": "Effectiveness of escape rooms in nursing education: A systematic review",
+      "dc:creator": "Köse A.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2025-08-01",
+      "prism:doi": "10.1016/j.nedt.2025.106745"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105012096238",
+      "dc:title": "The effectiveness of game-based learning in nursing education: A systematic review of the escape room approach",
+      "dc:creator": "Esmaeilzadeh S.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-08-01",
+      "prism:doi": "10.1016/j.nepr.2025.104494"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105012897270",
+      "dc:title": "The effect of gamified teaching material on nursing students' therapeutic communication skills and perception of nursing diagnoses in aggressive patient management: A randomized controlled study",
+      "dc:creator": "Ordu Y.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-08-01",
+      "prism:doi": "10.1016/j.nepr.2025.104503"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105011274494",
+      "dc:title": "From games to high fidelity: A comparative study of CPR training methods in nursing education",
+      "dc:creator": "Tank D.Y.",
+      "prism:publicationName": "Clinical Simulation in Nursing",
+      "prism:coverDate": "2025-08-01",
+      "prism:doi": "10.1016/j.ecns.2025.101783"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105010147751",
+      "dc:title": "Impact of self-directed learning strategy, an innovative method in nursing undergraduates: Study protocol for a randomized controlled trial",
+      "dc:creator": "Chaudhary S.",
+      "prism:publicationName": "Plos One",
+      "prism:coverDate": "2025-07-01",
+      "prism:doi": "10.1371/journal.pone.0325300"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105010965961",
+      "dc:title": "Impact of gamified behavior intervention based on mobile health on patients with coronary heart disease after percutaneous coronary intervention",
+      "dc:creator": "Wang J.",
+      "prism:publicationName": "Chinese Journal of Practical Nursing",
+      "prism:coverDate": "2025-07-01",
+      "prism:doi": "10.3760/cma.j.cn211501-20240918-02550"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105005500413",
+      "dc:title": "Gamified interventions for physical activity in pediatric cancer survivors：a scoping review",
+      "dc:creator": "Hua J.",
+      "prism:publicationName": "Chinese Journal of Nursing",
+      "prism:coverDate": "2025-06-20",
+      "prism:doi": "10.3761/j.issn.0254-1769.2025.10.019"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105000513216",
+      "dc:title": "Effectiveness of exercise for improving cognition, memory and executive function: A systematic umbrella review and meta-meta-analysis",
+      "dc:creator": "Singh B.",
+      "prism:publicationName": "British Journal of Sports Medicine",
+      "prism:coverDate": "2025-06-01",
+      "prism:doi": "10.1136/bjsports-2024-108589"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105001544049",
+      "dc:title": "The effect of using digital games on learning satisfaction and self-confidence in providing nursing students with subcutaneous injection skills: A randomized controlled trial",
+      "dc:creator": "Demi̇rcan B.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-05-01",
+      "prism:doi": "10.1016/j.nepr.2025.104341"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85219384665",
+      "dc:title": "The effect of serious game on the level of anxiety, fear, knowledge of hospitalized children and level of anxiety in their parents",
+      "dc:creator": "Parlak Sert H.",
+      "prism:publicationName": "Journal of Pediatric Nursing",
+      "prism:coverDate": "2025-05-01",
+      "prism:doi": "10.1016/j.pedn.2025.02.019"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105000435038",
+      "dc:title": "Effects of a nurse-led play-based internet addiction prevention program in early adolescents: A randomized controlled study",
+      "dc:creator": "Yumru Menteş H.",
+      "prism:publicationName": "Archives of Psychiatric Nursing",
+      "prism:coverDate": "2025-04-01",
+      "prism:doi": "10.1016/j.apnu.2025.151851"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85215067681",
+      "dc:title": "Escape rooms as formative knowledge assessment: A quasi-experimental study",
+      "dc:creator": "Kim C.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2025-04-01",
+      "prism:doi": "10.1016/j.nedt.2025.106572"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85214130755",
+      "dc:title": "Vaginal breech birth management: serious mobile game design and evaluation for midwifery students",
+      "dc:creator": "Özdemir S.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2025-03-01",
+      "prism:doi": "10.1016/j.nedt.2024.106563"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105001479502",
+      "dc:title": "The impact of escape room game and role-playing on nursing students’ violence against women assessment skills and attitudes toward violence against women: A randomised controlled trial",
+      "dc:creator": "Özkan Şat S.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-03-01",
+      "prism:doi": "10.1016/j.nepr.2025.104346"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105019395225",
+      "dc:title": "Effects of Using Escape Room as an Assessment Game on Critical Thinking and Self-efficacy in Clinical Performance of Nursing Students: A Randomized Clinical Trial",
+      "dc:creator": "Rezazadeh M.",
+      "prism:publicationName": "Avicenna Journal of Nursing and Midwifery Care",
+      "prism:coverDate": "2025-03-01",
+      "prism:doi": "10.32592/ajnmc.33.2.128"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105001307188",
+      "dc:title": "Nurse-led inpatient education using a gamification approach for patients with mental illness: A quasi-experimental study",
+      "dc:creator": "Naor A.P.",
+      "prism:publicationName": "International Journal of Nursing Sciences",
+      "prism:coverDate": "2025-03-01",
+      "prism:doi": "10.1016/j.ijnss.2025.02.007"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85213045249",
+      "dc:title": "Effectiveness of Digital-Based Interventions on Physical and Psychological Outcomes Among Cancer Patients: A Systematic Review and Meta-Analysis",
+      "dc:creator": "Goh C.C.",
+      "prism:publicationName": "Seminars in Oncology Nursing",
+      "prism:coverDate": "2025-02-01",
+      "prism:doi": "10.1016/j.soncn.2024.151796"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210999239",
+      "dc:title": "Effect of using a kaleidoscope projector and matching cards on fear and vital signs in children aged 3–6 years receiving inhaled medication",
+      "dc:creator": "Korkmaz B.",
+      "prism:publicationName": "Journal of Paediatrics and Child Health",
+      "prism:coverDate": "2025-02-01",
+      "prism:doi": "10.1111/jpc.16736"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85215357100",
+      "dc:title": "Gamification With a Support Partner and Postoperative Mobility in Older Adults Undergoing Radical Cystectomy: The MOVE UP Randomized Clinical Trial",
+      "dc:creator": "Lee D.",
+      "prism:publicationName": "JAMA Network Open",
+      "prism:coverDate": "2025-01-13",
+      "prism:doi": "10.1001/jamanetworkopen.2024.53037"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105000355722",
+      "dc:title": "The Effect of Game-Based Technology on Undergraduate Nursing Students' Knowledge and Motivation",
+      "dc:creator": "Durmaz Edeer A.",
+      "prism:publicationName": "CIN Computers Informatics Nursing",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1097/CIN.0000000000001251"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105025944421",
+      "dc:title": "The Effect of a Solution-Focused Stress Management Program on Emotional Eating and Digital Game Addiction in Nursing Students: A Randomized Controlled Study",
+      "dc:creator": "Akbaş E.",
+      "prism:publicationName": "Journal of Addictions Nursing",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1097/JAN.0000000000000669"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105017046580",
+      "dc:title": "Exploring the Impact of Home-Based Serious Smartphone Resuscitation Gaming on Stress Among Nursing Students Practicing Simulated Adult Basic Life Support: Randomized Waitlist Controlled Trial",
+      "dc:creator": "Fijačko N.",
+      "prism:publicationName": "Jmir Serious Games",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.2196/67623"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105026880999",
+      "dc:title": "The Effect of an Escape Room Simulation on Postmortem Care Training For Nursing Students: A Randomized Controlled Trial",
+      "dc:creator": "Basak T.",
+      "prism:publicationName": "Journal of Hospice and Palliative Nursing",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1097/NJH.0000000000001166"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105010610792",
+      "dc:title": "Applying Augmented Reality to Convey Medical Knowledge on Osteoclasts to Users of a Serious Game: Vignette Experiment",
+      "dc:creator": "Grübel J.",
+      "prism:publicationName": "Jmir Serious Games",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.2196/64751"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85211223422",
+      "dc:title": "Comparison of the escape room and storytelling methods in learning the stress response: A randomized controlled pilot study",
+      "dc:creator": "Dogu N.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1016/j.nepr.2024.104209"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85204629011",
+      "dc:title": "Effect of theme game-based learning on psychiatric violence risk assessment and response knowledge, skills, and self-confidence of nursing students: A randomized controlled trial",
+      "dc:creator": "Zhao J.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1016/j.nedt.2024.106419"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105002825700",
+      "dc:title": "Effectiveness of educational technology on human immunodeficiency virus/AIDS prevention: randomized clinical trial",
+      "dc:creator": "Holanda P.C.M.",
+      "prism:publicationName": "Revista Latino Americana De Enfermagem",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1590/1518-8345.7352.4515"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105011858725",
+      "dc:title": "Nursing Students Learn Vaccination Using Kahoot! Gamification: An Intervention Study of Knowledge, Satisfaction, Interest, and Collaboration",
+      "dc:creator": "Mohammadi A.",
+      "prism:publicationName": "Nursing Research and Practice",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1155/nrp/3518943"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210282045",
+      "dc:title": "The effect of game-based learning on the acquisition of intramuscular injection skills",
+      "dc:creator": "Gokalp M.G.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1016/j.nepr.2024.104172"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105011630824",
+      "dc:title": "Examining the Impact of Escape Room-Based Assessment on Nursing Student’s Self-Efficacy Perception",
+      "dc:creator": "Nodehi M.H.A.",
+      "prism:publicationName": "Strides in Development of Medical Education Journal",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.22062/sdme.2025.200059.1410"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105017827709",
+      "dc:title": "The Effect of Emergency Escape Room Simulation on Knowledge, Anxiety, and Satisfaction Levels of Students: A Randomized Controlled Trial",
+      "dc:creator": "Ozel H.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1177/2161783X251378638"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210407689",
+      "dc:title": "A comparison of watching cartoons versus playing games as a distraction method on pain and fear of pain during peripheral intravenous cannula placement in children aged 6–9 years: A randomized experimental study",
+      "dc:creator": "Uysal D.A.",
+      "prism:publicationName": "Journal of Pediatric Nursing",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1016/j.pedn.2024.11.023"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105002985885",
+      "dc:title": "Effectiveness of educational technology on human immunodeficiency virus/AIDS prevention: randomized clinical trial",
+      "dc:creator": "Holanda P.C.M.",
+      "prism:publicationName": "Revista Latino Americana De Enfermagem",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1590/1518-8345.7352.4516"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85100925896",
+      "dc:title": "Saving patient x: A quasi-experimental study of teamwork and performance in simulation following an interprofessional escape room",
+      "dc:creator": "Foltz-Ramos K.",
+      "prism:publicationName": "Journal of Interprofessional Care",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1080/13561820.2021.1874316"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105012741039",
+      "dc:title": "Communication Tools for End-of-Life Conversations in Palliative Nursing: A Narrative Review",
+      "dc:creator": "Giachello M.",
+      "prism:publicationName": "American Journal of Hospice and Palliative Medicine",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.1177/10499091251351571"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85218768413",
+      "dc:title": "Evaluating the Clinical Efficacy of an Exergame-Based Training Program for Enhancing Physical and Cognitive Functions in Older Adults With Mild Cognitive Impairment and Dementia Residing in Rural Long-Term Care Facilities: Randomized Controlled Trial",
+      "dc:creator": "Li A.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.2196/69109"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105010417041",
+      "dc:title": "Effectiveness of Gamified Teaching in Disaster Nursing Education for Health Care Workers: Systematic Review",
+      "dc:creator": "Bai S.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.2196/74955"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105005203628",
+      "dc:title": "Effect of Gamification on Improved Adherence to Inhaled Medications in Chronic Obstructive Pulmonary Disease: Randomized Controlled Trial",
+      "dc:creator": "Huang X.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.2196/65309"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105020411980",
+      "dc:title": "Game-based learning efficiency in nursing education in Iran: A systematic review",
+      "dc:creator": "Kamali M.",
+      "prism:publicationName": "Journal of Medical Education Development",
+      "prism:coverDate": "2025-01-01",
+      "prism:doi": "10.61882/edcj.18.3.130"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85212949186",
+      "dc:title": "Effectiveness of virtual reality exposure in surgical children: a Meta-analysis",
+      "dc:creator": "Hu Z.",
+      "prism:publicationName": "Chinese Journal of Nursing",
+      "prism:coverDate": "2024-12-20",
+      "prism:doi": "10.3761/j.issn.0254-1769.2024.24.015"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85212397001",
+      "dc:title": "Educational outcomes of digital serious games in nursing education: a systematic review and meta-analysis of randomized controlled trials",
+      "dc:creator": "Lee M.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1186/s12909-024-06464-1"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85205530630",
+      "dc:title": "Psychological and physiological benefits of horticultural therapy for Chinese older adults",
+      "dc:creator": "Xiaoyi L.",
+      "prism:publicationName": "Hong Kong Journal of Occupational Therapy",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1177/15691861241263875"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85195337037",
+      "dc:title": "Comparison of the effects of burn assessment mission game with feedback lecture on nursing students’ knowledge and skills in the burn patients’ assessment: a randomized clinical trial",
+      "dc:creator": "Nasirzade A.",
+      "prism:publicationName": "BMC Medical Informatics and Decision Making",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1186/s12911-024-02558-4"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85209244527",
+      "dc:title": "Impact of Technology on Physical Activity Levels of Childhood Cancer Survivors: A Systematic Review",
+      "dc:creator": "Akca Sumengen A.",
+      "prism:publicationName": "Seminars in Oncology Nursing",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1016/j.soncn.2024.151757"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85204209921",
+      "dc:title": "Effects of gamification on academic motivation and confidence of undergraduate nursing students: A systematic review and meta-analysis",
+      "dc:creator": "Seo Y.K.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1016/j.nedt.2024.106388"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85205462178",
+      "dc:title": "The effect of digital storytelling on nursing students' compliance with isolation precautions and their knowledge levels: A randomized controlled trial",
+      "dc:creator": "Bıyık Bayram S.",
+      "prism:publicationName": "Journal of Computer Assisted Learning",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1111/jcal.13062"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85202717237",
+      "dc:title": "Comparison of education using the flipped class, gamification and gamification in the flipped learning environment on the performance of nursing students in a client health assessment: a randomized clinical trial",
+      "dc:creator": "Ghafouri R.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1186/s12909-024-05966-2"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85181026640",
+      "dc:title": "Understanding the relationship of academic motivation and social support in graduate nursing education in Egypt",
+      "dc:creator": "El-Sayed M.M.",
+      "prism:publicationName": "BMC Nursing",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1186/s12912-023-01671-5"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210413350",
+      "dc:title": "Effect of a Hydration Game-Based Learning Program in Improving Fluid Intake and Hydration Status in Institutional Residents",
+      "dc:creator": "Lin L.C.",
+      "prism:publicationName": "Journal of Nursing Research",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1097/jnr.0000000000000650"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85190106645",
+      "dc:title": "Alerta Cannabis: A Tailored-Computer Web-Based Program for the Prevention of Cannabis Use in Adolescents: A Cluster-Randomized Controlled Trial Protocol",
+      "dc:creator": "Lima-Serrano M.",
+      "prism:publicationName": "BMC Nursing",
+      "prism:coverDate": "2024-12-01",
+      "prism:doi": "10.1186/s12912-024-01889-x"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85200812303",
+      "dc:title": "The effectiveness of serious games in nursing education: A meta-analysis of randomized controlled studies",
+      "dc:creator": "Demircan B.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2024-11-01",
+      "prism:doi": "10.1016/j.nedt.2024.106330"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85200497722",
+      "dc:title": "Effect of using gamification and augmented reality in mechanical ventilation unit of critical care nursing on nurse students' knowledge, motivation, and self-efficacy: A randomized controlled trial",
+      "dc:creator": "Othman S.Y.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2024-11-01",
+      "prism:doi": "10.1016/j.nedt.2024.106329"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210431408",
+      "dc:title": "Effects of Different Exercise Doses Through an Augmented Reality Exergame in Older Adults: A Pilot Randomized Controlled Trial",
+      "dc:creator": "Bravo-Aparicio J.",
+      "prism:publicationName": "Applied Sciences Switzerland",
+      "prism:coverDate": "2024-11-01",
+      "prism:doi": "10.3390/app142210592"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85207549050",
+      "dc:title": "Development and testing of a videogame intervention for symptom management among 8–18 years old children with cancer: a study protocol",
+      "dc:creator": "Sajjad S.",
+      "prism:publicationName": "BMJ Paediatrics Open",
+      "prism:coverDate": "2024-10-16",
+      "prism:doi": "10.1136/bmjpo-2024-002679"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85201759563",
+      "dc:title": "The effectiveness of serious games on undergraduate nursing students' knowledge and skills: A systematic review and meta-analysis",
+      "dc:creator": "Wang L.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2024-10-01",
+      "prism:doi": "10.1016/j.nepr.2024.104102"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85203624682",
+      "dc:title": "The effect of education provided with the escape room game on nursing students' learning of parenteral drug administration",
+      "dc:creator": "Aktaş N.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2024-10-01",
+      "prism:doi": "10.1016/j.nepr.2024.104133"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210226833",
+      "dc:title": "Using a Board Game to Learn a Physical Assessment Course in Nursing Education: A Randomized Controlled Study",
+      "dc:creator": "Demiray A.",
+      "prism:publicationName": "Journal of Nursology",
+      "prism:coverDate": "2024-09-27",
+      "prism:doi": "10.17049/jnursology.1428436"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85205467252",
+      "dc:title": "A study on the design of a medical terminology digital game and its application in undergraduate nursing students",
+      "dc:creator": "Xue X.",
+      "prism:publicationName": "Chinese Journal of Nursing Education",
+      "prism:coverDate": "2024-09-15",
+      "prism:doi": "10.3761/j.issn.1672-9234.2024.09.002"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85195255256",
+      "dc:title": "Effect of narrative videos and mini-VR games in nursing smoking cessation training on empathy and self-efficacy of smoking cessation counseling: A randomized controlled trial",
+      "dc:creator": "Cheung Y.T.D.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2024-09-01",
+      "prism:doi": "10.1016/j.nedt.2024.106272"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85201579203",
+      "dc:title": "Feasibility and acceptability of a serious game to study the effects of environmental distractors on emergency room nurse triage accuracy: A pilot study",
+      "dc:creator": "Assunta F.",
+      "prism:publicationName": "International Emergency Nursing",
+      "prism:coverDate": "2024-09-01",
+      "prism:doi": "10.1016/j.ienj.2024.101504"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85203135161",
+      "dc:title": "Effectiveness of preventive intervention programmes aiming to improve oral health in children who have undergone caries-related dental extractions: a rapid review",
+      "dc:creator": "Kouassi S.M.",
+      "prism:publicationName": "Community Dental Health",
+      "prism:coverDate": "2024-09-01",
+      "prism:doi": "10.1922/CDH_00107Kouassi07"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85196372302",
+      "dc:title": "Effects of gamification in advanced life support training for clinical nurses: A cluster randomized controlled trial",
+      "dc:creator": "Kim K.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2024-09-01",
+      "prism:doi": "10.1016/j.nedt.2024.106263"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85193829236",
+      "dc:title": "A game-based multimedia application to improve the ability of clinical nurses to perform geriatric care: A randomized controlled trial",
+      "dc:creator": "Tang H.J.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2024-08-01",
+      "prism:doi": "10.1016/j.nedt.2024.106253"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85199934828",
+      "dc:title": "Effects of nonimmersive virtual reality using Wii-Fit exercises on balance and cognition in Parkinson disease: A meta-analysis",
+      "dc:creator": "Hussain F.",
+      "prism:publicationName": "Medicine United States",
+      "prism:coverDate": "2024-07-26",
+      "prism:doi": "10.1097/MD.0000000000038940"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85197605626",
+      "dc:title": "Evaluation of the Performance of a Card Game to Introduce Students to Interprofessional Collaboration: A Randomized 2-Group Comparison Study",
+      "dc:creator": "Joseph A.R.",
+      "prism:publicationName": "Nurse Educator",
+      "prism:coverDate": "2024-07-01",
+      "prism:doi": "10.1097/NNE.0000000000001594"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85199763705",
+      "dc:title": "Enhancing teaching and learning of evidence-based practice via game-based learning",
+      "dc:creator": "Tay R.S.C.",
+      "prism:publicationName": "Asia Pacific Scholar",
+      "prism:coverDate": "2024-07-01",
+      "prism:doi": "10.29060/TAPS.2024-9-3/SC3111"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85197111818",
+      "dc:title": "Effectiveness of “Escape Room” Educational Technology in Nurses’ Education: A Systematic Review",
+      "dc:creator": "González-de la Torre H.",
+      "prism:publicationName": "Nursing Reports",
+      "prism:coverDate": "2024-06-01",
+      "prism:doi": "10.3390/nursrep14020091"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85187113264",
+      "dc:title": "Gamified Intervention for Health Promotion of Families in Child Health Clinics — A Cluster Randomised Trial",
+      "dc:creator": "Selänne L.",
+      "prism:publicationName": "Simulation and Gaming",
+      "prism:coverDate": "2024-06-01",
+      "prism:doi": "10.1177/10468781241236706"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85186387625",
+      "dc:title": "The effect of serious game and problem-based learning on nursing students' knowledge and clinical decision-making skill regarding the application of transfusion medicine in pediatric nursing",
+      "dc:creator": "Razaghpoor A.",
+      "prism:publicationName": "Journal of Pediatric Nursing",
+      "prism:coverDate": "2024-05-01",
+      "prism:doi": "10.1016/j.pedn.2024.01.010"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85187367504",
+      "dc:title": "The effect of mobile game training designed for asthmatic children on asthma management and quality of life",
+      "dc:creator": "Karakul A.",
+      "prism:publicationName": "Journal of Pediatric Nursing",
+      "prism:coverDate": "2024-05-01",
+      "prism:doi": "10.1016/j.pedn.2024.02.025"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85187460830",
+      "dc:title": "The effect of a training program on adolescents' stress levels and healthy lifestyle behaviors during the Covid-19 pandemic: A randomized controlled study",
+      "dc:creator": "Tar Bolacali E.",
+      "prism:publicationName": "Journal of Child and Adolescent Psychiatric Nursing",
+      "prism:coverDate": "2024-05-01",
+      "prism:doi": "10.1111/jcap.12456"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85183949839",
+      "dc:title": "Game-based learning to improve diagnostic accuracy: A pilot randomized-controlled trial",
+      "dc:creator": "Morgan D.J.",
+      "prism:publicationName": "Diagnosis",
+      "prism:coverDate": "2024-05-01",
+      "prism:doi": "10.1515/dx-2023-0133"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85172093571",
+      "dc:title": "Personalized Medical Terminology Learning Game: Guess the Term",
+      "dc:creator": "Hsu M.H.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2024-04-01",
+      "prism:doi": "10.1089/g4h.2023.0054"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85170092039",
+      "dc:title": "Teaching cardiopulmonary resuscitation using virtual reality: A randomized study",
+      "dc:creator": "Alcázar Artero P.M.",
+      "prism:publicationName": "Australasian Emergency Care",
+      "prism:coverDate": "2024-03-01",
+      "prism:doi": "10.1016/j.auec.2023.08.002"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85175235006",
+      "dc:title": "The effect of a serious game-based web application on stoma care education for nursing students: A randomized controlled trial",
+      "dc:creator": "Kulakaç N.",
+      "prism:publicationName": "Teaching and Learning in Nursing",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.1016/j.teln.2023.10.001"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85213056948",
+      "dc:title": "Application of Gamification Teaching in Disaster Education: Scoping Review",
+      "dc:creator": "Bai S.",
+      "prism:publicationName": "Jmir Serious Games",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.2196/64939"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85183020303",
+      "dc:title": "Integrating scenario game-based learning with the experiential learning strategy to facilitate nursing students’ learning performance and core competencies in labor support training",
+      "dc:creator": "Chang C.Y.",
+      "prism:publicationName": "Interactive Learning Environments",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.1080/10494820.2024.2308092"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85180847117",
+      "dc:title": "Acceptance of physical activity virtual reality games by residents of long-term care facilities: a scoping review",
+      "dc:creator": "Hosseini M.",
+      "prism:publicationName": "Disability and Rehabilitation Assistive Technology",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.1080/17483107.2023.2298839"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85216279542",
+      "dc:title": "Supporting contraceptive self-care and reproductive empowerment with a digital health game in Barbados: Development and Pre-implementation study for What’s My Method?",
+      "dc:creator": "Bertozzi E.",
+      "prism:publicationName": "Gates Open Research",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.12688/gatesopenres.15376.2"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85175305928",
+      "dc:title": "Educational escape rooms for healthcare students: A systematic review",
+      "dc:creator": "Quek L.H.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.1016/j.nedt.2023.106004"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85194897612",
+      "dc:title": "Using Gaming to Promote Vaccination Among Youth: A Systematic Review",
+      "dc:creator": "Ou L.",
+      "prism:publicationName": "Sage Open Nursing",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.1177/23779608241256998"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85199127412",
+      "dc:title": "Assessing the Clinical Effectiveness of an Exergame-Based Exercise Training Program Using Ring Fit Adventure to Prevent and Postpone Frailty and Sarcopenia Among Older Adults in Rural Long-Term Care Facilities: Randomized Controlled Trial",
+      "dc:creator": "Tuan S.H.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.2196/59468"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85203651090",
+      "dc:title": "The impact of an educational game on rational drug use and society's attitudes towards the role of nurses",
+      "dc:creator": "Dolu I.",
+      "prism:publicationName": "European Journal of Clinical and Experimental Medicine",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.15584/ejcem.2024.3.29"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85210894699",
+      "dc:title": "The effect of the burn wounds dressing and mechanical debridement training package on nursing interns’ knowledge and executive functions: A quasi-experimental study",
+      "dc:creator": "Otaghi M.",
+      "prism:publicationName": "Journal of Research Development in Nursing and Midwifery",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.29252/jgbfnm.21.3.15"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85105470412",
+      "dc:title": "Training initiatives that enhance knowledge, attitudes, and practices regarding the prevention, diagnosis and treatment of Lyme disease: a systematic review",
+      "dc:creator": "Coderre-Ball A.M.",
+      "prism:publicationName": "International Journal of Health Promotion and Education",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.1080/14635240.2021.1920045"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85184185210",
+      "dc:title": "Current trends in psychotherapies and psychosocial interventions for people with dementia: a scoping review of randomized controlled trials",
+      "dc:creator": "Vicente C.",
+      "prism:publicationName": "Frontiers in Psychiatry",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.3389/fpsyt.2024.1286475"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85205335338",
+      "dc:title": "Effects of a Mobile App to Promote Social Participation on Older Adults: Randomized Controlled Trial",
+      "dc:creator": "Kawaguchi K.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.2196/64196"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85182622284",
+      "dc:title": "Educational technologies for teaching hand hygiene: Systematic review",
+      "dc:creator": "Fernandes D.R.",
+      "prism:publicationName": "Plos One",
+      "prism:coverDate": "2024-01-01",
+      "prism:doi": "10.1371/journal.pone.0294725"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85176809876",
+      "dc:title": "The effect of adding exergame boxing to balance functions of elderly women",
+      "dc:creator": "Kartikasari R.D.",
+      "prism:publicationName": "Bali Medical Journal",
+      "prism:coverDate": "2023-12-01",
+      "prism:doi": "10.15562/bmj.v12i3.4722"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85190967664",
+      "dc:title": "Evaluation of Gamification on Surgical Nursing Course using Immersive Virtual Reality: A comparative study",
+      "dc:creator": "Xiao X.",
+      "prism:publicationName": "ACM International Conference Proceeding Series",
+      "prism:coverDate": "2023-10-20",
+      "prism:doi": "10.1145/3644116.3644217"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85172074724",
+      "dc:title": "The effect of virtual game simulation on students' perception of nursing diagnosis and clinical practice: Post-test only randomized controlled trial",
+      "dc:creator": "Ordu Y.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2023-10-01",
+      "prism:doi": "10.1016/j.nepr.2023.103792"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85161306324",
+      "dc:title": "Effectiveness of the miWe Simulator Training on Powered Wheelchair-driving Skills: A Randomized Controlled Trial",
+      "dc:creator": "Faure C.",
+      "prism:publicationName": "Archives of Physical Medicine and Rehabilitation",
+      "prism:coverDate": "2023-09-01",
+      "prism:doi": "10.1016/j.apmr.2023.04.022"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85162228411",
+      "dc:title": "The effectiveness of digital gaming on the functioning and activity of older people living in long-term care facilities: a systematic review and meta-analysis",
+      "dc:creator": "Kukkohovi S.",
+      "prism:publicationName": "Aging Clinical and Experimental Research",
+      "prism:coverDate": "2023-08-01",
+      "prism:doi": "10.1007/s40520-023-02459-y"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85169080461",
+      "dc:title": "Does Regular Practice with a “Flexible Bronchoscopy Simulator” Improve Fibreoptic Intubation Skills in Experts and Novices? A Randomized Controlled Study",
+      "dc:creator": "van Haperen M.",
+      "prism:publicationName": "Journal of Clinical Medicine",
+      "prism:coverDate": "2023-08-01",
+      "prism:doi": "10.3390/jcm12165195"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85160968464",
+      "dc:title": "Development and Contribution of a Serious Game to Improve Nursing Students' Clinical Reasoning in Acute Heart Failure: A Multimethod Study",
+      "dc:creator": "Maheu-Cadotte M.A.",
+      "prism:publicationName": "CIN Computers Informatics Nursing",
+      "prism:coverDate": "2023-06-01",
+      "prism:doi": "10.1097/CIN.0000000000000966"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85146725880",
+      "dc:title": "Effectiveness of virtual reality games in improving physical function, balance and reducing falls in balance-impaired older adults: A systematic review and meta-analysis",
+      "dc:creator": "Ren Y.",
+      "prism:publicationName": "Archives of Gerontology and Geriatrics",
+      "prism:coverDate": "2023-05-01",
+      "prism:doi": "10.1016/j.archger.2023.104924"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85160306075",
+      "dc:title": "Evaluation of the effect of serious game teaching method in the cultivation of clinical reasoning and reflection ability of pediatric practice nurses",
+      "dc:creator": "Zhou W.",
+      "prism:publicationName": "Chinese Journal of Practical Nursing",
+      "prism:coverDate": "2023-03-21",
+      "prism:doi": "10.3760/cma.j.cn211501-20220810-02539"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85149394810",
+      "dc:title": "The effects of virtual gaming simulation on nursing students' diagnosis, goal setting, and diagnosis prioritization: A randomized controlled trial",
+      "dc:creator": "Ordu Y.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2023-03-01",
+      "prism:doi": "10.1016/j.nepr.2023.103593"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85146607989",
+      "dc:title": "Effectiveness of a Game-Based Mobile Application in Educating Nursing Students on Venous Blood Specimen Collection: A Randomized Controlled Trial",
+      "dc:creator": "Tang Y.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2023-01-01",
+      "prism:doi": "10.1089/g4h.2022.0085"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85174749495",
+      "dc:title": "The potential of games for vulnerable groups like refugees: a scoping review",
+      "dc:creator": "Fernandes C.S.",
+      "prism:publicationName": "Revista Da Escola De Enfermagem Da USP",
+      "prism:coverDate": "2023-01-01",
+      "prism:doi": "10.1590/1980-220X-REEUSP-2022-0365"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85178371420",
+      "dc:title": "Improving Nursing Educational Practices and Professional Development through Smart Education in Smart Cities: A Systematic Literature Review *",
+      "dc:creator": "Dicheva N.K.",
+      "prism:publicationName": "Proceedings of 2023 IEEE International Smart Cities Conference Isc2 2023",
+      "prism:coverDate": "2023-01-01",
+      "prism:doi": "10.1109/ISC257844.2023.10293413"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85142004421",
+      "dc:title": "Effect of gamified flipped classroom on improving nursing students’ skills competency and learning motivation: a randomized controlled trial",
+      "dc:creator": "Elzeky M.E.H.",
+      "prism:publicationName": "BMC Nursing",
+      "prism:coverDate": "2022-12-01",
+      "prism:doi": "10.1186/s12912-022-01096-6"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85143180021",
+      "dc:title": "An Interprofessional Escape Room Experience to Improve Knowledge and Collaboration Among Health Professions Students",
+      "dc:creator": "Fusco N.M.",
+      "prism:publicationName": "American Journal of Pharmaceutical Education",
+      "prism:coverDate": "2022-11-01",
+      "prism:doi": "10.5688/ajpe8823"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85141889644",
+      "dc:title": "Effectiveness of game-based virtual reality phone application and online education on knowledge, attitude and compliance of standard precautions among nursing students",
+      "dc:creator": "AL-Mugheed K.",
+      "prism:publicationName": "Plos One",
+      "prism:coverDate": "2022-11-01",
+      "prism:doi": "10.1371/journal.pone.0275130"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85142392308",
+      "dc:title": "Motivational Design for Web-Based Instruction in Health Professions Education: Protocol for a Systematic Review and Directed Content Analysis",
+      "dc:creator": "Gavarkovs A.",
+      "prism:publicationName": "Jmir Research Protocols",
+      "prism:coverDate": "2022-11-01",
+      "prism:doi": "10.2196/42681"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85150248223",
+      "dc:title": "Board Game Intervention to Improve Cognitive and Daily Functioning in Elderly People with Mild Cognitive Impairment: A Randomized Controlled Trial",
+      "dc:creator": "Yang S.Y.",
+      "prism:publicationName": "International Journal of Gerontology",
+      "prism:coverDate": "2022-10-01",
+      "prism:doi": "10.6890/IJGE.202210_16(4).0007"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85135023424",
+      "dc:title": "The effects of neonatal resuscitation gamification program using immersive virtual reality: A quasi-experimental study",
+      "dc:creator": "Yang S.Y.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2022-10-01",
+      "prism:doi": "10.1016/j.nedt.2022.105464"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85137746017",
+      "dc:title": "Effects of Serious Games on Depression in Older Adults: Systematic Review and Meta-analysis of Randomized Controlled Trials",
+      "dc:creator": "Kim Y.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2022-09-01",
+      "prism:doi": "10.2196/37753"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85135295913",
+      "dc:title": "Effects of board game play on nursing students’ medication knowledge: A randomized controlled trial",
+      "dc:creator": "Chang Y.S.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2022-08-01",
+      "prism:doi": "10.1016/j.nepr.2022.103412"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85132776579",
+      "dc:title": "Game-based learning in undergraduate nursing education: A systematic review of mixed-method studies",
+      "dc:creator": "Kuruca Ozdemir E.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2022-07-01",
+      "prism:doi": "10.1016/j.nepr.2022.103375"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85128174429",
+      "dc:title": "Digital serious games in developing nursing clinical competence: A systematic review and meta-analysis",
+      "dc:creator": "Thangavelu D.P.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2022-06-01",
+      "prism:doi": "10.1016/j.nedt.2022.105357"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85132023896",
+      "dc:title": "The Effectiveness of Multicomponent Intervention on Daily Functioning among the Community-Dwelling Elderly: A Systematic Review",
+      "dc:creator": "Kim M.",
+      "prism:publicationName": "International Journal of Environmental Research and Public Health",
+      "prism:coverDate": "2022-06-01",
+      "prism:doi": "10.3390/ijerph19127483"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85130000995",
+      "dc:title": "Effectiveness of the Use of Animation and Gamification in Online Distance Education during Pandemic",
+      "dc:creator": "Inangil D.",
+      "prism:publicationName": "CIN Computers Informatics Nursing",
+      "prism:coverDate": "2022-05-10",
+      "prism:doi": "10.1097/CIN.0000000000000902"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85121563164",
+      "dc:title": "Effects of active video games on physical function in independent community-dwelling older adults: A systematic review and meta-analysis",
+      "dc:creator": "Suleiman-Martos N.",
+      "prism:publicationName": "Journal of Advanced Nursing",
+      "prism:coverDate": "2022-05-01",
+      "prism:doi": "10.1111/jan.15138"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85130645262",
+      "dc:title": "Randomized Controlled Trial of Interactive Spaced Education to Support Constipation Management by Pediatric Primary Care Providers",
+      "dc:creator": "Mallon D.",
+      "prism:publicationName": "Journal of Pediatric Gastroenterology and Nutrition",
+      "prism:coverDate": "2022-05-01",
+      "prism:doi": "10.1097/MPG.0000000000003405"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85124403682",
+      "dc:title": "The effect of neonatal resuscitation training based on a serious game simulation method on nursing students' knowledge, skills, satisfaction and self-confidence levels: A randomized controlled trial",
+      "dc:creator": "Sarvan S.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2022-04-01",
+      "prism:doi": "10.1016/j.nedt.2022.105298"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85125633232",
+      "dc:title": "The Serious Game and Integrated Simulator for Cardiopulmonary Resuscitation Training in Nursing Students",
+      "dc:creator": "Demirtas A.",
+      "prism:publicationName": "Simulation and Gaming",
+      "prism:coverDate": "2022-04-01",
+      "prism:doi": "10.1177/10468781211073162"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85128126173",
+      "dc:title": "The Effectiveness of a Serious Game (MemoreBox) for Cognitive Functioning Among Seniors in Care Facilities: Field Study",
+      "dc:creator": "Kleschnitzki J.M.",
+      "prism:publicationName": "Jmir Serious Games",
+      "prism:coverDate": "2022-04-01",
+      "prism:doi": "10.2196/33169"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85129963440",
+      "dc:title": "A Web-Based Escape Room to Raise Awareness About Severe Mental Illness Among University Students: Randomized Controlled Trial",
+      "dc:creator": "Rodriguez-Ferrer J.M.",
+      "prism:publicationName": "Jmir Serious Games",
+      "prism:coverDate": "2022-04-01",
+      "prism:doi": "10.2196/34222"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85128319560",
+      "dc:title": "Effects of Situation-Based Flipped Learning and Gamification as Combined Methodologies in Psychiatric Nursing Education: A Quasi-Experimental Study",
+      "dc:creator": "Kim H.",
+      "prism:publicationName": "Healthcare Switzerland",
+      "prism:coverDate": "2022-04-01",
+      "prism:doi": "10.3390/healthcare10040644"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/105011251250",
+      "dc:title": "Dropout rates in controlled trials with exergames for blood pressure management: a systematic review and meta-analysis protocol",
+      "dc:creator": "Lourenço C.L.M.",
+      "prism:publicationName": "Revista Brasileira De Atividade Fisica E Saude",
+      "prism:coverDate": "2022-03-28",
+      "prism:doi": "10.12820/rbafs.27e0250"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85121766636",
+      "dc:title": "Effects of Virtual Reality Intervention on Neural Plasticity in Stroke Rehabilitation: A Systematic Review",
+      "dc:creator": "Hao J.",
+      "prism:publicationName": "Archives of Physical Medicine and Rehabilitation",
+      "prism:coverDate": "2022-03-01",
+      "prism:doi": "10.1016/j.apmr.2021.06.024"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85123969915",
+      "dc:title": "The Effect of Serious Games for Nursing Students in Clinical Decision-Making Process: A Pilot Randomized Controlled Trial",
+      "dc:creator": "Calik A.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2022-02-01",
+      "prism:doi": "10.1089/g4h.2021.0180"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85119193111",
+      "dc:title": "The impact of using an “anatomy escape room” on nursing students: A comparative study",
+      "dc:creator": "Molina-Torres G.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2022-02-01",
+      "prism:doi": "10.1016/j.nedt.2021.105205"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85121982218",
+      "dc:title": "Facilitating nursing students' skill training in distance education via online game-based learning with the watch-summarize-question approach during the COVID-19 pandemic: A quasi-experimental study",
+      "dc:creator": "Chang C.Y.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2022-02-01",
+      "prism:doi": "10.1016/j.nedt.2021.105256"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85123968967",
+      "dc:title": "Physical Activity and Exergames among Older Adults: A Scoping Review",
+      "dc:creator": "Ismail N.A.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2022-02-01",
+      "prism:doi": "10.1089/g4h.2021.0104"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85124058201",
+      "dc:title": "Mobile health-based gamification intervention to increase physical activity participation among patients with coronary heart disease: Study protocol of a randomised controlled trial",
+      "dc:creator": "Xu L.",
+      "prism:publicationName": "BMJ Open",
+      "prism:coverDate": "2022-01-31",
+      "prism:doi": "10.1136/bmjopen-2021-054623"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85132885498",
+      "dc:title": "The effects of serious games in nursing education:a systematic review",
+      "dc:creator": "Guo J.",
+      "prism:publicationName": "Chinese Journal of Nursing Education",
+      "prism:coverDate": "2022-01-15",
+      "prism:doi": "10.3761/j.issn.1672-9234.2022.01.009"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85168735481",
+      "dc:title": "The effect of 7 different exercise training in balance function of patients with diabetic peripheral neuropathy:a network meta-analysis",
+      "dc:creator": "Zhang Y.",
+      "prism:publicationName": "Chinese Journal of Nursing",
+      "prism:coverDate": "2022-01-10",
+      "prism:doi": "10.3761/j.issn.0254-1769.2022.01.014"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85117906299",
+      "dc:title": "Effectiveness of serious games in nurse education: A systematic review",
+      "dc:creator": "Min A.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2022-01-01",
+      "prism:doi": "10.1016/j.nedt.2021.105178"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85120502084",
+      "dc:title": "Effectiveness of a game-based mobile application in educating nursing students on flushing and locking venous catheters with pre-filled saline syringes: A randomized controlled trial",
+      "dc:creator": "Gu R.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2022-01-01",
+      "prism:doi": "10.1016/j.nepr.2021.103260"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85124516294",
+      "dc:title": "Pediatric Non-Refractive Vision Screening with EyeSwift, PDI Check and Blinq: Non-Refractive Vision Screening with Two Binocular Video Games and Birefringent Scanning",
+      "dc:creator": "Mahlen T.",
+      "prism:publicationName": "Clinical Ophthalmology",
+      "prism:coverDate": "2022-01-01",
+      "prism:doi": "10.2147/OPTH.S344751"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85134106777",
+      "dc:title": "Frailty in the Elderly and Interventions Supported by Information and Communication Technologies: A Systematic Review",
+      "dc:creator": "Reis G.M.",
+      "prism:publicationName": "Research Anthology on Supporting Healthy Aging in A Digital Society",
+      "prism:coverDate": "2022-01-01",
+      "prism:doi": "10.4018/978-1-6684-5295-0.ch100"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85126277600",
+      "dc:title": "Immersive Virtual Reality for the Cognitive Rehabilitation of Stroke Survivors",
+      "dc:creator": "Chatterjee K.",
+      "prism:publicationName": "IEEE Transactions on Neural Systems and Rehabilitation Engineering",
+      "prism:coverDate": "2022-01-01",
+      "prism:doi": "10.1109/TNSRE.2022.3158731"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85103569222",
+      "dc:title": "The efficacy of exergaming in people with major neurocognitive disorder residing in long-term care facilities: a pilot randomized controlled trial",
+      "dc:creator": "Swinnen N.",
+      "prism:publicationName": "Alzheimer S Research and Therapy",
+      "prism:coverDate": "2021-12-01",
+      "prism:doi": "10.1186/s13195-021-00806-7"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85142329414",
+      "dc:title": "Update on best current practice of non-pharmacological interventions reducing preoperative anxiety in children, a semi-systematic literature review",
+      "dc:creator": "Desmet V.",
+      "prism:publicationName": "Acta Anaesthesiologica Belgica",
+      "prism:coverDate": "2021-12-01"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85119675233",
+      "dc:title": "Environmental enrichment for stroke and other non-progressive brain injury",
+      "dc:creator": "Qin H.",
+      "prism:publicationName": "Cochrane Database of Systematic Reviews",
+      "prism:coverDate": "2021-11-23",
+      "prism:doi": "10.1002/14651858.CD011879.pub2"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85116865774",
+      "dc:title": "The effectiveness of a digital game to improve public perception of dementia: A pretest-posttest evaluation",
+      "dc:creator": "Carter G.",
+      "prism:publicationName": "Plos One",
+      "prism:coverDate": "2021-10-01",
+      "prism:doi": "10.1371/journal.pone.0257337"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85104466163",
+      "dc:title": "Gamified applications for secondary prevention in patients with high cardiovascular disease risk: A systematic review of effectiveness and acceptability",
+      "dc:creator": "Davis A.J.",
+      "prism:publicationName": "Journal of Clinical Nursing",
+      "prism:coverDate": "2021-10-01",
+      "prism:doi": "10.1111/jocn.15808"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85122852571",
+      "dc:title": "Effect of Computer Games on Working Memory, Visual Memory, and Executive Functions of the Elderly",
+      "dc:creator": "Moradi P.",
+      "prism:publicationName": "Iranian Journal of Psychiatry and Clinical Psychology",
+      "prism:coverDate": "2021-09-01",
+      "prism:doi": "10.32598/ijpcp.27.2.3401.1"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85122698991",
+      "dc:title": "Computerised cognitive remediation to enhance mobility in older adults: a single-blind, single-centre, randomised trial",
+      "dc:creator": "Verghese J.",
+      "prism:publicationName": "Lancet Healthy Longevity",
+      "prism:coverDate": "2021-09-01",
+      "prism:doi": "10.1016/S2666-7568(21)00173-2"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85106338657",
+      "dc:title": "Digital Health Interventions among People Living with Frailty: A Scoping Review",
+      "dc:creator": "Linn N.",
+      "prism:publicationName": "Journal of the American Medical Directors Association",
+      "prism:coverDate": "2021-09-01",
+      "prism:doi": "10.1016/j.jamda.2021.04.012"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85113303149",
+      "dc:title": "Commercial off-the-shelf video games for reducing stress and anxiety: Systematic review",
+      "dc:creator": "Pallavicini F.",
+      "prism:publicationName": "Jmir Mental Health",
+      "prism:coverDate": "2021-08-01",
+      "prism:doi": "10.2196/28150"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85105326990",
+      "dc:title": "Does theme game-based teaching promote better learning about disaster nursing than scenario simulation: A randomized controlled trial",
+      "dc:creator": "Ma D.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2021-08-01",
+      "prism:doi": "10.1016/j.nedt.2021.104923"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85111050053",
+      "dc:title": "Effect of multi-disciplinary teaching on learning satisfaction, self-confidence level and learning performance in the nursing students",
+      "dc:creator": "Liu Y.M.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2021-08-01",
+      "prism:doi": "10.1016/j.nepr.2021.103128"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85108294493",
+      "dc:title": "Long-term effectiveness of an mHealth-tailored physical activity intervention in youth with congenital heart disease: A randomized controlled trial",
+      "dc:creator": "Lin P.J.",
+      "prism:publicationName": "Journal of Advanced Nursing",
+      "prism:coverDate": "2021-08-01",
+      "prism:doi": "10.1111/jan.14924"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85102056562",
+      "dc:title": "Nursing students’ evaluation of a gamified public health educational webinar: A comparative pilot study",
+      "dc:creator": "Grech J.",
+      "prism:publicationName": "Nursing Open",
+      "prism:coverDate": "2021-07-01",
+      "prism:doi": "10.1002/nop2.826"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85106551475",
+      "dc:title": "Efficacy of interactive video gaming in older adults with memory complaints: A clusterrandomized exercise intervention",
+      "dc:creator": "Ramnath U.",
+      "prism:publicationName": "Plos One",
+      "prism:coverDate": "2021-05-01",
+      "prism:doi": "10.1371/journal.pone.0252016"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85103575122",
+      "dc:title": "Impact of a serious game (Escape COVID-19) on the Intention to Change COVID-19 control practices among employees of long-term care facilities: Web-based randomized controlled trial",
+      "dc:creator": "Suppan M.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2021-03-01",
+      "prism:doi": "10.2196/27443"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85104502612",
+      "dc:title": "Comparative effectiveness of simulation versus serious game for training nursing students in cardiopulmonary resuscitation: A randomized control trial",
+      "dc:creator": "Farsi Z.",
+      "prism:publicationName": "International Journal of Computer Games Technology",
+      "prism:coverDate": "2021-01-01",
+      "prism:doi": "10.1155/2021/6695077"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85109926721",
+      "dc:title": "The use of video games in adolescents. A Public Health problema",
+      "dc:creator": "Rodríguez M.R.",
+      "prism:publicationName": "Enfermeria Global",
+      "prism:coverDate": "2021-01-01",
+      "prism:doi": "10.6018/EGLOBAL.438641"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85093928841",
+      "dc:title": "Immersive virtual reality vs. non-immersive distraction for pain management of children during bone pins and sutures removal: A randomized clinical trial protocol",
+      "dc:creator": "Le May S.",
+      "prism:publicationName": "Journal of Advanced Nursing",
+      "prism:coverDate": "2021-01-01",
+      "prism:doi": "10.1111/jan.14607"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85085012097",
+      "dc:title": "Block and Random Practice: A Wii Fit Dynamic Balance Training in Older Adults",
+      "dc:creator": "Jeon M.J.",
+      "prism:publicationName": "Research Quarterly for Exercise and Sport",
+      "prism:coverDate": "2021-01-01",
+      "prism:doi": "10.1080/02701367.2020.1733456"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85108443493",
+      "dc:title": "Opinion of mental healthcare providers on the impact of electronic games on psychiatric patients in Saudi Arabia",
+      "dc:creator": "Al-zahrani S.",
+      "prism:publicationName": "Informatics in Medicine Unlocked",
+      "prism:coverDate": "2021-01-01",
+      "prism:doi": "10.1016/j.imu.2021.100647"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85099007819",
+      "dc:title": "Effect of Remote Monitoring on Discharge to Home, Return to Activity, and Rehospitalization After Hip and Knee Arthroplasty: A Randomized Clinical Trial",
+      "dc:creator": "Mehta S.J.",
+      "prism:publicationName": "JAMA Network Open",
+      "prism:coverDate": "2020-12-21",
+      "prism:doi": "10.1001/jamanetworkopen.2020.28328"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85095442244",
+      "dc:title": "Effects of environmental distractors on nurse emergency triage accuracy: a pilot study protocol",
+      "dc:creator": "Delmas P.",
+      "prism:publicationName": "Pilot and Feasibility Studies",
+      "prism:coverDate": "2020-12-01",
+      "prism:doi": "10.1186/s40814-020-00717-8"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85097496761",
+      "dc:title": "Impact of a serious game on the intention to change infection prevention and control practices in nursing homes during the COVID-19 pandemic: Protocol for a web-based randomized controlled trial",
+      "dc:creator": "Suppan L.",
+      "prism:publicationName": "Jmir Research Protocols",
+      "prism:coverDate": "2020-12-01",
+      "prism:doi": "10.2196/25595"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85091053712",
+      "dc:title": "Effects of a multidisciplinary team-led school-based human papillomavirus vaccination health-promotion programme on improving vaccine acceptance and uptake among female adolescents: A cluster randomized controlled trial",
+      "dc:creator": "Chau J.P.C.",
+      "prism:publicationName": "Medicine United States",
+      "prism:coverDate": "2020-09-11",
+      "prism:doi": "10.1097/MD.0000000000022072"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85097492221",
+      "dc:title": "Lessons learned from an evaluation of serious gaming as an alternative to mannequin-based simulation technology: Randomized controlled trial",
+      "dc:creator": "Benda N.C.",
+      "prism:publicationName": "Jmir Serious Games",
+      "prism:coverDate": "2020-07-01",
+      "prism:doi": "10.2196/21123"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85085294626",
+      "dc:title": "Interactive video game-based approaches improve mobility and mood in older adults: A nonrandomized, controlled tri̇al",
+      "dc:creator": "Cicek A.",
+      "prism:publicationName": "Journal of Bodywork and Movement Therapies",
+      "prism:coverDate": "2020-07-01",
+      "prism:doi": "10.1016/j.jbmt.2020.01.005"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85097497254",
+      "dc:title": "The effects of gamification on computerized cognitive training: Systematic review and meta-analysis",
+      "dc:creator": "Vermeir J.F.",
+      "prism:publicationName": "Jmir Serious Games",
+      "prism:coverDate": "2020-07-01",
+      "prism:doi": "10.2196/18644"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85086346908",
+      "dc:title": "Game-Based Learning Interventions to Foster Cross-Cultural Care Training: A Scoping Review",
+      "dc:creator": "Pimentel J.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2020-06-01",
+      "prism:doi": "10.1089/g4h.2019.0078"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85125301818",
+      "dc:title": "Frailty in the elderly and interventions supported by information and communication technologies: A systematic review",
+      "dc:creator": "Reis G.M.",
+      "prism:publicationName": "Exploring the Role of Icts in Healthy Aging",
+      "prism:coverDate": "2020-05-31",
+      "prism:doi": "10.4018/978-1-7998-1937-0.ch007"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85081591173",
+      "dc:title": "Application of wearables to facilitate virtually supervised intradialytic exercise for reducing depression symptoms",
+      "dc:creator": "Zhou H.",
+      "prism:publicationName": "Sensors Switzerland",
+      "prism:coverDate": "2020-03-02",
+      "prism:doi": "10.3390/s20061571"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85079828363",
+      "dc:title": "Comparative value of a simulation by gaming and a traditional teaching method to improve clinical reasoning skills necessary to detect patient deterioration: A randomized study in nursing students",
+      "dc:creator": "Blanié A.",
+      "prism:publicationName": "BMC Medical Education",
+      "prism:coverDate": "2020-02-19",
+      "prism:doi": "10.1186/s12909-020-1939-6"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85079020184",
+      "dc:title": "Digital technology distraction for acute pain in children: A Meta-analysis",
+      "dc:creator": "Gates M.",
+      "prism:publicationName": "Pediatrics",
+      "prism:coverDate": "2020-02-01",
+      "prism:doi": "10.1542/peds.2019-1139"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85068371898",
+      "dc:title": "Serious games, a game changer in teaching neonatal resuscitation? A review",
+      "dc:creator": "Ghoman S.K.",
+      "prism:publicationName": "Archives of Disease in Childhood Fetal and Neonatal Edition",
+      "prism:coverDate": "2020-01-01",
+      "prism:doi": "10.1136/archdischild-2019-317011"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85073987777",
+      "dc:title": "Video game distraction and anesthesia mask practice reduces children's preoperative anxiety: A randomized clinical trial",
+      "dc:creator": "Dwairej D.A.",
+      "prism:publicationName": "Journal for Specialists in Pediatric Nursing",
+      "prism:coverDate": "2020-01-01",
+      "prism:doi": "10.1111/jspn.12272"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85089794968",
+      "dc:title": "Using serious games to increase prevention and self-management of chemotherapy-induced nausea and vomiting in older adults with cancer",
+      "dc:creator": "Loerzel V.W.",
+      "prism:publicationName": "Oncology Nursing Forum",
+      "prism:coverDate": "2020-01-01",
+      "prism:doi": "10.1188/20.ONF.567-576"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85077461261",
+      "dc:title": "Improving mental health and physiological stress responses in mothers following traumatic childbirth and in their infants: Study protocol for the Swiss TrAumatic biRth Trial (START)",
+      "dc:creator": "Sandoz V.",
+      "prism:publicationName": "BMJ Open",
+      "prism:coverDate": "2019-12-30",
+      "prism:doi": "10.1136/bmjopen-2019-032469"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85070403978",
+      "dc:title": "Dark Play of Serious Games: Effectiveness and Features (G4HE2018)",
+      "dc:creator": "Buijs-Spanjers K.R.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2019-08-01",
+      "prism:doi": "10.1089/g4h.2018.0126"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85065548548",
+      "dc:title": "Effect of a game-based virtual reality phone application on tracheostomy care education for nursing students: A randomized controlled trial",
+      "dc:creator": "Bayram S.B.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2019-08-01",
+      "prism:doi": "10.1016/j.nedt.2019.05.010"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85071577194",
+      "dc:title": "Evaluation of adaptive feedback in a smartphone-based serious game on health care providers' knowledge gain in neonatal emergency care: Protocol for a randomized controlled trial",
+      "dc:creator": "Tuti T.",
+      "prism:publicationName": "Jmir Research Protocols",
+      "prism:coverDate": "2019-07-01",
+      "prism:doi": "10.2196/13034"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85067179699",
+      "dc:title": "Play and learn with patients-designing and evaluating a serious game to enhance nurses' inhaler teaching techniques: A randomized controlled trial",
+      "dc:creator": "Chee E.J.M.",
+      "prism:publicationName": "Games for Health Journal",
+      "prism:coverDate": "2019-06-01",
+      "prism:doi": "10.1089/g4h.2018.0073"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85066031891",
+      "dc:title": "Educational games developed for students in perioperative nursing: A systematic review and appraisal of the evidence",
+      "dc:creator": "Nasiri M.",
+      "prism:publicationName": "Nurse Education in Practice",
+      "prism:coverDate": "2019-05-01",
+      "prism:doi": "10.1016/j.nepr.2019.05.002"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85063940575",
+      "dc:title": "Serious gaming and gamification education in health professions: systematic review",
+      "dc:creator": "Gentry S.V.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2019-03-01",
+      "prism:doi": "10.2196/12994"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85067234184",
+      "dc:title": "Digital education for the management of chronic wounds in health care professionals: Protocol for a systematic review by the digital health education collaboration",
+      "dc:creator": "Martinengo L.",
+      "prism:publicationName": "Jmir Research Protocols",
+      "prism:coverDate": "2019-03-01",
+      "prism:doi": "10.2196/12488"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85061968745",
+      "dc:title": "The influence of an educational internet-based intervention in the beliefs and attitudes of primary care professionals on non-specific chronic low back pain: Study protocol of a mixed methods approach",
+      "dc:creator": "García-Martínez E.",
+      "prism:publicationName": "BMC Family Practice",
+      "prism:coverDate": "2019-02-21",
+      "prism:doi": "10.1186/s12875-019-0919-6"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85059493154",
+      "dc:title": "The impact of 3 different distraction techniques on the pain and anxiety levels of children during venipuncture",
+      "dc:creator": "Inan G.",
+      "prism:publicationName": "Clinical Journal of Pain",
+      "prism:coverDate": "2019-02-01",
+      "prism:doi": "10.1097/AJP.0000000000000666"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85075910089",
+      "dc:title": "The influence of gamification on decision making in nursing students",
+      "dc:creator": "García-Viola A.",
+      "prism:publicationName": "Journal of Nursing Education",
+      "prism:coverDate": "2019-01-01",
+      "prism:doi": "10.3928/01484834-20191120-07"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85076098433",
+      "dc:title": "Immersive virtual reality for pediatric procedural pain: A randomized clinical trial",
+      "dc:creator": "Walther-Larsen S.",
+      "prism:publicationName": "Hospital Pediatrics",
+      "prism:coverDate": "2019-01-01",
+      "prism:doi": "10.1542/hpeds.2018-0249"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85054137380",
+      "dc:title": "Pushing the Boundaries: A Physical Activity Intervention Extends Sensor-Assessed Life-Space in Nursing Home Residents",
+      "dc:creator": "Jansen C.P.",
+      "prism:publicationName": "Gerontologist",
+      "prism:coverDate": "2018-09-14",
+      "prism:doi": "10.1093/geront/gnx136"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85072707327",
+      "dc:title": "Evaluating a serious gaming electronic medication administration record system among nursing students: Protocol for a pragmatic randomized controlled trial",
+      "dc:creator": "Booth R.",
+      "prism:publicationName": "Jmir Research Protocols",
+      "prism:coverDate": "2018-05-01",
+      "prism:doi": "10.2196/resprot.9601"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85041497801",
+      "dc:title": "Pilot Randomized Controlled Trial of the GO Game Intervention on Cognitive Function",
+      "dc:creator": "Iizuka A.",
+      "prism:publicationName": "American Journal of Alzheimer S Disease and Other Dementias",
+      "prism:coverDate": "2018-05-01",
+      "prism:doi": "10.1177/1533317517753362"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85055842161",
+      "dc:title": "Serious games as an educational strategy to control childhood obesity: A systematic literature review",
+      "dc:creator": "Dias J.D.",
+      "prism:publicationName": "Revista Latino Americana De Enfermagem",
+      "prism:coverDate": "2018-01-01",
+      "prism:doi": "10.1590/1518-8345.2509.3036"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85055788645",
+      "dc:title": "Effect of the board game as educational technology on schoolchildren’s knowledge on breastfeeding",
+      "dc:creator": "Martins F.D.P.",
+      "prism:publicationName": "Revista Latino Americana De Enfermagem",
+      "prism:coverDate": "2018-01-01",
+      "prism:doi": "10.1590/1518-8345.2316.3049"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85029008043",
+      "dc:title": "An exploratory trial of a health education programme to promote healthy lifestyles through social and emotional competence in young children: Study protocol",
+      "dc:creator": "Bermejo-Martins E.",
+      "prism:publicationName": "Journal of Advanced Nursing",
+      "prism:coverDate": "2018-01-01",
+      "prism:doi": "10.1111/jan.13402"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85007574022",
+      "dc:title": "Non-dominant hand quicker to insert peripheral venous catheters under echographic guidance: A randomised trial",
+      "dc:creator": "Durand-Bailloud L.",
+      "prism:publicationName": "Anaesthesia Critical Care and Pain Medicine",
+      "prism:coverDate": "2017-10-01",
+      "prism:doi": "10.1016/j.accpm.2016.08.008"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85019183645",
+      "dc:title": "Designing and evaluating the effectiveness of a serious game for safe administration of blood transfusion: A randomized controlled trial",
+      "dc:creator": "Tan A.J.Q.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2017-08-01",
+      "prism:doi": "10.1016/j.nedt.2017.04.027"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85019242504",
+      "dc:title": "Using a videogame to facilitate nursing and medical students' first visit to the operating theatre. A randomized controlled trial",
+      "dc:creator": "del Blanco Á.",
+      "prism:publicationName": "Nurse Education Today",
+      "prism:coverDate": "2017-08-01",
+      "prism:doi": "10.1016/j.nedt.2017.04.026"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84995532803",
+      "dc:title": "Health game interventions to enhance physical activity self-efficacy of children: A quantitative systematic review",
+      "dc:creator": "Pakarinen A.",
+      "prism:publicationName": "Journal of Advanced Nursing",
+      "prism:coverDate": "2017-04-01",
+      "prism:doi": "10.1111/jan.13160"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85015061348",
+      "dc:title": "An educational intervention to promote healthy lifestyles in preschool children: A cluster-RCT",
+      "dc:creator": "Iaia M.",
+      "prism:publicationName": "International Journal of Obesity",
+      "prism:coverDate": "2017-04-01",
+      "prism:doi": "10.1038/ijo.2016.239"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85014797277",
+      "dc:title": "Exergames and elderly: A non-systematic review of the literature",
+      "dc:creator": "de Boissieu P.",
+      "prism:publicationName": "European Geriatric Medicine",
+      "prism:coverDate": "2017-04-01",
+      "prism:doi": "10.1016/j.eurger.2017.02.003"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85015355962",
+      "dc:title": "Hand-held computers can help to distract children undergoing painful venipuncture procedures",
+      "dc:creator": "Crevatin F.",
+      "prism:publicationName": "Acta Paediatrica International Journal of Paediatrics",
+      "prism:coverDate": "2016-08-01",
+      "prism:doi": "10.1111/apa.13454"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84978765855",
+      "dc:title": "A Prospective Randomized Controlled Trial of Nonpharmacological Pain Management during Intravenous Cannulation in a Pediatric Emergency Department",
+      "dc:creator": "Miller K.",
+      "prism:publicationName": "Pediatric Emergency Care",
+      "prism:coverDate": "2016-07-01",
+      "prism:doi": "10.1097/PEC.0000000000000778"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84962972606",
+      "dc:title": "Comparison of the effects of virtual reality-based balance exercises and conventional exercises on balance and fall risk in older adults living in nursing homes in Turkey",
+      "dc:creator": "Yeşilyaprak S.",
+      "prism:publicationName": "Physiotherapy Theory and Practice",
+      "prism:coverDate": "2016-04-02",
+      "prism:doi": "10.3109/09593985.2015.1138009"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84947730819",
+      "dc:title": "Effectiveness of Exergaming Training in Reducing Risk and Incidence of Falls in Frail Older Adults with a History of Falls",
+      "dc:creator": "Fu A.S.",
+      "prism:publicationName": "Archives of Physical Medicine and Rehabilitation",
+      "prism:coverDate": "2015-12-01",
+      "prism:doi": "10.1016/j.apmr.2015.08.427"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84944280046",
+      "dc:title": "Using a serious game to complement CPR instruction in a nurse faculty",
+      "dc:creator": "Boada I.",
+      "prism:publicationName": "Computer Methods and Programs in Biomedicine",
+      "prism:coverDate": "2015-11-01",
+      "prism:doi": "10.1016/j.cmpb.2015.08.006"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84936766211",
+      "dc:title": "A virtual emergency telemedicine serious game in medical training: A quantitative, professional feedback-informed evaluation study",
+      "dc:creator": "Nicolaidou I.",
+      "prism:publicationName": "Journal of Medical Internet Research",
+      "prism:coverDate": "2015-06-01",
+      "prism:doi": "10.2196/jmir.3667"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84936940981",
+      "dc:title": "Using game activities as assessment tools for evaluating nursing students' understanding of tracheostomy care",
+      "dc:creator": "Noyudom A.",
+      "prism:publicationName": "International Journal of Assessment and Evaluation",
+      "prism:coverDate": "2015-01-01",
+      "prism:doi": "10.18848/2327-7920/cgp/v21i3-4/48366"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84924521630",
+      "dc:title": "Digital game-based learning: A supplement for medication calculation drills in nurse education",
+      "dc:creator": "Foss B.",
+      "prism:publicationName": "E Learning and Digital Media",
+      "prism:coverDate": "2014-01-01",
+      "prism:doi": "10.2304/elea.2014.11.4.342"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84964314928",
+      "dc:title": "Assessing the effect of a physical activity intervention in a nursing home ecology: A natural lab approach",
+      "dc:creator": "Jansen C.P.",
+      "prism:publicationName": "BMC Geriatrics",
+      "prism:coverDate": "2014-01-01",
+      "prism:doi": "10.1186/1471-2318-14-117"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84880599240",
+      "dc:title": "The influence of Nintendo-Wii® bowling upon residents of retirement homes",
+      "dc:creator": "Wittelsberger R.",
+      "prism:publicationName": "Zeitschrift Fur Gerontologie Und Geriatrie",
+      "prism:coverDate": "2013-07-01",
+      "prism:doi": "10.1007/s00391-012-0391-6"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84878643433",
+      "dc:title": "Comparative effectiveness of congregation- versus clinic-based approach to prevention of mother-to-child HIV transmission: Study protocol for a cluster randomized controlled trial",
+      "dc:creator": "Ezeanolue E.E.",
+      "prism:publicationName": "Implementation Science",
+      "prism:coverDate": "2013-06-08",
+      "prism:doi": "10.1186/1748-5908-8-62"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84876952365",
+      "dc:title": "Impact of a nurse-directed, coordinated school health program to enhance physical activity behaviors and reduce body mass index among minority children: A parallel-group, randomized control trial",
+      "dc:creator": "Wright K.",
+      "prism:publicationName": "International Journal of Nursing Studies",
+      "prism:coverDate": "2013-06-01",
+      "prism:doi": "10.1016/j.ijnurstu.2012.09.004"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84875387787",
+      "dc:title": "Active and Passive Distraction in Children Undergoing Wound Dressings",
+      "dc:creator": "Nilsson S.",
+      "prism:publicationName": "Journal of Pediatric Nursing",
+      "prism:coverDate": "2013-04-01",
+      "prism:doi": "10.1016/j.pedn.2012.06.003"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84874324740",
+      "dc:title": "Nutritional education for the management of osteodystrophy (NEMO) in patients on haemodialysis: A randomised controlled trial",
+      "dc:creator": "Karavetian M.",
+      "prism:publicationName": "Journal of Renal Care",
+      "prism:coverDate": "2013-03-01",
+      "prism:doi": "10.1111/j.1755-6686.2012.00327.x"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84868207490",
+      "dc:title": "\"Michael's Game\", a game-based on cognitive therapy for patients with psychotic disorders",
+      "dc:creator": "Khazaal Y.",
+      "prism:publicationName": "Journal De Therapie Comportementale Et Cognitive",
+      "prism:coverDate": "2012-09-01",
+      "prism:doi": "10.1016/j.jtcc.2012.06.003"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84864870781",
+      "dc:title": "Wii-hab for pre-frail older adults",
+      "dc:creator": "Daniel K.",
+      "prism:publicationName": "Rehabilitation Nursing",
+      "prism:coverDate": "2012-07-01",
+      "prism:doi": "10.1002/rnj.25"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84858702821",
+      "dc:title": "Can a virtual patient trainer teach student nurses how to save lives-teaching nursing students about pediatric respiratory diseases",
+      "dc:creator": "LeFlore J.L.",
+      "prism:publicationName": "Simulation in Healthcare",
+      "prism:coverDate": "2012-02-01",
+      "prism:doi": "10.1097/SIH.0b013e31823652de"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/84860342500",
+      "dc:title": "What Are the Barriers to Performing Nonpharmacological Interventions for Behavioral Symptoms in the Nursing Home?",
+      "dc:creator": "Cohen-Mansfield J.",
+      "prism:publicationName": "Journal of the American Medical Directors Association",
+      "prism:coverDate": "2012-01-01",
+      "prism:doi": "10.1016/j.jamda.2011.07.006"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/77953120133",
+      "dc:title": "Multi-modal distraction. Using technology to combat pain in young children with burn injuries",
+      "dc:creator": "Miller K.",
+      "prism:publicationName": "Burns",
+      "prism:coverDate": "2010-08-01",
+      "prism:doi": "10.1016/j.burns.2009.06.199"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/71949107687",
+      "dc:title": "Multimodal distraction to relieve pain in children undergoing acute medical procedures",
+      "dc:creator": "Miller K.",
+      "prism:publicationName": "Chinese Journal of Burns",
+      "prism:coverDate": "2009-12-18",
+      "prism:doi": "10.3760/cma.j.issn.1009-2587.2009.05.009"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/47649099644",
+      "dc:title": "SWITCH: Rationale, design, and implementation of a community, school, and family-based intervention to modify behaviors related to childhood obesity",
+      "dc:creator": "Eisenmann J.C.",
+      "prism:publicationName": "BMC Public Health",
+      "prism:coverDate": "2008-07-25",
+      "prism:doi": "10.1186/1471-2458-8-223"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/34548398426",
+      "dc:title": "Educational games for mental health professionals: a Cochrane review.",
+      "dc:creator": "Bhoopathi P.S.",
+      "prism:publicationName": "International Journal of Psychiatric Nursing Research",
+      "prism:coverDate": "2007-05-01"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/33845614073",
+      "dc:title": "Effects of distraction on pain, fear, and distress during venous port access and venipuncture in children and adolescents with cancer",
+      "dc:creator": "Windich-Biermeier A.",
+      "prism:publicationName": "Journal of Pediatric Oncology Nursing",
+      "prism:coverDate": "2007-01-01",
+      "prism:doi": "10.1177/1043454206296018"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/33747343395",
+      "dc:title": "Analysis of imitating social life in patients with chronic schizophrenia",
+      "dc:creator": "Ding G.Y.",
+      "prism:publicationName": "Chinese Journal of Clinical Rehabilitation",
+      "prism:coverDate": "2006-06-15"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/33646733096",
+      "dc:title": "Effectiveness of virtual reality for pediatric pain distraction during IV placement",
+      "dc:creator": "Gold J.I.",
+      "prism:publicationName": "Cyberpsychology and Behavior",
+      "prism:coverDate": "2006-04-01",
+      "prism:doi": "10.1089/cpb.2006.9.207"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/33745031317",
+      "dc:title": "Educational games for mental health professionals.",
+      "dc:creator": "Bhoopathi P.",
+      "prism:publicationName": "Cochrane Database of Systematic Reviews Online",
+      "prism:coverDate": "2006-01-01"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/26444489709",
+      "dc:title": "The efficacy of playing a virtual reality game in modulating pain for children with acute burn injuries: A randomized controlled trial [ISRCTN87413556]",
+      "dc:creator": "Das D.A.",
+      "prism:publicationName": "BMC Pediatrics",
+      "prism:coverDate": "2005-03-03",
+      "prism:doi": "10.1186/1471-2431-5-1"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/0141922897",
+      "dc:title": "Effects of multi-sensory stimulation for people with dementia",
+      "dc:creator": "Baker R.",
+      "prism:publicationName": "Journal of Advanced Nursing",
+      "prism:coverDate": "2003-09-01",
+      "prism:doi": "10.1046/j.1365-2648.2003.02744.x"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/0032159789",
+      "dc:title": "Evaluation of an educational game for health sciences students.",
+      "dc:creator": "Ingram C.",
+      "prism:publicationName": "Journal of Nursing Education",
+      "prism:coverDate": "1998-09-01"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/0029456671",
+      "dc:title": "Trivia-psychotica: the development and evaluation of an educational game for the revision of psychiatric disorders in a nurse training programme.",
+      "dc:creator": "Kelly S.",
+      "prism:publicationName": "Journal of Psychiatric and Mental Health Nursing",
+      "prism:coverDate": "1995-01-01",
+      "prism:doi": "10.1111/j.1365-2850.1995.tb00108.x"
+    },
+    {
+      "@_fa": "true",
+      "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/0028489811",
+      "dc:title": "Promoting Health in Schools through a Board Game",
+      "dc:creator": "Bartfay W.",
+      "prism:publicationName": "Western Journal of Nursing Research",
+      "prism:coverDate": "1994-01-01",
+      "prism:doi": "10.1177/019394599401600408"
+    }
+  ]
+}

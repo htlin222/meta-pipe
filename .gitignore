@@ -131,5 +131,6 @@ docs/archive/test-reports/
 projects/*
 !projects/.gitkeep
 !projects/ici-breast-cancer/
+!projects/game-based-learning-nursing-education/
 !projects/legacy/README.md
 worktrees/

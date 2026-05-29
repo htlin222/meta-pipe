@@ -1,0 +1,45 @@
+{
+  "participant_type": {
+    "nursing student": 73,
+    "mixed/unclear": 8,
+    "clinical nurse": 5,
+    "nursing intern/trainee": 2
+  },
+  "game_type": {
+    "serious game": 29,
+    "GBL": 34,
+    "gamification": 24,
+    "unclear": 1
+  },
+  "nwkm_levels(L*)": {
+    "L2": 83,
+    "L3": 2,
+    "L1": 29
+  },
+  "specialty": {
+    "other basic nursing": 36,
+    "infection control/wound care": 7,
+    "critical care/CPR/medication safety": 32,
+    "long-term care": 3,
+    "communication/mental health": 8,
+    "unclear": 2
+  },
+  "duration": {
+    "single(<=1day)": 20,
+    "short(1wk-1mo)": 17,
+    "unclear": 44,
+    "long(>1mo)": 7
+  },
+  "platform": {
+    "digital(app/web)": 50,
+    "board/card/physical": 19,
+    "hybrid": 3,
+    "unclear": 16
+  },
+  "comparator_type": {
+    "lecture": 21,
+    "ordinary/self-study": 34,
+    "case discussion": 6,
+    "unclear": 27
+  }
+}

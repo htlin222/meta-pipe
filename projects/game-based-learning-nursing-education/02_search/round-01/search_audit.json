@@ -1,0 +1,53 @@
+{
+  "round": "round-01",
+  "databases": [
+    {
+      "database": "pubmed",
+      "endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+      "query": "(\"serious game\"[tiab] OR \"serious games\"[tiab] OR \"serious gaming\"[tiab] OR gamification[tiab] OR gamified[tiab] OR gamify[tiab] OR \"game-based learning\"[tiab] OR \"game based learning\"[tiab] OR \"game-based\"[tiab] OR \"gameful\"[tiab] OR \"educational game\"[tiab] OR \"educational games\"[tiab] OR \"digital game\"[tiab] OR \"digital games\"[tiab] OR \"video game\"[tiab] OR \"video games\"[tiab] OR \"computer game\"[tiab] OR \"computer games\"[tiab] OR \"board game\"[tiab] OR \"board games\"[tiab] OR \"card game\"[tiab] OR \"card games\"[tiab] OR \"escape room\"[tiab] OR \"escape rooms\"[tiab] OR \"Video Games\"[Mesh] OR \"Gamification\"[Mesh]) AND (\"Education, Nursing\"[Mesh] OR \"Students, Nursing\"[Mesh] OR \"Nurses\"[Mesh] OR \"Faculty, Nursing\"[Mesh] OR nursing[tiab] OR nurse[tiab] OR nurses[tiab] OR \"nursing student\"[tiab] OR \"nursing students\"[tiab] OR \"student nurse\"[tiab] OR \"student nurses\"[tiab]) AND (randomized[tiab] OR randomised[tiab] OR randomly[tiab] OR \"randomized controlled trial\"[pt] OR \"controlled clinical trial\"[pt] OR \"randomized controlled trial\"[tiab] OR \"randomised controlled trial\"[tiab] OR RCT[tiab] OR \"controlled trial\"[tiab] OR \"Random Allocation\"[Mesh] OR \"Randomized Controlled Trials as Topic\"[Mesh])",
+      "query_hash": "af1e496b63a2558131215ba264e175b0b0e487c6398b5b2c53ae737b0941258d",
+      "params": {
+        "date": "2026-05-29T15:09:59.312351Z",
+        "query": "(\"serious game\"[tiab] OR \"serious games\"[tiab] OR \"serious gaming\"[tiab] OR gamification[tiab] OR gamified[tiab] OR gamify[tiab] OR \"game-based learning\"[tiab] OR \"game based learning\"[tiab] OR \"game-based\"[tiab] OR \"gameful\"[tiab] OR \"educational game\"[tiab] OR \"educational games\"[tiab] OR \"digital game\"[tiab] OR \"digital games\"[tiab] OR \"video game\"[tiab] OR \"video games\"[tiab] OR \"computer game\"[tiab] OR \"computer games\"[tiab] OR \"board game\"[tiab] OR \"board games\"[tiab] OR \"card game\"[tiab] OR \"card games\"[tiab] OR \"escape room\"[tiab] OR \"escape rooms\"[tiab] OR \"Video Games\"[Mesh] OR \"Gamification\"[Mesh]) AND (\"Education, Nursing\"[Mesh] OR \"Students, Nursing\"[Mesh] OR \"Nurses\"[Mesh] OR \"Faculty, Nursing\"[Mesh] OR nursing[tiab] OR nurse[tiab] OR nurses[tiab] OR \"nursing student\"[tiab] OR \"nursing students\"[tiab] OR \"student nurse\"[tiab] OR \"student nurses\"[tiab]) AND (randomized[tiab] OR randomised[tiab] OR randomly[tiab] OR \"randomized controlled trial\"[pt] OR \"controlled clinical trial\"[pt] OR \"randomized controlled trial\"[tiab] OR \"randomised controlled trial\"[tiab] OR RCT[tiab] OR \"controlled trial\"[tiab] OR \"Random Allocation\"[Mesh] OR \"Randomized Controlled Trials as Topic\"[Mesh])",
+        "count": "205",
+        "mindate": "",
+        "maxdate": "",
+        "datetype": "pdat",
+        "batch_size": "200"
+      },
+      "log_path": "..\\..\\projects\\game-based-learning-nursing-education\\02_search\\round-01\\log.md"
+    },
+    {
+      "database": "scopus",
+      "endpoint": "https://api.elsevier.com/content/search/scopus",
+      "query": "TITLE-ABS-KEY(\"serious game*\" OR gamification OR gamified OR \"game-based learning\" OR \"game based learning\" OR \"game-based\" OR gameful OR \"educational game*\" OR \"digital game*\" OR \"video game*\" OR \"computer game*\" OR \"board game*\" OR \"card game*\" OR \"escape room*\") AND TITLE-ABS-KEY(nursing OR nurse OR nurses OR \"nursing student*\" OR \"student nurse*\") AND TITLE-ABS-KEY(randomized OR randomised OR randomly OR \"randomized controlled trial\" OR \"randomised controlled trial\" OR RCT OR \"controlled trial\")",
+      "query_hash": "e4da5cd0ef4f1b43ff840e056406eecd03c008ae1cfe4c281c9faf302ad14e9f",
+      "params": {
+        "date": "2026-05-29T15:18:06.474079Z",
+        "query": "TITLE-ABS-KEY(\"serious game*\" OR gamification OR gamified OR \"game-based learning\" OR \"game based learning\" OR \"game-based\" OR gameful OR \"educational game*\" OR \"digital game*\" OR \"video game*\" OR \"computer game*\" OR \"board game*\" OR \"card game*\" OR \"escape room*\") AND TITLE-ABS-KEY(nursing OR nurse OR nurses OR \"nursing student*\" OR \"student nurse*\") AND TITLE-ABS-KEY(randomized OR randomised OR randomly OR \"randomized controlled trial\" OR \"randomised controlled trial\" OR RCT OR \"controlled trial\")",
+        "retrieved": "292",
+        "start": "0",
+        "count": "25",
+        "max_records": "",
+        "fields": "dc:title,dc:creator,prism:publicationName,prism:coverDate,dc:description,prism:doi"
+      },
+      "log_path": "..\\..\\projects\\game-based-learning-nursing-education\\02_search\\round-01\\scopus.log"
+    },
+    {
+      "database": "embase",
+      "endpoint": "https://api.elsevier.com/content/embase/article",
+      "query": "('serious game':ti,ab OR 'serious games':ti,ab OR gamification:ti,ab OR gamified:ti,ab OR 'game-based learning':ti,ab OR 'game based learning':ti,ab OR 'game-based':ti,ab OR gameful:ti,ab OR 'educational game':ti,ab OR 'educational games':ti,ab OR 'digital game':ti,ab OR 'video game':ti,ab OR 'computer game':ti,ab OR 'board game':ti,ab OR 'card game':ti,ab OR 'escape room':ti,ab OR 'serious game'/exp OR 'gamification'/exp) AND ('nursing education'/exp OR 'nursing student'/exp OR 'nurse'/exp OR nursing:ti,ab OR nurse:ti,ab OR nurses:ti,ab OR 'nursing student':ti,ab OR 'student nurse':ti,ab) AND (randomized:ti,ab OR randomised:ti,ab OR randomly:ti,ab OR 'randomized controlled trial':ti,ab OR rct:ti,ab OR 'controlled trial':ti,ab OR 'randomized controlled trial'/exp)",
+      "query_hash": "4f9102691224f45c38057383cff3902843509d946be4c693a4bc084237fc7a9b",
+      "params": {},
+      "log_path": "..\\..\\projects\\game-based-learning-nursing-education\\02_search\\round-01\\embase.log"
+    },
+    {
+      "database": "cochrane",
+      "endpoint": "https://api.cochrane.org/reviews",
+      "query": "(\"serious game*\" OR gamification OR gamified OR \"game-based learning\" OR \"game based learning\" OR \"game-based\" OR \"educational game*\" OR \"digital game*\" OR \"video game*\" OR \"computer game*\" OR \"board game*\" OR \"card game*\" OR \"escape room*\") AND (nursing OR nurse OR nurses OR \"nursing student*\" OR \"student nurse*\")",
+      "query_hash": "448cc43e632231c1123c5e43a8e1ca29803692fe5d36d4d4aa7e9a3c8d0caf3a",
+      "params": {},
+      "log_path": "..\\..\\projects\\game-based-learning-nursing-education\\02_search\\round-01\\cochrane.log"
+    }
+  ]
+}

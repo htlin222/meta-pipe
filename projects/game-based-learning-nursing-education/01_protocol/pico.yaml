@@ -1,0 +1,92 @@
+# PICO Framework — Game-based Teaching Strategies in Nursing Education
+# Date: 2026-05-29
+# Version: 1.0
+
+metadata:
+  title: "Effectiveness of Game-based Teaching Strategies in Nursing Education: A Systematic Review and Meta-Analysis"
+  short_title: "Game-based Teaching in Nursing Education"
+  protocol_date: "2026-05-29"
+  version: "1.0"
+
+research_question: |
+  In nursing learners (students, interns, clinical nurses, clinical nursing teachers) (P),
+  do game-based teaching strategies — gamification, game-based learning, or serious games (I)
+  compared with conventional / traditional teaching without game mechanics (C) improve
+  quantitative learning or teaching outcomes across NWKM Levels 1-4 (O)?
+
+population:
+  description: "Nursing learners of any type"
+  include:
+    - "Nursing students"
+    - "Nursing interns / trainees"
+    - "Clinical / registered nurses"
+    - "Clinical nursing teachers / preceptors"
+
+intervention:
+  description: "gamification; game-based learning; serious games; educational games; digital game-based learning"
+  required: "Explicit game design mechanics (points, badges, leaderboards, levels, quests, rewards, competition, feedback, unlock, role/decision challenge) OR complete GBL/serious-game architecture"
+
+comparison:
+  description: "conventional teaching; traditional education; lecture; case discussion; ordinary course/training; no game mechanics"
+
+outcomes:
+  framework: "NWKM (4 levels)"
+  levels:
+    - level: 1
+      name: "Reaction / engagement / relevance"
+    - level: 2
+      name: "Knowledge / skills / confidence"
+    - level: 3
+      name: "Behavior change / practice application"
+    - level: 4
+      name: "Patient outcomes / system-level impact"
+
+study_design:
+  include:
+    - "Randomized controlled trials (RCTs)"
+    - "Cluster-randomized controlled trials"
+  exclude:
+    - "Single-group pre/post without control"
+    - "Descriptive, cross-sectional, observational, qualitative studies"
+    - "No explicit game design elements"
+    - "Comparator also gamified/competitive"
+    - "No quantitative or comparable outcome data"
+
+risk_of_bias:
+  rct: "Cochrane RoB 2"
+  cluster_rct: "RoB 2 cluster extension"
+
+search:
+  databases:
+    - "PubMed/MEDLINE"
+    - "Embase"
+    - "CINAHL"
+    - "Scopus"
+    - "ERIC"
+    - "PsycINFO"
+    - "Cochrane Library (CENTRAL)"
+    - "CEPS / Airiti (華藝, Chinese)"
+    - "Europe PMC"
+  date_range:
+    from: "inception"
+    to: "2026-05-31"
+  language:
+    restriction: "None"
+
+# Extraction-stage classification dimensions (for the cross-tabulation the user requested)
+characterization_dimensions:
+  participant_type: ["nursing student", "nursing intern/trainee", "clinical nurse", "clinical nursing teacher"]
+  game_type: ["gamification (points/badges/leaderboard)", "game-based learning (GBL)", "serious game (full narrative/role)"]
+  nwkm_level: ["L1 reaction/engagement", "L2 knowledge/skills/confidence", "L3 clinical behavior change", "L4 patient/system outcome"]
+  specialty: ["critical care/CPR/medication safety", "infection control/wound care", "communication/mental health", "long-term care", "other basic nursing"]
+  intervention_duration: ["single (<=1 day)", "short-term (1 week-1 month)", "long-term (>1 month)"]
+  platform: ["digital (app/web)", "board/card/physical", "hybrid"]
+  comparator_type: ["lecture", "case discussion", "ordinary course/self-study"]
+
+grade:
+  tool: "GRADE"
+  starting_certainty:
+    rct: "HIGH"
+
+analysis_type:
+  preliminary: "pairwise"

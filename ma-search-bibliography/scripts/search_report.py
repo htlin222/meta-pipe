@@ -14,7 +14,7 @@ def parse_count(path: Path) -> int | None:
     if not path.exists():
         return None
     pattern = re.compile(r"^(count|retrieved)\s*:\s*(\d+)")
-    for line in path.read_text().splitlines():
+    for line in path.read_text(encoding="utf-8").splitlines():
         match = pattern.match(line.strip())
         if match:
             return int(match.group(2))
@@ -22,7 +22,7 @@ def parse_count(path: Path) -> int | None:
 
 
 def read_query(path: Path, section: str) -> str:
-    content = path.read_text().splitlines()
+    content = path.read_text(encoding="utf-8").splitlines()
     start = None
     for i, line in enumerate(content):
         if line.strip().lower() == f"[{section}]":
@@ -93,7 +93,7 @@ def main() -> None:
         lines.append(f"### {db}")
         lines.append(query or "(missing)")
 
-    out_md.write_text("\n".join(lines) + "\n")
+    out_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
