@@ -339,15 +339,15 @@ def build_suggestions() -> list[dict]:
             "title": TL("Two genuinely independent reviewers + conflict resolution", "兩位真正獨立的 reviewer + 衝突解決"),
             "where": TL("Screening (Stage 03)", "篩選（Stage 03）"),
             "why": TL(
-                "meta-pipe's `--reviewer 1/2` runs one model with one prompt and writes two columns; in the example decision_r1 = decision_r2 = final (all 27/63/32). Cochrane Handbook §6.4 expects two independent reviewers and a recorded conflict-resolution step.",
-                "meta-pipe 的 `--reviewer 1/2` 是同一個 model、同一條 prompt 寫兩欄；範例中 decision_r1 = decision_r2 = final（全部 27/63/32）。Cochrane Handbook §6.4 要求兩位獨立 reviewer 並記錄衝突解決。"),
+                "meta-pipe's `--reviewer 1/2` runs one model with one prompt and writes two columns; in the example decision_r1 = decision_r2 = final (all 27/63/32). Cochrane's MECIR standard C39 (Handbook §4.6) requires (at least) two people working independently to determine eligibility — mandatory at full text, desirable at title/abstract — which identical AI columns do not provide.",
+                "meta-pipe 的 `--reviewer 1/2` 是同一個 model、同一條 prompt 寫兩欄；範例中 decision_r1 = decision_r2 = final（全部 27/63/32）。Cochrane 的 MECIR 標準 C39（Handbook §4.6）要求（至少）兩人獨立判定納入資格——全文階段為強制、標題摘要階段為建議——相同的 AI 欄位並不符合。"),
         },
         {
             "title": TL("Multi-database search + cross-source de-duplication", "多資料庫搜尋 + 跨來源去重"),
             "where": TL("Search (Stage 02)", "搜尋（Stage 02）"),
             "why": TL(
-                "The example searched only PubMed (122 records) and the dedupe step is a no-op. Cochrane Handbook §4.4 expects at least MEDLINE + Embase + CENTRAL.",
-                "範例只搜了 PubMed（122 筆），去重步驟形同無作用。Cochrane Handbook §4.4 要求至少 MEDLINE + Embase + CENTRAL。"),
+                "The example searched only PubMed (122 records) and the dedupe step is a no-op. Cochrane's MECIR standard C24 (Handbook §4.3.1) expects CENTRAL, MEDLINE and Embase to be searched (Embase if access is available) — specific named databases, not just any three.",
+                "範例只搜了 PubMed（122 筆），去重步驟形同無作用。Cochrane 的 MECIR 標準 C24（Handbook §4.3.1）要求搜尋 CENTRAL、MEDLINE 與 Embase（Embase 視有無權限）——是特定具名資料庫，不是隨便三個。"),
         },
         {
             "title": TL("Risk-of-bias assessment as an enforced gate", "Risk-of-bias 評估作為強制 gate"),
