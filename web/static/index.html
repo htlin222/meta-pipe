@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>meta-pipe · web demo</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">
+      <span class="logo">meta-pipe</span>
+      <span class="badge demo">DEMO · replay of bundled example</span>
+    </div>
+    <a class="ext" href="https://github.com/htlin222/meta-pipe" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1 id="proj-title">Loading…</h1>
+    <p id="proj-subtitle" class="muted"></p>
+    <div id="headline" class="headline"></div>
+    <div class="note">
+      A thin web shell over the meta-pipe Claude-Code pipeline. It walks each stage,
+      <strong>pauses wherever a human operator must step in</strong> (type a topic, upload a paywalled PDF,
+      confirm a decision), and shows the real output. This is a <em>replay</em> of the repo's bundled
+      <code>ici-breast-cancer</code> example — no API key, no execution.
+    </div>
+  </section>
+
+  <section class="controls">
+    <button id="btn-step" class="primary">▶ Step through pipeline</button>
+    <button id="btn-auto">⏩ Auto-play</button>
+    <button id="btn-reset" class="ghost">↺ Reset</button>
+    <div id="progress" class="progress" aria-label="pipeline progress"></div>
+  </section>
+
+  <section id="stages" class="stages"></section>
+
+  <section id="output" class="output hidden">
+    <h2>Final output</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>PRISMA 2020 flow</h3>
+        <div id="prisma" class="prisma"></div>
+      </div>
+      <div class="card">
+        <h3>Manuscript abstract</h3>
+        <pre id="abstract" class="preview"></pre>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Deliverables</h3>
+      <ul id="downloads" class="downloads"></ul>
+    </div>
+  </section>
+
+  <section class="contrast card">
+    <h2>Why this demo exists</h2>
+    <p>
+      This UI is deliberately faithful and thin: its job is to make visible that meta-pipe's engine is a
+      <strong>human + Claude-Code operator pausing at every reasoning step</strong>. A web wrapper around it is
+      still that — a wrapper. By contrast, <a href="https://ebmc.nature.edu.kg" target="_blank" rel="noopener">ebm-copilot</a>
+      is a server-side platform with its own database, orchestration and autonomous agents — a different architecture, not a UI skin.
+    </p>
+  </section>
+</main>
+
+<footer class="site foot">
+  <div class="wrap muted">
+    Demo replay · meta-pipe by Lin &amp; Yeh · UI is an optional add-on (<code>web/</code>). Live mode requires Claude API billing.
+    <span id="gen" class="gen"></span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
