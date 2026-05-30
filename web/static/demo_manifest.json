@@ -21,7 +21,7 @@
         "value": "⊕⊕⊕⊕ HIGH"
       }
     ],
-    "generated_at": "2026-05-30 11:27 UTC"
+    "generated_at": "2026-05-30 11:59 UTC"
   },
   "stages": [
     {
@@ -104,11 +104,43 @@
       "num": "03",
       "name": "Title/Abstract Screening",
       "skill": "/ma-screening-quality",
-      "summary": "Dual independent screening against PICO; agreement (kappa) reported. Step 8 confirms analysis type.",
+      "summary": "Records are screened against PICO by an LLM. meta-pipe labels this dual-review; the configuration below shows exactly how the two reviewer columns are produced.",
       "gate": {
         "type": "decision",
         "label": "Confirm analysis type: pairwise vs network meta-analysis",
         "detail": "A genuine fork that changes every downstream stage. The operator must choose -- the pipeline pauses here for a yes/no decision."
+      },
+      "llm": {
+        "source": "tooling/python/ai_screen.py",
+        "model": "claude -p --model haiku",
+        "prompt": "You are an expert systematic reviewer screening studies for a meta-analysis.\n\nELIGIBILITY CRITERIA (from the project protocol -- read carefully):\n{eligibility_criteria}\n\nSTUDY TO SCREEN:\nTitle: {title}\nAuthors: {authors}\nJournal: {journal}\nYear: {year}\nAbstract: {abstract[:1500] if abstract else \"No abstract available\"}\n\nTASK:\nBased on ONLY the title and abstract, decide if this study should be:\n1. INCLUDE - clearly meets all eligibility criteria\n2. EXCLUDE - clearly violates one or more eligibility criteria\n3. MAYBE - uncertain, needs full-text review\n\nWhen in doubt, prefer MAYBE over EXCLUDE (liberal screening at title/abstract stage).\n\nRespond in this EXACT format (one line each, no markdown, no extra text):\nDECISION: [INCLUDE/EXCLUDE/MAYBE]\nREASON: [Brief explanation in one sentence]\nCONFIDENCE: [HIGH/MEDIUM/LOW]\nEXCLUSION_CODE: [code or NONE]\n\nExclusion codes:\n{EXCLUSION_CODES}",
+        "reviewer_mechanism": "`--reviewer 1` and `--reviewer 2` call the same model with the same prompt and only write a different CSV column (Reviewer1_Decision / Reviewer2_Decision). The script even prints: \"run with --reviewer 2 for dual review, or have a human fill Reviewer2 columns.\"",
+        "decisions": {
+          "columns": [
+            "decision_r1",
+            "decision_r2",
+            "final_decision"
+          ],
+          "counts": {
+            "decision_r1": {
+              "include": 27,
+              "maybe": 63,
+              "exclude": 32
+            },
+            "decision_r2": {
+              "include": 27,
+              "maybe": 63,
+              "exclude": 32
+            },
+            "final_decision": {
+              "include": 27,
+              "maybe": 63,
+              "exclude": 32
+            }
+          },
+          "total": 122,
+          "identical": true
+        }
       },
       "artifacts": [
         {

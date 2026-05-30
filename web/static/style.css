@@ -48,6 +48,9 @@ button.primary { background: var(--accent); border-color: var(--accent); color: 
 button.ghost { background: transparent; color: var(--muted); }
 button:disabled { opacity: 0.45; cursor: default; }
 
+button.small { padding: 6px 11px; font-size: 13px; }
+.counter { font-size: 12.5px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; background: var(--panel); }
+
 .progress { display: flex; gap: 6px; flex: 1; min-width: 240px; }
 .progress .seg { flex: 1; height: 8px; border-radius: 4px; background: var(--panel2); border: 1px solid var(--line); position: relative; }
 .progress .seg.done { background: var(--ok); border-color: var(--ok); }
@@ -55,8 +58,11 @@ button:disabled { opacity: 0.45; cursor: default; }
 .progress .seg.gate { background: var(--gate); border-color: var(--gate); }
 
 .stages { display: flex; flex-direction: column; gap: 14px; margin: 20px 0 36px; }
-.stage { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; opacity: 0.5; transition: opacity 0.25s; }
-.stage.shown { opacity: 1; }
+.stage { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: none; }
+.stage.shown { display: block; }
+.stage.done { opacity: 0.62; }
+.stage.active { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(91,157,255,0.25); }
+.stage.done::after { content: "✓ done"; display: inline-block; margin-top: 8px; font-size: 11px; color: var(--ok); }
 .stage .head { display: flex; align-items: baseline; gap: 10px; }
 .stage .num { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 700; }
 .stage h2 { font-size: 17px; margin: 0; }
@@ -78,6 +84,34 @@ details.art { border: 1px solid var(--line); border-radius: 8px; background: var
 details.art > summary { cursor: pointer; padding: 8px 12px; font-size: 13px; display: flex; align-items: center; gap: 8px; }
 details.art > summary .kind { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
 .preview { margin: 0; padding: 12px; background: var(--code); border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; overflow-x: auto; font-size: 12px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; max-height: 360px; }
+
+/* action zone + gate controls (you operate these by hand) */
+.actionzone { margin-top: 14px; }
+.actionzone:empty { margin-top: 0; }
+.stage.done .actionzone { display: none; }
+.gctl { border: 1px solid var(--gate); border-radius: 10px; padding: 12px; background: rgba(255,179,64,0.06); display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.gctl-ta, .gctl textarea { width: 100%; background: var(--code); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.gctl-radios { display: flex; gap: 16px; font-size: 14px; }
+.gctl-radios label, .gctl-check { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.gctl-drop { border: 1px dashed var(--gate); border-radius: 8px; padding: 14px; text-align: center; cursor: pointer; color: var(--muted); font-size: 13px; width: 100%; }
+
+/* LLM configuration reveal */
+.llm { margin: 14px 0 0; border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--panel2); }
+.llm-h { font-weight: 700; font-size: 13.5px; }
+.llm-src { font-size: 12px; color: var(--muted); margin: 4px 0 10px; }
+.llm-field { display: block; margin: 8px 0; }
+.llm-field > span { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); margin-bottom: 4px; }
+.llm-input { width: 100%; background: var(--code); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font: 13px ui-monospace, Menlo, monospace; }
+.llm-prompt { width: 100%; background: var(--code); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 9px; font: 12px/1.5 ui-monospace, Menlo, monospace; resize: vertical; }
+.llm-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 8px 0 4px; }
+.llm-note { font-size: 12px; color: var(--gate); }
+.llm-mech { font-size: 13px; color: var(--muted); margin-top: 12px; border-left: 3px solid var(--gate); padding-left: 10px; }
+.llm-decisions { margin-top: 12px; }
+.llm-cap { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
+.dtbl { border-collapse: collapse; font-size: 13px; }
+.dtbl th, .dtbl td { border: 1px solid var(--line); padding: 5px 12px; text-align: center; }
+.dtbl th { color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.4px; }
+.dtbl td:first-child, .dtbl th:first-child { text-align: left; }
 
 .output { margin: 10px 0 36px; }
 .output h2 { font-size: 20px; }

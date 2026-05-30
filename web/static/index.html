@@ -23,17 +23,18 @@
     <p id="proj-subtitle" class="muted"></p>
     <div id="headline" class="headline"></div>
     <div class="note">
-      A thin web shell over the meta-pipe Claude-Code pipeline. It walks each stage,
-      <strong>pauses wherever a human operator must step in</strong> (type a topic, upload a paywalled PDF,
-      confirm a decision), and shows the real output. This is a <em>replay</em> of the repo's bundled
+      A web interface for the meta-pipe pipeline. <strong>There is no auto-play.</strong> You advance one stage at a time and
+      must <strong>clear each human gate by hand</strong> — type the research question, choose pairwise vs network, upload the
+      paywalled PDFs, approve the extraction. At screening you can open and edit the actual <strong>LLM configuration</strong>
+      meta-pipe uses, so you can see how the two reviewer columns are produced. It replays the bundled
       <code>ici-breast-cancer</code> example — no API key, no execution.
     </div>
   </section>
 
   <section class="controls">
-    <button id="btn-step" class="primary">▶ Step through pipeline</button>
-    <button id="btn-auto">⏩ Auto-play</button>
+    <button id="btn-begin" class="primary">▶ Begin — walk it yourself</button>
     <button id="btn-reset" class="ghost">↺ Reset</button>
+    <div id="counter" class="counter">Human gates cleared: 0 / 0</div>
     <div id="progress" class="progress" aria-label="pipeline progress"></div>
   </section>
 
@@ -60,10 +61,12 @@
   <section class="contrast card">
     <h2>About this interface</h2>
     <p>
-      This is a thin web interface for meta-pipe. It walks through the pipeline stage by stage so you can see, at a glance,
-      <strong>what each stage produces</strong> and <strong>where the pipeline pauses for human input</strong> — typing the
-      research question, uploading a paywalled PDF, confirming the analysis type, signing off on extraction and GRADE.
-      It replays the bundled <code>ici-breast-cancer</code> example, so the whole flow is easy to follow without running anything.
+      This is a web interface for meta-pipe. Rather than auto-playing a polished run, it makes you
+      <strong>clear every human gate yourself</strong>, so it is honest about how much operator input the pipeline needs:
+      the research question, a hand-written search strategy, the pairwise-vs-network choice, the paywalled PDFs, and sign-off
+      on extraction. At the screening stage it also shows the <strong>actual model and prompt</strong> meta-pipe uses — which
+      you can edit and upload — so how the reviewer columns are produced is visible rather than assumed. It replays the bundled
+      <code>ici-breast-cancer</code> example without running anything.
     </p>
   </section>
 </main>
