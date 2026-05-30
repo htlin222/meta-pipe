@@ -31,6 +31,9 @@ header .wrap { display: flex; align-items: center; justify-content: space-betwee
 .logo { font-weight: 700; letter-spacing: 0.5px; }
 .badge { font-size: 11px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); }
 .badge.demo { color: var(--gate); border-color: #4a3c1d; background: var(--gate-bg); }
+.head-right { display: flex; align-items: center; gap: 12px; }
+button.lang { font: inherit; cursor: pointer; background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 13px; }
+button.lang:hover { border-color: #3a414f; }
 
 .intro { padding: 34px 0 8px; }
 h1 { font-size: 26px; margin: 0 0 6px; line-height: 1.25; }

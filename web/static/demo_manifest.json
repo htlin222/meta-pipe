@@ -1,15 +1,27 @@
 {
   "project": {
     "name": "ici-breast-cancer",
-    "title": "Neoadjuvant Immunotherapy + Chemotherapy vs Chemotherapy Alone for Early TNBC",
-    "subtitle": "A systematic review & meta-analysis of randomized controlled trials",
+    "title": {
+      "en": "Neoadjuvant Immunotherapy + Chemotherapy vs Chemotherapy Alone for Early TNBC",
+      "zh": "早期三陰性乳癌之術前免疫治療併化療 vs 單用化療"
+    },
+    "subtitle": {
+      "en": "A systematic review & meta-analysis of randomized controlled trials",
+      "zh": "隨機對照試驗的系統性回顧與統合分析"
+    },
     "headline": [
       {
-        "label": "RCTs",
+        "label": {
+          "en": "RCTs",
+          "zh": "隨機試驗"
+        },
         "value": "5"
       },
       {
-        "label": "Patients",
+        "label": {
+          "en": "Patients",
+          "zh": "病人數"
+        },
         "value": "2,402"
       },
       {
@@ -17,40 +29,73 @@
         "value": "1.26 (1.16–1.37)"
       },
       {
-        "label": "Certainty",
+        "label": {
+          "en": "Certainty",
+          "zh": "證據等級"
+        },
         "value": "⊕⊕⊕⊕ HIGH"
       }
     ],
-    "generated_at": "2026-05-30 12:22 UTC"
+    "generated_at": "2026-05-30 12:34 UTC"
   },
   "prep": [
     {
-      "title": "Toolchain installed",
-      "detail": "uv (Python), R ≥ 4.2 + renv, Quarto, cmake. One-time `bash setup.sh`.",
+      "title": {
+        "en": "Toolchain installed",
+        "zh": "已安裝工具鏈"
+      },
+      "detail": {
+        "en": "uv (Python), R ≥ 4.2 + renv, Quarto, cmake. One-time `bash setup.sh`.",
+        "zh": "uv（Python）、R ≥ 4.2 + renv、Quarto、cmake。一次性 `bash setup.sh`。"
+      },
       "basis": "README §Requirements, setup.sh",
       "required": true
     },
     {
-      "title": "API keys in .env",
-      "detail": "PubMed key is required; Scopus/Embase, Cochrane, Zotero and an Unpaywall email are optional.",
+      "title": {
+        "en": "API keys in .env",
+        "zh": ".env 內的 API 金鑰"
+      },
+      "detail": {
+        "en": "PubMed key is required; Scopus/Embase, Cochrane, Zotero and an Unpaywall email are optional.",
+        "zh": "PubMed 金鑰為必填；Scopus/Embase、Cochrane、Zotero 與 Unpaywall email 為選填。"
+      },
       "basis": ".env.example",
       "required": true
     },
     {
-      "title": "Research question → TOPIC.txt",
-      "detail": "You write the question into projects/<name>/TOPIC.txt; the pipeline cannot start without it.",
+      "title": {
+        "en": "Research question → TOPIC.txt",
+        "zh": "研究問題 → TOPIC.txt"
+      },
+      "detail": {
+        "en": "You write the question into projects/<name>/TOPIC.txt; the pipeline cannot start without it.",
+        "zh": "你要把研究問題寫進 projects/<name>/TOPIC.txt；沒有它 pipeline 無法啟動。"
+      },
       "basis": "init_project.py, AGENTS.md",
       "required": true
     },
     {
-      "title": "Search strategy → queries.txt",
-      "detail": "You translate PICO into a database Boolean query by hand and save it as queries.txt (a MeSH-expand helper exists, but the strategy is yours).",
+      "title": {
+        "en": "Search strategy → queries.txt",
+        "zh": "搜尋策略 → queries.txt"
+      },
+      "detail": {
+        "en": "You translate PICO into a database Boolean query by hand and save it as queries.txt (a MeSH-expand helper exists, but the strategy is yours).",
+        "zh": "你要親手把 PICO 轉成資料庫 Boolean query 存成 queries.txt（有 MeSH 展開工具，但策略要自己擬）。"
+      },
       "basis": "ma-search-bibliography/SKILL.md Step 1",
       "required": true
     },
     {
-      "title": "PROSPERO registration (you do this yourself)",
-      "detail": "meta-pipe drafts prospero_registration.md but does not register it. The author's position is that registration is out of scope for the tool — the researcher registers the protocol on PROSPERO themselves before running. We list it here as a real pre-run gate.",
+      "title": {
+        "en": "PROSPERO registration (you do this yourself)",
+        "zh": "PROSPERO 註冊（需自行完成）"
+      },
+      "detail": {
+        "en": "meta-pipe drafts prospero_registration.md but does not register it. The author's position is that registration is out of scope for the tool — the researcher registers the protocol on PROSPERO themselves before running. We list it here as a real pre-run gate.",
+        "zh": "meta-pipe 會草擬 prospero_registration.md 但不會幫你註冊。原作的立場是註冊不在工具範圍內——研究者要在跑之前自行上 PROSPERO 註冊。我們把它列為真正的跑前 gate。"
+      },
       "basis": "author's stance; prospero_registration.md is a draft only",
       "required": true
     }
@@ -59,15 +104,27 @@
     {
       "id": "00_intake",
       "num": "00",
-      "name": "Topic Intake",
+      "name": {
+        "en": "Topic Intake",
+        "zh": "主題評估"
+      },
       "skill": "/ma-topic-intake",
-      "summary": "With TOPIC.txt in place, Claude refines the PICO and runs a feasibility assessment.",
+      "summary": {
+        "en": "With TOPIC.txt in place, Claude refines the PICO and runs a feasibility assessment.",
+        "zh": "TOPIC.txt 就緒後，Claude 精修 PICO 並執行可行性評估。"
+      },
       "gates": [
         {
           "type": "approval",
           "kind": "program",
-          "label": "Feasibility assessment (mandatory first step)",
-          "detail": "meta-pipe requires a ~4-hour feasibility assessment before any protocol writing or extraction. The operator confirms it passed.",
+          "label": {
+            "en": "Feasibility assessment (mandatory first step)",
+            "zh": "可行性評估（必做的第一步）"
+          },
+          "detail": {
+            "en": "meta-pipe requires a ~4-hour feasibility assessment before any protocol writing or extraction. The operator confirms it passed.",
+            "zh": "meta-pipe 要求在撰寫 protocol 或抽取資料前先做約 4 小時的可行性評估。操作者確認通過。"
+          },
           "basis": "AGENTS.md §'When User Says Start' (MANDATORY FIRST STEP)"
         }
       ],
@@ -83,9 +140,15 @@
     {
       "id": "01_protocol",
       "num": "01",
-      "name": "Protocol",
+      "name": {
+        "en": "Protocol",
+        "zh": "計畫書"
+      },
       "skill": "/ma-search-bibliography",
-      "summary": "PICO formalised to pico.yaml with eligibility criteria. (PROSPERO is a pre-run prep gate, not a step here.)",
+      "summary": {
+        "en": "PICO formalised to pico.yaml with eligibility criteria. (PROSPERO is a pre-run prep gate, not a step here.)",
+        "zh": "PICO 形式化為 pico.yaml 並訂出納入條件。（PROSPERO 是跑前 prep gate，不在此步。）"
+      },
       "gates": [],
       "artifacts": [
         {
@@ -99,9 +162,15 @@
     {
       "id": "02_search",
       "num": "02",
-      "name": "Search & Dedupe",
+      "name": {
+        "en": "Search & Dedupe",
+        "zh": "搜尋與去重"
+      },
       "skill": "/ma-search-bibliography",
-      "summary": "Your queries.txt is run against the database(s) and results are exported to a versioned .bib.",
+      "summary": {
+        "en": "Your queries.txt is run against the database(s) and results are exported to a versioned .bib.",
+        "zh": "用你的 queries.txt 對資料庫執行搜尋，結果匯出為版本化 .bib。"
+      },
       "gates": [],
       "artifacts": [
         {
@@ -117,11 +186,17 @@
       ],
       "metrics": [
         {
-          "label": "Records identified",
+          "label": {
+            "en": "Records identified",
+            "zh": "找到紀錄"
+          },
           "value": "122"
         },
         {
-          "label": "Source",
+          "label": {
+            "en": "Source",
+            "zh": "來源"
+          },
           "value": "PubMed/MEDLINE"
         }
       ]
@@ -129,22 +204,40 @@
     {
       "id": "03_screening",
       "num": "03",
-      "name": "Title/Abstract Screening",
+      "name": {
+        "en": "Title/Abstract Screening",
+        "zh": "標題摘要篩選"
+      },
       "skill": "/ma-screening-quality",
-      "summary": "Records are screened against PICO by an LLM. The configuration below shows exactly how the two reviewer columns are produced.",
+      "summary": {
+        "en": "Records are screened against PICO by an LLM. The configuration below shows exactly how the two reviewer columns are produced.",
+        "zh": "由 LLM 依 PICO 篩選紀錄。下方設定顯示兩個 reviewer 欄位實際是怎麼產生的。"
+      },
       "gates": [
         {
           "type": "checkpoint",
           "kind": "program",
-          "label": "Inter-reviewer agreement κ ≥ 0.60 before Stage 04",
-          "detail": "meta-pipe gates the 03→04 transition on Cohen's κ. In this finished example the threshold is treated as met.",
+          "label": {
+            "en": "Inter-reviewer agreement κ ≥ 0.60 before Stage 04",
+            "zh": "進入 Stage 04 前 inter-reviewer κ ≥ 0.60"
+          },
+          "detail": {
+            "en": "meta-pipe gates the 03→04 transition on Cohen's κ. In this finished example the threshold is treated as met.",
+            "zh": "meta-pipe 以 Cohen's κ 把關 03→04。在這份完成的範例中視為已達標。"
+          },
           "basis": "ma-end-to-end/SKILL.md §Quality Gates"
         },
         {
           "type": "decision",
           "kind": "program",
-          "label": "Confirm analysis type: pairwise vs network",
-          "detail": "A genuine fork that changes every downstream stage; meta-pipe names this the Analysis Type Confirmation Gate (Step 8).",
+          "label": {
+            "en": "Confirm analysis type: pairwise vs network",
+            "zh": "確認分析型別：pairwise vs network"
+          },
+          "detail": {
+            "en": "A genuine fork that changes every downstream stage; meta-pipe names this the Analysis Type Confirmation Gate (Step 8).",
+            "zh": "這個分岔會改變所有下游階段；meta-pipe 稱之為 Analysis Type Confirmation Gate（Step 8）。"
+          },
           "basis": "AGENTS.md row 03b; ma-screening-quality/SKILL.md Step 8"
         }
       ],
@@ -152,7 +245,10 @@
         "source": "tooling/python/ai_screen.py",
         "model": "claude -p --model haiku",
         "prompt": "You are an expert systematic reviewer screening studies for a meta-analysis.\n\nELIGIBILITY CRITERIA (from the project protocol -- read carefully):\n{eligibility_criteria}\n\nSTUDY TO SCREEN:\nTitle: {title}\nAuthors: {authors}\nJournal: {journal}\nYear: {year}\nAbstract: {abstract[:1500] if abstract else \"No abstract available\"}\n\nTASK:\nBased on ONLY the title and abstract, decide if this study should be:\n1. INCLUDE - clearly meets all eligibility criteria\n2. EXCLUDE - clearly violates one or more eligibility criteria\n3. MAYBE - uncertain, needs full-text review\n\nWhen in doubt, prefer MAYBE over EXCLUDE (liberal screening at title/abstract stage).\n\nRespond in this EXACT format (one line each, no markdown, no extra text):\nDECISION: [INCLUDE/EXCLUDE/MAYBE]\nREASON: [Brief explanation in one sentence]\nCONFIDENCE: [HIGH/MEDIUM/LOW]\nEXCLUSION_CODE: [code or NONE]\n\nExclusion codes:\n{EXCLUSION_CODES}",
-        "reviewer_mechanism": "`--reviewer 1` and `--reviewer 2` call the same model with the same prompt and only write a different CSV column (Reviewer1_Decision / Reviewer2_Decision). The script even prints: \"run with --reviewer 2 for dual review, or have a human fill Reviewer2 columns.\"",
+        "reviewer_mechanism": {
+          "en": "`--reviewer 1` and `--reviewer 2` call the same model with the same prompt and only write a different CSV column (Reviewer1_Decision / Reviewer2_Decision). The script even prints: \"run with --reviewer 2 for dual review, or have a human fill Reviewer2 columns.\"",
+          "zh": "`--reviewer 1` 與 `--reviewer 2` 用同一個 model、同一條 prompt，只是寫入不同的 CSV 欄位（Reviewer1_Decision / Reviewer2_Decision）。程式甚至印出：「run with --reviewer 2 for dual review, or have a human fill Reviewer2 columns.」"
+        },
         "decisions": {
           "columns": [
             "decision_r1",
@@ -189,15 +285,24 @@
       ],
       "metrics": [
         {
-          "label": "Screened",
+          "label": {
+            "en": "Screened",
+            "zh": "已篩"
+          },
           "value": "122"
         },
         {
-          "label": "Excluded",
+          "label": {
+            "en": "Excluded",
+            "zh": "排除"
+          },
           "value": "117"
         },
         {
-          "label": "To full-text",
+          "label": {
+            "en": "To full-text",
+            "zh": "進全文"
+          },
           "value": "5"
         }
       ]
@@ -205,22 +310,40 @@
     {
       "id": "04_fulltext",
       "num": "04",
-      "name": "Full-text Retrieval & Eligibility",
+      "name": {
+        "en": "Full-text Retrieval & Eligibility",
+        "zh": "全文取得與資格審查"
+      },
       "skill": "/ma-fulltext-management",
-      "summary": "Open-access PDFs are fetched for low-confidence studies via Unpaywall; paywalled PDFs the operator must supply.",
+      "summary": {
+        "en": "Open-access PDFs are fetched for low-confidence studies via Unpaywall; paywalled PDFs the operator must supply.",
+        "zh": "低信心研究的 OA PDF 由 Unpaywall 自動抓取；付費 PDF 需操作者自行提供。"
+      },
       "gates": [
         {
           "type": "upload",
           "kind": "program",
-          "label": "Supply paywalled full-text PDFs",
-          "detail": "meta-pipe retrieves OA PDFs automatically, but flagged/paywalled studies need the operator to place the PDF in 04_fulltext/. The interface adds an upload box for exactly that step.",
+          "label": {
+            "en": "Supply paywalled full-text PDFs",
+            "zh": "提供付費全文 PDF"
+          },
+          "detail": {
+            "en": "meta-pipe retrieves OA PDFs automatically, but flagged/paywalled studies need the operator to place the PDF in 04_fulltext/. The interface adds an upload box for exactly that step.",
+            "zh": "meta-pipe 會自動抓 OA PDF，但被標記/付費的研究需操作者把 PDF 放進 04_fulltext/。介面就為這一步加上傳框。"
+          },
           "basis": "ma-fulltext-management/SKILL.md Phase 2 (Targeted PDF Retrieval)"
         },
         {
           "type": "checkpoint",
           "kind": "program",
-          "label": "Full-text screening κ ≥ 0.60 before Stage 05",
-          "detail": "The 04→05 transition is gated on full-text screening agreement.",
+          "label": {
+            "en": "Full-text screening κ ≥ 0.60 before Stage 05",
+            "zh": "進入 Stage 05 前全文篩選 κ ≥ 0.60"
+          },
+          "detail": {
+            "en": "The 04→05 transition is gated on full-text screening agreement.",
+            "zh": "04→05 的轉換以全文篩選一致性把關。"
+          },
           "basis": "ma-end-to-end/SKILL.md §Quality Gates"
         }
       ],
@@ -238,11 +361,17 @@
       ],
       "metrics": [
         {
-          "label": "Full-text sought",
+          "label": {
+            "en": "Full-text sought",
+            "zh": "索取全文"
+          },
           "value": "5"
         },
         {
-          "label": "Included",
+          "label": {
+            "en": "Included",
+            "zh": "納入"
+          },
           "value": "5"
         }
       ]
@@ -250,15 +379,27 @@
     {
       "id": "05_extraction",
       "num": "05",
-      "name": "Data Extraction & RoB",
+      "name": {
+        "en": "Data Extraction & RoB",
+        "zh": "資料抽取與 RoB"
+      },
       "skill": "/ma-data-extraction",
-      "summary": "Structured outcome data are extracted; low-confidence fields are flagged. (A risk-of-bias schema is defined in pico.yaml.)",
+      "summary": {
+        "en": "Structured outcome data are extracted; low-confidence fields are flagged. (A risk-of-bias schema is defined in pico.yaml.)",
+        "zh": "抽取結構化結果資料；低信心欄位被標記。（pico.yaml 已定義 risk-of-bias schema。）"
+      },
       "gates": [
         {
           "type": "checkpoint",
           "kind": "program",
-          "label": "Extraction completeness — all included studies extracted",
-          "detail": "meta-pipe gates the 05→06 transition on extraction completeness.",
+          "label": {
+            "en": "Extraction completeness — all included studies extracted",
+            "zh": "抽取完整性 — 所有納入研究皆已抽取"
+          },
+          "detail": {
+            "en": "meta-pipe gates the 05→06 transition on extraction completeness.",
+            "zh": "meta-pipe 以抽取完整性把關 05→06。"
+          },
           "basis": "ma-end-to-end/SKILL.md §Quality Gates"
         }
       ],
@@ -276,11 +417,17 @@
       ],
       "metrics": [
         {
-          "label": "Trials",
+          "label": {
+            "en": "Trials",
+            "zh": "試驗數"
+          },
           "value": "5"
         },
         {
-          "label": "Patients",
+          "label": {
+            "en": "Patients",
+            "zh": "病人數"
+          },
           "value": "2,402"
         }
       ]
@@ -288,15 +435,27 @@
     {
       "id": "06_analysis",
       "num": "06",
-      "name": "Meta-Analysis (R)",
+      "name": {
+        "en": "Meta-Analysis (R)",
+        "zh": "統合分析（R）"
+      },
       "skill": "/ma-meta-analysis",
-      "summary": "Random-effects pooling in R (meta/metafor): forest plots, subgroup and sensitivity analyses.",
+      "summary": {
+        "en": "Random-effects pooling in R (meta/metafor): forest plots, subgroup and sensitivity analyses.",
+        "zh": "在 R（meta/metafor）做隨機效應合併：forest plot、次群組與敏感度分析。"
+      },
       "gates": [
         {
           "type": "checkpoint",
           "kind": "program",
-          "label": "All figures ≥ 300 DPI before Stage 07",
-          "detail": "The 06→07 transition is gated on figure resolution.",
+          "label": {
+            "en": "All figures ≥ 300 DPI before Stage 07",
+            "zh": "進入 Stage 07 前所有圖 ≥ 300 DPI"
+          },
+          "detail": {
+            "en": "The 06→07 transition is gated on figure resolution.",
+            "zh": "06→07 的轉換以圖檔解析度把關。"
+          },
           "basis": "ma-end-to-end/SKILL.md §Quality Gates"
         }
       ],
@@ -330,15 +489,27 @@
     {
       "id": "07_manuscript",
       "num": "07",
-      "name": "Manuscript (Quarto)",
+      "name": {
+        "en": "Manuscript (Quarto)",
+        "zh": "稿件（Quarto）"
+      },
       "skill": "/ma-manuscript-quarto",
-      "summary": "Sections, tables, figures and references are assembled and rendered.",
+      "summary": {
+        "en": "Sections, tables, figures and references are assembled and rendered.",
+        "zh": "組裝並渲染章節、表格、圖與參考文獻。"
+      },
       "gates": [
         {
           "type": "approval",
           "kind": "program",
-          "label": "Approve the manuscript outline before any writing",
-          "detail": "meta-pipe makes Phase 1 (outline + checklist) mandatory and requires operator approval before a single section is written.",
+          "label": {
+            "en": "Approve the manuscript outline before any writing",
+            "zh": "撰寫前先核准稿件大綱"
+          },
+          "detail": {
+            "en": "meta-pipe makes Phase 1 (outline + checklist) mandatory and requires operator approval before a single section is written.",
+            "zh": "meta-pipe 把 Phase 1（大綱 + 檢核表）設為必做，且要操作者核准後才動筆寫任何一節。"
+          },
           "basis": "ma-manuscript-quarto/SKILL.md Phase 1 (MANDATORY before any writing)"
         }
       ],
@@ -351,11 +522,17 @@
       ],
       "metrics": [
         {
-          "label": "Word count",
+          "label": {
+            "en": "Word count",
+            "zh": "字數"
+          },
           "value": "~4,900"
         },
         {
-          "label": "Tables",
+          "label": {
+            "en": "Tables",
+            "zh": "表格"
+          },
           "value": "3 + 4 supp."
         }
       ]
@@ -363,9 +540,15 @@
     {
       "id": "08_grade",
       "num": "08",
-      "name": "GRADE & Peer Review",
+      "name": {
+        "en": "GRADE & Peer Review",
+        "zh": "GRADE 與同儕審查"
+      },
       "skill": "/ma-peer-review",
-      "summary": "GRADE certainty assessment and Summary-of-Findings table are written into the manuscript supplement.",
+      "summary": {
+        "en": "GRADE certainty assessment and Summary-of-Findings table are written into the manuscript supplement.",
+        "zh": "GRADE 證據等級評估與 Summary-of-Findings 表寫入稿件補充資料。"
+      },
       "gates": [],
       "artifacts": [
         {
@@ -376,7 +559,10 @@
       ],
       "metrics": [
         {
-          "label": "Primary outcome certainty",
+          "label": {
+            "en": "Primary outcome certainty",
+            "zh": "主要結果證據等級"
+          },
           "value": "⊕⊕⊕⊕ HIGH"
         }
       ]
@@ -384,15 +570,27 @@
     {
       "id": "09_qa",
       "num": "09",
-      "name": "QA & Submission Prep",
+      "name": {
+        "en": "QA & Submission Prep",
+        "zh": "QA 與投稿準備"
+      },
       "skill": "/ma-publication-quality",
-      "summary": "Overclaim audit, DOI verification, PRISMA completeness and a final readiness score.",
+      "summary": {
+        "en": "Overclaim audit, DOI verification, PRISMA completeness and a final readiness score.",
+        "zh": "誇大宣稱稽核、DOI 驗證、PRISMA 完整性與最終就緒分數。"
+      },
       "gates": [
         {
           "type": "checkpoint",
           "kind": "program",
-          "label": "PRISMA 27/27 + publication readiness ≥ 95%",
-          "detail": "The final gate: validate_pipeline.py / final_qa_report.py block on failures.",
+          "label": {
+            "en": "PRISMA 27/27 + publication readiness ≥ 95%",
+            "zh": "PRISMA 27/27 + 發表就緒 ≥ 95%"
+          },
+          "detail": {
+            "en": "The final gate: validate_pipeline.py / final_qa_report.py block on failures.",
+            "zh": "最後一道 gate：validate_pipeline.py / final_qa_report.py 失敗即擋下。"
+          },
           "basis": "ma-end-to-end/SKILL.md §Resources; ma-publication-quality/SKILL.md"
         }
       ],
@@ -405,7 +603,10 @@
       ],
       "metrics": [
         {
-          "label": "Status",
+          "label": {
+            "en": "Status",
+            "zh": "狀態"
+          },
           "value": "99% complete"
         }
       ]
@@ -417,15 +618,30 @@
     "downloads": [
       {
         "label": "manuscript.pdf",
-        "note": "rendered in live mode via Quarto"
+        "note": {
+          "en": "rendered in live mode via Quarto",
+          "zh": "live 模式用 Quarto 渲染"
+        }
       },
       {
-        "label": "PRISMA 2020 flow diagram",
-        "note": "shown above"
+        "label": {
+          "en": "PRISMA 2020 flow diagram",
+          "zh": "PRISMA 2020 流程圖"
+        },
+        "note": {
+          "en": "shown above",
+          "zh": "見上方"
+        }
       },
       {
-        "label": "forest plots + SoF table",
-        "note": "produced by stage 06 / 08"
+        "label": {
+          "en": "forest plots + SoF table",
+          "zh": "forest plot + SoF 表"
+        },
+        "note": {
+          "en": "produced by stage 06 / 08",
+          "zh": "由 stage 06 / 08 產生"
+        }
       }
     ]
   }

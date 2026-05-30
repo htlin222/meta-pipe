@@ -11,6 +11,10 @@ website?* The answer is a **thin shell** — the pipeline walks stage by stage a
 paywalled PDF, confirm pairwise-vs-network, sign off on extraction/GRADE). Those
 pauses are the point, and the UI makes them prominent.
 
+The UI is **bilingual (English / 繁體中文)** via a header toggle. Narrative text
+is bilingual in the manifest; code, file paths, `basis` lines, prompts and
+medical values stay in English.
+
 ## Two modes
 
 | Mode | What it does | Cost |

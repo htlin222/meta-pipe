@@ -11,9 +11,12 @@
   <div class="wrap">
     <div class="brand">
       <span class="logo">meta-pipe</span>
-      <span class="badge demo">DEMO · replay of bundled example</span>
+      <span class="badge demo" data-i18n="badge_demo">DEMO · replay of bundled example</span>
     </div>
-    <a class="ext" href="https://github.com/htlin222/meta-pipe" target="_blank" rel="noopener">GitHub ↗</a>
+    <div class="head-right">
+      <button id="btn-lang" class="lang">中文</button>
+      <a class="ext" href="https://github.com/htlin222/meta-pipe" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
   </div>
 </header>
 
@@ -22,22 +25,15 @@
     <h1 id="proj-title">Loading…</h1>
     <p id="proj-subtitle" class="muted"></p>
     <div id="headline" class="headline"></div>
-    <div class="note">
-      A web interface for the meta-pipe pipeline. <strong>There is no auto-play.</strong> First you prepare everything meta-pipe
-      needs <em>before</em> it can run; then you advance one stage at a time, clearing each gate that exists in
-      <strong>meta-pipe's own program</strong> by hand. Every gate cites its <code>basis</code> in the repo. At screening you can
-      open and edit the actual <strong>LLM configuration</strong> meta-pipe uses. It replays the bundled
-      <code>ici-breast-cancer</code> example — no API key, no execution.
-    </div>
+    <div class="note" data-i18n="intro"></div>
   </section>
 
   <section id="prep" class="prep card">
     <div class="prep-head">
-      <h2>Before you run — prepare these</h2>
+      <h2 data-i18n="prep_h">Before you run — prepare these</h2>
       <span id="prep-counter" class="counter">Prepared: 0 / 0</span>
     </div>
-    <p class="muted">meta-pipe needs all of this in place before the pipeline starts — including registering the protocol on
-      PROSPERO yourself (the author's position is that registration is out of scope for the tool). Tick each to unlock the run.</p>
+    <p class="muted" data-i18n="prep_desc"></p>
     <div id="prep-list"></div>
   </section>
 
@@ -51,48 +47,38 @@
   <section id="stages" class="stages"></section>
 
   <section id="output" class="output hidden">
-    <h2>Final output</h2>
+    <h2 data-i18n="out_h">Final output</h2>
     <div class="grid">
       <div class="card">
-        <h3>PRISMA 2020 flow</h3>
+        <h3 data-i18n="prisma_h">PRISMA 2020 flow</h3>
         <div id="prisma" class="prisma"></div>
       </div>
       <div class="card">
-        <h3>Manuscript abstract</h3>
+        <h3 data-i18n="abs_h">Manuscript abstract</h3>
         <pre id="abstract" class="preview"></pre>
       </div>
     </div>
     <div class="card">
-      <h3>Deliverables</h3>
+      <h3 data-i18n="deliv_h">Deliverables</h3>
       <ul id="downloads" class="downloads"></ul>
     </div>
   </section>
 
   <section id="suggestions" class="suggest card hidden">
-    <h2>Our suggestions — gates we would add</h2>
-    <p class="muted">
-      These are <strong>our</strong> opinion about what a strict systematic review needs and meta-pipe does not yet enforce.
-      They are <strong>not</strong> part of the upstream pull request — they live only on this page. Each says why we would add it.
-    </p>
+    <h2 data-i18n="sug_h">Our suggestions — gates we would add</h2>
+    <p class="muted" data-i18n="sug_desc"></p>
     <div id="suggest-list"></div>
   </section>
 
   <section class="contrast card">
-    <h2>About this interface</h2>
-    <p>
-      Rather than auto-playing a polished run, this interface makes you <strong>prepare the prerequisites</strong> and then
-      <strong>clear each meta-pipe gate yourself</strong>, so it is honest about how much the pipeline depends on the operator.
-      Every gate is grounded in meta-pipe's own program and cites its <code>basis</code>; gates we think are <em>missing</em>
-      are kept separate, labelled as ours, and left off the pull request. At screening it also shows the
-      <strong>actual model and prompt</strong> meta-pipe uses — editable and uploadable — so how the reviewer columns are
-      produced is visible rather than assumed. It replays the bundled <code>ici-breast-cancer</code> example without running anything.
-    </p>
+    <h2 data-i18n="about_h">About this interface</h2>
+    <p data-i18n="about_b"></p>
   </section>
 </main>
 
 <footer class="site foot">
   <div class="wrap muted">
-    Demo replay · meta-pipe by Lin &amp; Yeh · UI is an optional add-on (<code>web/</code>). Live mode requires Claude API billing.
+    <span data-i18n="foot"></span>
     <span id="gen" class="gen"></span>
   </div>
 </footer>
