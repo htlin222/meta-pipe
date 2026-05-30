@@ -3,21 +3,32 @@
 
 Scans the bundled example project (``projects/ici-breast-cancer/``) and emits a
 self-contained ``demo_manifest.json`` that the static frontend replays stage by
-stage. No API keys, no Claude tokens, no live execution -- it simply surfaces the
-real artifacts that already live in the repo.
+stage. No API keys, no Claude tokens, no live execution -- it surfaces the real
+artifacts that already live in the repo.
+
+The gates are grounded in meta-pipe's own program and documentation, in three
+classes:
+
+* **prep**    -- things the researcher must prepare BEFORE running (environment,
+                 API keys, TOPIC.txt, the hand-written search strategy, and the
+                 PROSPERO registration the researcher does themselves).
+* **program** -- pauses/checkpoints that exist in meta-pipe today; each carries a
+                 ``basis`` pointing at where in the repo it comes from.
+* **suggested** (separate ``suggestions.json``, only emitted with
+                 ``--with-suggestions``) -- gates meta-pipe does NOT have that we
+                 would add, each with a ``why``. These are our opinion and are
+                 kept OFF the upstream PR.
 
 Run from the repo root:
 
-    uv run web/build_demo_manifest.py
-
-Or point it at a different finished project:
-
-    uv run web/build_demo_manifest.py --project projects/your-project
+    uv run web/build_demo_manifest.py                    # PR build (no suggestions)
+    uv run web/build_demo_manifest.py --with-suggestions # our deploy build
 """
 
 from __future__ import annotations
 
 import argparse
+import csv as _csv
 import json
 import shutil
 from datetime import datetime, timezone
@@ -27,7 +38,6 @@ from pathlib import Path
 
 
 def read_text(path: Path, max_chars: int = 2400) -> str:
-    """Read a file, collapse to a preview, never explode if it is missing."""
     if not path.exists():
         return ""
     text = path.read_text(encoding="utf-8", errors="replace").strip()
@@ -47,17 +57,12 @@ def read_head(path: Path, n_lines: int, max_chars: int = 2400) -> str:
 
 
 def extract_screen_prompt(repo: Path) -> str:
-    """Pull the real title/abstract screening prompt out of ai_screen.py.
-
-    This is the actual prompt meta-pipe sends to the model. We surface it
-    verbatim so the operator can see — and edit — what drives screening.
-    """
+    """Pull the real title/abstract screening prompt out of ai_screen.py."""
     src = repo / "tooling/python/ai_screen.py"
     if not src.exists():
         return ""
     text = src.read_text(encoding="utf-8", errors="replace")
-    marker = "def screen_one("
-    i = text.find(marker)
+    i = text.find("def screen_one(")
     if i == -1:
         return ""
     j = text.find('prompt = f"""', i)
@@ -69,15 +74,7 @@ def extract_screen_prompt(repo: Path) -> str:
 
 
 def screening_decision_counts(proj: Path) -> dict:
-    """Count the three decision columns in the screened CSV.
-
-    In this example Reviewer1, Reviewer2 and the final decision are identical —
-    because meta-pipe's `--reviewer 1/2` runs the *same* model and prompt and
-    only writes a different column. We surface the real counts so this is
-    self-evident rather than asserted.
-    """
-    import csv as _csv
-
+    """Count the three decision columns; in this example they are identical."""
     f = proj / "03_screening" / "round-01_decisions_ai_screened.csv"
     out = {"columns": ["decision_r1", "decision_r2", "final_decision"], "counts": {}, "total": 0}
     if not f.exists():
@@ -95,57 +92,77 @@ def screening_decision_counts(proj: Path) -> dict:
     return out
 
 
-# --- stage definitions -----------------------------------------------------
-# Each stage maps a pipeline phase to (a) the human gate that pauses it and
-# (b) the real artifacts produced. The gates are not glossed over: the UI makes
-# the operator clear each one by hand, so the amount of human input the pipeline
-# actually needs is felt rather than narrated.
+# --- pre-run preparation ----------------------------------------------------
+# Files / actions the researcher must have ready before meta-pipe runs at all.
 
-GATE_NONE = None
+
+def build_prep() -> list[dict]:
+    return [
+        {
+            "title": "Toolchain installed",
+            "detail": "uv (Python), R ≥ 4.2 + renv, Quarto, cmake. One-time `bash setup.sh`.",
+            "basis": "README §Requirements, setup.sh",
+            "required": True,
+        },
+        {
+            "title": "API keys in .env",
+            "detail": "PubMed key is required; Scopus/Embase, Cochrane, Zotero and an Unpaywall email are optional.",
+            "basis": ".env.example",
+            "required": True,
+        },
+        {
+            "title": "Research question → TOPIC.txt",
+            "detail": "You write the question into projects/<name>/TOPIC.txt; the pipeline cannot start without it.",
+            "basis": "init_project.py, AGENTS.md",
+            "required": True,
+        },
+        {
+            "title": "Search strategy → queries.txt",
+            "detail": "You translate PICO into a database Boolean query by hand and save it as queries.txt (a MeSH-expand helper exists, but the strategy is yours).",
+            "basis": "ma-search-bibliography/SKILL.md Step 1",
+            "required": True,
+        },
+        {
+            "title": "PROSPERO registration (you do this yourself)",
+            "detail": "meta-pipe drafts prospero_registration.md but does not register it. The author's position is that registration is out of scope for the tool — the researcher registers the protocol on PROSPERO themselves before running. We list it here as a real pre-run gate.",
+            "basis": "author's stance; prospero_registration.md is a draft only",
+            "required": True,
+        },
+    ]
+
+
+# --- in-pipeline gates that exist in meta-pipe today ------------------------
+# Each gate: type drives the UI control; kind="program"; basis = where it lives.
+
+
+def G(type_, label, detail, basis):
+    return {"type": type_, "kind": "program", "label": label, "detail": detail, "basis": basis}
 
 
 def build_stages(proj: Path, repo: Path) -> list[dict]:
     return [
         {
-            "id": "00_intake",
-            "num": "00",
-            "name": "Topic Intake",
-            "skill": "/ma-topic-intake",
-            "summary": "Operator states the research question; Claude refines PICO and runs a feasibility check.",
-            "gate": {
-                "type": "input",
-                "label": "Research question (text input)",
-                "detail": "The pipeline cannot start without a human-supplied topic. In live mode this is a text box; here we replay the real TOPIC.txt.",
-            },
-            "artifacts": [
-                {"name": "TOPIC.txt", "kind": "text", "preview": read_head(proj / "01_protocol/TOPIC.txt", 24)},
+            "id": "00_intake", "num": "00", "name": "Topic Intake", "skill": "/ma-topic-intake",
+            "summary": "With TOPIC.txt in place, Claude refines the PICO and runs a feasibility assessment.",
+            "gates": [
+                G("approval", "Feasibility assessment (mandatory first step)",
+                  "meta-pipe requires a ~4-hour feasibility assessment before any protocol writing or extraction. The operator confirms it passed.",
+                  "AGENTS.md §'When User Says Start' (MANDATORY FIRST STEP)"),
             ],
+            "artifacts": [{"name": "TOPIC.txt", "kind": "text", "preview": read_head(proj / "01_protocol/TOPIC.txt", 24)}],
             "metrics": [],
         },
         {
-            "id": "01_protocol",
-            "num": "01",
-            "name": "Protocol & PROSPERO",
-            "skill": "/ma-search-bibliography",
-            "summary": "PICO formalised to pico.yaml, eligibility criteria and the PROSPERO registration draft.",
-            "gate": {
-                "type": "human-action",
-                "label": "PROSPERO registration (off-platform)",
-                "detail": "Registering the protocol on PROSPERO is a manual human action on an external website -- a web UI can draft it but cannot complete it.",
-            },
-            "artifacts": [
-                {"name": "pico.yaml", "kind": "code", "preview": read_head(proj / "01_protocol/pico.yaml", 35)},
-                {"name": "prospero_registration.md", "kind": "text", "preview": read_head(proj / "01_protocol/prospero_registration.md", 30)},
-            ],
+            "id": "01_protocol", "num": "01", "name": "Protocol", "skill": "/ma-search-bibliography",
+            "summary": "PICO formalised to pico.yaml with eligibility criteria. (PROSPERO is a pre-run prep gate, not a step here.)",
+            "gates": [],
+            "artifacts": [{"name": "pico.yaml", "kind": "code", "preview": read_head(proj / "01_protocol/pico.yaml", 35)}],
             "metrics": [],
         },
         {
-            "id": "02_search",
-            "num": "02",
-            "name": "Search & Dedupe",
-            "skill": "/ma-search-bibliography",
-            "summary": "Database search (PubMed/MEDLINE) executed via API, results deduplicated to a clean .bib.",
-            "gate": GATE_NONE,
+            "id": "02_search", "num": "02", "name": "Search & Dedupe", "skill": "/ma-search-bibliography",
+            "summary": "Your queries.txt is run against the database(s) and results are exported to a versioned .bib.",
+            "gates": [],
             "artifacts": [
                 {"name": "SEARCH_COMPLETION_REPORT.md", "kind": "text", "preview": read_head(proj / "02_search/SEARCH_COMPLETION_REPORT.md", 30)},
                 {"name": "round-01_pubmed_log.md", "kind": "text", "preview": read_text(proj / "02_search/round-01_pubmed_log.md", 1200)},
@@ -153,18 +170,16 @@ def build_stages(proj: Path, repo: Path) -> list[dict]:
             "metrics": [{"label": "Records identified", "value": "122"}, {"label": "Source", "value": "PubMed/MEDLINE"}],
         },
         {
-            "id": "03_screening",
-            "num": "03",
-            "name": "Title/Abstract Screening",
-            "skill": "/ma-screening-quality",
-            "summary": "Records are screened against PICO by an LLM. meta-pipe labels this dual-review; the configuration below shows exactly how the two reviewer columns are produced.",
-            "gate": {
-                "type": "decision",
-                "label": "Confirm analysis type: pairwise vs network meta-analysis",
-                "detail": "A genuine fork that changes every downstream stage. The operator must choose -- the pipeline pauses here for a yes/no decision.",
-            },
-            # The real LLM configuration, surfaced verbatim and made editable so
-            # the operator can see what actually drives screening.
+            "id": "03_screening", "num": "03", "name": "Title/Abstract Screening", "skill": "/ma-screening-quality",
+            "summary": "Records are screened against PICO by an LLM. The configuration below shows exactly how the two reviewer columns are produced.",
+            "gates": [
+                G("checkpoint", "Inter-reviewer agreement κ ≥ 0.60 before Stage 04",
+                  "meta-pipe gates the 03→04 transition on Cohen's κ. In this finished example the threshold is treated as met.",
+                  "ma-end-to-end/SKILL.md §Quality Gates"),
+                G("decision", "Confirm analysis type: pairwise vs network",
+                  "A genuine fork that changes every downstream stage; meta-pipe names this the Analysis Type Confirmation Gate (Step 8).",
+                  "AGENTS.md row 03b; ma-screening-quality/SKILL.md Step 8"),
+            ],
             "llm": {
                 "source": "tooling/python/ai_screen.py",
                 "model": "claude -p --model haiku",
@@ -176,43 +191,34 @@ def build_stages(proj: Path, repo: Path) -> list[dict]:
                 ),
                 "decisions": screening_decision_counts(proj),
             },
-            "artifacts": [
-                {"name": "AI_SCREENING_REPORT.md", "kind": "text", "preview": read_head(proj / "03_screening/AI_SCREENING_REPORT.md", 28)},
-            ],
-            "metrics": [
-                {"label": "Screened", "value": "122"},
-                {"label": "Excluded", "value": "117"},
-                {"label": "To full-text", "value": "5"},
-            ],
+            "artifacts": [{"name": "AI_SCREENING_REPORT.md", "kind": "text", "preview": read_head(proj / "03_screening/AI_SCREENING_REPORT.md", 28)}],
+            "metrics": [{"label": "Screened", "value": "122"}, {"label": "Excluded", "value": "117"}, {"label": "To full-text", "value": "5"}],
         },
         {
-            "id": "04_fulltext",
-            "num": "04",
-            "name": "Full-text Retrieval & Eligibility",
-            "skill": "/ma-fulltext-management",
-            "summary": "Open-access PDFs fetched automatically (Unpaywall); paywalled PDFs must be uploaded by the operator.",
-            "gate": {
-                "type": "upload",
-                "label": "Upload paywalled full-text PDFs",
-                "detail": "The single most common upload point. Automated retrieval covers OA papers; the rest require a human to supply the PDF. In live mode this is a file-drop box.",
-            },
+            "id": "04_fulltext", "num": "04", "name": "Full-text Retrieval & Eligibility", "skill": "/ma-fulltext-management",
+            "summary": "Open-access PDFs are fetched for low-confidence studies via Unpaywall; paywalled PDFs the operator must supply.",
+            "gates": [
+                G("upload", "Supply paywalled full-text PDFs",
+                  "meta-pipe retrieves OA PDFs automatically, but flagged/paywalled studies need the operator to place the PDF in 04_fulltext/. The interface adds an upload box for exactly that step.",
+                  "ma-fulltext-management/SKILL.md Phase 2 (Targeted PDF Retrieval)"),
+                G("checkpoint", "Full-text screening κ ≥ 0.60 before Stage 05",
+                  "The 04→05 transition is gated on full-text screening agreement.",
+                  "ma-end-to-end/SKILL.md §Quality Gates"),
+            ],
             "artifacts": [
                 {"name": "round-01_include_list.txt", "kind": "text", "preview": read_head(proj / "04_fulltext/round-01_include_list.txt", 12)},
                 {"name": "PHASE4_SUMMARY.md", "kind": "text", "preview": read_head(proj / "04_fulltext/PHASE4_SUMMARY.md", 26)},
             ],
-            "metrics": [{"label": "Full-text sought", "value": "5"}, {"label": "Retrieved", "value": "5"}, {"label": "Included", "value": "5"}],
+            "metrics": [{"label": "Full-text sought", "value": "5"}, {"label": "Included", "value": "5"}],
         },
         {
-            "id": "05_extraction",
-            "num": "05",
-            "name": "Data Extraction & RoB",
-            "skill": "/ma-data-extraction",
-            "summary": "Structured outcome data + risk-of-bias assessment. Low-confidence fields flagged for human review.",
-            "gate": {
-                "type": "review",
-                "label": "Verify extracted data & risk-of-bias judgements",
-                "detail": "AI proposes; a human confirms. Numbers feeding the meta-analysis must be checked -- the pipeline pauses for operator sign-off.",
-            },
+            "id": "05_extraction", "num": "05", "name": "Data Extraction & RoB", "skill": "/ma-data-extraction",
+            "summary": "Structured outcome data are extracted; low-confidence fields are flagged. (A risk-of-bias schema is defined in pico.yaml.)",
+            "gates": [
+                G("checkpoint", "Extraction completeness — all included studies extracted",
+                  "meta-pipe gates the 05→06 transition on extraction completeness.",
+                  "ma-end-to-end/SKILL.md §Quality Gates"),
+            ],
             "artifacts": [
                 {"name": "round-01_extraction.csv", "kind": "table", "preview": read_text(proj / "05_extraction/round-01_extraction.csv", 1800)},
                 {"name": "round-01_QUICK_STATS.md", "kind": "text", "preview": read_head(proj / "05_extraction/round-01_QUICK_STATS.md", 24)},
@@ -220,62 +226,81 @@ def build_stages(proj: Path, repo: Path) -> list[dict]:
             "metrics": [{"label": "Trials", "value": "5"}, {"label": "Patients", "value": "2,402"}],
         },
         {
-            "id": "06_analysis",
-            "num": "06",
-            "name": "Meta-Analysis (R)",
-            "skill": "/ma-meta-analysis",
+            "id": "06_analysis", "num": "06", "name": "Meta-Analysis (R)", "skill": "/ma-meta-analysis",
             "summary": "Random-effects pooling in R (meta/metafor): forest plots, subgroup and sensitivity analyses.",
-            "gate": GATE_NONE,
+            "gates": [
+                G("checkpoint", "All figures ≥ 300 DPI before Stage 07",
+                  "The 06→07 transition is gated on figure resolution.",
+                  "ma-end-to-end/SKILL.md §Quality Gates"),
+            ],
             "artifacts": [
                 {"name": "tables_pCR_meta_analysis_results.csv", "kind": "table", "preview": read_text(proj / "06_analysis/tables_pCR_meta_analysis_results.csv", 1200)},
                 {"name": "tables_safety_meta_analysis_summary.csv", "kind": "table", "preview": read_text(proj / "06_analysis/tables_safety_meta_analysis_summary.csv", 800)},
-                {"name": "tables_PDL1_subgroup_comparison.csv", "kind": "table", "preview": read_text(proj / "06_analysis/tables_PDL1_subgroup_comparison.csv", 600)},
             ],
-            "metrics": [
-                {"label": "pCR RR", "value": "1.26 (1.16–1.37)"},
-                {"label": "EFS HR", "value": "0.66 (0.51–0.86)"},
-                {"label": "I²", "value": "0%"},
-            ],
+            "metrics": [{"label": "pCR RR", "value": "1.26 (1.16–1.37)"}, {"label": "EFS HR", "value": "0.66 (0.51–0.86)"}, {"label": "I²", "value": "0%"}],
         },
         {
-            "id": "07_manuscript",
-            "num": "07",
-            "name": "Manuscript (Quarto)",
-            "skill": "/ma-manuscript-quarto",
-            "summary": "Sections, tables, figures and references assembled and rendered to a journal-ready manuscript.",
-            "gate": GATE_NONE,
-            "artifacts": [
-                {"name": "00_abstract.md", "kind": "text", "preview": read_text(proj / "07_manuscript/00_abstract.md", 2400)},
+            "id": "07_manuscript", "num": "07", "name": "Manuscript (Quarto)", "skill": "/ma-manuscript-quarto",
+            "summary": "Sections, tables, figures and references are assembled and rendered.",
+            "gates": [
+                G("approval", "Approve the manuscript outline before any writing",
+                  "meta-pipe makes Phase 1 (outline + checklist) mandatory and requires operator approval before a single section is written.",
+                  "ma-manuscript-quarto/SKILL.md Phase 1 (MANDATORY before any writing)"),
             ],
+            "artifacts": [{"name": "00_abstract.md", "kind": "text", "preview": read_text(proj / "07_manuscript/00_abstract.md", 2400)}],
             "metrics": [{"label": "Word count", "value": "~4,900"}, {"label": "Tables", "value": "3 + 4 supp."}],
         },
         {
-            "id": "08_grade",
-            "num": "08",
-            "name": "GRADE & Peer Review",
-            "skill": "/ma-peer-review",
-            "summary": "GRADE certainty assessment and Summary-of-Findings table; internal peer-review pass.",
-            "gate": {
-                "type": "review",
-                "label": "Confirm GRADE certainty judgements",
-                "detail": "GRADE downgrade/upgrade decisions are judgement calls a human must endorse.",
-            },
-            "artifacts": [
-                {"name": "SupplementaryTable4_GRADE_Profile.md", "kind": "text", "preview": read_head(proj / "07_manuscript/tables/SupplementaryTable4_GRADE_Profile.md", 30)},
-            ],
+            "id": "08_grade", "num": "08", "name": "GRADE & Peer Review", "skill": "/ma-peer-review",
+            "summary": "GRADE certainty assessment and Summary-of-Findings table are written into the manuscript supplement.",
+            "gates": [],
+            "artifacts": [{"name": "SupplementaryTable4_GRADE_Profile.md", "kind": "text", "preview": read_head(proj / "07_manuscript/tables/SupplementaryTable4_GRADE_Profile.md", 30)}],
             "metrics": [{"label": "Primary outcome certainty", "value": "⊕⊕⊕⊕ HIGH"}],
         },
         {
-            "id": "09_qa",
-            "num": "09",
-            "name": "QA & Submission Prep",
-            "skill": "/ma-publication-quality",
-            "summary": "Overclaim audit, DOI verification, PRISMA completeness, final readiness check.",
-            "gate": GATE_NONE,
-            "artifacts": [
-                {"name": "doi_verification_report.md", "kind": "text", "preview": read_text(proj / "09_qa/doi_verification_report.md", 1600)},
+            "id": "09_qa", "num": "09", "name": "QA & Submission Prep", "skill": "/ma-publication-quality",
+            "summary": "Overclaim audit, DOI verification, PRISMA completeness and a final readiness score.",
+            "gates": [
+                G("checkpoint", "PRISMA 27/27 + publication readiness ≥ 95%",
+                  "The final gate: validate_pipeline.py / final_qa_report.py block on failures.",
+                  "ma-end-to-end/SKILL.md §Resources; ma-publication-quality/SKILL.md"),
             ],
+            "artifacts": [{"name": "doi_verification_report.md", "kind": "text", "preview": read_text(proj / "09_qa/doi_verification_report.md", 1600)}],
             "metrics": [{"label": "Status", "value": "99% complete"}],
+        },
+    ]
+
+
+# --- our suggestions (NOT shipped in the PR) -------------------------------
+# Gates meta-pipe does NOT have that we would add, each with a rationale.
+
+
+def build_suggestions() -> list[dict]:
+    return [
+        {
+            "title": "Two genuinely independent reviewers + conflict resolution",
+            "where": "Screening (Stage 03)",
+            "why": "meta-pipe's `--reviewer 1/2` runs one model with one prompt and writes two columns; in the example decision_r1 = decision_r2 = final (all 27/63/32). Cochrane Handbook §6.4 expects two independent reviewers and a recorded conflict-resolution step.",
+        },
+        {
+            "title": "Multi-database search + cross-source de-duplication",
+            "where": "Search (Stage 02)",
+            "why": "The example searched only PubMed (122 records) and the dedupe step is a no-op. Cochrane Handbook §4.4 expects at least MEDLINE + Embase + CENTRAL.",
+        },
+        {
+            "title": "Risk-of-bias assessment as an enforced gate",
+            "where": "Extraction / RoB (Stage 05)",
+            "why": "pico.yaml defines a RoB 2 schema, but no per-study × domain assessment is required before analysis runs. We would gate Stage 06 on a completed RoB matrix.",
+        },
+        {
+            "title": "GRADE certainty sign-off gate",
+            "where": "GRADE (Stage 08)",
+            "why": "GRADE certainty is hand-written with no gate. Downgrade/upgrade judgements should be confirmed before any publication-quality certainty claim is made.",
+        },
+        {
+            "title": "Search-strategy builder & ≥ 2-database validator",
+            "where": "Search prep",
+            "why": "queries.txt is authored entirely by hand (only a MeSH-expand helper exists). Nothing validates database coverage or strategy completeness before the search runs.",
         },
     ]
 
@@ -284,18 +309,20 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Build demo_manifest.json for the meta-pipe web UI")
     ap.add_argument("--project", default="projects/ici-breast-cancer", help="finished project to replay")
     ap.add_argument("--repo-root", default=str(Path(__file__).resolve().parent.parent), help="meta-pipe repo root")
+    ap.add_argument("--with-suggestions", action="store_true",
+                    help="also emit suggestions.json (our opinion; keep OFF the upstream PR)")
     args = ap.parse_args()
 
     repo = Path(args.repo_root).resolve()
     proj = (repo / args.project).resolve()
     web = repo / "web"
-    assets = web / "static" / "assets"
+    static = web / "static"
+    assets = static / "assets"
     assets.mkdir(parents=True, exist_ok=True)
 
     if not proj.exists():
         raise SystemExit(f"project not found: {proj}")
 
-    # Copy display assets (PRISMA flow) into the static tree so the site is self-contained.
     prisma_src = proj / "figures/prisma_flow_static.svg"
     if prisma_src.exists():
         shutil.copy2(prisma_src, assets / "prisma_flow_static.svg")
@@ -313,6 +340,7 @@ def main() -> None:
             ],
             "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         },
+        "prep": build_prep(),
         "stages": build_stages(proj, repo),
         "output": {
             "prisma_svg": "assets/prisma_flow_static.svg" if prisma_src.exists() else "",
@@ -325,9 +353,20 @@ def main() -> None:
         },
     }
 
-    out = web / "static" / "demo_manifest.json"
+    out = static / "demo_manifest.json"
     out.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"wrote {out} ({out.stat().st_size:,} bytes, {len(manifest['stages'])} stages)")
+    msg = f"wrote {out.name} ({out.stat().st_size:,} bytes, {len(manifest['stages'])} stages, {len(manifest['prep'])} prep gates)"
+
+    sug = static / "suggestions.json"
+    if args.with_suggestions:
+        sug.write_text(json.dumps({"suggestions": build_suggestions()}, indent=2, ensure_ascii=False), encoding="utf-8")
+        msg += f"; wrote {sug.name} ({len(build_suggestions())} suggestions)"
+    else:
+        # Keep the PR build clean: never leave a stale suggestions.json behind.
+        if sug.exists():
+            sug.unlink()
+        msg += "; suggestions.json omitted (PR build)"
+    print(msg)
 
 
 if __name__ == "__main__":

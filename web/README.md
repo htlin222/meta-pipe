@@ -24,6 +24,27 @@ pauses are the point, and the UI makes them prominent.
 > frontend deliberately does **not** add an API-key configuration page — it
 > follows meta-pipe's existing `.env` convention.
 
+## Gates
+
+The UI does not gloss over the operator's work. Gates come in two classes, both
+grounded in meta-pipe's own program:
+
+- **Pre-run preparation** — what the researcher must have ready before the
+  pipeline starts: toolchain, `.env` keys, `TOPIC.txt`, the hand-written
+  `queries.txt` search strategy, and **PROSPERO registration** (meta-pipe drafts
+  it but does not register — the researcher does that themselves; this is the
+  author's stated position). The run cannot begin until each is ticked.
+- **In-pipeline gates** — pauses/checkpoints that exist in meta-pipe today
+  (feasibility, κ ≥ 0.60, the 03b analysis-type confirmation, paywalled-PDF
+  supply, extraction completeness, figure DPI, outline approval, PRISMA 27/27).
+  Each gate cites its `basis` in the repo so it is verifiable.
+
+`build_demo_manifest.py --with-suggestions` additionally emits a
+`suggestions.json` describing gates meta-pipe does **not** have that we would add
+(real dual review, multi-database search, RoB/GRADE sign-off, a strategy
+validator), each with a rationale. That file is **our opinion and is kept out of
+the upstream PR** — the default build omits it.
+
 ## Quick start
 
 ```bash

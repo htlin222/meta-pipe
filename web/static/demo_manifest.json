@@ -21,20 +21,56 @@
         "value": "⊕⊕⊕⊕ HIGH"
       }
     ],
-    "generated_at": "2026-05-30 11:59 UTC"
+    "generated_at": "2026-05-30 12:22 UTC"
   },
+  "prep": [
+    {
+      "title": "Toolchain installed",
+      "detail": "uv (Python), R ≥ 4.2 + renv, Quarto, cmake. One-time `bash setup.sh`.",
+      "basis": "README §Requirements, setup.sh",
+      "required": true
+    },
+    {
+      "title": "API keys in .env",
+      "detail": "PubMed key is required; Scopus/Embase, Cochrane, Zotero and an Unpaywall email are optional.",
+      "basis": ".env.example",
+      "required": true
+    },
+    {
+      "title": "Research question → TOPIC.txt",
+      "detail": "You write the question into projects/<name>/TOPIC.txt; the pipeline cannot start without it.",
+      "basis": "init_project.py, AGENTS.md",
+      "required": true
+    },
+    {
+      "title": "Search strategy → queries.txt",
+      "detail": "You translate PICO into a database Boolean query by hand and save it as queries.txt (a MeSH-expand helper exists, but the strategy is yours).",
+      "basis": "ma-search-bibliography/SKILL.md Step 1",
+      "required": true
+    },
+    {
+      "title": "PROSPERO registration (you do this yourself)",
+      "detail": "meta-pipe drafts prospero_registration.md but does not register it. The author's position is that registration is out of scope for the tool — the researcher registers the protocol on PROSPERO themselves before running. We list it here as a real pre-run gate.",
+      "basis": "author's stance; prospero_registration.md is a draft only",
+      "required": true
+    }
+  ],
   "stages": [
     {
       "id": "00_intake",
       "num": "00",
       "name": "Topic Intake",
       "skill": "/ma-topic-intake",
-      "summary": "Operator states the research question; Claude refines PICO and runs a feasibility check.",
-      "gate": {
-        "type": "input",
-        "label": "Research question (text input)",
-        "detail": "The pipeline cannot start without a human-supplied topic. In live mode this is a text box; here we replay the real TOPIC.txt."
-      },
+      "summary": "With TOPIC.txt in place, Claude refines the PICO and runs a feasibility assessment.",
+      "gates": [
+        {
+          "type": "approval",
+          "kind": "program",
+          "label": "Feasibility assessment (mandatory first step)",
+          "detail": "meta-pipe requires a ~4-hour feasibility assessment before any protocol writing or extraction. The operator confirms it passed.",
+          "basis": "AGENTS.md §'When User Says Start' (MANDATORY FIRST STEP)"
+        }
+      ],
       "artifacts": [
         {
           "name": "TOPIC.txt",
@@ -47,24 +83,15 @@
     {
       "id": "01_protocol",
       "num": "01",
-      "name": "Protocol & PROSPERO",
+      "name": "Protocol",
       "skill": "/ma-search-bibliography",
-      "summary": "PICO formalised to pico.yaml, eligibility criteria and the PROSPERO registration draft.",
-      "gate": {
-        "type": "human-action",
-        "label": "PROSPERO registration (off-platform)",
-        "detail": "Registering the protocol on PROSPERO is a manual human action on an external website -- a web UI can draft it but cannot complete it."
-      },
+      "summary": "PICO formalised to pico.yaml with eligibility criteria. (PROSPERO is a pre-run prep gate, not a step here.)",
+      "gates": [],
       "artifacts": [
         {
           "name": "pico.yaml",
           "kind": "code",
           "preview": "# PICO Framework for Meta-Analysis\n# Triple-Negative Breast Cancer Neoadjuvant Immunotherapy\n# Date: 2026-02-07\n# Version: 1.0\n\nmetadata:\n  title: \"Neoadjuvant Immunotherapy Plus Chemotherapy versus Chemotherapy Alone for Early Triple-Negative Breast Cancer: A Systematic Review and Meta-Analysis\"\n  title_chinese: \"早期三陰性乳癌術前免疫治療合併化療相較於單用化療之系統性回顧與統合分析\"\n  protocol_date: \"2026-02-07\"\n  prospero_id: \"\" # To be filled after registration\n  registration_date: \"\" # To be filled after approval\n  version: \"1.0\"\n  last_updated: \"2026-02-07\"\n\n# Research Question\nresearch_question: |\n  Does adding immune checkpoint inhibitors to neoadjuvant chemotherapy improve\n  pathologic complete response and survival outcomes in early or locally advanced\n  triple-negative breast cancer (TNBC) compared with chemotherapy alone?\n\n# PICO Components\n\npopulation:\n  description: \"Patients with early-stage or locally advanced triple-negative breast cancer\"\n\n  inclusion_criteria:\n    disease:\n      - \"Histologically confirmed invasive breast cancer\"\n      - \"Triple-negative phenotype: ER-negative, PR-negative, HER2-negative\"\n      - \"ER/PR negative: <1% nuclear staining by immunohistochemistry (IHC)\"\n      - \"HER2 negative: IHC 0-1+, or IHC 2+ with negative FISH/ISH (HER2/CEP17 ratio <2.0)\"\n\n    stage:\n      - \"Early-stage: Clinical stage I-III\"\n      - \"Locally advanced: T2-4, N0-3, M0\""
-        },
-        {
-          "name": "prospero_registration.md",
-          "kind": "text",
-          "preview": "# PROSPERO Registration Document\n## Systematic Review Protocol\n\n**Registration Number**: [To be assigned by PROSPERO]\n**Registration Date**: [To be assigned by PROSPERO]\n**Last Update**: 2026-02-07\n\n---\n\n## 1. Review Title\n\n**English**: Neoadjuvant Immunotherapy Plus Chemotherapy versus Chemotherapy Alone for Early Triple-Negative Breast Cancer: A Systematic Review and Meta-Analysis\n\n**Chinese**: 早期三陰性乳癌術前免疫治療合併化療相較於單用化療之系統性回顧與統合分析\n\n---\n\n## 2. Original Language Title\n\n**Language**: English and Chinese (Mandarin)\n\n**Title**: Neoadjuvant Immunotherapy Plus Chemotherapy versus Chemotherapy Alone for Early Triple-Negative Breast Cancer: A Systematic Review and Meta-Analysis\n\n---\n\n## 3. Anticipated or Actual Start Date\n\n**Start Date**: 2026-02-07\n\n---"
         }
       ],
       "metrics": []
@@ -74,8 +101,8 @@
       "num": "02",
       "name": "Search & Dedupe",
       "skill": "/ma-search-bibliography",
-      "summary": "Database search (PubMed/MEDLINE) executed via API, results deduplicated to a clean .bib.",
-      "gate": null,
+      "summary": "Your queries.txt is run against the database(s) and results are exported to a versioned .bib.",
+      "gates": [],
       "artifacts": [
         {
           "name": "SEARCH_COMPLETION_REPORT.md",
@@ -104,12 +131,23 @@
       "num": "03",
       "name": "Title/Abstract Screening",
       "skill": "/ma-screening-quality",
-      "summary": "Records are screened against PICO by an LLM. meta-pipe labels this dual-review; the configuration below shows exactly how the two reviewer columns are produced.",
-      "gate": {
-        "type": "decision",
-        "label": "Confirm analysis type: pairwise vs network meta-analysis",
-        "detail": "A genuine fork that changes every downstream stage. The operator must choose -- the pipeline pauses here for a yes/no decision."
-      },
+      "summary": "Records are screened against PICO by an LLM. The configuration below shows exactly how the two reviewer columns are produced.",
+      "gates": [
+        {
+          "type": "checkpoint",
+          "kind": "program",
+          "label": "Inter-reviewer agreement κ ≥ 0.60 before Stage 04",
+          "detail": "meta-pipe gates the 03→04 transition on Cohen's κ. In this finished example the threshold is treated as met.",
+          "basis": "ma-end-to-end/SKILL.md §Quality Gates"
+        },
+        {
+          "type": "decision",
+          "kind": "program",
+          "label": "Confirm analysis type: pairwise vs network",
+          "detail": "A genuine fork that changes every downstream stage; meta-pipe names this the Analysis Type Confirmation Gate (Step 8).",
+          "basis": "AGENTS.md row 03b; ma-screening-quality/SKILL.md Step 8"
+        }
+      ],
       "llm": {
         "source": "tooling/python/ai_screen.py",
         "model": "claude -p --model haiku",
@@ -169,12 +207,23 @@
       "num": "04",
       "name": "Full-text Retrieval & Eligibility",
       "skill": "/ma-fulltext-management",
-      "summary": "Open-access PDFs fetched automatically (Unpaywall); paywalled PDFs must be uploaded by the operator.",
-      "gate": {
-        "type": "upload",
-        "label": "Upload paywalled full-text PDFs",
-        "detail": "The single most common upload point. Automated retrieval covers OA papers; the rest require a human to supply the PDF. In live mode this is a file-drop box."
-      },
+      "summary": "Open-access PDFs are fetched for low-confidence studies via Unpaywall; paywalled PDFs the operator must supply.",
+      "gates": [
+        {
+          "type": "upload",
+          "kind": "program",
+          "label": "Supply paywalled full-text PDFs",
+          "detail": "meta-pipe retrieves OA PDFs automatically, but flagged/paywalled studies need the operator to place the PDF in 04_fulltext/. The interface adds an upload box for exactly that step.",
+          "basis": "ma-fulltext-management/SKILL.md Phase 2 (Targeted PDF Retrieval)"
+        },
+        {
+          "type": "checkpoint",
+          "kind": "program",
+          "label": "Full-text screening κ ≥ 0.60 before Stage 05",
+          "detail": "The 04→05 transition is gated on full-text screening agreement.",
+          "basis": "ma-end-to-end/SKILL.md §Quality Gates"
+        }
+      ],
       "artifacts": [
         {
           "name": "round-01_include_list.txt",
@@ -193,10 +242,6 @@
           "value": "5"
         },
         {
-          "label": "Retrieved",
-          "value": "5"
-        },
-        {
           "label": "Included",
           "value": "5"
         }
@@ -207,12 +252,16 @@
       "num": "05",
       "name": "Data Extraction & RoB",
       "skill": "/ma-data-extraction",
-      "summary": "Structured outcome data + risk-of-bias assessment. Low-confidence fields flagged for human review.",
-      "gate": {
-        "type": "review",
-        "label": "Verify extracted data & risk-of-bias judgements",
-        "detail": "AI proposes; a human confirms. Numbers feeding the meta-analysis must be checked -- the pipeline pauses for operator sign-off."
-      },
+      "summary": "Structured outcome data are extracted; low-confidence fields are flagged. (A risk-of-bias schema is defined in pico.yaml.)",
+      "gates": [
+        {
+          "type": "checkpoint",
+          "kind": "program",
+          "label": "Extraction completeness — all included studies extracted",
+          "detail": "meta-pipe gates the 05→06 transition on extraction completeness.",
+          "basis": "ma-end-to-end/SKILL.md §Quality Gates"
+        }
+      ],
       "artifacts": [
         {
           "name": "round-01_extraction.csv",
@@ -242,7 +291,15 @@
       "name": "Meta-Analysis (R)",
       "skill": "/ma-meta-analysis",
       "summary": "Random-effects pooling in R (meta/metafor): forest plots, subgroup and sensitivity analyses.",
-      "gate": null,
+      "gates": [
+        {
+          "type": "checkpoint",
+          "kind": "program",
+          "label": "All figures ≥ 300 DPI before Stage 07",
+          "detail": "The 06→07 transition is gated on figure resolution.",
+          "basis": "ma-end-to-end/SKILL.md §Quality Gates"
+        }
+      ],
       "artifacts": [
         {
           "name": "tables_pCR_meta_analysis_results.csv",
@@ -253,11 +310,6 @@
           "name": "tables_safety_meta_analysis_summary.csv",
           "kind": "table",
           "preview": "Outcome,Trials,ICI_Events,ICI_Total,ICI_Rate_Pct,Control_Events,Control_Total,Control_Rate_Pct,Pooled_RR,CI_95,P_value,I2_Pct\nSerious Adverse Events,2,114,387,29.5,76,387,19.6,1.50,1.13-1.98,0.034,0.0%\nFatal Adverse Events,2,4,1006,0.4,0,609,0,—,—,—,—"
-        },
-        {
-          "name": "tables_PDL1_subgroup_comparison.csv",
-          "kind": "table",
-          "preview": "Subgroup,N_Trials,N_Patients,Pooled_RR,CI_95,P_value,I2_percent\nPD-L1 Positive,3,1212,1.27,\"[1.1, 1.45]\",0.01817,0%\nPD-L1 Negative,2,284,1.75,\"[0.09, 33.96]\",0.2516,29.9%"
         }
       ],
       "metrics": [
@@ -280,8 +332,16 @@
       "num": "07",
       "name": "Manuscript (Quarto)",
       "skill": "/ma-manuscript-quarto",
-      "summary": "Sections, tables, figures and references assembled and rendered to a journal-ready manuscript.",
-      "gate": null,
+      "summary": "Sections, tables, figures and references are assembled and rendered.",
+      "gates": [
+        {
+          "type": "approval",
+          "kind": "program",
+          "label": "Approve the manuscript outline before any writing",
+          "detail": "meta-pipe makes Phase 1 (outline + checklist) mandatory and requires operator approval before a single section is written.",
+          "basis": "ma-manuscript-quarto/SKILL.md Phase 1 (MANDATORY before any writing)"
+        }
+      ],
       "artifacts": [
         {
           "name": "00_abstract.md",
@@ -305,12 +365,8 @@
       "num": "08",
       "name": "GRADE & Peer Review",
       "skill": "/ma-peer-review",
-      "summary": "GRADE certainty assessment and Summary-of-Findings table; internal peer-review pass.",
-      "gate": {
-        "type": "review",
-        "label": "Confirm GRADE certainty judgements",
-        "detail": "GRADE downgrade/upgrade decisions are judgement calls a human must endorse."
-      },
+      "summary": "GRADE certainty assessment and Summary-of-Findings table are written into the manuscript supplement.",
+      "gates": [],
       "artifacts": [
         {
           "name": "SupplementaryTable4_GRADE_Profile.md",
@@ -330,8 +386,16 @@
       "num": "09",
       "name": "QA & Submission Prep",
       "skill": "/ma-publication-quality",
-      "summary": "Overclaim audit, DOI verification, PRISMA completeness, final readiness check.",
-      "gate": null,
+      "summary": "Overclaim audit, DOI verification, PRISMA completeness and a final readiness score.",
+      "gates": [
+        {
+          "type": "checkpoint",
+          "kind": "program",
+          "label": "PRISMA 27/27 + publication readiness ≥ 95%",
+          "detail": "The final gate: validate_pipeline.py / final_qa_report.py block on failures.",
+          "basis": "ma-end-to-end/SKILL.md §Resources; ma-publication-quality/SKILL.md"
+        }
+      ],
       "artifacts": [
         {
           "name": "doi_verification_report.md",
