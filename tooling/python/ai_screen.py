@@ -25,6 +25,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional, Dict, List
 
 
 def _resolve_meta_pipe_root() -> Path:
@@ -168,12 +169,33 @@ def screen_fulltext_one(
     doi: str,
     pmid: str,
     eligibility_criteria: str,
+    pdf_path: Optional[Path] = None,
 ) -> dict:
     """
     Call `claude -p` to re-screen a study at the full-text stage.
-    Uses web-available full text (PubMed, journal sites) to re-apply eligibility.
+    Uses local PDF text if available, otherwise attempts to use web search.
     Returns dict with decision, reason, confidence, exclusion_code.
     """
+    pdf_text = ""
+    if pdf_path and pdf_path.exists():
+        print(f"   (Extracting text from {pdf_path.name}...)")
+        try:
+            # Try to use the same logic as llm_extract.py (first few pages are usually enough for eligibility)
+            from llm_extract import extract_pdf_text
+
+            pdf_text = extract_pdf_text(pdf_path, max_pages=10)
+        except Exception as e:
+            print(f"   (PDF extraction failed: {e})")
+            pdf_text = ""
+
+    prompt_context = f"STUDY TO SCREEN:\nRecord ID: {record_id}\nTitle: {title}\nDOI: {doi}\nPMID: {pmid}\n"
+    if pdf_text:
+        # Limit text to avoid context window issues
+        prompt_context += f"\nFULL TEXT CONTENT (first 10 pages):\n{pdf_text[:15000]}\n"
+        search_instruction = "2. Evaluate ALL eligibility criteria against the provided FULL TEXT content."
+    else:
+        search_instruction = "2. Search for the full text of this study using the DOI or PMID. Evaluate ALL eligibility criteria against the full-text content."
+
     prompt = f"""You are an expert systematic reviewer performing FULL-TEXT eligibility screening for a meta-analysis.
 
 This study was previously INCLUDED at the title/abstract stage. Your task is to re-evaluate
@@ -183,15 +205,10 @@ at this stage, the study must clearly satisfy ALL eligibility criteria.
 ELIGIBILITY CRITERIA (from the project protocol -- read carefully):
 {eligibility_criteria}
 
-STUDY TO SCREEN:
-Record ID: {record_id}
-Title: {title}
-DOI: {doi}
-PMID: {pmid}
+{prompt_context}
 
 INSTRUCTIONS:
-1. Search for the full text of this study using the DOI or PMID.
-2. Evaluate ALL eligibility criteria against the full-text content.
+1. {search_instruction}
 3. Pay special attention to: study design details, exact population definitions,
    intervention/comparator specifics, outcome measurement methods, and follow-up duration.
 4. If the full text reveals ANY eligibility violation not apparent from the abstract, EXCLUDE.
@@ -207,11 +224,12 @@ Exclusion codes:
 {EXCLUSION_CODES}
 """
 
-    text = _invoke_claude(prompt, timeout=120)
+    # 180s: tool use / long full-text prompts need more than the default 120s
+    text = _invoke_claude(prompt, timeout=180)
 
     parsed = {
-        "decision": "include",
-        "reason": "Unable to determine — defaulting to include",
+        "decision": "exclude",  # Default to exclude on failure/uncertainty for full-text
+        "reason": "Unable to determine — defaulting to exclude (safety first)",
         "confidence": "LOW",
         "exclusion_code": "NONE",
     }
@@ -226,9 +244,9 @@ Exclusion codes:
         elif line.startswith("EXCLUSION_CODE:"):
             parsed["exclusion_code"] = line.split(":", 1)[1].strip()
 
-    # Full-text screening only allows INCLUDE or EXCLUDE (no MAYBE)
+    # Full-text screening only allows INCLUDE or EXCLUDE
     if parsed["decision"] not in ("include", "exclude"):
-        parsed["decision"] = "include"
+        parsed["decision"] = "exclude"
 
     return parsed
 
@@ -369,21 +387,25 @@ def run_abstract_screening(args, project_path: Path) -> None:
     may = decisions.count("maybe")
     total = len(records)
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"SCREENING SUMMARY (Reviewer {args.reviewer} = AI)")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"Total:    {total}")
     print(f"Screened: {screened}  (skipped {skipped} already decided)")
-    print(f"  include: {inc} ({inc/total*100:.1f}%)")
-    print(f"  exclude: {exc} ({exc/total*100:.1f}%)")
-    print(f"  maybe:   {may} ({may/total*100:.1f}%)")
-    print(f"{'='*60}")
+    print(f"  include: {inc} ({inc / total * 100:.1f}%)")
+    print(f"  exclude: {exc} ({exc / total * 100:.1f}%)")
+    print(f"  maybe:   {may} ({may / total * 100:.1f}%)")
+    print(f"{'=' * 60}")
     print(f"\nOutput: {output_csv}")
 
     if args.reviewer == 1:
-        print(f"\nNext: run with --reviewer 2 for dual review, or have a human fill Reviewer2 columns.")
+        print(
+            f"\nNext: run with --reviewer 2 for dual review, or have a human fill Reviewer2 columns."
+        )
         print(f"Then: uv run ma-screening-quality/scripts/dual_review_agreement.py \\")
-        print(f"        --file {output_csv} --col-a Reviewer1_Decision --col-b Reviewer2_Decision \\")
+        print(
+            f"        --file {output_csv} --col-a Reviewer1_Decision --col-b Reviewer2_Decision \\"
+        )
         print(f"        --out {round_dir}/agreement.md")
 
 
@@ -398,7 +420,9 @@ def run_fulltext_screening(args, project_path: Path) -> None:
     output_csv = project_path / "04_fulltext" / "fulltext_decisions.csv"
 
     if not manifest_csv.exists():
-        print(f"ERROR: {manifest_csv} not found. Complete Stage 04 (fulltext retrieval) first.")
+        print(
+            f"ERROR: {manifest_csv} not found. Complete Stage 04 (fulltext retrieval) first."
+        )
         sys.exit(1)
 
     eligibility = load_eligibility_criteria(project_path)
@@ -445,18 +469,20 @@ def run_fulltext_screening(args, project_path: Path) -> None:
         if rid in existing:
             records.append(existing[rid])
         else:
-            records.append({
-                "record_id": rid,
-                "title": m.get("title", ""),
-                "doi": m.get("doi", ""),
-                "pmid": m.get("pmid", ""),
-                "FT_Reviewer1_Decision": "",
-                "FT_Reviewer1_Reason": "",
-                "FT_Reviewer2_Decision": "",
-                "FT_Reviewer2_Reason": "",
-                "FT_Final_Decision": "",
-                "FT_Exclusion_Code": "",
-            })
+            records.append(
+                {
+                    "record_id": rid,
+                    "title": m.get("title", ""),
+                    "doi": m.get("doi", ""),
+                    "pmid": m.get("pmid", ""),
+                    "FT_Reviewer1_Decision": "",
+                    "FT_Reviewer1_Reason": "",
+                    "FT_Reviewer2_Decision": "",
+                    "FT_Reviewer2_Reason": "",
+                    "FT_Final_Decision": "",
+                    "FT_Exclusion_Code": "",
+                }
+            )
 
     decision_col = f"FT_Reviewer{args.reviewer}_Decision"
     reason_col = f"FT_Reviewer{args.reviewer}_Reason"
@@ -474,11 +500,22 @@ def run_fulltext_screening(args, project_path: Path) -> None:
         doi = record.get("doi", "")
         pmid = record.get("pmid", "")
 
+        # Find matching manifest record for file_path
+        manifest_record = next(
+            (m for m in manifest_records if m.get("record_id") == rid), {}
+        )
+        file_path_val = manifest_record.get("file_path", "")
+        pdf_path = None
+        if file_path_val:
+            pdf_path = Path(file_path_val)
+            if not pdf_path.is_absolute():
+                pdf_path = (project_path / "04_fulltext" / pdf_path).resolve()
+
         print(f"\n[{i}/{len(records)}] {rid}")
         print(f"   {title[:80]}...")
 
         try:
-            result = screen_fulltext_one(title, rid, doi, pmid, eligibility)
+            result = screen_fulltext_one(title, rid, doi, pmid, eligibility, pdf_path)
             record[decision_col] = result["decision"]
             record[reason_col] = (
                 f"{result['exclusion_code']}: {result['reason']}"
@@ -530,14 +567,14 @@ def run_fulltext_screening(args, project_path: Path) -> None:
     exc = decisions.count("exclude")
     total = len(records)
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"FULL-TEXT SCREENING SUMMARY (Reviewer {args.reviewer} = AI)")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"Total:    {total}")
     print(f"Screened: {screened}  (skipped {skipped} already decided)")
-    print(f"  include: {inc} ({inc/total*100:.1f}%)" if total else "  include: 0")
-    print(f"  exclude: {exc} ({exc/total*100:.1f}%)" if total else "  exclude: 0")
-    print(f"{'='*60}")
+    print(f"  include: {inc} ({inc / total * 100:.1f}%)" if total else "  include: 0")
+    print(f"  exclude: {exc} ({exc / total * 100:.1f}%)" if total else "  exclude: 0")
+    print(f"{'=' * 60}")
     print(f"\nOutput: {output_csv}")
 
     # Check if both reviewers are done
@@ -558,7 +595,9 @@ def run_fulltext_screening(args, project_path: Path) -> None:
         print(f"    --out {agreement_out}")
     elif args.reviewer == 1:
         print(f"\nNext: run with --reviewer 2 for dual review:")
-        print(f"  uv run tooling/python/ai_screen.py --project {args.project} --stage fulltext --reviewer 2")
+        print(
+            f"  uv run tooling/python/ai_screen.py --project {args.project} --stage fulltext --reviewer 2"
+        )
 
 
 def main() -> None:

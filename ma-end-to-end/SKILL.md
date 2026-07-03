@@ -6,18 +6,22 @@ description: End-to-end AI-assisted meta-analysis pipeline orchestration from TO
 # Ma End To End
 
 ## Overview
+
 Coordinate the complete meta-analysis workflow, ensure every step is tracked, and produce a final manuscript with reviewer responses.
 
 ## Inputs
+
 - `TOPIC.txt`
 - Optional user constraints such as population, outcomes, time window, study types, or target journal.
 
 ## Outputs
+
 - Standard project layout and all step artifacts described below.
 - Final rendered manuscript in `07_manuscript/`.
 - Reviewer notes in `08_reviews/`.
 
 ## Project Layout (Numbered)
+
 Create a numbered top-level structure and keep every artifact in its step folder.
 
 ```
@@ -34,6 +38,7 @@ tooling/python/   # uv project
 ```
 
 ## Environment Setup
+
 1. Initialize Python tooling with uv inside `tooling/python/` using `uv init`.
 2. Use `uv add` to manage dependencies for search and automation scripts.
 3. Run Python scripts via `uv run` (do not call `python3` directly).
@@ -41,35 +46,37 @@ tooling/python/   # uv project
 5. Use R with `renv` inside `06_analysis/` for reproducible meta-analysis.
 
 ## Workflow
+
 1. Read `TOPIC.txt` and produce protocol artifacts in `01_protocol/`.
    - Read from `projects/<project-name>/TOPIC.txt`
    - Use `/ma-topic-intake` skill
    - Write to `01_protocol/pico.yaml`, `01_protocol/eligibility.md`, `01_protocol/outcomes.md`, `01_protocol/search-plan.md`, `01_protocol/decision-log.md`
-1b. **Preliminary** analysis type: ≥3 treatments → `nma_candidate`, 2 treatments → `pairwise`.
-    - Record in `01_protocol/pico.yaml` (L22: analysis_type.preliminary field)
-    - Record in `01_protocol/analysis-type-decision.md` (Stage 1 section)
+     1b. **Preliminary** analysis type: ≥3 treatments → `nma_candidate`, 2 treatments → `pairwise`.
+   - Record in `01_protocol/pico.yaml` (L22: analysis_type.preliminary field)
+   - Record in `01_protocol/analysis-type-decision.md` (Stage 1 section)
 2. Plan and run database searches, then save round-based `.bib` files in `02_search/`.
    - Use `/ma-search-bibliography` skill
    - Write to `02_search/round-01/queries.txt`, `02_search/round-01/results.bib`, `02_search/round-01/dedupe.bib`, `02_search/round-01/log.md`
 3. Screen titles and abstracts, record decisions, and generate included `.bib` in `03_screening/`.
    - Use `/ma-screening-quality` skill
    - Write to `03_screening/round-01/decisions.csv`, `03_screening/round-01/included.bib`, `03_screening/round-01/agreement.md`
-3b. **Analysis Type Confirmation Gate** (if `nma_candidate`):
-    - Tally study designs, assess network connectivity and transitivity
-    - If >30% single-arm → strongly consider downgrading to pairwise + pooled proportions
-    - Confirm in `01_protocol/analysis-type-decision.md` (Stage 2 section)
-    - Update `01_protocol/pico.yaml` (L23: analysis_type.confirmed field)
-    - **Do NOT proceed to Stage 06 without confirmed analysis type**
+     3b. **Analysis Type Confirmation Gate** (if `nma_candidate`):
+   - Tally study designs, assess network connectivity and transitivity
+   - If >30% single-arm → strongly consider downgrading to pairwise + pooled proportions
+   - Confirm in `01_protocol/analysis-type-decision.md` (Stage 2 section)
+   - Update `01_protocol/pico.yaml` (L23: analysis_type.confirmed field)
+   - **Do NOT proceed to Stage 06 without confirmed analysis type**
 4. Collect full texts and build a manifest in `04_fulltext/`.
    - Use `/ma-fulltext-management` skill
    - Write to `04_fulltext/manifest.csv`, `04_fulltext/*.pdf`
-4b. **Full-text eligibility screening** (PRISMA 2020 item 16 — mandatory).
-    - Use `/ma-fulltext-management` skill (Stage 04b section)
-    - Run `uv run tooling/python/ai_screen.py --project <name> --stage fulltext --reviewer 1`
-    - Run `uv run tooling/python/ai_screen.py --project <name> --stage fulltext --reviewer 2`
-    - Compute kappa: `uv run ma-screening-quality/scripts/dual_review_agreement.py --file 04_fulltext/fulltext_decisions.csv --col-a FT_Reviewer1_Decision --col-b FT_Reviewer2_Decision --out 04_fulltext/ft_agreement.md`
-    - Resolve conflicts, then only `FT_Final_Decision = include` rows proceed to Stage 05
-    - Write to `04_fulltext/fulltext_decisions.csv`, `04_fulltext/ft_agreement.md`
+     4b. **Full-text eligibility screening** (PRISMA 2020 item 16 — mandatory).
+   - Use `/ma-fulltext-management` skill (Stage 04b section)
+   - Run `uv run tooling/python/ai_screen.py --project <name> --stage fulltext --reviewer 1`
+   - Run `uv run tooling/python/ai_screen.py --project <name> --stage fulltext --reviewer 2`
+   - Audit for quality: `uv run ma-end-to-end/scripts/audit_screening_quality.py --project <name>`
+   - Compute kappa: `uv run ma-screening-quality/scripts/dual_review_agreement.py --file 04_fulltext/fulltext_decisions.csv --col-a FT_Reviewer1_Decision --col-b FT_Reviewer2_Decision --out 04_fulltext/ft_agreement.md`
+   - Resolve conflicts, then only `FT_Final_Decision = include` rows proceed to Stage 05
+   - Write to `04_fulltext/fulltext_decisions.csv`, `04_fulltext/ft_agreement.md`
 5. Extract data into a normalized database in `05_extraction/`.
    - **Input**: Only studies with `FT_Final_Decision = include` from `04_fulltext/fulltext_decisions.csv`
    - Use `/ma-data-extraction` skill
@@ -111,12 +118,12 @@ When running with agent teams enabled (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`)
 
 ### Parallelism Opportunities
 
-| Phase | Stages | Parallelism | Teammates |
-|-------|--------|-------------|-----------|
-| Foundation | 00-02 | Sequential (hard dependencies) | protocol-architect → search-specialist |
-| Screening | 03 | **Parallel** (dual independent review) | screener-a + screener-b simultaneously |
-| Processing | 04-06 | Sequential (each depends on prior) | fulltext-manager → data-extractor → statistician |
-| Synthesis | 07-09 | **Parallel** (independent outputs) | manuscript-writer + qa-auditor simultaneously |
+| Phase      | Stages | Parallelism                            | Teammates                                        |
+| ---------- | ------ | -------------------------------------- | ------------------------------------------------ |
+| Foundation | 00-02  | Sequential (hard dependencies)         | protocol-architect → search-specialist           |
+| Screening  | 03     | **Parallel** (dual independent review) | screener-a + screener-b simultaneously           |
+| Processing | 04-06  | Sequential (each depends on prior)     | fulltext-manager → data-extractor → statistician |
+| Synthesis  | 07-09  | **Parallel** (independent outputs)     | manuscript-writer + qa-auditor simultaneously    |
 
 ### How to Start
 
@@ -145,6 +152,7 @@ See `ma-agent-teams/SKILL.md` for complete orchestration details.
 ---
 
 ## Resources
+
 - `scripts/init_project.py` creates the numbered folder tree and a checklist.
 - `scripts/run_robustness_checks.py` runs agreement stats, PRISMA flow, and GRADE summaries.
 - `scripts/validate_pipeline.py` enforces checklist completion before final render.
@@ -155,7 +163,9 @@ See `ma-agent-teams/SKILL.md` for complete orchestration details.
 - `scripts/validate_module_registry.py` checks all scripts are documented across SKILL.md, CLAUDE.md, and GETTING_STARTED.md.
 
 ## Step References
+
 Open the relevant skill for details at each stage:
+
 - `ma-topic-intake/SKILL.md`
 - `ma-search-bibliography/SKILL.md`
 - `ma-screening-quality/SKILL.md`
@@ -167,5 +177,6 @@ Open the relevant skill for details at each stage:
 - `ma-publication-quality/SKILL.md`
 
 ## Validation
+
 - Ensure each step writes its expected artifacts before moving to the next.
 - Create and update `09_qa/pipeline-checklist.md` after every milestone.

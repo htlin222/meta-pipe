@@ -84,16 +84,31 @@ def extract_text_with_pypdf(pdf_path: Path, max_pages: int) -> Optional[str]:
     return "\n".join(texts).strip()
 
 
-def extract_pdf_text(pdf_path: Path, max_pages: int) -> str:
-    text = extract_text_with_pdfplumber(pdf_path, max_pages)
-    if text:
-        return text
-    text = extract_text_with_pypdf(pdf_path, max_pages)
-    if text:
-        return text
-    raise SystemExit(
-        "No PDF parser available. Install one of: pdfplumber or pypdf (via uv add)."
-    )
+def extract_pdf_text_targeted(pdf_path: Path, max_total_pages: int = 20) -> str:
+    """Extract text from the first few pages AND pages with keywords like Results or Table."""
+    try:
+        import pdfplumber
+    except Exception:
+        # Fallback to simple extraction if pdfplumber not available
+        return extract_pdf_text(pdf_path, max_pages=max_total_pages)
+
+    target_keywords = ["result", "table", "outcome", "finding", "figure", "conclusion"]
+    selected_pages = []
+
+    with pdfplumber.open(str(pdf_path)) as pdf:
+        num_pages = len(pdf.pages)
+        # Always take the first 5 pages (usually Intro/Methods)
+        for i in range(min(5, num_pages)):
+            selected_pages.append(pdf.pages[i].extract_text() or "")
+
+        # Search for keywords in subsequent pages
+        if num_pages > 5:
+            for i in range(5, min(num_pages, max_total_pages)):
+                text = pdf.pages[i].extract_text() or ""
+                if any(kw in text.lower() for kw in target_keywords):
+                    selected_pages.append(f"--- [Page {i + 1}] ---\n{text}")
+
+    return "\n".join(selected_pages).strip()
 
 
 def build_prompt(
@@ -107,7 +122,8 @@ def build_prompt(
     header = [
         "You are assisting with meta-analysis data extraction.",
         "Extract the requested fields from the study text.",
-        "Return JSON only. Use null for missing values.",
+        "IMPORTANT: If multiple outcomes are reported, prioritize the primary outcome as defined in the protocol.",
+        "If a field is missing, use null.",
         "Include page numbers or sections in `page_reference` when possible.",
         "",
         f"Record ID: {record.get('record_id') or ''}",
@@ -117,7 +133,7 @@ def build_prompt(
         "",
         f"Fields: {field_list}",
         "",
-        "Study text:",
+        "Study text (extracted from intro/methods and results sections):",
         clipped,
     ]
     return "\n".join(header).strip()
@@ -147,7 +163,9 @@ def call_llm(
     resp = requests.post(url, headers=headers, json=payload, timeout=120)
     resp.raise_for_status()
     data = resp.json()
-    return str(data.get("choices", [{}])[0].get("message", {}).get("content", "")).strip()
+    return str(
+        data.get("choices", [{}])[0].get("message", {}).get("content", "")
+    ).strip()
 
 
 def parse_json_response(text: str) -> Tuple[Optional[dict], Optional[str]]:
@@ -160,7 +178,9 @@ def parse_json_response(text: str) -> Tuple[Optional[dict], Optional[str]]:
 def main() -> None:
     load_dotenv()
     parser = argparse.ArgumentParser(description="LLM-assisted extraction from PDFs.")
-    parser.add_argument("--manifest", default="04_fulltext/manifest.csv", help="Manifest CSV")
+    parser.add_argument(
+        "--manifest", default="04_fulltext/manifest.csv", help="Manifest CSV"
+    )
     parser.add_argument(
         "--data-dictionary",
         default="05_extraction/data-dictionary.md",
@@ -168,12 +188,24 @@ def main() -> None:
     )
     parser.add_argument("--out-jsonl", default="05_extraction/llm_suggestions.jsonl")
     parser.add_argument("--out-log", default="05_extraction/llm_extract.log")
-    parser.add_argument("--prompts-dir", default=None, help="Optional directory to save prompts")
-    parser.add_argument("--limit", type=int, default=None, help="Max records to process")
-    parser.add_argument("--max-pages", type=int, default=5, help="Max PDF pages to parse")
-    parser.add_argument("--max-chars", type=int, default=12000, help="Max text characters per prompt")
-    parser.add_argument("--min-chars", type=int, default=400, help="Skip PDFs with less text")
-    parser.add_argument("--dry-run", action="store_true", help="Generate prompts without calling LLM")
+    parser.add_argument(
+        "--prompts-dir", default=None, help="Optional directory to save prompts"
+    )
+    parser.add_argument(
+        "--limit", type=int, default=None, help="Max records to process"
+    )
+    parser.add_argument(
+        "--max-pages", type=int, default=5, help="Max PDF pages to parse"
+    )
+    parser.add_argument(
+        "--max-chars", type=int, default=12000, help="Max text characters per prompt"
+    )
+    parser.add_argument(
+        "--min-chars", type=int, default=400, help="Skip PDFs with less text"
+    )
+    parser.add_argument(
+        "--dry-run", action="store_true", help="Generate prompts without calling LLM"
+    )
     parser.add_argument("--api-base", default=None, help="LLM API base URL")
     parser.add_argument("--api-key", default=None, help="LLM API key")
     parser.add_argument("--model", default=None, help="LLM model name")
@@ -193,7 +225,9 @@ def main() -> None:
             pass
 
     if not args.dry_run and (not api_base or not api_key or not model):
-        raise SystemExit("Missing LLM_API_BASE / LLM_API_KEY / LLM_MODEL (or pass via args)")
+        raise SystemExit(
+            "Missing LLM_API_BASE / LLM_API_KEY / LLM_MODEL (or pass via args)"
+        )
 
     manifest_rows = read_manifest(Path(args.manifest))
     fields = parse_fields_from_dictionary(Path(args.data_dictionary))
@@ -225,7 +259,7 @@ def main() -> None:
                 continue
 
             try:
-                text = extract_pdf_text(pdf_path, args.max_pages)
+                text = extract_pdf_text_targeted(pdf_path, args.max_pages)
             except SystemExit as exc:
                 errors += 1
                 record = {
@@ -243,7 +277,9 @@ def main() -> None:
             prompt = build_prompt(row, fields, text, args.max_chars)
             prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
             if prompts_dir:
-                prompt_path = prompts_dir / f"{row.get('record_id') or pdf_path.stem}.prompt.txt"
+                prompt_path = (
+                    prompts_dir / f"{row.get('record_id') or pdf_path.stem}.prompt.txt"
+                )
                 prompt_path.write_text(prompt, encoding="utf-8")
 
             response_text = ""
