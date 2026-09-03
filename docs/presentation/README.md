@@ -1,25 +1,27 @@
-# meta-pipe Workflow Presentation
+# meta-pipe workflow presentation
 
-`meta-pipe-workflow.pptx` — 16 張投影片，介紹 meta-pipe 的端到端工作流程（繁體中文，附講者備註）。
+`meta-pipe-workflow.pptx` — 16 slides (English, 16:9) describing the pipeline for an academic audience. Speaker notes are included on every slide.
 
-| # | 主題 |
-|---|------|
-| 1 | 封面 |
-| 2 | 為什麼需要一條流水線（100+ 小時 vs 約 14 小時） |
-| 3 | 核心理念：Skills 驅動、可重現工具鏈、品質閘門 |
-| 4 | 流程總覽：11 個階段、4 個區塊 |
-| 5 | Stage 00–02：主題、計畫、搜尋（4 小時可行性評估） |
-| 6 | Stage 03–04：雙人篩選、分析類型確認閘門 |
-| 7 | Stage 05：LLM 輔助資料萃取 |
-| 8 | Stage 06：依分析類型分流（pairwise / NMA / pooled / narrative） |
-| 9 | Stage 07–10：手稿、審查、出版品質、投稿 |
-| 10 | 品質閘門一覽表 |
-| 11 | 範例專案：ICI in TNBC |
-| 12 | 各階段時間投資（原生圖表） |
-| 13 | Agent Teams 平行模式 |
-| 14 | 人機分工 |
-| 15 | 三步驟開始新專案 |
-| 16 | 結語 |
+| # | Slide |
+|---|-------|
+| 1 | Title |
+| 2 | Motivation: labour, reporting standards, reproducibility |
+| 3 | Design principles |
+| 4 | Stages 00–10 and principal artefacts |
+| 5 | Stages 00–02: topic intake, protocol, search |
+| 6 | Stages 03–04: dual screening, analysis-type confirmation, full text |
+| 7 | Stage 05: extraction with investigator verification |
+| 8 | Stage 06: analysis routed by confirmed analysis type |
+| 9 | Stages 07–10: manuscript, appraisal, QA, submission |
+| 10 | Quality gates (table) |
+| 11 | Validation against metadat benchmark datasets |
+| 12 | Worked example: neoadjuvant ICI in TNBC |
+| 13 | Investigator time by stage (chart) |
+| 14 | Division of responsibility |
+| 15 | Limitations and current work |
+| 16 | Availability, requirements, citation |
+
+All figures are taken from the repository documentation and the example project log. Single-project estimates are labelled as such on the slides.
 
 ## Rebuild
 
@@ -29,4 +31,4 @@ npm install pptxgenjs
 node build_deck.js   # writes meta-pipe-workflow.pptx
 ```
 
-字型：`Microsoft JhengHei`（Office 內建）；程式碼片段用 `Courier New`。
+Fonts: Cambria (headings), Calibri (body), Courier New (file names and commands).
