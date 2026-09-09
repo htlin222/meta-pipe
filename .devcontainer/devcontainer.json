@@ -1,0 +1,18 @@
+{
+  "name": "meta-pipe",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": { "version": "3.12" },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "onCreateCommand": "curl -fsSL https://raw.githubusercontent.com/htlin222/dotfiles/main/start/codespace_prewarm.sh | bash",
+  "remoteEnv": {
+    "PATH": "${containerEnv:HOME}/.local/bin:${containerEnv:PATH}"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["anthropic.claude-code", "eamodio.gitlens"]
+    }
+  },
+  "hostRequirements": { "cpus": 2 }
+}
