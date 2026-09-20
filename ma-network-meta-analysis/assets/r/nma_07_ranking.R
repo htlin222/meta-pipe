@@ -16,7 +16,9 @@ source("nma_04_models.R")
 cat("=== Treatment Rankings (SUCRA from Bayesian Posterior) ===\n")
 
 # --- 1. Compute rank probabilities ---
-ranks <- rank.probability(bayes_re)
+# preferredDirection: 1 = higher values better, -1 = lower values better
+NMA_PREF_DIR <- if (NMA_SMALL_VALUES == "desirable") -1 else 1
+ranks <- rank.probability(bayes_re, preferredDirection = NMA_PREF_DIR)
 cat("Rank probability matrix:\n")
 print(ranks)
 
@@ -114,7 +116,7 @@ print(summary(rel_effects))
 # =============================================================================
 
 cat("\n=== P-scores (Frequentist Sensitivity) ===\n")
-pscore_ranking <- netrank(net_re, small.values = "undesirable")
+pscore_ranking <- netrank(net_re, small.values = NMA_SMALL_VALUES)
 
 pscore_df <- data.frame(
   Treatment = names(pscore_ranking$Pscore.random),
@@ -157,9 +159,4 @@ rank_gt <- rank_df %>%
 gtsave(rank_gt, file.path(TBL_DIR, "nma_rankings.png"), expand = 10)
 cat("Rankings table (PNG) saved to", file.path(TBL_DIR, "nma_rankings.png"), "\n")
 
-# --- 7. Frequentist league table (supplement) ---
-cat("\n=== League Table (Frequentist — for Supplement) ===\n")
-league <- netleague(net_re, random = TRUE, seq = pscore_ranking, digits = 2)
-league_df <- as.data.frame(league$random)
-write_csv(league_df, file.path(TBL_DIR, "nma_league_table_frequentist.csv"))
-cat("Frequentist league table saved (supplement).\n")
+# League tables (Bayesian primary + frequentist supplement) are built in nma_10_tables.R

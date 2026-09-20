@@ -201,7 +201,7 @@ if (!is.null(subgroup_var) && subgroup_var %in% available_cols) {
     # Fit subgroup NMA
     net_sg <- tryCatch(
       netmeta(TE, seTE, treat1, treat2, studlab,
-              data = sg_data, sm = "RR",
+              data = sg_data, sm = NMA_SM,
               random = TRUE, method.tau = "REML"),
       error = function(e) {
         cat("NMA failed for subgroup:", conditionMessage(e), "\n")

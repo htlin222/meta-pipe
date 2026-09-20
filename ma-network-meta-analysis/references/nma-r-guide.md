@@ -212,72 +212,59 @@ SUCRA interpretation: 0 = definitely worst, 1 = definitely best. Present with ca
 
 ## Step 8: League Table
 
-```r
-# Bayesian: relative effects vs each reference
-rel <- relative.effect(results, t1 = "Placebo")
-summary(rel)
+**Orientation matters.** Two conventions coexist and are easy to mix up:
 
-# Frequentist league table (supplement)
-league <- netleague(net, random = TRUE, digits = 2)
+| Source | Cell `[row, col]` means | Triangles |
+| --- | --- | --- |
+| `gemtc::relative.effect.table(results)` | effect of **column** relative to **row** | both = network (reciprocal) |
+| `netmeta::netleague(net)` (no `y`) | lower = network (**column vs row**); upper = **direct** estimate (row vs column) | different content! |
+| `net$TE.random[i, j]` | treatment **i vs j** (row vs column) | both = network (reciprocal) |
+
+`nma_10_tables.R` normalises everything to **row vs column, network estimate** before
+writing CSVs or drawing the heatmap. Do not colour-code `netleague()$random` directly:
+its lower and upper triangles hold different quantities in opposite directions.
+
+```r
+# Bayesian league table (primary): posterior medians + 95% CrI
+ret <- relative.effect.table(results)    # array [t1, t2, c("2.5%","50%","97.5%")]
+est <- t(ret[, , "50%"])                 # transpose -> [i, j] = i vs j
+lo  <- t(ret[, , "2.5%"]); hi <- t(ret[, , "97.5%"])
+
+# Frequentist (supplement): use the matrices, not the formatted strings
+est_f <- net$TE.random; lo_f <- net$lower.random; hi_f <- net$upper.random
+
+# Raw netmeta league table for the supplement (lower = network, upper = direct)
+netleague(net, random = TRUE, seq = netrank(net, small.values = "desirable"),
+          digits = 2, path = "tables/leaguetable.xlsx")   # Excel via writexl
+
+# Efficacy + safety in one table: x = efficacy model, y = safety model
+netleague(net_efficacy, net_safety, random = TRUE, digits = 2)
 ```
 
 ### League Table Heatmap
 
-A color-coded heatmap makes it easy to spot which comparisons favor which treatment at a glance. The script `nma_10_tables.R` generates this automatically, but here is the core approach for customization:
+`nma_10_tables.R` builds the heatmap from the numeric matrices above (function
+`league_long()` → `league_heatmap()`). Core idea:
 
 ```r
-library(ggplot2)
-library(tidyr)
+# long_df: one row per ordered pair (row_treat, col_treat) with
+#   estimate / lower / upper on the natural scale, sig = interval excludes null,
+#   fill_val signed so that NEGATIVE = favours row (flip sign when higher is better)
+signed   <- if (is_ratio) log(estimate) else estimate     # < 0: row has lower values
+fill_val <- if (small_values == "desirable") signed else -signed
 
-# 1. Get league matrix ordered by ranking
-ranking <- netrank(net, small.values = "undesirable")
-league  <- netleague(net, random = TRUE, seq = ranking, digits = 2)
-mat     <- league$random
-
-# 2. Parse each cell into numeric estimate + CI
-#    Cell format is typically "0.85 [0.62, 1.17]"
-parse_league_cell <- function(cell_text) {
-  m <- regmatches(cell_text, regexec(
-    "([0-9.-]+)\\s*[\\[\\(]([0-9.-]+)[,;]\\s*([0-9.-]+)[\\]\\)]", cell_text
-  ))[[1]]
-  if (length(m) == 4) {
-    list(est = as.numeric(m[2]), lo = as.numeric(m[3]), hi = as.numeric(m[4]))
-  } else {
-    list(est = NA, lo = NA, hi = NA)
-  }
-}
-
-# 3. Build long-format data frame
-treat_names <- rownames(mat)
-long_df <- do.call(rbind, lapply(seq_along(treat_names), function(i) {
-  do.call(rbind, lapply(seq_along(treat_names), function(j) {
-    if (i == j || is.na(mat[i, j])) return(NULL)
-    vals <- parse_league_cell(mat[i, j])
-    data.frame(
-      row_treat = treat_names[i], col_treat = treat_names[j],
-      estimate = vals$est, sig = (vals$lo > 1) | (vals$hi < 1),
-      label = trimws(mat[i, j]), stringsAsFactors = FALSE
-    )
-  }))
-}))
-
-# 4. Plot
 ggplot(long_df, aes(col_treat, row_treat)) +
-  geom_tile(aes(fill = log(estimate)), color = "white") +
-  geom_text(aes(label = label, fontface = ifelse(sig, "bold", "plain")),
-            size = 3) +
-  scale_fill_gradient2(
-    low = "#2166AC", mid = "white", high = "#B2182B", midpoint = 0
-  ) +
+  geom_tile(aes(fill = fill_val), color = "white") +
+  geom_text(aes(label = label, fontface = ifelse(sig, "bold", "plain")), size = 3) +
+  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B", midpoint = 0,
+                       breaks = c(-lim, lim), labels = c("Favours row", "Favours column")) +
+  scale_x_discrete(position = "top") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 0),
-        panel.grid = element_blank())
+  theme(axis.text.x = element_text(angle = 45, hjust = 0), panel.grid = element_blank())
 ```
 
-**Customization options**:
-- Change `scale_fill_gradient2` colors to match journal style
-- Adjust `size` in `geom_text()` for readability (smaller for many treatments)
-- For MD/SMD (non-ratio measures), use `estimate` directly instead of `log(estimate)` and set the null at 0
+Order rows/columns by SUCRA (Bayesian) or P-score (frequentist), best first, and
+state in the caption: "Each cell shows the row treatment versus the column treatment."
 
 ---
 

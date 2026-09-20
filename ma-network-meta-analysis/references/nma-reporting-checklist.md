@@ -62,7 +62,7 @@
 | 21 | Risk of bias within studies | RoB summary across studies | 06_analysis/figures/ |
 | 22 | **[NMA] Network geometry** | Network graph showing treatments and connections | 06_analysis/figures/network_graph.png |
 | 23 | Results of individual studies | Effect estimates from each study | 06_analysis/nma_prepared_data.csv |
-| 24 | Synthesis of results | NMA results: league table, forest plots | 06_analysis/tables/nma_league_table.csv |
+| 24 | Synthesis of results | NMA results: league table, forest plots | 06_analysis/tables/nma_league_table_bayesian.csv |
 | 25 | **[NMA] Exploration of inconsistency** | Results of consistency assessment | 06_analysis/nma_inconsistency_report.txt |
 | 26 | Risk of bias across studies | Funnel plot results | 06_analysis/figures/nma_funnel.png |
 | 27 | Additional analyses | Sensitivity analysis results, leave-one-out | 06_analysis/nma_sensitivity_report.txt |

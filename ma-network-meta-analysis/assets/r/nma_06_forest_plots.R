@@ -38,7 +38,7 @@ cat("Forest plot saved.\n")
 net_both <- netmeta(
   TE, seTE, treat1, treat2, studlab,
   data       = nma_data,
-  sm         = "RR",
+  sm         = NMA_SM,
   random     = TRUE,
   fixed      = TRUE,
   method.tau = "REML",

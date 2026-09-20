@@ -80,6 +80,15 @@ MCMC_N_ITER   <- 50000   # Sampling iterations (increase if poor convergence)
 MCMC_THIN     <- 10      # Thinning interval
 MCMC_N_CHAINS <- 4       # Number of MCMC chains
 
+# --- 6b. Analysis settings (single source of truth) ---
+# Used by nma_03/04/06/07/09/10/11/12. Change HERE, not in individual scripts.
+NMA_SM           <- "RR"           # Effect measure: "RR", "OR", "HR", "MD", "SMD"
+NMA_REF_TREAT    <- NULL           # Reference treatment (NULL = netmeta default: first alphabetically)
+NMA_SMALL_VALUES <- "undesirable"  # "desirable" when LOWER values are better
+                                   #   (e.g. HR for PFS/OS, adverse events, mortality)
+                                   # Drives netrank(), rank.probability(preferredDirection)
+                                   # and the league-table heatmap colour direction.
+
 # --- 7. Figure export defaults ---
 FIG_WIDTH  <- 10
 FIG_HEIGHT <- 8

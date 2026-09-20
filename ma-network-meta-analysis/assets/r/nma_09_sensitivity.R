@@ -51,7 +51,7 @@ for (s in studies) {
   # Use frequentist for speed in leave-one-out
   net_loo <- tryCatch(
     netmeta(TE, seTE, treat1, treat2, studlab,
-            data = data_loo, sm = "RR",
+            data = data_loo, sm = NMA_SM,
             random = TRUE, method.tau = "REML"),
     error = function(e) NULL
   )

@@ -1,10 +1,26 @@
 # =============================================================================
-# nma_10_tables.R — Export League Table & Rankings as Publication Tables
+# nma_10_tables.R — Export League Tables & Rankings as Publication Tables
 # =============================================================================
-# Purpose: Create gt/PNG tables for manuscript inclusion
-# Input: net_re from nma_04_models.R, rankings from nma_07_ranking.R
-# Output: tables/league_table.png, tables/league_table_heatmap.png,
-#         tables/nma_summary.png
+# Purpose: League tables (Bayesian PRIMARY + frequentist SUPPLEMENT), colour-coded
+#          league-table heatmaps, and a summary table vs reference
+# Input:   bayes_re + net_re from nma_04_models.R;
+#          NMA_SM / NMA_SMALL_VALUES from nma_01_setup.R
+# Output:  tables/nma_league_table_bayesian.csv       posterior median [95% CrI]
+#          tables/nma_league_table_frequentist.csv    REML estimate [95% CI]
+#          tables/nma_league_table_netleague.csv/.xlsx raw netmeta::netleague() output
+#          tables/league_table_heatmap.png            primary (Bayesian if available)
+#          tables/league_table_heatmap_frequentist.png
+#          tables/nma_summary.png / nma_summary.csv
+#
+# ORIENTATION — read before interpreting any league table:
+#   * Tables and heatmaps built by THIS script: every cell = ROW treatment vs
+#     COLUMN treatment, network estimate. Both triangles are filled (reciprocal).
+#   * netmeta::netleague() output (the *_netleague.* files) is different:
+#     LOWER triangle = network estimate (column vs row),
+#     UPPER triangle = DIRECT pairwise estimate (row vs column).
+#     Never colour-code that matrix as if both triangles were the same thing.
+#   * gemtc::relative.effect.table()[t1, t2, ] = effect of t2 relative to t1
+#     (column vs row); it is transposed below to match the row-vs-column rule.
 # =============================================================================
 
 source("nma_04_models.R")
@@ -14,124 +30,141 @@ library(flextable)
 library(ggplot2)
 library(tidyr)
 
-# --- 1. League table (full pairwise comparisons) ---
-cat("Building league table...\n")
-ranking <- netrank(net_re, small.values = "undesirable")
-league <- netleague(net_re, random = TRUE, seq = ranking, digits = 2)
+is_ratio <- NMA_SM %in% c("RR", "OR", "HR")
+null_val <- if (is_ratio) 1 else 0
+has_bayes <- exists("bayes_re")
 
-# Convert to data frame for gt
-league_matrix <- league$random
-league_df <- as.data.frame(league_matrix)
+# --- 0. Helpers -------------------------------------------------------------
 
-# Save as CSV
-write_csv(league_df, file.path(TBL_DIR, "nma_league_table_full.csv"))
-
-# --- 1b. League table heatmap (color-coded by effect size) ---
-cat("Generating league table heatmap...\n")
-
-# Order treatments by P-score ranking
-treat_order <- names(sort(ranking$Pscore.random, decreasing = TRUE))
-n_treats <- length(treat_order)
-sm <- net_re$sm
-is_ratio <- sm %in% c("RR", "OR", "HR")
-
-# Build long-format data from the league matrix
-heatmap_rows <- list()
-for (i in seq_len(n_treats)) {
-  for (j in seq_len(n_treats)) {
-    if (i == j) next
-    cell_text <- league_matrix[i, j]
-    if (is.na(cell_text) || cell_text == "") next
-
-    # Parse "estimate [lower, upper]" or "estimate (lower, upper)"
-    m <- regmatches(cell_text, regexec(
-      "([0-9.-]+)\\s*[\\[\\(]([0-9.-]+)[,;]\\s*([0-9.-]+)[\\]\\)]", cell_text
-    ))[[1]]
-
-    if (length(m) == 4) {
-      est <- as.numeric(m[2])
-      lo  <- as.numeric(m[3])
-      hi  <- as.numeric(m[4])
-
-      # Determine statistical significance (CI excludes null)
-      null_val <- if (is_ratio) 1 else 0
-      sig <- (lo > null_val) || (hi < null_val)
-
-      heatmap_rows[[length(heatmap_rows) + 1]] <- data.frame(
-        row_treat = rownames(league_matrix)[i],
-        col_treat = colnames(league_matrix)[j],
-        estimate  = est,
-        lower     = lo,
-        upper     = hi,
-        sig       = sig,
-        label     = trimws(cell_text),
-        stringsAsFactors = FALSE
-      )
-    }
+# Long-format league data from square effect matrices on the analysis scale
+# (log scale for ratio measures). est/lower/upper[i, j] = treatment i vs j.
+# fill_val is signed so that NEGATIVE always means "favours row".
+league_long <- function(est, lower, upper, trts, treat_order, digits = 2) {
+  fmt <- paste0("%.", digits, "f")
+  rows <- list()
+  for (a in treat_order) for (b in treat_order) {
+    if (a == b) next
+    i <- match(a, trts); j <- match(b, trts)
+    e <- est[i, j]; lo <- lower[i, j]; hi <- upper[i, j]
+    if (is.na(e)) next
+    if (is_ratio) { e <- exp(e); lo <- exp(lo); hi <- exp(hi) }
+    signed <- if (is_ratio) log(e) else e          # < 0: row has lower values
+    rows[[length(rows) + 1]] <- data.frame(
+      row_treat = a, col_treat = b,
+      estimate = e, lower = lo, upper = hi,
+      sig      = (lo > null_val) || (hi < null_val),
+      label    = sprintf(paste0(fmt, " [", fmt, "; ", fmt, "]"), e, lo, hi),
+      fill_val = if (NMA_SMALL_VALUES == "desirable") signed else -signed,
+      stringsAsFactors = FALSE
+    )
   }
+  out <- do.call(rbind, rows)
+  out$row_treat <- factor(out$row_treat, levels = treat_order)
+  out$col_treat <- factor(out$col_treat, levels = treat_order)
+  out
 }
 
-if (length(heatmap_rows) > 0) {
-  heatmap_df <- do.call(rbind, heatmap_rows)
-
-  # Factor levels ordered by P-score ranking
-  heatmap_df$row_treat <- factor(heatmap_df$row_treat, levels = treat_order)
-  heatmap_df$col_treat <- factor(heatmap_df$col_treat, levels = treat_order)
-
-  # Color scale: centered on null effect (1 for ratios, 0 for differences)
-  if (is_ratio) {
-    # Log-transform ratios so color scale is symmetric around 1
-    heatmap_df$fill_val <- log(heatmap_df$estimate)
-  } else {
-    heatmap_df$fill_val <- heatmap_df$estimate
+# Square character matrix (row vs column) for CSV export
+league_wide <- function(long_df, treat_order) {
+  m <- matrix("", length(treat_order), length(treat_order),
+              dimnames = list(treat_order, treat_order))
+  diag(m) <- treat_order
+  for (k in seq_len(nrow(long_df))) {
+    m[as.character(long_df$row_treat[k]), as.character(long_df$col_treat[k])] <- long_df$label[k]
   }
-  fill_limit <- max(abs(heatmap_df$fill_val), na.rm = TRUE)
+  cbind(data.frame(Treatment = treat_order, stringsAsFactors = FALSE),
+        as.data.frame(m, stringsAsFactors = FALSE))
+}
 
-  # Font size scales with number of treatments
-  cell_font_size <- if (n_treats <= 5) 3.2 else if (n_treats <= 8) 2.8 else 2.2
-
-  p_heatmap <- ggplot(heatmap_df, aes(x = col_treat, y = row_treat)) +
+league_heatmap <- function(long_df, title, estimate_label, interval_label, file) {
+  n_treats   <- nlevels(long_df$row_treat)
+  fill_limit <- max(abs(long_df$fill_val), na.rm = TRUE)
+  cell_font  <- if (n_treats <= 5) 3.2 else if (n_treats <= 8) 2.8 else 2.2
+  p <- ggplot(long_df, aes(x = col_treat, y = row_treat)) +
     geom_tile(aes(fill = fill_val), color = "white", linewidth = 0.8) +
-    geom_text(
-      aes(label = label, fontface = ifelse(sig, "bold", "plain")),
-      size = cell_font_size, color = "black"
-    ) +
+    geom_text(aes(label = label, fontface = ifelse(sig, "bold", "plain")),
+              size = cell_font, color = "black") +
     scale_fill_gradient2(
       low = "#2166AC", mid = "white", high = "#B2182B",
-      midpoint = 0,
-      limits = c(-fill_limit, fill_limit),
-      name = if (is_ratio) paste0("log(", sm, ")") else sm
+      midpoint = 0, limits = c(-fill_limit, fill_limit),
+      name = NULL, breaks = c(-fill_limit, fill_limit),
+      labels = c("Favours row", "Favours column")
     ) +
     scale_x_discrete(position = "top") +
+    scale_y_discrete(limits = rev) +          # best treatment on top
     labs(
-      title = "League Table Heatmap",
+      title = title,
       subtitle = paste0(
-        "Effect estimates (", sm, " with 95% CI). ",
-        "Bold = statistically significant. ",
-        "Blue = favors row; Red = favors column."
+        "Each cell = row vs column: ", estimate_label, " ", NMA_SM,
+        " [95% ", interval_label, "]. Bold = interval excludes ", null_val, ".\n",
+        "Treatments ordered best to worst."
       ),
       x = NULL, y = NULL
     ) +
     theme_minimal(base_size = 12) +
     theme(
-      axis.text.x = element_text(angle = 45, hjust = 0, face = "bold"),
-      axis.text.y = element_text(face = "bold"),
-      panel.grid   = element_blank(),
-      plot.title   = element_text(face = "bold", size = 14),
-      plot.subtitle = element_text(size = 9, color = "grey40"),
+      axis.text.x.top = element_text(angle = 45, hjust = 0, vjust = 0, face = "bold"),
+      axis.text.y   = element_text(face = "bold"),
+      panel.grid    = element_blank(),
+      plot.title    = element_text(face = "bold", size = 14),
+      plot.subtitle = element_text(size = 9, color = "grey40", margin = margin(b = 4 * max(nchar(levels(long_df$row_treat))))),
       legend.position = "right"
     )
-
-  # Scale figure dimensions to treatment count
   fig_size <- max(6, n_treats * 1.4)
-  ggsave(
-    file.path(TBL_DIR, "league_table_heatmap.png"),
-    plot = p_heatmap, width = fig_size, height = fig_size * 0.85,
-    dpi = FIG_DPI, bg = "white"
-  )
-  cat("League table heatmap saved to", file.path(TBL_DIR, "league_table_heatmap.png"), "\n")
+  ggsave(file.path(TBL_DIR, file), plot = p,
+         width = fig_size, height = fig_size * 0.85, dpi = FIG_DPI, bg = "white")
+  cat("Heatmap saved to", file.path(TBL_DIR, file), "\n")
+  invisible(p)
+}
+
+# --- 1. Treatment order (best -> worst) ---
+ranking <- netrank(net_re, small.values = NMA_SMALL_VALUES)
+if (has_bayes) {
+  pref_dir    <- if (NMA_SMALL_VALUES == "desirable") -1 else 1
+  sucra_vals  <- sucra(rank.probability(bayes_re, preferredDirection = pref_dir))
+  treat_order <- names(sort(sucra_vals, decreasing = TRUE))     # by SUCRA (primary)
 } else {
-  cat("⚠️ Could not parse league matrix cells — heatmap skipped.\n")
+  treat_order <- names(sort(ranking$Pscore.random, decreasing = TRUE))  # by P-score
+}
+
+# --- 1a. Bayesian league table (PRIMARY) ---
+if (has_bayes) {
+  cat("Building Bayesian league table (posterior median + 95% CrI)...\n")
+  ret <- relative.effect.table(bayes_re)          # [t1, t2, ] = t2 relative to t1
+  league_b <- league_long(
+    est = t(ret[, , "50%"]), lower = t(ret[, , "2.5%"]), upper = t(ret[, , "97.5%"]),
+    trts = dimnames(ret)[[1]], treat_order = treat_order
+  )
+  write_csv(league_wide(league_b, treat_order),
+            file.path(TBL_DIR, "nma_league_table_bayesian.csv"))
+  league_heatmap(league_b, "League Table (Bayesian NMA)",
+                 "posterior median", "CrI", "league_table_heatmap.png")
+} else {
+  cat("bayes_re not found — Bayesian league table skipped.\n")
+}
+
+# --- 1b. Frequentist league table (SUPPLEMENT) ---
+cat("Building frequentist league table (REML, 95% CI)...\n")
+league_f <- league_long(
+  est = net_re$TE.random, lower = net_re$lower.random, upper = net_re$upper.random,
+  trts = net_re$trts, treat_order = treat_order
+)
+write_csv(league_wide(league_f, treat_order),
+          file.path(TBL_DIR, "nma_league_table_frequentist.csv"))
+league_heatmap(league_f, "League Table (Frequentist NMA, sensitivity)",
+               "REML estimate", "CI",
+               if (has_bayes) "league_table_heatmap_frequentist.png" else "league_table_heatmap.png")
+
+# Raw netmeta::netleague() — lower = network (column vs row), upper = DIRECT (row vs column)
+league_nm <- netleague(net_re, random = TRUE, common = FALSE, seq = ranking, digits = 2)
+write_csv(as.data.frame(league_nm$random),
+          file.path(TBL_DIR, "nma_league_table_netleague.csv"))
+if (requireNamespace("writexl", quietly = TRUE)) {
+  tryCatch(
+    netleague(net_re, random = TRUE, common = FALSE, seq = ranking, digits = 2,
+              path = file.path(TBL_DIR, "nma_league_table_netleague.xlsx"), overwrite = TRUE),
+    error = function(e) cat("netleague Excel export skipped:", conditionMessage(e), "\n")
+  )
 }
 
 # --- 2. Summary table: all treatments vs reference ---
@@ -158,8 +191,7 @@ for (i in seq_along(treatments)) {
   lower <- net_re$lower.random[idx, ref_idx]
   upper <- net_re$upper.random[idx, ref_idx]
 
-  sm <- net_re$sm
-  if (sm %in% c("RR", "OR", "HR")) {
+  if (is_ratio) {
     summary_data$Estimate[i] <- sprintf("%.2f (%.2f-%.2f)", exp(te), exp(lower), exp(upper))
   } else {
     summary_data$Estimate[i] <- sprintf("%.2f (%.2f-%.2f)", te, lower, upper)

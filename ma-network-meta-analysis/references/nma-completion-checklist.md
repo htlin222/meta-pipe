@@ -22,8 +22,8 @@
   - **Tool**: `uv run validate_nma_outputs.py --root projects/<name>`
 
 - [ ] **03. League table complete**
-  - File: `06_analysis/tables/league_table.png` or `.csv`
-  - Heatmap: `06_analysis/tables/league_table_heatmap.png`
+  - File: `06_analysis/tables/nma_league_table_bayesian.csv` (primary, posterior median + 95% CrI); `nma_league_table_frequentist.csv` (supplement)
+  - Heatmap: `06_analysis/tables/league_table_heatmap.png` (every cell = row vs column)
   - All n*(n-1)/2 pairwise comparisons present
   - Upper triangle: effect estimates (RR/OR/HR)
   - Lower triangle: credible/confidence intervals
