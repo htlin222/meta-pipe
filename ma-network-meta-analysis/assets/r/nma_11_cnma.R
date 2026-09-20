@@ -103,7 +103,7 @@ cat("=== Frequentist CNMA: Additive Model (Primary Analysis) ===\n")
 cnma_add <- discomb(
   TE, seTE, treat1, treat2, studlab,
   data      = nma_data,
-  sm        = "RR",          # Adapt: "RR", "OR", "MD", "SMD"
+  sm        = NMA_SM,        # set in nma_01_setup.R
   random    = TRUE,
   fixed     = TRUE,
   inactive  = inactive_treatment
@@ -163,7 +163,7 @@ cnma_int <- tryCatch({
   discomb(
     TE, seTE, treat1, treat2, studlab,
     data      = nma_data,
-    sm        = "RR",
+    sm        = NMA_SM,
     random    = TRUE,
     fixed     = TRUE,
     inactive  = inactive_treatment,

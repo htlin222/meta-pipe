@@ -134,11 +134,11 @@ cat("\n=== Frequentist NMA (Sensitivity Analysis for Supplement) ===\n")
 net_re <- netmeta(
   TE, seTE, treat1, treat2, studlab,
   data       = nma_data,
-  sm         = "RR",           # Adapt: "RR", "OR", "MD", "SMD"
+  sm         = NMA_SM,          # set in nma_01_setup.R
   random     = TRUE,
-  fixed      = TRUE,
+  common     = TRUE,
   method.tau = "REML",
-  reference.group = NULL       # Set to control treatment name
+  reference.group = NMA_REF_TREAT
 )
 
 cat("Frequentist summary (for supplement):\n")

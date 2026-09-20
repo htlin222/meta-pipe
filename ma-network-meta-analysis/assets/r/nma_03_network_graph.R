@@ -31,7 +31,7 @@ png(file.path(FIG_DIR, "network_graph.png"),
 
 netgraph(
   netmeta(TE, seTE, treat1, treat2, studlab, data = nma_data,
-          sm = "RR", random = TRUE, method.tau = "REML"),
+          sm = NMA_SM, random = TRUE, method.tau = "REML"),
   seq = "optimal",
   number.of.studies = TRUE,
   cex.points = 3,
