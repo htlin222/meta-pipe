@@ -29,7 +29,7 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 
 def check_prisma_checklist(
@@ -241,6 +241,35 @@ def check_crossreference_validation(project_root: Path) -> Tuple[int, int, List[
     return max(0, score), 10, issues
 
 
+def png_dpi(path: Path) -> Optional[int]:
+    """Resolution a PNG declares in its pHYs chunk, or None if it declares none.
+
+    A PNG with no pHYs chunk is rendered at the viewer's default, conventionally
+    72 dpi, however many pixels it contains. Journals that check resolution read
+    this chunk, so "2400 pixels wide" is not the same as "300 dpi".
+    """
+    try:
+        data = path.read_bytes()
+    except OSError:
+        return None
+    if data[:8] != b"\x89PNG\r\n\x1a\n":
+        return None
+    offset = 8
+    while offset + 8 <= len(data):
+        length = int.from_bytes(data[offset : offset + 4], "big")
+        chunk = data[offset + 4 : offset + 8]
+        if chunk == b"pHYs" and offset + 17 <= len(data):
+            px_per_unit = int.from_bytes(data[offset + 8 : offset + 12], "big")
+            unit = data[offset + 16]
+            if unit != 1:  # not metres; resolution is a ratio only
+                return None
+            return round(px_per_unit * 0.0254)
+        if chunk == b"IDAT":
+            return None  # pHYs must precede IDAT
+        offset += 12 + length
+    return None
+
+
 def check_figure_quality(project_root: Path) -> Tuple[int, int, List[str]]:
     """Check figure quality (DPI, labels)."""
     figures_dir = project_root / "06_analysis" / "figures"
@@ -269,10 +298,25 @@ def check_figure_quality(project_root: Path) -> Tuple[int, int, List[str]]:
         )
         score -= 2
 
-    # Check file sizes (rough DPI proxy - <100KB likely low resolution)
-    small_files = [f for f in png_files if f.stat().st_size < 100_000]
-    if small_files:
-        issues.append(f"{len(small_files)} figures <100KB - verify 300 DPI")
+    # Read the declared resolution instead of guessing from file size. File size
+    # is not a DPI proxy and in practice points the wrong way: R's png(res=300)
+    # writes no pHYs chunk at all (so the file declares 72 dpi) while producing a
+    # LARGER file than ragg::agg_png, which does declare 300.
+    undeclared = [f for f in png_files if png_dpi(f) is None]
+    low_dpi = [f for f in png_files if (d := png_dpi(f)) is not None and d < 300]
+
+    if undeclared:
+        issues.append(
+            f"{len(undeclared)} figures declare no resolution (no pHYs chunk) - "
+            "re-render with ragg::agg_png(res=300), png(type='cairo', res=300) "
+            "or ggsave(dpi=300)"
+        )
+        score -= 3
+    if low_dpi:
+        issues.append(
+            f"{len(low_dpi)} figures below 300 DPI "
+            f"(lowest {min(png_dpi(f) for f in low_dpi)})"
+        )
         score -= 3
 
     return max(0, score), 10, issues

@@ -22,11 +22,11 @@ FIX=0
 [ "${1:-}" = "--fix" ] && FIX=1
 
 pass=0; warn=0; fail=0
-declare -a REMEDY
+REMEDY=""   # newline-separated; an empty bash 3.2 array trips `set -u`
 
 ok()   { printf '  \033[32m✓\033[0m %s\n' "$1"; pass=$((pass+1)); }
-no()   { printf '  \033[31m✗\033[0m %s\n' "$1"; fail=$((fail+1)); [ -n "${2:-}" ] && REMEDY+=("$1 → $2"); }
-meh()  { printf '  \033[33m!\033[0m %s\n' "$1"; warn=$((warn+1)); [ -n "${2:-}" ] && REMEDY+=("$1 → $2"); }
+no()   { printf '  \033[31m✗\033[0m %s\n' "$1"; fail=$((fail+1)); [ -n "${2:-}" ] && REMEDY="$REMEDY  • $1 → $2"$'\n'; }
+meh()  { printf '  \033[33m!\033[0m %s\n' "$1"; warn=$((warn+1)); [ -n "${2:-}" ] && REMEDY="$REMEDY  • $1 → $2"$'\n'; }
 head_() { printf '\n\033[1m%s\033[0m\n' "$1"; }
 
 # --- 1. command-line tools ---------------------------------------------------
@@ -137,7 +137,17 @@ if [ -f "$REPO/.env" ]; then
     meh "SCOPUS_API_KEY unset — PRISMA needs a second database; the run will substitute ClinicalTrials.gov and record a deviation"
   fi
 
-  [ -z "${UNPAYWALL_EMAIL:-}" ] && meh "UNPAYWALL_EMAIL unset — stage 04 full-text retrieval degrades to fully-open PDFs only" "set UNPAYWALL_EMAIL in .env"
+  if [ -n "${UNPAYWALL_EMAIL:-}" ]; then
+    # Unpaywall takes an email as its politeness parameter; a malformed one is
+    # rejected, so test it rather than trust that the field is filled in.
+    if curl -s "https://api.unpaywall.org/v2/10.1056/NEJMoa1814017?email=${UNPAYWALL_EMAIL}" | jq -e '.doi' >/dev/null 2>&1; then
+      ok "Unpaywall resolves OA locations"
+    else
+      no "Unpaywall rejected UNPAYWALL_EMAIL" "check the address in .env"
+    fi
+  else
+    meh "UNPAYWALL_EMAIL unset — stage 04 full-text retrieval degrades to fully-open PDFs only" "set UNPAYWALL_EMAIL in .env"
+  fi
 else
   meh ".env missing — only keyless sources will work" "cp .env.example .env and fill it in"
 fi
@@ -195,9 +205,8 @@ avail="$(df -g "$REPO" | awk 'NR==2{print $4}')"
 
 # --- verdict -------------------------------------------------------------------
 printf '\n\033[1m%d passed, %d warnings, %d failed\033[0m\n' "$pass" "$warn" "$fail"
-if [ "${#REMEDY[@]}" -gt 0 ]; then
-  printf '\nTo fix:\n'
-  printf '  • %s\n' "${REMEDY[@]}"
+if [ -n "$REMEDY" ]; then
+  printf '\nTo fix:\n%s' "$REMEDY"
 fi
 [ "$fail" -gt 0 ] && { printf '\n\033[31mPreflight failed — do not start a run.\033[0m\n'; exit 1; }
 printf '\n\033[32mPreflight passed.\033[0m\n'

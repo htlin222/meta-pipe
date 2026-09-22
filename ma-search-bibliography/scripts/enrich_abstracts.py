@@ -37,7 +37,9 @@ from urllib.parse import quote
 try:
     import bibtexparser
 except ImportError:
-    print("ERROR: bibtexparser not installed. Run: uv add bibtexparser", file=sys.stderr)
+    print(
+        "ERROR: bibtexparser not installed. Run: uv add bibtexparser", file=sys.stderr
+    )
     sys.exit(1)
 
 try:
@@ -67,46 +69,145 @@ def fetch_pubmed_abstracts(pmids: list[str], email: str | None) -> dict[str, str
     results: dict[str, str] = {}
     if not pmids:
         return results
-    try:
-        from Bio import Entrez  # type: ignore
-    except ImportError:
-        print("WARN: biopython not available; skipping Entrez lookups", file=sys.stderr)
-        return results
-    if email:
-        Entrez.email = email
+    # Direct efetch + ElementTree rather than Bio.Entrez: Entrez.read() builds a
+    # deeply-validated object graph and measured ~2.5 min per 200-PMID batch,
+    # while the same HTTP fetch takes ~8.5s. Parsing is the bottleneck, not NCBI.
+    # POST is used because 200 comma-joined PMIDs overflow a sane URL length.
+    import xml.etree.ElementTree as ET
+
+    api_key = os.environ.get("PUBMED_API_KEY") or os.environ.get("NCBI_API_KEY")
 
     for start in range(0, len(pmids), BATCH_SIZE):
         chunk = pmids[start : start + BATCH_SIZE]
         print(f"  Entrez efetch batch {start // BATCH_SIZE + 1}: {len(chunk)} PMIDs")
-        try:
-            handle = Entrez.efetch(
-                db="pubmed",
-                id=",".join(chunk),
-                rettype="abstract",
-                retmode="xml",
-            )
-            records = Entrez.read(handle)
-            handle.close()
-        except Exception as exc:
-            print(f"  WARN: Entrez batch failed: {exc}", file=sys.stderr)
+        data = {
+            "db": "pubmed",
+            "id": ",".join(chunk),
+            "rettype": "abstract",
+            "retmode": "xml",
+        }
+        if email:
+            data["email"] = email
+        if api_key:
+            data["api_key"] = api_key
+        # Retry: a transient 400/5xx here silently loses 200 records' abstracts,
+        # which downstream looks like "no abstract available" rather than a failed
+        # fetch. Never let a network blip masquerade as missing data.
+        root = None
+        for attempt in range(1, 4):
+            try:
+                resp = requests.post(ENTREZ_EFETCH, data=data, timeout=REQUEST_TIMEOUT)
+                resp.raise_for_status()
+                root = ET.fromstring(resp.content)
+                break
+            except Exception as exc:
+                if attempt == 3:
+                    print(
+                        f"  WARN: Entrez batch {start // BATCH_SIZE + 1} FAILED after "
+                        f"3 attempts ({len(chunk)} PMIDs lost): {exc}",
+                        file=sys.stderr,
+                    )
+                else:
+                    print(
+                        f"  retry {attempt}/3 for batch {start // BATCH_SIZE + 1}: {exc}",
+                        file=sys.stderr,
+                    )
+                    time.sleep(2 * attempt)
+        if root is None:
             continue
 
-        for article in records.get("PubmedArticle", []):
-            try:
-                medline = article["MedlineCitation"]
-                pmid = str(medline["PMID"])
-                abstract_node = medline.get("Article", {}).get("Abstract", {})
-                parts = abstract_node.get("AbstractText", [])
-                if isinstance(parts, list):
-                    text = " ".join(str(p) for p in parts if p)
-                else:
-                    text = str(parts)
-                if text:
-                    results[pmid] = clean_text(text)
-            except Exception as exc:
-                print(f"  WARN: could not parse PubMed record: {exc}", file=sys.stderr)
-        time.sleep(0.4)  # stay under NCBI 3 req/s without API key
+        for article in root.iter("PubmedArticle"):
+            pmid_node = article.find("./MedlineCitation/PMID")
+            if pmid_node is None or not pmid_node.text:
+                continue
+            parts = [
+                "".join(node.itertext())
+                for node in article.findall(
+                    "./MedlineCitation/Article/Abstract/AbstractText"
+                )
+            ]
+            text = clean_text(" ".join(p for p in parts if p))
+            if text:
+                results[pmid_node.text.strip()] = text
+        time.sleep(0.15 if api_key else 0.4)  # NCBI: 10 req/s keyed, 3 req/s unkeyed
     return results
+
+
+ENTREZ_ESEARCH = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+
+
+def _resolve_dois_to_pmids(records: list, workers: int) -> dict[str, str]:
+    """Look each record's DOI up in PubMed via the [AID] field. {record_id: pmid}."""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    api_key = os.environ.get("PUBMED_API_KEY") or os.environ.get("NCBI_API_KEY")
+
+    def lookup(doi: str) -> str:
+        params = {
+            "db": "pubmed",
+            "term": f'"{doi}"[AID]',
+            "retmode": "json",
+            "retmax": 1,
+        }
+        if api_key:
+            params["api_key"] = api_key
+        try:
+            resp = requests.get(ENTREZ_ESEARCH, params=params, timeout=REQUEST_TIMEOUT)
+            if resp.status_code != 200:
+                return ""
+            ids = resp.json().get("esearchresult", {}).get("idlist", [])
+            return ids[0] if ids else ""
+        except Exception:  # noqa: BLE001 - a failed lookup just means no PMID
+            return ""
+
+    out: dict[str, str] = {}
+    done = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(lookup, r["doi"]): r for r in records}
+        for fut in as_completed(futures):
+            record = futures[fut]
+            done += 1
+            try:
+                pmid = fut.result()
+            except Exception:  # noqa: BLE001
+                pmid = ""
+            if pmid:
+                out[record["record_id"]] = pmid
+            if done % 200 == 0 or done == len(records):
+                print(f"  {done}/{len(records)} DOI lookups done ({len(out)} resolved)")
+    return out
+
+
+def _fill_concurrently(needs: list, fetch, source_label: str, workers: int) -> None:
+    """Run a per-record lookup concurrently and fill in whatever comes back.
+
+    These phases are network-bound one-request-per-record loops: serially they
+    ran at ~8 lookups/min, so ~1,000 DOIs took roughly two hours. Threads are
+    the right fix (all the time is spent waiting on HTTP, not on CPU).
+    Failures are swallowed per record — a record simply keeps an empty abstract
+    and is later marked `unavailable`, never dropped.
+    """
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    done = 0
+    filled = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(fetch, r): r for r in needs}
+        for fut in as_completed(futures):
+            record = futures[fut]
+            done += 1
+            try:
+                abstract = fut.result()
+            except Exception:  # noqa: BLE001 - one bad record must not abort the phase
+                abstract = ""
+            if abstract:
+                record["abstract"] = abstract
+                record["abstract_source"] = source_label
+                filled += 1
+            if done % 100 == 0 or done == len(needs):
+                print(
+                    f"  {done}/{len(needs)} {source_label} lookups done ({filled} filled)"
+                )
 
 
 def fetch_crossref_abstract(doi: str, mailto: str | None) -> str:
@@ -195,6 +296,16 @@ def main() -> None:
     parser.add_argument(
         "--skip-openalex", action="store_true", help="Skip OpenAlex fallback"
     )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=16,
+        help=(
+            "Concurrent HTTP workers for the CrossRef/OpenAlex phases (default: 16). "
+            "These phases are one request per record and network-bound; serially they "
+            "run at roughly 8 lookups/min, so ~1000 DOIs takes ~2h."
+        ),
+    )
     args = parser.parse_args()
 
     entrez_email = os.environ.get("ENTREZ_EMAIL") or os.environ.get("NCBI_EMAIL")
@@ -221,7 +332,9 @@ def main() -> None:
             "authors": clean_text(entry.get("author", "")),
             "year": entry.get("year", "").strip(),
             "title": clean_text(entry.get("title", "")),
-            "journal": clean_text(entry.get("journal", entry.get("publicationName", ""))),
+            "journal": clean_text(
+                entry.get("journal", entry.get("publicationName", ""))
+            ),
             "doi": entry.get("doi", "").strip(),
             "pmid": extract_pmid(entry),
             "keywords": clean_text(entry.get("keywords", "")),
@@ -244,35 +357,69 @@ def main() -> None:
                 record["abstract"] = pubmed_abstract
                 record["abstract_source"] = "pubmed"
 
+    # Phase 1b: DOI -> PMID, then a second Entrez pass.
+    # Records found only by Scopus often ARE indexed in PubMed; they simply did
+    # not match the PubMed query, so they arrive with a DOI but no PMID. Looking
+    # the DOI up in PubMed recovers a full MEDLINE abstract, which is better
+    # quality than the CrossRef fallback and avoids sending the record to
+    # title-only screening.
+    if not args.skip_crossref:
+        need_pmid = [
+            r for r in records if not r["abstract"] and r["doi"] and not r["pmid"]
+        ]
+        if need_pmid:
+            print(
+                f"Phase 1b: DOI->PMID resolution for {len(need_pmid)} records "
+                f"({args.workers} workers)"
+            )
+            resolved = _resolve_dois_to_pmids(need_pmid, args.workers)
+            if resolved:
+                print(f"  resolved {len(resolved)} PMIDs; refetching abstracts")
+                more = fetch_pubmed_abstracts(list(resolved.values()), entrez_email)
+                filled = 0
+                for record in need_pmid:
+                    pmid = resolved.get(record["record_id"])
+                    if not pmid:
+                        continue
+                    record["pmid"] = pmid
+                    abstract = more.get(pmid)
+                    if abstract:
+                        record["abstract"] = abstract
+                        record["abstract_source"] = "pubmed_via_doi"
+                        filled += 1
+                print(f"  Phase 1b filled {filled} abstracts")
+
     # Phase 2: CrossRef by DOI
     if not args.skip_crossref:
         needs = [r for r in records if not r["abstract"] and r["doi"]]
         if needs:
-            print(f"Phase 2: CrossRef lookup for {len(needs)} DOIs")
-        for i, record in enumerate(needs, 1):
-            if i % 25 == 0:
-                print(f"  {i}/{len(needs)} CrossRef lookups done")
-            abstract = fetch_crossref_abstract(record["doi"], crossref_mailto)
-            if abstract:
-                record["abstract"] = abstract
-                record["abstract_source"] = "crossref"
-            time.sleep(0.1)
+            print(
+                f"Phase 2: CrossRef lookup for {len(needs)} DOIs "
+                f"({args.workers} workers)"
+            )
+            _fill_concurrently(
+                needs,
+                lambda r: fetch_crossref_abstract(r["doi"], crossref_mailto),
+                "crossref",
+                args.workers,
+            )
 
     # Phase 3: OpenAlex fallback
     if not args.skip_openalex:
         needs = [r for r in records if not r["abstract"] and r["title"]]
         if needs:
-            print(f"Phase 3: OpenAlex fallback for {len(needs)} records")
-        for i, record in enumerate(needs, 1):
-            if i % 25 == 0:
-                print(f"  {i}/{len(needs)} OpenAlex lookups done")
-            abstract = fetch_openalex_abstract(
-                record["title"], record["year"], crossref_mailto
+            print(
+                f"Phase 3: OpenAlex fallback for {len(needs)} records "
+                f"({args.workers} workers)"
             )
-            if abstract:
-                record["abstract"] = abstract
-                record["abstract_source"] = "openalex"
-            time.sleep(0.1)
+            _fill_concurrently(
+                needs,
+                lambda r: fetch_openalex_abstract(
+                    r["title"], r["year"], crossref_mailto
+                ),
+                "openalex",
+                args.workers,
+            )
 
     for record in records:
         if not record["abstract"]:

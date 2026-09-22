@@ -22,6 +22,7 @@ import argparse
 import csv
 import json as _json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -69,7 +70,9 @@ def _assert_claude_cli() -> None:
         raise SystemExit("ERROR: `claude -p --help` timed out after 15s.")
     if help_out.returncode != 0:
         raise SystemExit(f"ERROR: `claude -p --help` failed: {help_out.stderr.strip()}")
-    missing = [flag for flag in ("--bare", "--output-format") if flag not in help_out.stdout]
+    missing = [
+        flag for flag in ("--bare", "--output-format") if flag not in help_out.stdout
+    ]
     if missing:
         raise SystemExit(
             "ERROR: installed `claude` CLI is missing required flag(s): "
@@ -77,6 +80,7 @@ def _assert_claude_cli() -> None:
             f"{'.'.join(str(x) for x in MIN_CLAUDE_CLI_VERSION)}. "
             "See tooling/python/CLAUDE_CLI_FLAGS.md."
         )
+
 
 EXCLUSION_CODES = """\
 - P1: Wrong population
@@ -251,6 +255,90 @@ Exclusion codes:
     return parsed
 
 
+def screen_batch(records: List[dict], eligibility_criteria: str) -> Dict[int, dict]:
+    """Screen several studies in one `claude -p` call.
+
+    One call per record is the most faithful method but is dominated by CLI
+    startup (~14s wall for a ~10s model turn), so a large corpus becomes
+    infeasible. Batching amortises that startup across K records while still
+    requiring a separate, explicitly-keyed judgement per record.
+
+    Returns {position_index: parsed_dict} for whichever records the model
+    returned. The caller is responsible for any record missing from the reply --
+    it must never be silently dropped.
+    """
+    blocks = []
+    for i, rec in enumerate(records, 1):
+        abstract = (rec.get("Abstract") or "").strip()
+        blocks.append(
+            f"### RECORD {i}\n"
+            f"Title: {rec.get('Title', '')}\n"
+            f"Authors: {rec.get('Authors', '')}\n"
+            f"Journal: {rec.get('Journal', '')}\n"
+            f"Year: {rec.get('Year', '')}\n"
+            f"Abstract: {abstract[:1200] if abstract else 'NO ABSTRACT AVAILABLE'}"
+        )
+    joined = "\n\n".join(blocks)
+
+    prompt = f"""You are an expert systematic reviewer screening studies for a meta-analysis.
+
+ELIGIBILITY CRITERIA (from the project protocol -- read carefully):
+{eligibility_criteria}
+
+You will screen {len(records)} studies. Judge EACH ONE INDEPENDENTLY on its own
+title and abstract. Do not let one record influence another.
+
+{joined}
+
+TASK:
+For each record, decide:
+1. INCLUDE - clearly meets all eligibility criteria
+2. EXCLUDE - clearly violates one or more eligibility criteria
+3. MAYBE - uncertain, needs full-text review
+
+When in doubt, prefer MAYBE over EXCLUDE (liberal screening at title/abstract stage).
+If a record has no abstract, judge on the title alone and prefer MAYBE unless the
+title clearly violates a criterion.
+
+Output EXACTLY one line per record, in this format, no markdown, no extra text:
+RECORD <n> | DECISION: <INCLUDE|EXCLUDE|MAYBE> | REASON: <one sentence> | CONFIDENCE: <HIGH|MEDIUM|LOW> | EXCLUSION_CODE: <code or NONE>
+
+You must output exactly {len(records)} lines, numbered 1 to {len(records)}.
+
+Exclusion codes:
+{EXCLUSION_CODES}
+"""
+
+    timeout = max(120, 25 * len(records))
+    text = _invoke_claude(prompt, timeout=timeout)
+
+    out: Dict[int, dict] = {}
+    line_re = re.compile(r"RECORD\s*(\d+)\s*\|(.*)", re.I)
+    for line in text.strip().splitlines():
+        m = line_re.search(line.strip())
+        if not m:
+            continue
+        idx = int(m.group(1))
+        if not (1 <= idx <= len(records)) or idx in out:
+            continue
+        rest = m.group(2)
+
+        def field(name: str, default: str) -> str:
+            fm = re.search(rf"{name}\s*:\s*([^|]*)", rest, re.I)
+            return fm.group(1).strip() if fm else default
+
+        decision = field("DECISION", "maybe").lower()
+        if decision not in ("include", "exclude", "maybe"):
+            decision = "maybe"
+        out[idx] = {
+            "decision": decision,
+            "reason": field("REASON", "No reason given"),
+            "confidence": (field("CONFIDENCE", "LOW") or "LOW").upper(),
+            "exclusion_code": field("EXCLUSION_CODE", "NONE") or "NONE",
+        }
+    return out
+
+
 def screen_one(title, abstract, year, authors, journal, eligibility_criteria) -> dict:
     """
     Call `claude -p` to screen a single study.
@@ -308,11 +396,177 @@ Exclusion codes:
     return parsed
 
 
+def _apply(
+    record: dict, res: dict, decision_col: str, reason_col: str, reviewer: int
+) -> None:
+    record[decision_col] = res["decision"]
+    record[reason_col] = (
+        f"{res['exclusion_code']}: {res['reason']}"
+        if res["exclusion_code"] != "NONE"
+        else res["reason"]
+    )
+    record["Notes"] = (
+        record.get("Notes", "") + f" | AI-R{reviewer} confidence={res['confidence']}"
+    ).strip(" |")
+
+
+def _run_batched(
+    records: List[dict],
+    batch_size: int,
+    eligibility: str,
+    decision_col: str,
+    reason_col: str,
+    reviewer: int,
+) -> None:
+    """Screen in batches, falling back to one-by-one for anything not returned.
+
+    A record the model omits is NEVER left undecided or dropped: it is retried
+    individually, and only if that also fails is it recorded as 'maybe' with the
+    error captured in the reason column.
+    """
+    pending = [r for r in records if not r.get(decision_col, "").strip()]
+    print(f"Batched screening: {len(pending)} records, batch size {batch_size}")
+
+    done = 0
+    repaired = 0
+    for start in range(0, len(pending), batch_size):
+        chunk = pending[start : start + batch_size]
+        try:
+            results = screen_batch(chunk, eligibility)
+        except Exception as exc:  # noqa: BLE001 - one bad batch must not abort the run
+            print(f"   batch error: {exc}")
+            results = {}
+
+        missing = []
+        for idx, record in enumerate(chunk, 1):
+            res = results.get(idx)
+            if res is None:
+                missing.append(record)
+                continue
+            _apply(record, res, decision_col, reason_col, reviewer)
+            done += 1
+
+        for record in missing:
+            repaired += 1
+            try:
+                res = screen_one(
+                    record.get("Title", ""),
+                    record.get("Abstract", ""),
+                    record.get("Year", ""),
+                    record.get("Authors", ""),
+                    record.get("Journal", ""),
+                    eligibility,
+                )
+                _apply(record, res, decision_col, reason_col, reviewer)
+            except Exception as exc:  # noqa: BLE001
+                record[decision_col] = "maybe"
+                record[reason_col] = f"AI error: {exc}"
+            done += 1
+
+        print(f"   {done}/{len(pending)} screened (individual repairs: {repaired})")
+
+    undecided = [r for r in records if not r.get(decision_col, "").strip()]
+    if undecided:
+        raise RuntimeError(
+            f"{len(undecided)} records left undecided — refusing to write a partial "
+            "decisions file (a missing decision corrupts the PRISMA flow)"
+        )
+
+
+def _column_fill_counts(path: Path, fieldnames: List[str]) -> Dict[str, int]:
+    """How many non-empty cells each column currently has on disk."""
+    if not path.exists():
+        return {}
+    counts: Dict[str, int] = {c: 0 for c in fieldnames}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for row in csv.DictReader(f):
+                for col in counts:
+                    if (row.get(col) or "").strip():
+                        counts[col] += 1
+    except Exception:  # noqa: BLE001 - an unreadable prior file just means no guard data
+        return {}
+    return counts
+
+
+def _assert_no_column_regression(
+    records: List[dict],
+    fieldnames: List[str],
+    prior_counts: Dict[str, int],
+    owned: set,
+) -> None:
+    """Refuse to write if this pass would blank out a column it does not own.
+
+    Guards the dual-review invariant: a reviewer-2 run must never reduce the
+    number of populated Reviewer1_* cells (or Final_*, or any other column).
+    Shrinking a column you do not own means data loss, not an update.
+    """
+    if not prior_counts:
+        return
+    regressions = []
+    for col in fieldnames:
+        if col in owned:
+            continue
+        before = prior_counts.get(col, 0)
+        after = sum(1 for r in records if (r.get(col) or "").strip())
+        if after < before:
+            regressions.append(f"{col}: {before} -> {after} ({before - after} lost)")
+    if regressions:
+        raise RuntimeError(
+            "refusing to write: this pass would reduce populated cells in "
+            "column(s) it does not own -- that is data loss, not an update:\n  "
+            + "\n  ".join(regressions)
+        )
+
+
+def _write_and_summarise(
+    records, fieldnames, output_csv, decision_col, args, round_dir, prior_counts=None
+) -> None:
+    owned = {
+        f"Reviewer{args.reviewer}_Decision",
+        f"Reviewer{args.reviewer}_Reason",
+        "Notes",
+    }
+    _assert_no_column_regression(records, fieldnames, prior_counts or {}, owned)
+
+    with open(output_csv, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(records)
+
+    decisions = [r.get(decision_col, "").lower() for r in records]
+    total = len(records) or 1
+    print(f"\n{'=' * 60}")
+    print(f"SCREENING SUMMARY (Reviewer {args.reviewer} = AI)")
+    print(f"{'=' * 60}")
+    print(f"Total:    {len(records)}")
+    for label in ("include", "exclude", "maybe"):
+        n = decisions.count(label)
+        print(f"  {label}: {n} ({n / total * 100:.1f}%)")
+    print(f"{'=' * 60}")
+    print(f"\nOutput: {output_csv}")
+
+
 def run_abstract_screening(args, project_path: Path) -> None:
     """Run title/abstract screening (original Stage 03 behavior)."""
     screening_db = project_path / "03_screening" / "screening-database.csv"
     round_dir = project_path / "03_screening" / args.round
-    output_csv = round_dir / "decisions.csv"
+
+    shard_i = getattr(args, "shard_index", None)
+    shard_n = getattr(args, "shard_total", None)
+    sharded = shard_i is not None
+
+    if sharded:
+        # Shard output is per-shard AND per-reviewer, so concurrent shards and
+        # the two reviewers never write the same file. decisions.csv is produced
+        # later by merge_screening_shards.py.
+        output_csv = (
+            round_dir
+            / "shards"
+            / f"decisions.r{args.reviewer}.shard-{shard_i:03d}-of-{shard_n:03d}.csv"
+        )
+    else:
+        output_csv = round_dir / "decisions.csv"
 
     if not screening_db.exists():
         print(f"ERROR: {screening_db} not found. Run search stage first.")
@@ -322,18 +576,62 @@ def run_abstract_screening(args, project_path: Path) -> None:
     if not eligibility:
         print("WARNING: No eligibility.md found. AI will use basic heuristics.")
 
-    round_dir.mkdir(parents=True, exist_ok=True)
+    output_csv.parent.mkdir(parents=True, exist_ok=True)
 
     with open(screening_db, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         fieldnames = list(reader.fieldnames)
         records = list(reader)
 
+    # MERGE, DO NOT REPLACE.
+    # The screening database's reviewer columns are empty by construction. If a
+    # reviewer pass always started from it, running --reviewer 2 after
+    # --reviewer 1 would write a decisions.csv in which Reviewer1_* is blank,
+    # silently destroying half of an independent dual review -- exactly what the
+    # kappa is meant to measure. So when the output already exists, seed from it
+    # and overlay only the column this pass owns.
+    key_col = "RecordID" if "RecordID" in fieldnames else None
+    prior_counts = _column_fill_counts(output_csv, fieldnames)
+    if output_csv.exists() and key_col:
+        with open(output_csv, "r", encoding="utf-8") as f:
+            existing = {r.get(key_col, ""): r for r in csv.DictReader(f)}
+        merged = 0
+        for i, rec in enumerate(records):
+            prev = existing.get(rec.get(key_col, ""))
+            if prev:
+                records[i] = {**rec, **{k: v for k, v in prev.items() if v}}
+                merged += 1
+        if merged:
+            print(
+                f"Merging into existing {output_csv.name}: {merged} prior rows carried forward"
+            )
+
+    if sharded:
+        total_in = len(records)
+        # Round-robin (stride) assignment: shard i takes positions i-1, i-1+n, ...
+        # Every record lands in exactly one shard, so the shards partition the
+        # corpus exactly and merging cannot lose or duplicate a record.
+        records = records[shard_i - 1 :: shard_n]
+        print(
+            f"Shard {shard_i}/{shard_n}: {len(records)} of {total_in} records"
+            f" (stride assignment)"
+        )
+
     print(f"Loaded {len(records)} records from {screening_db.name}")
     print(f"Filling Reviewer{args.reviewer} columns (AI screening)")
 
     decision_col = f"Reviewer{args.reviewer}_Decision"
     reason_col = f"Reviewer{args.reviewer}_Reason"
+
+    batch_size = getattr(args, "batch", 1) or 1
+    if batch_size > 1:
+        _run_batched(
+            records, batch_size, eligibility, decision_col, reason_col, args.reviewer
+        )
+        _write_and_summarise(
+            records, fieldnames, output_csv, decision_col, args, round_dir, prior_counts
+        )
+        return
 
     screened = 0
     skipped = 0
@@ -376,6 +674,12 @@ def run_abstract_screening(args, project_path: Path) -> None:
             record[reason_col] = f"AI error: {e}"
             screened += 1
 
+    _assert_no_column_regression(
+        records,
+        fieldnames,
+        prior_counts,
+        {decision_col, reason_col, "Notes"},
+    )
     with open(output_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -417,7 +721,18 @@ def run_fulltext_screening(args, project_path: Path) -> None:
     This implements PRISMA 2020 item 16 (full-text exclusion with reasons).
     """
     manifest_csv = project_path / "04_fulltext" / "manifest.csv"
-    output_csv = project_path / "04_fulltext" / "fulltext_decisions.csv"
+
+    shard_i = getattr(args, "shard_index", None)
+    shard_n = getattr(args, "shard_total", None)
+    ft_sharded = shard_i is not None
+    if ft_sharded:
+        output_csv = (
+            project_path / "04_fulltext" / "shards"
+            / f"fulltext_decisions.r{args.reviewer}.shard-{shard_i:03d}-of-{shard_n:03d}.csv"
+        )
+        output_csv.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        output_csv = project_path / "04_fulltext" / "fulltext_decisions.csv"
 
     if not manifest_csv.exists():
         print(
@@ -623,7 +938,53 @@ def main() -> None:
         default="round-01",
         help="Screening round directory name (default: round-01)",
     )
+    parser.add_argument(
+        "--shard",
+        default=None,
+        metavar="i/n",
+        help=(
+            "Screen only shard i of n (1-based), e.g. --shard 3/16. Records are "
+            "assigned round-robin by position, so every shard sees a comparable "
+            "mix. Each shard writes its own file under <round>/shards/ and never "
+            "touches <round>/decisions.csv, so N shards can run concurrently. "
+            "Screening one record costs ~14s serially, so a large corpus needs "
+            "this: run all N shards in parallel, then merge with "
+            "merge_screening_shards.py. Omit for the original single-process "
+            "behaviour."
+        ),
+    )
+    parser.add_argument(
+        "--batch",
+        type=int,
+        default=1,
+        metavar="K",
+        help=(
+            "Screen K records per `claude -p` call instead of one (default: 1). "
+            "Each record still gets its own explicitly-keyed decision; batching "
+            "only amortises CLI startup, which dominates single-record cost "
+            "(~14s wall for a ~10s model turn). Any record the model omits is "
+            "retried individually, and the run aborts rather than write a "
+            "decisions file with a missing decision. Use with --shard on large "
+            "corpora; K=10-15 is a reasonable range."
+        ),
+    )
     args = parser.parse_args()
+
+    if args.batch < 1:
+        parser.error(f"--batch must be >= 1 (got {args.batch})")
+
+    if args.shard is not None:
+        try:
+            _i, _n = (int(x) for x in args.shard.split("/", 1))
+        except ValueError:
+            parser.error(f"--shard must look like i/n (got {args.shard!r})")
+        if _n < 1 or not (1 <= _i <= _n):
+            parser.error(
+                f"--shard i/n requires 1 <= i <= n and n >= 1 (got {args.shard!r})"
+            )
+        args.shard_index, args.shard_total = _i, _n
+    else:
+        args.shard_index, args.shard_total = None, None
 
     _assert_claude_cli()
 

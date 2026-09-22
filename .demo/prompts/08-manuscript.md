@@ -1,6 +1,8 @@
 Stage 07 — the manuscript. Same standing rules, plus one that matters most here: **the manuscript may not claim more than Stage 06 measured.** A wide credible interval is a wide credible interval in the abstract too.
 
 1. Invoke the `ma-manuscript-quarto` skill.
+   **The scope limitation goes in the abstract, not only the limitations section.** This review networks pCR alone. EFS, OS and safety were pre-specified in the protocol and are not pooled, because full-text retrieval reached only 18 of 101 included studies and the remaining abstracts carry HR with CI in 2% and cardiac outcomes in 10%. A reader who sees only the abstract must still learn that this is a single-outcome network. Say it in the Methods as a scope decision with its reason, restate it in the Discussion, and never let the Results imply a breadth the analysis does not have.
+
 2. **Phase 1 is mandatory**: fill `07_manuscript/manuscript_outline.md` first — section-by-section, with the key numbers slotted in. The repo's workflow asks for user approval here; the orchestrating session is acting as the user, so write the outline, then continue into Phase 2 in the same turn and flag anything in the outline you think a human should overrule.
 3. Phase 2 — write the sections as Quarto:
    - Introduction: why regimen choice in neoadjuvant HER2-positive disease is genuinely unsettled, and what a network adds over the existing pairwise meta-analyses

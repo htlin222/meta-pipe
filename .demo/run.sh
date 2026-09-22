@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Drive the worker Claude Code pane through every step in .demo/steps.conf.
 #
-#   .demo/run.sh [--from <step-id>] [--only <step-id>] [--dry-run]
+#   .demo/run.sh [--from <id>] [--only <id>] [--await <id>] [--dry-run]
 #
 # Each stdout line is an event for the orchestrating session to watch.
 #
@@ -36,11 +36,12 @@ steps_dir="$pd/.progress/steps"
 log="$HERE/run.log"
 HOOK="$REPO/.claude/hooks/pipeline-progress.sh"
 
-from=""; only=""; dry=0
+from=""; only=""; dry=0; await_id=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --from) from="$2"; shift 2 ;;
     --only) only="$2"; shift 2 ;;
+    --await) await_id="$2"; shift 2 ;;
     --dry-run) dry=1; shift ;;
     *) printf 'unknown argument: %s\n' "$1" >&2; exit 2 ;;
   esac
@@ -98,6 +99,16 @@ submit() {
 
 verify() { ( cd "$pd" && eval "$1" ) >/dev/null 2>&1; }
 
+# Is anything still happening for this project, even though the agent is idle?
+# Two signals, because either alone is misleading:
+#   - files changed recently; but a batch job that only writes on completion can
+#     be quiet for 25 minutes while working perfectly
+#   - a live process mentioning the project; catches exactly that case
+project_busy() {
+  [ -n "$(find "$pd" -mmin "-$QUIET_GRACE_MIN" -type f -not -path '*/.progress/*' -print -quit 2>/dev/null)" ] && return 0
+  pgrep -f -- "$PROJECT" >/dev/null 2>&1
+}
+
 # Wait for the sentinel. Returns 0 sentinel, 1 stalled, 2 agent blocked,
 # 3 worker went quiet without writing it, 4 worker declared itself blocked.
 #
@@ -117,7 +128,19 @@ await() {
       blocked) return 2 ;;
       idle|done)
         settled=$((settled+1))
-        [ "$settled" -ge "$SETTLE_POLLS" ] && { [ -f "$sentinel" ] && return 0; return 3; }
+        if [ "$settled" -ge "$SETTLE_POLLS" ]; then
+          [ -f "$sentinel" ] && return 0
+          # A quiet agent does not mean nothing is happening. The worker can
+          # legitimately end a turn while background shells it started keep
+          # working — 16 parallel screening shards, say. Nudging then is worse
+          # than useless: it interrupts work that is already in flight.
+          if project_busy; then
+            say "  … agent idle but the project is still changing — background work in flight"
+            settled=0
+          else
+            return 3
+          fi
+        fi
         ;;
       *) settled=0 ;;
     esac
@@ -184,6 +207,35 @@ That check runs with the working directory at projects/$PROJECT/. Look at what i
 }
 
 say "=== run start (project=$PROJECT pane=$PANE) ==="
+
+# --await: a step is already running in the worker (usually because the runner
+# died and the worker carried on). Wait it out instead of resubmitting a prompt
+# for work that is already in flight, then continue with the steps after it.
+if [ -n "$await_id" ]; then
+  aline="$(grep "^$await_id|" <<< "$STEP_TABLE")"
+  if [ -z "$aline" ]; then
+    say "✖ --await $await_id: no such step in steps.conf"; exit 2
+  fi
+  IFS='|' read -r _ _ atimeout acheck <<< "$aline"
+  say "◎ attaching to step $await_id already in flight — not resubmitting"
+  await "$steps_dir/$await_id.done" $(( atimeout * 60 )); arc=$?
+  snapshot
+  case "$arc" in
+    4) say "✖ step $await_id — the worker reports it is blocked and needs a person:"
+       sed 's/^/     /' "$steps_dir/$await_id.blocked" | head -25; exit 1 ;;
+    1) say "✖ step $await_id produced no output for ${atimeout}m — stalled"; exit 1 ;;
+  esac
+  if verify "$acheck"; then
+    say "✓ step $await_id complete and verified"
+    touch "$steps_dir/$await_id.done"
+  else
+    say "⚠ step $await_id settled but verification failed — handing it back to the normal path"
+    from="$await_id"
+  fi
+  [ -z "$from" ] && from="$(awk -F'|' -v id="$await_id" '$1!~/^#/ && $1!="" {a[++n]=$1} END{for(i=1;i<=n;i++) if(a[i]==id && i<n) print a[i+1]}' <<< "$STEP_TABLE")"
+  [ -z "$from" ] && { say "=== run finished (nothing after $await_id) ==="; exit 0; }
+  say "… continuing from step $from"
+fi
 
 if [ "$dry" = 1 ]; then
   while IFS='|' read -r id prompt timeout check; do

@@ -42,22 +42,114 @@ def group_terms(terms: List[str], fmt) -> str:
     return "(" + " OR ".join(formatted) + ")"
 
 
+def group_terms_raw(terms: List[str], fmt) -> str:
+    """Like group_terms but without pre-quoting.
+
+    The non-PubMed builders must see the raw term so they can detect and strip a
+    trailing PubMed field tag. ``quote()`` would wrap the tag inside the quotes
+    (``"Receptor, ErbB-2[mh]"``), hiding it from the tag parser. PubMed keeps
+    using ``group_terms`` so its behaviour is unchanged.
+    """
+    if not terms:
+        return ""
+    formatted = [fmt(t) for t in terms]
+    if len(formatted) == 1:
+        return formatted[0]
+    return "(" + " OR ".join(formatted) + ")"
+
+
+TAG_RE = re.compile(r"\[([^\]]+)\]\s*$")
+
+
+def split_field_tag(term: str) -> tuple[str, str]:
+    """Split a PubMed-tagged term into (bare_term, normalized_tag).
+
+    PubMed field tags are a PubMed-only construct. Emitting them inside another
+    database's field operator produces invalid syntax -- e.g.
+    ``TITLE-ABS-KEY("Breast Neoplasms"[MeSH])`` is rejected by Scopus. Every
+    non-PubMed builder therefore strips the tag and maps it to that database's
+    own field, instead of passing it through verbatim.
+
+    Returns the bare term (quotes preserved) and one of:
+    ``ti``, ``tiab``, ``mesh``, ``pt``, or ``""`` when the term carried no tag.
+    """
+    match = TAG_RE.search(term.strip())
+    if not match:
+        return term.strip(), ""
+
+    bare = term[: match.start()].strip()
+    raw = match.group(1).strip().lower()
+
+    if raw in ("ti", "title"):
+        tag = "ti"
+    elif raw in ("tiab", "tw", "all fields"):
+        tag = "tiab"
+    elif raw in ("mesh", "mesh terms", "mh", "majr"):
+        tag = "mesh"
+    elif raw in ("pt", "publication type"):
+        tag = "pt"
+    else:
+        tag = "tiab"
+    return bare, tag
+
+
+def requote(term: str) -> str:
+    """Re-quote a bare term for databases that cannot parse bare commas.
+
+    ``Receptor, ErbB-2`` is a legal unquoted PubMed MeSH term but breaks
+    Scopus/Embase parsing, where the comma is a delimiter.
+    """
+    term = term.strip()
+    if term.startswith('"') and term.endswith('"'):
+        return term
+    if " " in term or "," in term:
+        return f'"{term}"'
+    return term
+
+
 def build_pubmed_group(terms: List[str]) -> str:
+    # PubMed behaviour is unchanged: tagged terms pass through verbatim,
+    # untagged terms default to [tiab].
     def fmt(term: str) -> str:
         return term if "[" in term else f"{term}[tiab]"
     return group_terms(terms, fmt)
 
 
 def build_scopus_group(terms: List[str]) -> str:
-    return group_terms(terms, lambda term: f"TITLE-ABS-KEY({term})")
+    """Scopus: strip PubMed tags, map [ti] to TITLE(), everything else to
+    TITLE-ABS-KEY(). Publication types have no Scopus field equivalent, so they
+    degrade to a free-text TITLE-ABS-KEY match rather than being dropped."""
+    def fmt(term: str) -> str:
+        bare, tag = split_field_tag(term)
+        bare = requote(bare)
+        return f"TITLE({bare})" if tag == "ti" else f"TITLE-ABS-KEY({bare})"
+    return group_terms(terms, fmt)
 
 
 def build_embase_group(terms: List[str]) -> str:
-    return group_terms(terms, lambda term: f"{term}:ti,ab,kw")
+    """Embase (Emtree syntax): strip PubMed tags, map [ti] to :ti and MeSH
+    descriptors to an exploded Emtree term; everything else to :ti,ab,kw."""
+    def fmt(term: str) -> str:
+        bare, tag = split_field_tag(term)
+        if tag == "mesh":
+            return f"{requote(bare).lower()}/exp"
+        if tag == "ti":
+            return f"{requote(bare)}:ti"
+        return f"{requote(bare)}:ti,ab,kw"
+    return group_terms(terms, fmt)
 
 
 def build_cochrane_group(terms: List[str]) -> str:
-    return group_terms(terms, lambda term: term)
+    """Cochrane CENTRAL: strip PubMed tags, map MeSH to [mh] and [ti] to :ti."""
+    def fmt(term: str) -> str:
+        bare, tag = split_field_tag(term)
+        bare = requote(bare)
+        if tag == "mesh":
+            return f"[mh {bare}]"
+        if tag == "ti":
+            return f"{bare}:ti"
+        return bare
+    return group_terms(terms, fmt)
 
 
 def main() -> None:
