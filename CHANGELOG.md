@@ -4,6 +4,16 @@ All notable changes to meta-pipe are documented in this file.
 
 ## [Unreleased]
 
+### Added
+- Orchestration harness (`.demo/`) — drives a worker Claude Code pane through the pipeline from a second session over the [herdr socket API](https://herdr.dev/docs/socket-api/), one stage at a time
+  - `preflight.sh` — 40+ checks that the environment can *finish* a run before it starts. Checks that things run rather than that they are installed: compiles a JAGS model through `rjags`, renders a PDF through Quarto, authenticates each API key live, and lints every prompt so a script path or CLI flag that does not exist is caught in seconds instead of mid-stage
+  - `run.sh` — steps the worker through `steps.conf`. Completion is a sentinel file the worker writes **and** a verify command that inspects the artifacts, never the agent's status; liveness is the pane's revision counter, so the budget is an inactivity timeout rather than a wall clock; a worker that is genuinely stuck writes `<id>.blocked` and the run stops for a person
+  - `steps.conf` — per-stage timeout and verify command. Verify checks content (a kappa in the agreement file, a confirmed analysis type in `pico.yaml`, a minimum figure count), not mere file existence
+  - `prompts/` — one prompt per stage, with the standing rules re-sent on every step so they survive the worker's context compaction
+  - `reset.sh` — archives a finished run and re-initializes the project; `--keep-search` carries the slowest, most rate-limited stage forward
+  - `README.md` — the design rationale, written as the list of failures each guard exists to prevent
+- `.claude/hooks/pipeline-progress.sh` — Stop hook that snapshots pipeline progress after every turn to `projects/<name>/.progress/` (`PROGRESS.md` stage board, append-only `progress.jsonl`, `status.json`). Documented in `.claude/hooks/README.md`, including why it must not be used for liveness: a session started before the hook was last edited keeps the old copy, and nothing outside that session can reload it
+
 ### Fixed
 - Replace deprecated `datetime.utcnow()` with timezone-aware `datetime.now(timezone.utc)` across 13 files (29 call sites). Output string shape preserved (`...Z` suffix, no `+00:00`). Eliminates all pytest `DeprecationWarning`s
 - `tests/test_project_status.py::test_all_stages_complete` — update fixture to create `04_fulltext/manifest.csv` matching the current validation lambda (was creating `round-01/unpaywall_results.csv` from an earlier schema)

@@ -1,0 +1,17 @@
+{
+	"hooks": {
+		"Stop": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "bash \"${CLAUDE_PROJECT_DIR:-/Users/htlin/meta-pipe}/.claude/hooks/pipeline-progress.sh\"",
+						"timeout": 60,
+						"statusMessage": "Snapshotting pipeline progress..."
+					}
+				]
+			}
+		]
+	}
+}
