@@ -111,6 +111,16 @@ def main():
         "--out-log", required=True, type=Path, help="Output log file path"
     )
     parser.add_argument(
+        "--workers",
+        type=int,
+        default=1,
+        help=(
+            "Concurrent downloads (default 1). Serially this runs at roughly 1 PDF/min: "
+            "publisher URLs that block cost the full timeout x retries budget each, and "
+            "the work is network-bound, so threads are the right fix."
+        ),
+    )
+    parser.add_argument(
         "--sleep",
         type=float,
         default=1.0,
@@ -175,12 +185,13 @@ def main():
                 print(f"   Found columns: {reader.fieldnames}", file=sys.stderr)
                 sys.exit(1)
 
+            jobs = []
+            i = 0
             for i, row in enumerate(reader, 1):
                 record_id = row.get("record_id", "").strip()
                 pdf_url = row.get("best_oa_pdf_url", "").strip()
                 is_oa = row.get("is_oa", "").strip()
 
-                # Skip non-OA or missing URL
                 if is_oa != "True" or not pdf_url:
                     skipped_count += 1
                     continue
@@ -188,37 +199,47 @@ def main():
                 total_processed += 1
                 output_path = args.pdf_dir / f"{record_id}.pdf"
 
-                # Skip if already exists
                 if args.skip_existing and output_path.exists():
-                    print(f"[{i:3d}] ⏭️  SKIP: {record_id} (already exists)")
                     log_f.write(f"SKIP: {record_id} - already exists\n")
                     skipped_count += 1
                     continue
 
-                # Download PDF
-                print(f"[{i:3d}] 📥 Downloading: {record_id}")
-                success, msg = download_pdf(
-                    pdf_url,
-                    output_path,
-                    timeout=args.timeout,
-                    max_retries=args.max_retries,
-                )
+                jobs.append((record_id, pdf_url, output_path))
 
+            def _one(job):
+                rid, url, out = job
+                ok, msg = download_pdf(
+                    url, out, timeout=args.timeout, max_retries=args.max_retries
+                )
+                return rid, url, out, ok, msg
+
+            workers = max(1, int(getattr(args, "workers", 1) or 1))
+            print(f"Downloading {len(jobs)} PDFs with {workers} worker(s)")
+            done = 0
+            if workers == 1:
+                results = (_one(j) for j in jobs)
+            else:
+                from concurrent.futures import ThreadPoolExecutor
+
+                pool = ThreadPoolExecutor(max_workers=workers)
+                results = pool.map(_one, jobs)
+
+            for rid, pdf_url, output_path, success, msg in results:
+                done += 1
                 if success:
-                    print(f"      ✅ {msg}")
-                    log_f.write(f"SUCCESS: {record_id} - {msg}\n")
+                    log_f.write(f"SUCCESS: {rid} - {msg}\n")
                     log_f.write(f"  URL: {pdf_url}\n")
                     log_f.write(f"  Path: {output_path}\n\n")
                     success_count += 1
                 else:
-                    print(f"      ❌ {msg}")
-                    log_f.write(f"FAIL: {record_id} - {msg}\n")
+                    log_f.write(f"FAIL: {rid} - {msg}\n")
                     log_f.write(f"  URL: {pdf_url}\n\n")
                     fail_count += 1
-
-                # Rate limiting
-                if args.sleep > 0:
-                    time.sleep(args.sleep)
+                if done % 25 == 0 or done == len(jobs):
+                    print(
+                        f"  {done}/{len(jobs)} attempted ({success_count} ok, {fail_count} failed)"
+                    )
+                    log_f.flush()
 
         # Write summary to log
         log_f.write("\n" + "=" * 80 + "\n")

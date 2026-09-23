@@ -10,6 +10,26 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 
+def resolve_id_column(fieldnames) -> Optional[str]:
+    """Find the record-id column whatever the project spelled it.
+
+    Screening databases in this repo use `RecordID`; the extraction and
+    manifest CSVs use `record_id`. Matching only the snake_case spelling makes
+    every ID in a CamelCase file invisible, and the checks below then report
+    `decisions_records: 0` -- which reads like a catastrophic data loss rather
+    than a column-name mismatch. Resolve the name instead of assuming it.
+    """
+    if not fieldnames:
+        return None
+    wanted = ("record_id", "recordid", "study_id", "studyid")
+    norm = {(f or "").strip().lower().replace("_", ""): f for f in fieldnames}
+    for w in wanted:
+        key = w.replace("_", "")
+        if key in norm:
+            return norm[key]
+    return None
+
+
 def read_bib_ids(path: Path) -> Set[str]:
     if not path.exists():
         return set()
@@ -34,12 +54,17 @@ def read_decisions(path: Path, decision_col: str) -> Tuple[Set[str], Set[str]]:
         return included, all_ids
     with path.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
+        id_col = resolve_id_column(reader.fieldnames) or "record_id"
+        dec_col = decision_col
+        if reader.fieldnames and dec_col not in reader.fieldnames:
+            lower = {(f or "").lower(): f for f in reader.fieldnames}
+            dec_col = lower.get(decision_col.lower(), decision_col)
         for row in reader:
-            rid = (row.get("record_id") or "").strip()
+            rid = (row.get(id_col) or "").strip()
             if not rid:
                 continue
             all_ids.add(rid)
-            decision = (row.get(decision_col) or "").strip().lower()
+            decision = (row.get(dec_col) or "").strip().lower()
             if decision == "include":
                 included.add(rid)
     return included, all_ids
@@ -50,9 +75,12 @@ def load_manifest_ids(path: Path) -> Tuple[Set[str], Optional[str]]:
         return set(), "missing_manifest"
     with path.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
-        if not reader.fieldnames or "record_id" not in reader.fieldnames:
+        id_col = resolve_id_column(reader.fieldnames)
+        if not id_col:
             return set(), "missing_record_id_column"
-        ids = {row.get("record_id", "").strip() for row in reader if row.get("record_id", "").strip()}
+        ids = {
+            row.get(id_col, "").strip() for row in reader if row.get(id_col, "").strip()
+        }
         return ids, None
 
 
@@ -64,10 +92,18 @@ def load_extraction_ids(path: Path) -> Tuple[Set[str], Optional[str]]:
         if not reader.fieldnames:
             return set(), "missing_headers"
         if "record_id" in reader.fieldnames:
-            ids = {row.get("record_id", "").strip() for row in reader if row.get("record_id", "").strip()}
+            ids = {
+                row.get("record_id", "").strip()
+                for row in reader
+                if row.get("record_id", "").strip()
+            }
             return ids, None
         if "study_id" in reader.fieldnames:
-            ids = {row.get("study_id", "").strip() for row in reader if row.get("study_id", "").strip()}
+            ids = {
+                row.get("study_id", "").strip()
+                for row in reader
+                if row.get("study_id", "").strip()
+            }
             return ids, "record_id_missing_using_study_id"
     return set(), "missing_record_id"
 
@@ -100,7 +136,9 @@ def load_db_total(path: Path) -> Optional[int]:
     return None
 
 
-def write_report(out_path: Path, sections: List[str], json_out: Optional[Path], payload: dict) -> None:
+def write_report(
+    out_path: Path, sections: List[str], json_out: Optional[Path], payload: dict
+) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text("\n".join(sections) + "\n")
     if json_out:
@@ -110,9 +148,13 @@ def write_report(out_path: Path, sections: List[str], json_out: Optional[Path], 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate stage transitions.")
-    parser.add_argument("--root", default=None, help="Project root (default: repo root)")
+    parser.add_argument(
+        "--root", default=None, help="Project root (default: repo root)"
+    )
     parser.add_argument("--round", default="round-01", help="Round name")
-    parser.add_argument("--from-stage", required=True, help="From stage number (e.g., 02)")
+    parser.add_argument(
+        "--from-stage", required=True, help="From stage number (e.g., 02)"
+    )
     parser.add_argument("--to-stage", required=True, help="To stage number (e.g., 03)")
     parser.add_argument(
         "--check",
@@ -121,8 +163,12 @@ def main() -> None:
         choices=["record_ids_match", "counts_reconcile"],
         help="Check(s) to run",
     )
-    parser.add_argument("--decisions-column", default="final_decision", help="Decision column")
-    parser.add_argument("--out", default="09_qa/stage_transition_report.md", help="Output report path")
+    parser.add_argument(
+        "--decisions-column", default="final_decision", help="Decision column"
+    )
+    parser.add_argument(
+        "--out", default="09_qa/stage_transition_report.md", help="Output report path"
+    )
     parser.add_argument("--out-json", default=None, help="Output JSON path")
     args = parser.parse_args()
 
@@ -160,9 +206,13 @@ def main() -> None:
             if missing_in_bib or missing_in_decisions:
                 check_result["ok"] = False
                 if missing_in_bib:
-                    check_result["notes"].append(f"decision_ids_not_in_bib: {len(missing_in_bib)}")
+                    check_result["notes"].append(
+                        f"decision_ids_not_in_bib: {len(missing_in_bib)}"
+                    )
                 if missing_in_decisions:
-                    check_result["notes"].append(f"bib_ids_not_in_decisions: {len(missing_in_decisions)}")
+                    check_result["notes"].append(
+                        f"bib_ids_not_in_decisions: {len(missing_in_decisions)}"
+                    )
         elif stage_pair == "03->04":
             included_ids, _ = read_decisions(decisions_csv, args.decisions_column)
             manifest_ids, manifest_issue = load_manifest_ids(manifest_csv)
@@ -177,9 +227,13 @@ def main() -> None:
                 if missing or extra:
                     check_result["ok"] = False
                     if missing:
-                        check_result["notes"].append(f"included_missing_in_manifest: {len(missing)}")
+                        check_result["notes"].append(
+                            f"included_missing_in_manifest: {len(missing)}"
+                        )
                     if extra:
-                        check_result["notes"].append(f"manifest_not_in_included: {len(extra)}")
+                        check_result["notes"].append(
+                            f"manifest_not_in_included: {len(extra)}"
+                        )
         elif stage_pair == "04->04b":
             manifest_ids, manifest_issue = load_manifest_ids(manifest_csv)
             ft_ids, ft_issue = load_manifest_ids(fulltext_decisions_csv)
@@ -191,20 +245,28 @@ def main() -> None:
                 check_result["ok"] = False
                 check_result["notes"].append(f"fulltext_decisions_issue: {ft_issue}")
             else:
-                check_result["notes"].append(f"fulltext_decisions_records: {len(ft_ids)}")
+                check_result["notes"].append(
+                    f"fulltext_decisions_records: {len(ft_ids)}"
+                )
                 missing = sorted(manifest_ids - ft_ids)
                 extra = sorted(ft_ids - manifest_ids)
                 if missing or extra:
                     check_result["ok"] = False
                     if missing:
-                        check_result["notes"].append(f"manifest_missing_in_ft_decisions: {len(missing)}")
+                        check_result["notes"].append(
+                            f"manifest_missing_in_ft_decisions: {len(missing)}"
+                        )
                     if extra:
-                        check_result["notes"].append(f"ft_decisions_not_in_manifest: {len(extra)}")
+                        check_result["notes"].append(
+                            f"ft_decisions_not_in_manifest: {len(extra)}"
+                        )
         elif stage_pair in ("04->05", "04b->05"):
             # Stage 05 should only contain studies with FT_Final_Decision=include
             # If fulltext_decisions.csv exists, use it as the source of truth
             if fulltext_decisions_csv.exists():
-                ft_included, _ = read_decisions(fulltext_decisions_csv, "FT_Final_Decision")
+                ft_included, _ = read_decisions(
+                    fulltext_decisions_csv, "FT_Final_Decision"
+                )
                 source_ids = ft_included
                 check_result["notes"].append(f"ft_included_records: {len(ft_included)}")
             else:
@@ -212,8 +274,12 @@ def main() -> None:
                 if manifest_issue:
                     check_result["ok"] = False
                     check_result["notes"].append(f"manifest_issue: {manifest_issue}")
-                check_result["notes"].append(f"manifest_records (no FT screening): {len(source_ids)}")
-                check_result["notes"].append("WARNING: fulltext_decisions.csv missing — PRISMA item 16 not met")
+                check_result["notes"].append(
+                    f"manifest_records (no FT screening): {len(source_ids)}"
+                )
+                check_result["notes"].append(
+                    "WARNING: fulltext_decisions.csv missing — PRISMA item 16 not met"
+                )
             extraction_ids, extraction_issue = load_extraction_ids(extraction_csv)
             mapping = load_study_map(study_map_csv)
             if extraction_issue == "record_id_missing_using_study_id" and mapping:
@@ -231,11 +297,17 @@ def main() -> None:
                 if missing or extra:
                     check_result["ok"] = False
                     if missing:
-                        check_result["notes"].append(f"source_missing_in_extraction: {len(missing)}")
+                        check_result["notes"].append(
+                            f"source_missing_in_extraction: {len(missing)}"
+                        )
                     if extra:
-                        check_result["notes"].append(f"extraction_not_in_source: {len(extra)}")
+                        check_result["notes"].append(
+                            f"extraction_not_in_source: {len(extra)}"
+                        )
         else:
-            check_result["notes"].append("record_id check not defined for this stage pair.")
+            check_result["notes"].append(
+                "record_id check not defined for this stage pair."
+            )
         if not check_result["ok"]:
             failures.append("record_ids_match")
         payload["checks"]["record_ids_match"] = check_result
@@ -284,13 +356,19 @@ def main() -> None:
                 count_result["ok"] = False
                 count_result["notes"].append(f"fulltext_decisions_issue: {ft_issue}")
             else:
-                count_result["notes"].append(f"fulltext_decisions_records: {len(ft_ids)}")
+                count_result["notes"].append(
+                    f"fulltext_decisions_records: {len(ft_ids)}"
+                )
                 if len(manifest_ids) != len(ft_ids):
                     count_result["ok"] = False
-                    count_result["notes"].append("manifest_records != fulltext_decisions_records")
+                    count_result["notes"].append(
+                        "manifest_records != fulltext_decisions_records"
+                    )
         elif stage_pair in ("04->05", "04b->05"):
             if fulltext_decisions_csv.exists():
-                ft_included, ft_all = read_decisions(fulltext_decisions_csv, "FT_Final_Decision")
+                ft_included, ft_all = read_decisions(
+                    fulltext_decisions_csv, "FT_Final_Decision"
+                )
                 count_result["notes"].append(f"ft_total_screened: {len(ft_all)}")
                 count_result["notes"].append(f"ft_included: {len(ft_included)}")
                 ft_excluded = len(ft_all) - len(ft_included)
@@ -302,7 +380,9 @@ def main() -> None:
                     count_result["ok"] = False
                     count_result["notes"].append(f"manifest_issue: {manifest_issue}")
                 source_count = len(source_ids)
-                count_result["notes"].append(f"manifest_records (no FT screening): {source_count}")
+                count_result["notes"].append(
+                    f"manifest_records (no FT screening): {source_count}"
+                )
             extraction_ids, extraction_issue = load_extraction_ids(extraction_csv)
             mapping = load_study_map(study_map_csv)
             if extraction_issue == "record_id_missing_using_study_id" and mapping:
@@ -318,7 +398,9 @@ def main() -> None:
                 count_result["ok"] = False
                 count_result["notes"].append("source_records != extraction_records")
         else:
-            count_result["notes"].append("count reconciliation not defined for this stage pair.")
+            count_result["notes"].append(
+                "count reconciliation not defined for this stage pair."
+            )
 
         if not count_result["ok"]:
             failures.append("counts_reconcile")
@@ -327,12 +409,31 @@ def main() -> None:
         sections.extend([f"- {note}" for note in count_result["notes"]])
         sections.append("")
 
+    # A stage pair the script has no rule for is NOT a pass. Reporting
+    # "all checks passed" when nothing was checked turns an unimplemented
+    # transition into a green tick, which is the one thing a QA tool must
+    # never do.
+    undefined = (
+        all(
+            any("not defined for this stage pair" in n for n in c["notes"])
+            for c in payload["checks"].values()
+        )
+        if payload["checks"]
+        else True
+    )
+
+    sections.append("## Status")
     if failures:
         payload["ok"] = False
-        sections.append("## Status")
         sections.append(f"- FAILED checks: {', '.join(sorted(set(failures)))}")
+    elif undefined:
+        payload["ok"] = None
+        payload["not_applicable"] = True
+        sections.append(
+            f"- NOT CHECKED: this script defines no continuity rule for {stage_pair}. "
+            "Nothing was verified; this is not a pass."
+        )
     else:
-        sections.append("## Status")
         sections.append("- All requested checks passed.")
 
     out_path = root / args.out

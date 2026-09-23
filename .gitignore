@@ -134,3 +134,14 @@ projects/*
 !projects/dlbcl-frontline-nma/
 !projects/legacy/README.md
 worktrees/
+
+# Orchestration harness: the code in .demo/ is tracked; only its runtime state is not.
+.demo/run.log
+.demo/CURRENT_STEP
+.demo/STEP
+.demo/ACTIVE_PROJECT
+.demo/DRIVER_SESSION
+projects/*/.progress/
+projects/_archive/
+.demo/runner.out
+.demo/runner.pid

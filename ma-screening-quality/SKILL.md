@@ -37,6 +37,46 @@ uv run tooling/python/ai_screen.py --project <project-name> --reviewer 2
 uv run tooling/python/ai_screen.py --project <project-name> --round round-02
 ```
 
+### Parallel Screening (`--shard`) — required for corpora above a few hundred records
+
+`ai_screen.py` makes one `claude -p` call per record per reviewer and runs
+serially: roughly **14 s per record** measured. A 2,700-record corpus under dual
+review is ~21 hours that way. `--shard i/n` splits the work so shards run
+concurrently.
+
+```bash
+# Build the input ai_screen.py expects (nothing else in the pipeline creates it)
+uv run tooling/python/build_screening_database.py --project <name> \
+    --in-csv projects/<name>/03_screening/records_with_abstracts.csv
+
+# Fan out: N shards per reviewer, all concurrent
+for i in $(seq 1 32); do
+  uv run tooling/python/ai_screen.py --project <name> --stage abstract \
+      --reviewer 1 --shard $i/32 &
+done; wait
+
+# Same for reviewer 2, then merge (fails loudly if any record is lost)
+uv run tooling/python/merge_screening_shards.py --project <name> --round round-01
+```
+
+- Records are assigned by **stride** (`records[i-1::n]`), so the shards partition
+  the corpus exactly — no record is screened twice or skipped, and each shard
+  sees a comparable mix rather than one era or one source.
+- Each shard writes `<round>/shards/decisions.r<R>.shard-<i>-of-<n>.csv` and
+  never touches `<round>/decisions.csv`, so concurrent shards and the two
+  reviewers cannot clobber each other.
+- **Dual-review safety (fixed, D-029)**: a reviewer pass now **merges into** an
+  existing `decisions.csv` instead of replacing it, seeding from the file on disk
+  and overlaying only the column it owns. Before this fix, `--reviewer 2` re-read
+  the pristine `screening-database.csv` (whose `Reviewer1_*` columns are empty)
+  and overwrote `decisions.csv`, silently destroying half of an independent dual
+  review — the exact thing the kappa measures. A guard now **refuses to write** if
+  the pass would reduce the number of populated cells in any column it does not
+  own, so this class of data loss fails loudly instead of passing silently.
+- `merge_screening_shards.py` refuses to write unless every reviewer's shard set
+  is complete and covers the corpus exactly — a dropped record silently corrupts
+  the PRISMA flow, so it is treated as a hard error.
+
 ### Dual-Review Agreement
 
 ```bash
@@ -72,6 +112,7 @@ uv run ma-screening-quality/scripts/dual_review_agreement.py \
 - **Topic-agnostic**: reads `eligibility.md` from any project, passes it to Claude as screening criteria
 - **Uses `claude -p --model haiku`**: OAuth-based, no API key needed, fast and cheap
 - **Skips already-decided rows**: safe to re-run if interrupted
+- **`--shard i/n`**: screen one stride-selected shard, for concurrent execution (see above)
 - **Liberal screening**: when uncertain, defaults to MAYBE (standard practice at title/abstract stage)
 - **Generic exclusion codes**: P1/P2 (population), I1/I2 (intervention), C1 (comparator), S1-S4 (study design), O1/O2 (outcomes), T1/T2 (time), L1 (language), D1 (duplicate)
 
@@ -80,6 +121,8 @@ uv run ma-screening-quality/scripts/dual_review_agreement.py \
 - `references/screening-labels.md` provides standardized decision labels.
 - `references/dual-review-schema.md` defines recommended decision columns.
 - `scripts/dual_review_agreement.py` computes agreement and Cohen's kappa.
+- `tooling/python/build_screening_database.py` builds `03_screening/screening-database.csv` from `dedupe.bib` or from `enrich_abstracts.py` output.
+- `tooling/python/merge_screening_shards.py` reassembles `ai_screen.py --shard` outputs into one `decisions.csv`, failing loudly on any lost or duplicated record.
 
 ## Step 8: Analysis Type Confirmation Gate
 

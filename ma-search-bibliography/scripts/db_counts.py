@@ -36,6 +36,7 @@ def main() -> None:
         "scopus": round_dir / "scopus.log",
         "embase": round_dir / "embase.log",
         "cochrane": round_dir / "cochrane.log",
+        "ctgov": round_dir / "ctgov_log.txt",
     }
 
     rows = []
@@ -56,7 +57,12 @@ def main() -> None:
 
     out_md = Path(args.out_md) if args.out_md else round_dir / "db_counts.md"
     out_md.parent.mkdir(parents=True, exist_ok=True)
-    lines = ["# Database Retrieval Counts", "", "| Database | Retrieved |", "| --- | --- |"]
+    lines = [
+        "# Database Retrieval Counts",
+        "",
+        "| Database | Retrieved |",
+        "| --- | --- |",
+    ]
     for db, count, _ in rows:
         lines.append(f"| {db} | {count} |")
     lines.append(f"| total | {total} |")
