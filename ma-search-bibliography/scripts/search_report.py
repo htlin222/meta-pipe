@@ -59,6 +59,7 @@ def main() -> None:
         "scopus": round_dir / "scopus.log",
         "embase": round_dir / "embase.log",
         "cochrane": round_dir / "cochrane.log",
+        "ctgov": round_dir / "ctgov_log.txt",
     }
 
     rows = []
@@ -79,7 +80,7 @@ def main() -> None:
     lines = [
         "# Search Report",
         "",
-        f"Generated: {dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "")}Z",
+        f"Generated: {dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', '')}Z",
         "",
         "| Database | Retrieved |",
         "| --- | --- |",

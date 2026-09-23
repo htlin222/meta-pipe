@@ -5,6 +5,26 @@ All notable changes to meta-pipe are documented in this file.
 ## [Unreleased]
 
 ### Added
+- Open-data extraction ladder — recovers arm-level trial data without institutional access, which is what most of a run outside a university network is otherwise missing
+  - `tooling/python/extract_ctgov_arms.py` — per-arm outcomes and adverse-event counts from ClinicalTrials.gov results. Sponsor-reported primary data, often more complete than the paper: papers summarise safety, the registry tabulates every term with a numerator and denominator per arm
+  - `tooling/python/extract_arms_llm.py` — arm-level extraction from the best available source per record, strongest provenance first
+  - `tooling/python/consolidate_extraction.py` — merges registry and extracted arms by provenance rather than convenience
+  - `tooling/python/assess_rob2.py` — RoB 2 from retrieved full text only; an abstract cannot support a risk-of-bias judgement and the script refuses to pretend otherwise
+  - `ma-data-extraction/references/open-data-sources.md` — the five tiers, with measured coverage: on one review, 18 PDFs retrieved against 27 recoverable from Europe PMC, 8 of 27 registered trials with posted results, and 41% of included studies carrying an NCT id that appeared nowhere in the manifest
+- `ai_screen.py --shard i/n` — stratified sharding so screening runs in parallel; the serial path measured 13.8 s/record, which is 21 hours for two reviewers over 2,756 records. With `merge_screening_shards.py`, which verifies the merged count equals the input exactly, because a lost record is a corrupted PRISMA flow
+- `ma-search-bibliography/scripts/ctgov_fetch.py` — ClinicalTrials.gov as a searchable source
+- `tooling/python/build_screening_database.py` — bridges Stage 02's BibTeX to the CSV `ai_screen.py` expects; nothing else in the pipeline did
+
+### Fixed
+- **Full-text screening was screening abstracts.** Downloaded PDFs were never read, so the full-text kappa measured nothing. Three defects compounded it: `exclude` was the fallback for a parse or retrieval failure, which turns infrastructure failure into an eligibility exclusion; 51 of 122 "PDFs" were HTML interstitials (a paywall returns a login page, not a 404); and the text was never extracted. All three produce plausible-looking numbers, which is why none of them surfaced until the outputs were read
+- `ai_screen.py` reviewer-2 pass overwrote reviewer 1's column, silently halving an independent dual review while the kappa still computed
+- `build_queries.py` emitted PubMed field tags into the Scopus query (`TITLE-ABS-KEY("Breast Neoplasms"[MeSH])`), which Scopus accepts silently and answers with nonsense
+- `create_pdf_manifest.py` never mined NCT ids from titles and abstracts, leaving the column empty for every row
+- `download_oa_pdfs.py` recorded an OA landing page with no direct PDF link as unavailable, under-reporting what is reachable
+- `publication_readiness_score.py` used file size as a DPI proxy. The proxy points the wrong way: R's `png(res=300)` writes the right pixels and no `pHYs` chunk, so the file declares 72 dpi while being larger than `ragg::agg_png`, which declares 300. It now reads the chunk
+- Three scoring bugs in `publication_readiness_score.py` that let it report 124/100
+
+### Added
 - Orchestration harness (`.demo/`) — drives a worker Claude Code pane through the pipeline from a second session over the [herdr socket API](https://herdr.dev/docs/socket-api/), one stage at a time
   - `preflight.sh` — 40+ checks that the environment can *finish* a run before it starts. Checks that things run rather than that they are installed: compiles a JAGS model through `rjags`, renders a PDF through Quarto, authenticates each API key live, and lints every prompt so a script path or CLI flag that does not exist is caught in seconds instead of mid-stage
   - `run.sh` — steps the worker through `steps.conf`. Completion is a sentinel file the worker writes **and** a verify command that inspects the artifacts, never the agent's status; liveness is the pane's revision counter, so the budget is an inactivity timeout rather than a wall clock; a worker that is genuinely stuck writes `<id>.blocked` and the run stops for a person

@@ -51,11 +51,49 @@ Run reproducible database searches, capture the search strategy, and produce ver
 - See `references/pubmed-eutils.md` for a compact tutorial and API notes.
 - Read API keys from `.env` in the project root.
 
+## Abstract Enrichment (run this before Stage 03 screening)
+
+`dedupe.bib` carries **titles only** — `pubmed_fetch.py` does not write an `abstract`
+field. Screening on titles alone cannot apply population, design or outcome-reporting
+criteria, so back-fill abstracts first:
+
+```bash
+uv run --project tooling/python ma-search-bibliography/scripts/enrich_abstracts.py \
+  --in-bib  projects/<name>/02_search/round-XX/dedupe.bib \
+  --out-csv projects/<name>/03_screening/enriched.csv \
+  --min-coverage 0.85 --workers 16
+```
+
+### ⚠️ `--project tooling/python` is required
+
+Without it, `uv` resolves a **different environment** and the script aborts with
+`ERROR: bibtexparser not installed` **even though the dependency is present** in
+`tooling/python`. The error names the wrong cause, so this costs an hour if you take it at
+face value. `--with 'bibtexparser<2' --with requests` also works but pins versions by hand;
+`--project tooling/python` is the correct form.
+
+### Behaviour
+
+- Sources are tried in order: **PubMed efetch → DOI→PMID → CrossRef → OpenAlex**.
+- `--workers N` (default 16) parallelises the per-record HTTP phases. They are
+  network-bound; serially they run at roughly **8 lookups/min**, so ~1,000 DOIs takes ~2h.
+- `--min-coverage F` exits non-zero if coverage falls below F. **The CSV is still written**,
+  so a failed gate is a signal to act on, not a lost run.
+- Records with no abstract anywhere get `abstract_source = unavailable`. They must stay in
+  the corpus: a missing abstract is a _retrieval_ limitation, not an eligibility judgement,
+  so such records screen to **unclear → advance to full text**, never to exclude.
+- **OpenAlex is unauthenticated and IP-rate-limited.** It returns
+  `HTTP 429 "Insufficient budget ... shared by everyone on your network's IP address"`
+  once the shared daily budget is spent, and then fills nothing. Treat its contribution as
+  best-effort.
+
 ## Resources
 
 ### Python Scripts (Search & Deduplication)
+
 - `scripts/pubmed_fetch.py` fetches PubMed records and writes BibTeX.
 - `scripts/dedupe_bib.py` removes duplicate records based on DOI, PMID, or title.
+- `scripts/enrich_abstracts.py` back-fills abstracts (PubMed → DOI→PMID → CrossRef → OpenAlex); **must be run with `uv run --project tooling/python`** (see above).
 - `scripts/build_queries.py` builds multi-DB queries from `pico.yaml`.
 - `scripts/mesh_expand.py` expands terms via the MeSH RDF lookup service.
 - `scripts/expand_terms.py` expands PICO terms using MeSH and optional Emtree synonyms.
@@ -67,15 +105,18 @@ Run reproducible database searches, capture the search strategy, and produce ver
 - `scripts/scopus_fetch.py` fetches Scopus Search API results.
 - `scripts/embase_fetch.py` fetches Embase Search API results.
 - `scripts/cochrane_fetch.py` fetches Cochrane ReviewDB API results.
+- `scripts/ctgov_fetch.py` fetches ClinicalTrials.gov API v2 records (public, no API key; usable as a credential-free second source for the PRISMA ≥2-source requirement).
 - `scripts/bib_subset_by_ids.py` extracts a BibTeX subset from CSV record IDs.
 - `scripts/zotero_fetch.py` fetches records from a Zotero collection.
 - `scripts/zotero_sync.py` syncs a `.bib` file back to a Zotero collection.
 - `scripts/env_utils.py` loads `.env` credentials.
 
 ### R Scripts (PRISMA Flowchart)
+
 - `scripts/generate_prisma_flowchart.R` generates PRISMA 2020 compliant flow diagrams in PNG/PDF/SVG/HTML formats.
 
 ### Reference Documentation
+
 - `references/pubmed-eutils.md` summarizes the E-utilities workflow.
 - `references/database-auth.md` summarizes authentication per database.
 - `references/emtree-synonyms-template.csv` provides a template for Emtree synonyms.
@@ -93,6 +134,7 @@ Run reproducible database searches, capture the search strategy, and produce ver
 **When**: After completing database searches and deduplication.
 
 **Command**:
+
 ```bash
 cd ma-search-bibliography/scripts
 
@@ -107,6 +149,7 @@ Rscript generate_prisma_flowchart.R \
 ```
 
 **Example** (after search completion, before screening):
+
 ```bash
 # Count database records
 DB_RECORDS=$(wc -l < ../../projects/<project-name>/02_search/round-01/dedupe.bib | xargs)
@@ -116,6 +159,7 @@ Rscript generate_prisma_flowchart.R $DB_RECORDS 0 0 0 0 NA ../../projects/<proje
 ```
 
 **Outputs**:
+
 - `prisma_flowchart.png` (300 DPI, for manuscript)
 - `prisma_flowchart.pdf` (vector, for publication)
 - `prisma_flowchart.svg` (scalable, for presentations)

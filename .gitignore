@@ -143,3 +143,5 @@ worktrees/
 .demo/DRIVER_SESSION
 projects/*/.progress/
 projects/_archive/
+.demo/runner.out
+.demo/runner.pid

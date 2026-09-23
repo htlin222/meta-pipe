@@ -49,14 +49,47 @@ def check_prisma_checklist(
     content = checklist_path.read_text()
     issues = []
 
-    # Count completed items (lines with ✅ or checkmark)
-    completed = len(re.findall(r"[✅✓]", content))
+    # Count completed ITEMS, not completed CHARACTERS. Counting every tick in
+    # the file sweeps up prose, legends and summary lines, and nothing caps the
+    # result at the number of items -- which is how a 32-item checklist scored
+    # 46/32 (144%) and pushed the overall readiness score above 100%.
+    # A checklist item is a table row that carries a status marker.
+    rows = [ln for ln in content.splitlines() if ln.lstrip().startswith("|")]
+    status = [ln for ln in rows if re.search(r"[✅✓❌⬜⚠️]", ln)]
 
-    # Count NA items (not applicable)
-    na_count = len(re.findall(r"\bNA\b", content))
+    # PRISMA's "27 items" (32 with the NMA extension) counts PARENT items, but
+    # a filled checklist lists their sub-items -- 10a/10b, 13a-13f, 16a/16b,
+    # S1-S5. Counting rows therefore yields far more than 32, and with no cap
+    # the component scored 46/32 = 144% and dragged the overall figure past
+    # 100%. Roll sub-items up to their parent: a parent counts as complete only
+    # when every one of its rows is complete.
+    parents: dict[str, list[bool]] = {}
+    for ln in status:
+        m = re.match(r"\|[\s*_]*(S?\d+)[a-z]?[\s*_]*\|", ln.lstrip())
+        if not m:
+            continue
+        parents.setdefault(m.group(1), []).append(bool(re.search(r"[✅✓]", ln)))
 
-    # Count incomplete items (lines with ❌ or ⬜)
-    incomplete = len(re.findall(r"[❌⬜]", content))
+    if parents:
+        completed = sum(1 for done in parents.values() if all(done))
+        incomplete = sum(1 for done in parents.values() if not all(done))
+        na_count = sum(1 for ln in status if re.search(r"\bN/?A\b", ln))
+        if len(parents) != total_items:
+            issues.append(
+                f"checklist enumerates {len(parents)} parent items across "
+                f"{len(status)} rows; PRISMA expects {total_items}"
+            )
+    else:  # not a numbered table; fall back, but still cap
+        completed = len(re.findall(r"[✅✓]", content))
+        incomplete = len(re.findall(r"[❌⬜]", content))
+        na_count = len(re.findall(r"\bN/?A\b", content))
+
+    if completed > total_items:
+        issues.append(
+            f"checklist marks {completed} complete items but PRISMA has "
+            f"{total_items}; capped at {total_items}"
+        )
+        completed = total_items
 
     if na_count > 5:
         issues.append(f"Too many NA items ({na_count}) - review applicability")
@@ -203,14 +236,28 @@ def check_claim_audit(project_root: Path) -> Tuple[int, int, List[str]]:
     issues = []
     score = 15
 
-    # Check for flagged overclaims
-    if "⚠️" in content or "WARNING" in content:
-        overclaim_count = content.count("⚠️") + content.count("WARNING")
+    # Read the count the audit REPORTS. Searching for "⚠️" matches the report's
+    # own severity legend -- "**High**: 0 ⚠️" -- so a clean audit with zero
+    # issues was losing 2 points for the word "zero" being formatted with an
+    # icon. Fall back to counting markers only if no total is stated.
+    m = re.search(r"Total Issues\**:?\s*\**\s*(\d+)", content, re.I)
+    if m:
+        overclaim_count = int(m.group(1))
+    else:
+        overclaim_count = content.count("WARNING") + len(
+            re.findall(r"⚠️(?!\s*$)", content)
+        )
+        issues.append("claim audit states no total; counted markers instead")
+
+    if overclaim_count:
         issues.append(f"{overclaim_count} potential overclaims detected")
         score -= min(overclaim_count * 2, 10)
 
-    # Check for evidence-claim mismatches
-    if "MISMATCH" in content or "inconsistent" in content.lower():
+    # An explicit mismatch section, not the word appearing anywhere in prose
+    # (the report's own "Best Practices" section discusses inconsistency).
+    if re.search(r"^.*\bMISMATCH\b", content, re.M) or re.search(
+        r"^#+.*inconsisten", content, re.M | re.I
+    ):
         issues.append("Evidence-claim inconsistencies detected")
         score -= 5
 
@@ -374,7 +421,7 @@ def calculate_readiness_score(project_root: Path, verbose: bool = False) -> Dict
         "analysis_type": analysis_type,
         "components": {},
         "total_score": 0,
-        "total_possible": 100,
+        "total_possible": 0,
         "grade": "",
         "all_issues": [],
     }
@@ -404,6 +451,10 @@ def calculate_readiness_score(project_root: Path, verbose: bool = False) -> Dict
             "issues": issues,
         }
         results["total_score"] += score
+        # The denominator is the sum of what the components can actually award.
+        # It was hardcoded to 100 while the components total 112, so a perfect
+        # project reported "112/100 (112%)" -- a score above its own maximum.
+        results["total_possible"] += max_score
         results["all_issues"].extend(issues)
 
     # Assign grade

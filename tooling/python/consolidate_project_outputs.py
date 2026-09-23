@@ -232,12 +232,93 @@ def consolidate_outputs(root_dir: Path, project_name: str, output_dir: Path = No
     print("=" * 70)
 
 
+def _measure_project(root: Path) -> str:
+    """Describe the project from its own files, or say nothing.
+
+    Everything here is counted from disk. If a file is absent the line is
+    omitted rather than filled with a plausible number -- an index is read as a
+    factual summary of the project it sits in.
+    """
+    import csv as _csv
+
+    lines = []
+
+    def _rows(rel, key=None):
+        f = root / rel
+        if not f.exists():
+            return None
+        try:
+            with f.open(newline="", encoding="utf-8") as fh:
+                rr = list(_csv.DictReader(fh))
+            return rr
+        except Exception:
+            return None
+
+    dedupes = (
+        sorted((root / "02_search").glob("round-*/dedupe.bib"))
+        if (root / "02_search").is_dir()
+        else []
+    )
+    if dedupes:
+        n = sum(
+            1
+            for ln in dedupes[-1].read_text(errors="replace").splitlines()
+            if ln.startswith("@")
+        )
+        lines.append(
+            f"- **Records after deduplication** ({dedupes[-1].parent.name}): {n:,}"
+        )
+
+    ft = _rows("04_fulltext/fulltext_decisions.csv")
+    if ft is not None:
+        inc = sum(
+            1 for r in ft if (r.get("FT_Final_Decision") or "").strip() == "include"
+        )
+        lines.append(
+            f"- **Studies included after full-text screening**: {inc:,} of {len(ft):,} screened at full text"
+        )
+
+    ex = _rows("05_extraction/extraction.csv")
+    if ex is not None:
+        trials = {(r.get("trial_id") or "").strip() for r in ex} - {""}
+        lines.append(
+            f"- **Extraction database**: {len(ex):,} arm rows from {len(trials):,} trials"
+        )
+
+    arms = _rows("06_analysis/nma_arms.csv")
+    if arms is not None:
+        tr = {r["trial_id"] for r in arms}
+        pat = sum(int(r["n"]) for r in arms if (r.get("n") or "").strip().isdigit())
+        lines.append(
+            f"- **In the network**: {len(tr):,} trials, {len(arms):,} arms, {pat:,} patients"
+        )
+
+    figs = (
+        list((root / "06_analysis" / "figures").glob("*.png"))
+        if (root / "06_analysis" / "figures").is_dir()
+        else []
+    )
+    if figs:
+        lines.append(f"- **Figures produced**: {len(figs):,}")
+
+    if not lines:
+        return "---\n"
+
+    return (
+        "---\n\n## 📊 Measured from this project\n\n"
+        + "\n".join(lines)
+        + "\n\nNo effect estimates are reproduced here. For results see the manuscript\n"
+        "(`07_manuscript/`) and the certainty ratings in `08_reviews/`.\n\n---\n"
+    )
+
+
 def create_project_index(
     output_dir: Path, project_name: str, total_copied: int, total_missing: int
 ):
     """Create an index file listing all consolidated outputs."""
 
     index_path = output_dir / "INDEX.md"
+    measured_block = _measure_project(output_dir)
 
     content = f"""# {project_name.upper()} Project Outputs
 
@@ -257,41 +338,28 @@ organized by pipeline stage for easy review and archival.
 projects/{project_name}/
 ├── 00_overview/          # Project summaries and feasibility reports
 ├── 01_protocol/          # PICO, eligibility, search strategy
-├── 02_search/            # Literature search results (122 records)
-├── 03_screening/         # Title/abstract screening (5 RCTs)
+├── 02_search/            # Literature search results
+├── 03_screening/         # Title/abstract screening
 ├── 04_fulltext/          # Full-text retrieval
-├── 05_extraction/        # Data extraction (N=2402 patients)
+├── 05_extraction/        # Data extraction
 ├── 06_analysis/          # Meta-analysis results and R scripts
-├── 07_manuscript/        # Manuscript sections and tables (4,921 words)
+├── 07_manuscript/        # Manuscript sections and tables
 ├── 08_documentation/     # Project guides and workflows
 └── 09_scripts/           # Python utility scripts
 ```
 
----
-
-## 🎯 Key Findings (Quick Reference)
-
-### Efficacy Results
-
-| Outcome | Effect | 95% CI | p-value | Quality |
-|---------|--------|--------|---------|---------|
-| pCR | RR 1.26 | 1.16-1.37 | 0.0015 | ⊕⊕⊕⊕ HIGH |
-| EFS | HR 0.66 | 0.51-0.86 | 0.021 | ⊕⊕⊕◯ MODERATE |
-| OS | HR 0.48 | (k=2) | 0.346 | ⊕⊕◯◯ LOW |
-
-### Study Characteristics
-
-- **Trials included**: 5 RCTs
-- **Total patients**: N=2402
-- **Intervention**: ICI + chemotherapy vs chemotherapy alone
-- **Population**: Triple-negative breast cancer (TNBC), neoadjuvant setting
-
----
+{measured_block}
 
 ## 📁 File Listings by Directory
 
 """
 
+    # NOTE: this index used to carry a hardcoded "Key Findings" table --
+    # RR 1.26 (1.16-1.37), 5 RCTs, N=2402 -- copied from the ici-breast-cancer
+    # project. Running the script on any other project stamped THAT project's
+    # index with a meta-analysis result it never produced, GRADE rating
+    # included. Counts are now measured from the project, and nothing is
+    # written that cannot be measured.
     # List files in each directory
     for subdir in sorted(output_dir.iterdir()):
         if subdir.is_dir() and not subdir.name.startswith("."):

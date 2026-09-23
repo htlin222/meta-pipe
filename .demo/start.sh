@@ -52,6 +52,13 @@ if [ -f "$pidfile" ] && kill -0 "$(cat "$pidfile")" 2>/dev/null; then
   printf 'runner detached (pid %s) — survives this session ending\n' "$(cat "$pidfile")"
   printf 'follow it with:  tail -f %s\n' "$HERE/run.log"
 else
+  # A run that skips every step finishes in under a second, which is not a
+  # failure — distinguish the two by whether it logged a completion.
+  if tail -3 "$HERE/run.log" 2>/dev/null | grep -q "run finished"; then
+    printf 'runner already finished (nothing left to do)\n'
+    tail -4 "$HERE/run.log" | sed 's/^/  /'
+    exit 0
+  fi
   printf 'runner failed to start; see %s\n' "$outfile"
   exit 1
 fi

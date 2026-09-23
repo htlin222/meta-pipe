@@ -174,6 +174,8 @@ def screen_fulltext_one(
     pmid: str,
     eligibility_criteria: str,
     pdf_path: Optional[Path] = None,
+    abstract: str = "",
+    retrieval_status: str = "",
 ) -> dict:
     """
     Call `claude -p` to re-screen a study at the full-text stage.
@@ -184,21 +186,56 @@ def screen_fulltext_one(
     if pdf_path and pdf_path.exists():
         print(f"   (Extracting text from {pdf_path.name}...)")
         try:
-            # Try to use the same logic as llm_extract.py (first few pages are usually enough for eligibility)
-            from llm_extract import extract_pdf_text
+            # The module is extract_pdf_text.py and the function is
+            # extract_text_from_pdf. The previous `from llm_extract import
+            # extract_pdf_text` named a module that does not exist in this repo,
+            # so every downloaded PDF was silently ignored and full-text
+            # screening degraded to a web search for every record.
+            from extract_pdf_text import extract_text_from_pdf
 
-            pdf_text = extract_pdf_text(pdf_path, max_pages=10)
+            _res = extract_text_from_pdf(pdf_path, max_pages=10)
+            # returns a dict with metadata, not a bare string
+            pdf_text = _res.get("text", "") if isinstance(_res, dict) else str(_res)
+            if isinstance(_res, dict) and _res.get("error"):
+                print(f"   (PDF extraction reported: {_res['error']})")
         except Exception as e:
             print(f"   (PDF extraction failed: {e})")
             pdf_text = ""
 
     prompt_context = f"STUDY TO SCREEN:\nRecord ID: {record_id}\nTitle: {title}\nDOI: {doi}\nPMID: {pmid}\n"
     if pdf_text:
-        # Limit text to avoid context window issues
         prompt_context += f"\nFULL TEXT CONTENT (first 10 pages):\n{pdf_text[:15000]}\n"
-        search_instruction = "2. Evaluate ALL eligibility criteria against the provided FULL TEXT content."
+        search_instruction = (
+            "2. EVIDENCE AVAILABLE: the full text is provided above. Evaluate ALL "
+            "eligibility criteria against it. Reserve UNCLEAR for genuine ambiguity "
+            "in the document, not for extraction difficulty."
+        )
+    elif abstract:
+        # No full text could be retrieved, but the abstract is available. Give it to
+        # the reviewer and state the rule, instead of asking for a web search that
+        # usually fails and yields a meaningless "unable to determine".
+        prompt_context += (
+            f"\nABSTRACT (no full text could be retrieved):\n{abstract[:6000]}\n"
+        )
+        search_instruction = (
+            "2. EVIDENCE AVAILABLE: ABSTRACT ONLY -- no full text could be retrieved.\n"
+            "   Apply the protocol rule for this case:\n"
+            "   - EXCLUDE if the abstract shows a HARD, SELF-EVIDENT violation: metastatic/"
+            "stage IV population, HER2-negative population, explicitly non-randomised or "
+            "single-arm, review/editorial/commentary, a SECONDARY or POOLED analysis of "
+            "previously reported trials, protocol without results, or non-breast primary. "
+            "Name the criterion.\n"
+            "   - UNCLEAR if the abstract is consistent with eligibility but lacks detail only "
+            "the full text could supply (arm-level pCR numbers, exact stage distribution).\n"
+            "   - Do NOT answer UNCLEAR merely because the full text is unavailable, and do NOT "
+            "EXCLUDE for missing arm-level outcome data -- that is reporting depth, not "
+            "ineligibility."
+        )
     else:
-        search_instruction = "2. Search for the full text of this study using the DOI or PMID. Evaluate ALL eligibility criteria against the full-text content."
+        search_instruction = (
+            "2. EVIDENCE AVAILABLE: title only. Answer UNCLEAR unless the title itself shows a "
+            "hard violation."
+        )
 
     prompt = f"""You are an expert systematic reviewer performing FULL-TEXT eligibility screening for a meta-analysis.
 
@@ -231,9 +268,17 @@ Exclusion codes:
     # 180s: tool use / long full-text prompts need more than the default 120s
     text = _invoke_claude(prompt, timeout=180)
 
+    # Default to UNCLEAR, never to exclude.
+    # A parse failure, a timeout, or a full text the model could not reach is a
+    # RETRIEVAL/TOOLING outcome, not an eligibility judgement. Defaulting such a
+    # record to "exclude" silently converts an infrastructure failure into a
+    # PRISMA exclusion-with-reason and drops eligible trials: in a pilot, 6 of 8
+    # records defaulted this way, including a neoadjuvant T-DM1 + pertuzumab
+    # trial that plainly meets the criteria. Unclear records advance to human
+    # adjudication instead.
     parsed = {
-        "decision": "exclude",  # Default to exclude on failure/uncertainty for full-text
-        "reason": "Unable to determine — defaulting to exclude (safety first)",
+        "decision": "unclear",
+        "reason": "Unable to determine from available full text — advanced for adjudication",
         "confidence": "LOW",
         "exclusion_code": "NONE",
     }
@@ -248,9 +293,10 @@ Exclusion codes:
         elif line.startswith("EXCLUSION_CODE:"):
             parsed["exclusion_code"] = line.split(":", 1)[1].strip()
 
-    # Full-text screening only allows INCLUDE or EXCLUDE
+    # Anything that is not a clean include/exclude becomes `unclear`, which
+    # advances the record rather than silently excluding it.
     if parsed["decision"] not in ("include", "exclude"):
-        parsed["decision"] = "exclude"
+        parsed["decision"] = "unclear"
 
     return parsed
 
@@ -727,7 +773,9 @@ def run_fulltext_screening(args, project_path: Path) -> None:
     ft_sharded = shard_i is not None
     if ft_sharded:
         output_csv = (
-            project_path / "04_fulltext" / "shards"
+            project_path
+            / "04_fulltext"
+            / "shards"
             / f"fulltext_decisions.r{args.reviewer}.shard-{shard_i:03d}-of-{shard_n:03d}.csv"
         )
         output_csv.parent.mkdir(parents=True, exist_ok=True)
@@ -744,11 +792,21 @@ def run_fulltext_screening(args, project_path: Path) -> None:
     if not eligibility:
         print("WARNING: No eligibility.md found. AI will use basic heuristics.")
 
+    # Abstracts for records with no retrievable full text: without these the
+    # reviewer has nothing to judge and returns "unable to determine".
+    abstracts: Dict[str, str] = {}
+    sdb = project_path / "03_screening" / "screening-database.csv"
+    if sdb.exists():
+        with open(sdb, "r", encoding="utf-8") as fh:
+            for row in csv.DictReader(fh):
+                abstracts[row.get("RecordID", "")] = (row.get("Abstract") or "").strip()
+
     # Read manifest
     with open(manifest_csv, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         manifest_records = list(reader)
 
+    m_by_id = {m.get("record_id", ""): m for m in manifest_records}
     print(f"Loaded {len(manifest_records)} studies from {manifest_csv.name}")
     print(f"Filling FT_Reviewer{args.reviewer} columns (AI full-text screening)")
 
@@ -775,11 +833,36 @@ def run_fulltext_screening(args, project_path: Path) -> None:
                 if rid:
                     existing[rid] = row
 
-    # Build records list from manifest
+    # Build records list from manifest.
+    # Records whose full text could not be retrieved are NOT screened: you cannot
+    # assess the eligibility of a paper you cannot read. PRISMA 2020 counts these
+    # in the "reports not retrieved" box, which is distinct from "excluded with
+    # reasons". Marking them not_retrieved here keeps that distinction intact and
+    # avoids spending a web search per record on paper we know is unavailable.
+    NOT_RETRIEVABLE = {"unavailable", "registry_only", "pdf_invalid"}
+    skipped_unretrieved = 0
     records = []
     for m in manifest_records:
         rid = m.get("record_id", "").strip()
         if not rid:
+            continue
+        status = (m.get("retrieval_status") or "").strip()
+        if status in NOT_RETRIEVABLE:
+            row = existing.get(rid) or {k: "" for k in ft_fieldnames}
+            row.update(
+                {
+                    "record_id": rid,
+                    "title": m.get("title", ""),
+                    "doi": m.get("doi", ""),
+                    "pmid": m.get("pmid", ""),
+                    "FT_Final_Decision": "not_retrieved",
+                    "FT_Exclusion_Code": "NOT_RETRIEVED",
+                }
+            )
+            if not row.get("FT_Reviewer1_Reason"):
+                row["FT_Reviewer1_Reason"] = f"full text not retrieved ({status})"
+            existing[rid] = row
+            skipped_unretrieved += 1
             continue
         if rid in existing:
             records.append(existing[rid])
@@ -798,6 +881,19 @@ def run_fulltext_screening(args, project_path: Path) -> None:
                     "FT_Exclusion_Code": "",
                 }
             )
+
+    if skipped_unretrieved:
+        print(
+            f"{skipped_unretrieved} records marked not_retrieved (no full text to assess); "
+            f"{len(records)} assessable records will be screened"
+        )
+
+    if ft_sharded:
+        total_in = len(records)
+        # Same stride partition as the abstract stage: shard i takes positions
+        # i-1, i-1+n, ... so the shards partition the corpus exactly.
+        records = records[shard_i - 1 :: shard_n]
+        print(f"Shard {shard_i}/{shard_n}: {len(records)} of {total_in} records")
 
     decision_col = f"FT_Reviewer{args.reviewer}_Decision"
     reason_col = f"FT_Reviewer{args.reviewer}_Reason"
@@ -824,13 +920,33 @@ def run_fulltext_screening(args, project_path: Path) -> None:
         if file_path_val:
             pdf_path = Path(file_path_val)
             if not pdf_path.is_absolute():
-                pdf_path = (project_path / "04_fulltext" / pdf_path).resolve()
+                # manifest file_path may be written relative to the project root
+                # ("04_fulltext/pdf/x.pdf") or to 04_fulltext/ ("pdf/x.pdf");
+                # accept either rather than silently resolving to a missing file.
+                for base in (project_path, project_path / "04_fulltext"):
+                    cand = (base / pdf_path).resolve()
+                    if cand.exists():
+                        pdf_path = cand
+                        break
+                else:
+                    pdf_path = (project_path / "04_fulltext" / pdf_path).resolve()
 
         print(f"\n[{i}/{len(records)}] {rid}")
         print(f"   {title[:80]}...")
 
         try:
-            result = screen_fulltext_one(title, rid, doi, pmid, eligibility, pdf_path)
+            result = screen_fulltext_one(
+                title,
+                rid,
+                doi,
+                pmid,
+                eligibility,
+                pdf_path,
+                abstract=abstracts.get(rid, ""),
+                retrieval_status=(m_by_id.get(rid, {}) or {}).get(
+                    "retrieval_status", ""
+                ),
+            )
             record[decision_col] = result["decision"]
             record[reason_col] = (
                 f"{result['exclusion_code']}: {result['reason']}"
@@ -870,11 +986,18 @@ def run_fulltext_screening(args, project_path: Path) -> None:
                 record["FT_Final_Decision"] = "include"
                 record["FT_Exclusion_Code"] = "NONE"
 
-    # Write fulltext_decisions.csv
+    # Write fulltext_decisions.csv.
+    # Unsharded runs also emit the not_retrieved rows so the file accounts for
+    # every manifest record; sharded runs emit only their own shard, and the
+    # merge step restores the full set.
+    out_rows = records
+    if not ft_sharded:
+        screened_ids = {r.get("record_id") for r in records}
+        out_rows = records + [v for k, v in existing.items() if k not in screened_ids]
     with open(output_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=ft_fieldnames, extrasaction="ignore")
         writer.writeheader()
-        writer.writerows(records)
+        writer.writerows(out_rows)
 
     # Summary
     decisions = [r.get(decision_col, "").lower() for r in records]

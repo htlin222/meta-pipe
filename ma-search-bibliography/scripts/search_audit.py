@@ -67,6 +67,7 @@ def main() -> None:
         "scopus": "https://api.elsevier.com/content/search/scopus",
         "embase": "https://api.elsevier.com/content/embase/article",
         "cochrane": "https://api.cochrane.org/reviews",
+        "ctgov": "https://clinicaltrials.gov/api/v2/studies",
     }
 
     logs = {
@@ -74,6 +75,7 @@ def main() -> None:
         "scopus": round_dir / "scopus.log",
         "embase": round_dir / "embase.log",
         "cochrane": round_dir / "cochrane.log",
+        "ctgov": round_dir / "ctgov_log.txt",
     }
 
     audit = {"round": args.round, "databases": []}

@@ -28,7 +28,7 @@ def split_terms(value: Any) -> List[str]:
 
 def quote(term: str) -> str:
     term = term.strip()
-    if " " in term and not term.startswith("\""):
+    if " " in term and not term.startswith('"'):
         return f'"{term}"'
     return term
 
@@ -112,6 +112,7 @@ def build_pubmed_group(terms: List[str]) -> str:
     # untagged terms default to [tiab].
     def fmt(term: str) -> str:
         return term if "[" in term else f"{term}[tiab]"
+
     return group_terms(terms, fmt)
 
 
@@ -119,16 +120,19 @@ def build_scopus_group(terms: List[str]) -> str:
     """Scopus: strip PubMed tags, map [ti] to TITLE(), everything else to
     TITLE-ABS-KEY(). Publication types have no Scopus field equivalent, so they
     degrade to a free-text TITLE-ABS-KEY match rather than being dropped."""
+
     def fmt(term: str) -> str:
         bare, tag = split_field_tag(term)
         bare = requote(bare)
         return f"TITLE({bare})" if tag == "ti" else f"TITLE-ABS-KEY({bare})"
-    return group_terms(terms, fmt)
+
+    return group_terms_raw(terms, fmt)
 
 
 def build_embase_group(terms: List[str]) -> str:
     """Embase (Emtree syntax): strip PubMed tags, map [ti] to :ti and MeSH
     descriptors to an exploded Emtree term; everything else to :ti,ab,kw."""
+
     def fmt(term: str) -> str:
         bare, tag = split_field_tag(term)
         if tag == "mesh":
@@ -136,11 +140,13 @@ def build_embase_group(terms: List[str]) -> str:
         if tag == "ti":
             return f"{requote(bare)}:ti"
         return f"{requote(bare)}:ti,ab,kw"
-    return group_terms(terms, fmt)
+
+    return group_terms_raw(terms, fmt)
 
 
 def build_cochrane_group(terms: List[str]) -> str:
     """Cochrane CENTRAL: strip PubMed tags, map MeSH to [mh] and [ti] to :ti."""
+
     def fmt(term: str) -> str:
         bare, tag = split_field_tag(term)
         bare = requote(bare)
@@ -149,14 +155,21 @@ def build_cochrane_group(terms: List[str]) -> str:
         if tag == "ti":
             return f"{bare}:ti"
         return bare
-    return group_terms(terms, fmt)
+
+    return group_terms_raw(terms, fmt)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build database queries from pico.yaml")
-    parser.add_argument("--pico", default="01_protocol/pico.yaml", help="Path to pico.yaml")
+    parser = argparse.ArgumentParser(
+        description="Build database queries from pico.yaml"
+    )
+    parser.add_argument(
+        "--pico", default="01_protocol/pico.yaml", help="Path to pico.yaml"
+    )
     parser.add_argument("--expanded", default=None, help="Expanded terms YAML")
-    parser.add_argument("--out", default="02_search/round-01/queries.txt", help="Output file")
+    parser.add_argument(
+        "--out", default="02_search/round-01/queries.txt", help="Output file"
+    )
     args = parser.parse_args()
 
     if args.expanded:
