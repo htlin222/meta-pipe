@@ -18,6 +18,14 @@ Then assemble a contact sheet of the full set with `uv run tooling/python/assemb
 
 Then **verify it by reading the `pHYs` chunk**, not by trusting the call and not by file size. The repo's own readiness check uses "larger than 100 KB" as a DPI proxy, and that proxy points the wrong way: in the test, the 98 KB file was the one with no resolution and the 30 KB file was a true 300 dpi. Write the verification into a small script under `06_analysis/` so the check is reproducible, and report the measured dpi per file.
 
+**Layout defects a previous run shipped, so check for these specifically.** Each was only visible once the file was opened:
+- value labels drawn at a bar's end collide with anything annotated inside the bar, and short bars have no room for an inside label at all — put the value in its own right-hand gutter, consistently for every row
+- a right-hand annotation built from two layers at colliding x positions renders as `1.50▲ 2 trials` with no space. Give value and annotation separate columns with a visible gutter
+- a credible interval that reaches the panel edge is unreadable: the reader cannot tell whether it ended there or was clipped. Widen the axis so every interval terminates inside, or clip explicitly with an arrowhead and say so
+- overlapping point labels in a scatter need `ggrepel` with `min.segment.length = 0` so leader lines are drawn; band labels belong at the band's edge, not among the points
+- a node label centred on its node sits under the edges radiating from it — offset it or give it a halo
+- keep a statistic on one line: `τ = 0.27` must not break across a wrap
+
 Requirements that apply to all of them: legible at 4 m, colour-blind safe, no red/green as the only distinction, units and n on the axes, and every figure readable without its caption.
 
 Finish with: the file list, the DPI you verified, the palette rationale, and which single figure you would put on the summary slide.

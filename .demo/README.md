@@ -19,12 +19,20 @@ orchestrator ── herdr agent prompt ──▶ worker runs one stage
 
 ```bash
 .demo/preflight.sh          # never skip this
-.demo/run.sh                # drives every step in steps.conf
-.demo/run.sh --from 06      # resume
-.demo/run.sh --only 07      # one step
+.demo/start.sh              # run it detached — survives the session ending
+.demo/status.sh             # where everything stands; the first command on coming back
+.demo/stop.sh               # stop the runner; the worker's current turn finishes
+
+.demo/start.sh --from 06    # resume from a step
+.demo/start.sh --only 07    # one step
+.demo/start.sh --await 03   # a step is already running: wait, do not resubmit
 .demo/run.sh --dry-run      # what is already satisfied
+
 .demo/reset.sh --yes --keep-search   # archive and start clean
 ```
+
+Set `WORKER_PANE` and `DRIVER_SESSIONS` in `config.env` first — `herdr pane list`
+finds the pane id.
 
 Progress at any moment: `projects/<project>/.progress/PROGRESS.md`.
 
@@ -37,6 +45,8 @@ Progress at any moment: `projects/<project>/.progress/PROGRESS.md`.
 | `steps.conf` | `id \| prompt \| timeout \| verify command` |
 | `prompts/` | one file per stage — the actual instructions to the worker |
 | `run.sh` | the runner |
+| `start.sh` / `stop.sh` / `status.sh` | detached lifecycle |
+| `prompts/_shakedown/` | mid-run repairs from the first run, and why each is now unnecessary |
 | `reset.sh` | archive a finished run, re-init the project |
 | `run.log` | append-only event log |
 
@@ -82,6 +92,22 @@ key in `.env.example` as required and non-empty, so once a partially-filled
 document. It reads only the current directory, so rendering from
 `07_manuscript/` is fine. Preflight tests it the way Stage 07 runs it, and warns
 about the repo-root trap.
+
+**An idle agent is not an idle pipeline.** The worker legitimately ends a turn
+while background shells it started keep working, and 16 screening shards write
+only on completion — the tree can be quiet for 25 minutes while everything is
+fine. Nudging then interrupts work in flight. Busy now means "files changed
+recently **or** a live process names this project".
+
+**The runner died with the session that launched it.** It was a background job
+of that shell. `start.sh` puts it in its own session, so a multi-hour run does
+not depend on a terminal staying open, and `--await` attaches to a step already
+running instead of resubmitting a prompt for work the worker is still doing.
+
+**A verify command must be able to fail.** The first version of one step checked
+a condition that was already true before the step ran, so the runner skipped it
+and reported success. Write the check so it would fail on a plausible
+half-finished attempt — that is the whole job of the check.
 
 **The worker's context compacts mid-run.** Several times, over this many stages.
 The standing rules — do not invent data, do not shrink the corpus to save time,

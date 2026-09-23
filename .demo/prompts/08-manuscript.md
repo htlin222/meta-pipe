@@ -10,6 +10,10 @@ Stage 07 — the manuscript. Same standing rules, plus one that matters most her
    - Results: study characteristics table, network description, primary pCR results, EFS/OS, safety, inconsistency, sensitivity analyses
    - Discussion: what changes clinical practice, what does not, and an honest limitations section — the pCR-definition heterogeneity, the sparse nodes for the newest agents, the surrogacy gap between pCR and long-term outcome, and the search limitation from Stage 02
    - Abstract last, once the numbers are fixed
+
+   **Quantify the attrition between eligibility and the network, and mind the units.** Studies that pass full-text screening but contribute no usable per-arm pair are not a footnote — in one run they were the majority of the eligible evidence. Report it as a supplementary table classified by the *first* gate each trial failed, and separate what retrieval cost you from what the protocol and the trial designs cost you: they are different claims and only the first is fixable with better access. Assert the classification against the analysis dataset at run time so the table cannot drift from the network it describes.
+
+   Reports and trials are not interchangeable. Companion and follow-up publications make "reports included minus trials networked" a meaningless subtraction; state both counts explicitly and never mix them in one figure.
 4. Target format: Lancet Oncology / JAMA Oncology conventions, roughly 3,500–5,000 words.
 5. Assemble the tables (study characteristics, league table, GRADE summary) and reference both the journal and presentation figure sets.
 6. Render to `07_manuscript/index.html` and `index.pdf`. If a render fails, fix it — an unrendered manuscript is not a manuscript.
