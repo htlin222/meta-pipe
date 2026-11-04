@@ -215,6 +215,7 @@ See [ma-manuscript-quarto/SKILL.md](ma-manuscript-quarto/SKILL.md) for detailed 
   - Python: `uv add <package>` in `tooling/python/`
   - R: `install.packages()` then `renv::snapshot()` in project root
 - **API keys**: Read from `.env` ([ma-search-bibliography/references/api-setup.md](ma-search-bibliography/references/api-setup.md))
+  - Secret values in `.env` are 1Password `op://` refs. Run credentialed scripts as `op run --env-file=.env -- uv run ...` (or start the agent session itself via `op run --env-file=.env -- claude`); `env_utils.load_dotenv` never overrides injected values.
 - **Rounds**: Keep all `round-XX` data, never overwrite
 - **Delete**: Use `rip` not `rm`
 

@@ -15,6 +15,12 @@ set -uo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$(cd "$HERE/.." && pwd)"
+# .env holds 1Password op:// refs: re-exec under `op run` so the live
+# credential checks below see real values (and never source the refs over them).
+if [ -z "${OP_RUN_PREFLIGHT:-}" ] && [ -f "$REPO/.env" ] && grep -q 'op://' "$REPO/.env" \
+   && command -v op >/dev/null 2>&1; then
+  OP_RUN_PREFLIGHT=1 exec op run --env-file="$REPO/.env" -- "$0" "$@"
+fi
 # shellcheck source=/dev/null
 . "$HERE/config.env"
 
@@ -119,7 +125,7 @@ head_ "API credentials (a key in .env is not the same as a key that authenticate
 if [ -f "$REPO/.env" ]; then
   ok ".env exists"
   # shellcheck source=/dev/null
-  set -a; . "$REPO/.env" 2>/dev/null; set +a
+  [ -z "${OP_RUN_PREFLIGHT:-}" ] && { set -a; . "$REPO/.env" 2>/dev/null; set +a; }
 
   if [ -n "${PUBMED_API_KEY:-}" ]; then
     code="$(curl -s -o /dev/null -w '%{http_code}' "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=cancer&retmax=1&api_key=${PUBMED_API_KEY}")"
