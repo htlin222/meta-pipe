@@ -15,6 +15,15 @@
 
 ---
 
+## Architecture
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/architecture-dark.svg">
+  <img alt="meta-pipe architecture" src="docs/architecture.svg">
+</picture>
+
+---
+
 ## Quick Start
 
 ```bash

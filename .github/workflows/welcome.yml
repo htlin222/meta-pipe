@@ -1,0 +1,8 @@
+name: Welcome
+on:
+  issues: { types: [opened] }
+  pull_request_target: { types: [opened] }
+jobs:
+  welcome:
+    uses: htlin222/.github/.github/workflows/welcome.yml@main
+    permissions: { issues: write, pull-requests: write }

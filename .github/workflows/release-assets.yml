@@ -1,0 +1,7 @@
+name: Release assets
+on:
+  release: { types: [published] }
+jobs:
+  assets:
+    uses: htlin222/.github/.github/workflows/release-assets.yml@main
+    permissions: { contents: write }
