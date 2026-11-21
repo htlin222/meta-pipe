@@ -145,3 +145,6 @@ projects/*/.progress/
 projects/_archive/
 .demo/runner.out
 .demo/runner.pid
+
+# Home cleanup: generated files and machine-local state
+.claude/settings.local.json
