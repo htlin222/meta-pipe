@@ -137,3 +137,6 @@ worktrees/
 # Dashboard
 dashboard/node_modules/
 dashboard/dist/
+
+# Home cleanup: generated files and machine-local state
+.claude/settings.local.json
